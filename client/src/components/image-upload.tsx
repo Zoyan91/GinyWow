@@ -72,7 +72,7 @@ export default function ImageUpload({ onThumbnailUploaded }: ImageUploadProps) {
           Upload Your Thumbnail
         </h3>
         
-        <motion.div
+        <div
           {...getRootProps()}
           className={`
             border-2 border-dashed rounded-xl p-12 text-center cursor-pointer transition-all duration-300
@@ -81,8 +81,6 @@ export default function ImageUpload({ onThumbnailUploaded }: ImageUploadProps) {
               : 'border-border hover:border-primary/50 hover:bg-muted/30'
             }
           `}
-          whileHover={{ scale: isDragActive ? 1.05 : 1.02 }}
-          whileTap={{ scale: 0.98 }}
           data-testid="upload-dropzone"
         >
           <input {...getInputProps()} data-testid="file-input" />
@@ -138,7 +136,7 @@ export default function ImageUpload({ onThumbnailUploaded }: ImageUploadProps) {
               </p>
             </div>
           )}
-        </motion.div>
+        </div>
       </CardContent>
     </Card>
   );

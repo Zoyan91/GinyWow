@@ -10,6 +10,7 @@ export interface IStorage {
   // Title optimization operations
   createTitleOptimization(optimization: InsertTitleOptimization): Promise<TitleOptimization>;
   getTitleOptimization(id: string): Promise<TitleOptimization | undefined>;
+  updateTitleOptimization(id: string, updates: Partial<TitleOptimization>): Promise<TitleOptimization | undefined>;
   getTitleOptimizationsByThumbnail(thumbnailId: string): Promise<TitleOptimization[]>;
 }
 
@@ -55,6 +56,7 @@ export class MemStorage implements IStorage {
       id,
       optimizedTitles: [],
       createdAt: new Date(),
+      thumbnailId: insertOptimization.thumbnailId || null,
     };
     this.titleOptimizations.set(id, optimization);
     return optimization;
@@ -62,6 +64,15 @@ export class MemStorage implements IStorage {
 
   async getTitleOptimization(id: string): Promise<TitleOptimization | undefined> {
     return this.titleOptimizations.get(id);
+  }
+
+  async updateTitleOptimization(id: string, updates: Partial<TitleOptimization>): Promise<TitleOptimization | undefined> {
+    const existing = this.titleOptimizations.get(id);
+    if (!existing) return undefined;
+    
+    const updated = { ...existing, ...updates };
+    this.titleOptimizations.set(id, updated);
+    return updated;
   }
 
   async getTitleOptimizationsByThumbnail(thumbnailId: string): Promise<TitleOptimization[]> {

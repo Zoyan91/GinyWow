@@ -15,10 +15,12 @@ export default function AnalyticsDashboard({ thumbnail, optimization }: Analytic
 
   const ctrImprovement = thumbnail?.enhancementMetrics?.ctrImprovement || 0;
   const bestTitleScore = optimization?.optimizedTitles?.[0]?.seoScore || 0;
-  const avgEstimatedCtr = optimization?.optimizedTitles?.reduce((acc, curr) => acc + curr.estimatedCtr, 0) / (optimization?.optimizedTitles?.length || 1) || 0;
+  const avgEstimatedCtr = optimization?.optimizedTitles && optimization.optimizedTitles.length > 0 
+    ? optimization.optimizedTitles.reduce((acc, curr) => acc + curr.estimatedCtr, 0) / optimization.optimizedTitles.length 
+    : 0;
 
   // Extract trending keywords from title suggestions
-  const trendingKeywords = optimization?.optimizedTitles?.flatMap(title => title.tags).slice(0, 10) || [];
+  const trendingKeywords = (optimization?.optimizedTitles?.flatMap(title => title.tags) ?? []).slice(0, 10);
   const uniqueKeywords = Array.from(new Set(trendingKeywords));
 
   return (
