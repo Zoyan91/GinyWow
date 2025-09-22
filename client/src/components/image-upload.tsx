@@ -28,8 +28,8 @@ export default function ImageUpload({ onThumbnailUploaded }: ImageUploadProps) {
     onSuccess: (data) => {
       onThumbnailUploaded(data.thumbnail);
       toast({
-        title: "Thumbnail uploaded successfully!",
-        description: "AI analysis complete. Check out your enhanced thumbnail below.",
+        title: "Image uploaded successfully!",
+        description: "AI analysis complete. Check out your enhanced image below.",
       });
       setUploadProgress(0);
     },
@@ -69,7 +69,7 @@ export default function ImageUpload({ onThumbnailUploaded }: ImageUploadProps) {
       <CardContent className="p-8">
         <h3 className="text-2xl font-semibold mb-6 flex items-center">
           <i className="fas fa-upload text-primary mr-3"></i>
-          Upload Your Thumbnail
+          Upload Your Image
         </h3>
         
         <div
@@ -99,7 +99,7 @@ export default function ImageUpload({ onThumbnailUploaded }: ImageUploadProps) {
                 />
               </motion.div>
               <div className="space-y-2">
-                <h4 className="text-lg font-medium">Processing your thumbnail...</h4>
+                <h4 className="text-lg font-medium">Processing your image...</h4>
                 <p className="text-muted-foreground">AI is analyzing and enhancing your image</p>
                 <div className="max-w-xs mx-auto">
                   <Progress value={uploadProgress} className="h-2" />
@@ -117,7 +117,7 @@ export default function ImageUpload({ onThumbnailUploaded }: ImageUploadProps) {
               
               <div>
                 <h4 className="text-xl font-medium mb-2">
-                  {isDragActive ? "Drop your thumbnail here" : "Drag & drop your thumbnail here"}
+                  {isDragActive ? "Drop your image here" : "Drag & drop your image here"}
                 </h4>
                 <p className="text-muted-foreground mb-4">or click to browse files</p>
                 

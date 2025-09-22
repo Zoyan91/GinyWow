@@ -2,7 +2,8 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Search, ChevronDown, Moon, Sun, FolderOpen, Share2 } from "lucide-react";
 import ImageUpload from "@/components/image-upload";
 import ThumbnailComparison from "@/components/thumbnail-comparison";
 import TitleOptimizer from "@/components/title-optimizer";
@@ -12,6 +13,7 @@ import type { Thumbnail, TitleOptimization } from "@shared/schema";
 export default function Home() {
   const [currentThumbnail, setCurrentThumbnail] = useState<Thumbnail | null>(null);
   const [currentOptimization, setCurrentOptimization] = useState<TitleOptimization | null>(null);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   return (
     <div className="min-h-screen bg-white">
@@ -21,27 +23,75 @@ export default function Home() {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <div className="flex items-center">
-              <h1 className="text-2xl font-bold text-gray-900" data-testid="logo">ThumbnailAI</h1>
+              <h1 className="text-2xl font-bold text-gray-900" data-testid="logo">GinyWow</h1>
             </div>
             
-            {/* Navigation */}
-            <div className="hidden md:flex items-center space-x-8">
-              <button className="text-gray-600 hover:text-gray-900 transition-colors font-medium" data-testid="nav-pdf">
-                PDF
-              </button>
-              <button className="text-gray-600 hover:text-gray-900 transition-colors font-medium" data-testid="nav-app-opener">
-                App Opener
-              </button>
-              <button className="text-gray-600 hover:text-gray-900 transition-colors font-medium" data-testid="nav-image-converter">
-                Image Converter
-              </button>
-              <button className="text-gray-600 hover:text-gray-900 transition-colors font-medium" data-testid="nav-write">
-                Write
-              </button>
+            {/* Main Navigation */}
+            <div className="hidden md:flex items-center space-x-6">
+              <DropdownMenu>
+                <DropdownMenuTrigger className="flex items-center text-gray-600 hover:text-gray-900 transition-colors font-medium" data-testid="nav-pdf">
+                  PDF <ChevronDown className="ml-1 w-4 h-4" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem>Edit PDF</DropdownMenuItem>
+                  <DropdownMenuItem>PDF to Word</DropdownMenuItem>
+                  <DropdownMenuItem>Merge PDF</DropdownMenuItem>
+                  <DropdownMenuItem>Split PDF</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              
+              <DropdownMenu>
+                <DropdownMenuTrigger className="flex items-center text-gray-600 hover:text-gray-900 transition-colors font-medium" data-testid="nav-image">
+                  Image <ChevronDown className="ml-1 w-4 h-4" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem>Remove Background</DropdownMenuItem>
+                  <DropdownMenuItem>Resize Image</DropdownMenuItem>
+                  <DropdownMenuItem>Compress Image</DropdownMenuItem>
+                  <DropdownMenuItem>Image to Text</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              
+              <DropdownMenu>
+                <DropdownMenuTrigger className="flex items-center text-gray-600 hover:text-gray-900 transition-colors font-medium" data-testid="nav-write">
+                  Write <ChevronDown className="ml-1 w-4 h-4" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem>Essay Writer</DropdownMenuItem>
+                  <DropdownMenuItem>Paragraph Writer</DropdownMenuItem>
+                  <DropdownMenuItem>Grammar Fixer</DropdownMenuItem>
+                  <DropdownMenuItem>Content Improver</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              
+              <DropdownMenu>
+                <DropdownMenuTrigger className="flex items-center text-gray-600 hover:text-gray-900 transition-colors font-medium" data-testid="nav-video">
+                  Video <ChevronDown className="ml-1 w-4 h-4" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem>Compress Video</DropdownMenuItem>
+                  <DropdownMenuItem>Video to GIF</DropdownMenuItem>
+                  <DropdownMenuItem>Trim Video</DropdownMenuItem>
+                  <DropdownMenuItem>MP4 to MP3</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              
+              <DropdownMenu>
+                <DropdownMenuTrigger className="flex items-center text-gray-600 hover:text-gray-900 transition-colors font-medium" data-testid="nav-file">
+                  File <ChevronDown className="ml-1 w-4 h-4" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem>Excel to PDF</DropdownMenuItem>
+                  <DropdownMenuItem>CSV to Excel</DropdownMenuItem>
+                  <DropdownMenuItem>Split Excel</DropdownMenuItem>
+                  <DropdownMenuItem>XML to JSON</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
             
-            {/* Search and Sign In */}
+            {/* Right Side Utilities */}
             <div className="flex items-center space-x-4">
+              {/* Search */}
               <div className="relative hidden md:block">
                 <Input
                   type="text"
@@ -51,12 +101,49 @@ export default function Home() {
                 />
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
               </div>
+              
+              {/* Utilities */}
+              <div className="hidden md:flex items-center space-x-2">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-gray-600 hover:text-gray-900"
+                  onClick={() => setIsDarkMode(!isDarkMode)}
+                  data-testid="dark-mode-toggle"
+                >
+                  {isDarkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-gray-600 hover:text-gray-900"
+                  data-testid="my-files"
+                >
+                  <FolderOpen className="w-4 h-4" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-gray-600 hover:text-gray-900"
+                  data-testid="share"
+                >
+                  <Share2 className="w-4 h-4" />
+                </Button>
+              </div>
+              
+              {/* Sign In and Upgrade */}
               <Button 
                 variant="outline" 
                 className="border-gray-200 text-gray-600 hover:bg-gray-50"
                 data-testid="sign-in-button"
               >
                 Sign In
+              </Button>
+              <Button 
+                className="bg-blue-600 hover:bg-blue-700 text-white"
+                data-testid="upgrade-button"
+              >
+                Upgrade
               </Button>
             </div>
           </div>
@@ -76,12 +163,12 @@ export default function Home() {
           <h2 className="text-5xl md:text-6xl font-bold mb-6 leading-tight text-gray-900">
             Free Tools to Make{" "}
             <span className="text-blue-600">
-              Content Creation
+              Business
             </span>
             {" "}Simple
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-12 leading-relaxed">
-            Optimize your YouTube thumbnails and titles for better clicks, views, and engagement.
+            We offer PDF, video, image and other online tools to make your life easier
           </p>
           
           {/* Search Bar */}
@@ -161,10 +248,10 @@ export default function Home() {
         <div className="container mx-auto px-6">
           <div className="text-center">
             <div className="flex items-center justify-center space-x-3 mb-4">
-              <span className="text-xl font-bold text-gray-900">ThumbnailAI</span>
+              <span className="text-xl font-bold text-gray-900">GinyWow</span>
             </div>
             <p className="text-gray-600 mb-6 max-w-md mx-auto">
-              Supercharge your YouTube content with AI-powered thumbnail enhancement and title optimization.
+              We offer PDF, video, image and other online tools to make your life easier
             </p>
             <div className="flex justify-center space-x-6 text-sm text-gray-500">
               <a href="#" className="hover:text-gray-900 transition-colors">Privacy Policy</a>
@@ -174,7 +261,7 @@ export default function Home() {
             </div>
             <div className="mt-6 pt-6 border-t border-gray-200">
               <p className="text-sm text-gray-500">
-                © 2024 ThumbnailAI. All rights reserved. • Built with ❤️ for content creators
+                © 2024 GinyWow. All rights reserved. • Built with ❤️ for making business simple
               </p>
             </div>
           </div>

@@ -1,8 +1,8 @@
-# ThumbnailAI - YouTube Thumbnail Optimization Platform
+# GinyWow - Online Tools Platform
 
 ## Overview
 
-ThumbnailAI is a web application that uses AI to analyze and enhance YouTube thumbnails while providing title optimization suggestions. The platform allows users to upload thumbnail images, receive AI-powered enhancement recommendations, and generate optimized titles to improve click-through rates and SEO performance.
+GinyWow is a web application that offers PDF, video, image and other online tools to make your life easier. The platform provides various tools for content creation, file conversion, and productivity enhancement, similar to TinyWow's approach to simplifying everyday tasks.
 
 ## User Preferences
 
@@ -70,4 +70,4 @@ Preferred communication style: Simple, everyday language.
 - **drizzle-zod**: Integration between Drizzle ORM and Zod validation
 - **typescript**: Static type checking throughout the application
 
-The application follows a modern full-stack architecture with strong type safety, automated database migrations, and AI-powered features for content optimization.
+The application follows a modern full-stack architecture with strong type safety, automated database migrations, and AI-powered features for productivity and content creation tools.
