@@ -382,10 +382,6 @@ export default function Home() {
                 </div>
               ) : (
                 <div className="space-y-6">
-                  <div className="text-center">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">Optimization Results</h3>
-                  </div>
-
                   {/* Professional Before/After Thumbnail Comparison */}
                   {optimizationResult.thumbnailComparison && (
                     <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 border border-gray-200 shadow-xl">
