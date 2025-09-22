@@ -410,22 +410,7 @@ export default function Home() {
                               data-testid="after-thumbnail"
                             />
                           </div>
-                          <div className="mt-4 space-y-3">
-                            {/* Enhancement Metrics */}
-                            {optimizationResult.thumbnailComparison.enhancementMetrics && (
-                              <div className="flex justify-center gap-3 mb-3">
-                                <span className="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded font-medium">
-                                  +{optimizationResult.thumbnailComparison.enhancementMetrics.contrast}% Contrast
-                                </span>
-                                <span className="text-xs bg-purple-100 text-purple-600 px-2 py-1 rounded font-medium">
-                                  +{optimizationResult.thumbnailComparison.enhancementMetrics.saturation}% Saturation
-                                </span>
-                                <span className="text-xs bg-green-100 text-green-600 px-2 py-1 rounded font-medium">
-                                  +{optimizationResult.thumbnailComparison.enhancementMetrics.clarity}% Clarity
-                                </span>
-                              </div>
-                            )}
-                            
+                          <div className="mt-4">
                             <button
                               onClick={() => {
                                 const link = document.createElement('a');
