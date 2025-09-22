@@ -234,9 +234,9 @@ export default function Home() {
           {/* Optimize Button */}
           <div className="text-center">
             <Button 
-              className={`px-8 py-3 rounded-lg font-medium transition-all duration-300 ${
+              className={`px-8 py-3 rounded-lg font-medium ${
                 uploadedFile && title.trim() 
-                  ? 'bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 text-white shadow-lg hover:shadow-xl transform hover:scale-105'
+                  ? 'bg-blue-600 hover:bg-blue-700 text-white'
                   : 'bg-gray-300 text-gray-500 cursor-not-allowed'
               }`}
               disabled={!uploadedFile || !title.trim()}
