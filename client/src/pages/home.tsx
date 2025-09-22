@@ -108,14 +108,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background relative">
-      {/* Animated Background */}
-      <div className="animated-background">
-        <div className="gradient-blob blob-1"></div>
-        <div className="gradient-blob blob-2"></div>
-        <div className="gradient-blob blob-3"></div>
-        <div className="gradient-blob blob-4"></div>
-        <div className="gradient-blob blob-5"></div>
-      </div>
       {/* Header */}
       <header className="bg-white/90 backdrop-blur-sm border-b border-gray-200 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
