@@ -137,6 +137,69 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Combined optimize endpoint (thumbnail + title)
+  app.post('/api/optimize', upload.single('thumbnail'), async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ error: 'No thumbnail file provided' });
+      }
+
+      const { title } = req.body;
+      if (!title || title.trim() === '') {
+        return res.status(400).json({ error: 'Title is required' });
+      }
+
+      const base64Image = req.file.buffer.toString('base64');
+      
+      // Create thumbnail record
+      const thumbnailData = insertThumbnailSchema.parse({
+        originalImageData: base64Image,
+        fileName: req.file.originalname,
+        fileSize: req.file.size,
+      });
+      const thumbnail = await storage.createThumbnail(thumbnailData);
+
+      // Analyze thumbnail with AI
+      const analysis = await analyzeThumbnail(base64Image);
+
+      // Generate title suggestions
+      const titleSuggestions = await optimizeTitles(title.trim(), analysis.description);
+
+      // Create title optimization record
+      const optimization = await storage.createTitleOptimization({
+        originalTitle: title.trim(),
+        thumbnailId: thumbnail.id,
+      });
+
+      // Update with suggestions
+      await storage.updateTitleOptimization(optimization.id, {
+        optimizedTitles: titleSuggestions,
+      });
+
+      // Calculate a simple CTR score based on title length and thumbnail analysis
+      const ctrScore = Math.min(95, Math.max(15, 
+        (title.trim().length > 10 && title.trim().length < 60 ? 30 : 10) +
+        (analysis.ctrImprovement || 30) +
+        (titleSuggestions && titleSuggestions.length > 0 ? 15 : 0)
+      ));
+
+      res.json({
+        ctrScore: Math.round(ctrScore),
+        ctrFeedback: ctrScore > 70 ? 'Excellent! Your thumbnail and title have strong click potential.' :
+                     ctrScore > 50 ? 'Good combination! Consider implementing the suggested improvements.' :
+                     'This combination needs improvement. Follow our suggestions to boost performance.',
+        titleSuggestions: titleSuggestions || [],
+        thumbnailAnalysis: analysis.description,
+        recommendations: analysis.recommendations,
+        thumbnailId: thumbnail.id,
+        optimizationId: optimization.id,
+      });
+    } catch (error) {
+      console.error('Error during optimization:', error);
+      res.status(500).json({ error: 'Failed to optimize thumbnail and title' });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
