@@ -260,26 +260,12 @@ export default function Home() {
               onDrop={handleDrop}
             >
               {thumbnailPreview ? (
-                <div className="relative">
-                  <img 
-                    src={thumbnailPreview} 
-                    alt="Thumbnail preview" 
-                    className="w-full max-h-48 object-contain rounded-lg"
-                    data-testid="thumbnail-preview"
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <Button 
-                      className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg flex items-center gap-2 transition-colors opacity-90 hover:opacity-100"
-                      data-testid="change-thumbnail-btn"
-                      onClick={() => document.getElementById('thumbnail-upload')?.click()}
-                    >
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                      </svg>
-                      Change Thumbnail
-                    </Button>
-                  </div>
-                </div>
+                <img 
+                  src={thumbnailPreview} 
+                  alt="Thumbnail preview" 
+                  className="w-full max-h-48 object-contain rounded-lg"
+                  data-testid="thumbnail-preview"
+                />
               ) : (
                 <div className="flex flex-col items-center">
                   <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mb-4">
@@ -306,6 +292,22 @@ export default function Home() {
                 </div>
               )}
             </div>
+            
+            {/* Change Thumbnail Button - Outside Border */}
+            {thumbnailPreview && (
+              <div className="text-center mt-4">
+                <Button 
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg flex items-center gap-2 transition-colors mx-auto"
+                  data-testid="change-thumbnail-btn"
+                  onClick={() => document.getElementById('thumbnail-upload')?.click()}
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  </svg>
+                  Change Thumbnail
+                </Button>
+              </div>
+            )}
           </div>
 
           {/* YouTube Title Section */}
