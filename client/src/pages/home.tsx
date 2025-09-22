@@ -245,13 +245,16 @@ export default function Home() {
               }}
             />
             <div 
-              className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
+              className={`${thumbnailPreview 
+                ? 'rounded-lg overflow-hidden' 
+                : 'border-2 border-dashed rounded-lg p-8 text-center'
+              } transition-colors ${
                 isDragOver 
                   ? 'border-blue-400 bg-blue-50' 
                   : uploadError 
                   ? 'border-red-300 bg-red-50' 
                   : thumbnailPreview
-                  ? 'border-green-300 bg-green-50'
+                  ? ''
                   : 'border-gray-300 hover:border-gray-400'
               }`}
               data-testid="thumbnail-upload-area"
@@ -260,14 +263,13 @@ export default function Home() {
               onDrop={handleDrop}
             >
               {thumbnailPreview ? (
-                <div className="cursor-pointer" onClick={() => document.getElementById('thumbnail-upload')?.click()}>
-                  <img 
-                    src={thumbnailPreview} 
-                    alt="Thumbnail preview" 
-                    className="w-full h-full rounded-lg object-cover"
-                    data-testid="thumbnail-preview"
-                  />
-                </div>
+                <img 
+                  src={thumbnailPreview} 
+                  alt="Thumbnail preview" 
+                  className="w-full h-48 object-cover cursor-pointer rounded-lg"
+                  data-testid="thumbnail-preview"
+                  onClick={() => document.getElementById('thumbnail-upload')?.click()}
+                />
               ) : (
                 <div className="flex flex-col items-center">
                   <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mb-4">
