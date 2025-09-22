@@ -159,7 +159,7 @@ export default function Home() {
 
           {/* Thumbnail Upload Section */}
           <div className="mb-8">
-            <label className="sr-only">
+            <label className="block text-sm font-medium text-gray-700 mb-3">
               Thumbnail
             </label>
             <input 
@@ -174,7 +174,7 @@ export default function Home() {
               }}
             />
             <div 
-              className={`border-2 border-dashed rounded-lg p-12 text-center transition-colors cursor-pointer ${
+              className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
                 isDragOver 
                   ? 'border-blue-400 bg-blue-50' 
                   : uploadError 
@@ -182,7 +182,6 @@ export default function Home() {
                   : 'border-gray-300 hover:border-gray-400'
               }`}
               data-testid="thumbnail-upload-area"
-              onClick={() => document.getElementById('thumbnail-upload')?.click()}
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
               onDrop={handleDrop}
@@ -198,7 +197,17 @@ export default function Home() {
                 }`}>
                   {uploadError || (uploadedFile ? uploadedFile.name : "Drop your thumbnail here or click to browse")}
                 </p>
-                <p className="text-sm text-gray-500">Supports: JPG, PNG, WebP (Max 5MB)</p>
+                <p className="text-sm text-gray-500 mb-4">Supports: JPG, PNG, WebP (Max 5MB)</p>
+                <Button 
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg flex items-center gap-2"
+                  data-testid="upload-thumbnail-btn"
+                  onClick={() => document.getElementById('thumbnail-upload')?.click()}
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                  </svg>
+                  Upload Thumbnail
+                </Button>
               </div>
             </div>
           </div>
@@ -225,9 +234,9 @@ export default function Home() {
           {/* Optimize Button */}
           <div className="text-center">
             <Button 
-              className={`px-8 py-3 rounded-md font-medium ${
+              className={`px-8 py-3 rounded-lg font-medium transition-all duration-300 ${
                 uploadedFile && title.trim() 
-                  ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                  ? 'bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 text-white shadow-lg hover:shadow-xl transform hover:scale-105'
                   : 'bg-gray-300 text-gray-500 cursor-not-allowed'
               }`}
               disabled={!uploadedFile || !title.trim()}
