@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Search, ChevronDown } from "lucide-react";
+import { Link } from "wouter";
 import type { Thumbnail, TitleOptimization } from "@shared/schema";
 
 export default function Home() {
@@ -113,9 +114,11 @@ export default function Home() {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex items-center">
-              <h1 className="text-2xl font-bold text-gray-900" data-testid="logo">
-                <span className="text-gray-900">Giny</span><span className="text-blue-600">Wow</span>
-              </h1>
+              <Link href="/">
+                <h1 className="text-2xl font-bold text-gray-900 cursor-pointer hover:opacity-80 transition-opacity" data-testid="logo">
+                  <span className="text-gray-900">Giny</span><span className="text-blue-600">Wow</span>
+                </h1>
+              </Link>
             </div>
             
             {/* Main Navigation */}
@@ -775,7 +778,9 @@ export default function Home() {
         <div className="container mx-auto px-6">
           <div className="grid md:grid-cols-4 gap-8">
             <div>
-              <h3 className="font-bold text-gray-900 mb-4">GinyWow</h3>
+              <Link href="/">
+                <h3 className="font-bold text-gray-900 mb-4 cursor-pointer hover:opacity-80 transition-opacity">GinyWow</h3>
+              </Link>
               <p className="text-gray-600 text-sm mb-4">
                 Free tools to make content creation simple and efficient for creators worldwide.
               </p>
