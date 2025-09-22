@@ -201,15 +201,6 @@ export default function Home() {
                 <p className="text-sm text-gray-500">Supports: JPG, PNG, WebP (Max 5MB)</p>
               </div>
             </div>
-            <div className="mt-4">
-              <Button 
-                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md"
-                data-testid="upload-thumbnail-btn"
-                onClick={() => document.getElementById('thumbnail-upload')?.click()}
-              >
-                Upload Thumbnail
-              </Button>
-            </div>
           </div>
 
           {/* YouTube Title Section */}
