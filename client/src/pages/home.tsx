@@ -290,7 +290,7 @@ export default function Home() {
               className={`px-8 py-3 rounded-lg font-medium transition-colors ${
                 uploadedFile && title.trim() 
                   ? 'bg-blue-600 hover:bg-blue-700 text-white'
-                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                  : 'bg-blue-400 text-white cursor-not-allowed'
               }`}
               disabled={!uploadedFile || !title.trim() || isOptimizing}
               onClick={handleOptimize}
