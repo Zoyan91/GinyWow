@@ -197,13 +197,9 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium mb-6">
-              <span className="animate-pulse">✨</span>
-              AI-Powered Thumbnail Enhancement
-            </div>
             <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight">
-              Transform Your YouTube Thumbnails<br/>
-              <span className="text-blue-600">Into Click Magnets</span>
+              Enhance Your YouTube Thumbnails<br/>
+              & Titles in Seconds
             </h1>
             <p className="text-gray-700 text-xl mb-8 max-w-3xl mx-auto leading-relaxed">
               Professional AI enhancement that improves every detail while preserving your original design. 
