@@ -181,7 +181,7 @@ export default function Home() {
             <h1 className="text-3xl md:text-5xl font-medium text-gray-900 mb-4 leading-tight">
               Enhance Your YouTube Thumbnails & Titles in Seconds
             </h1>
-            <p className="text-gray-600 text-lg mb-8 max-w-2xl mx-auto">
+            <p className="text-gray-900 text-lg mb-8 max-w-2xl mx-auto">
               Optimize your YouTube thumbnails and titles for better clicks, views, and engagement.
             </p>
           </motion.div>
