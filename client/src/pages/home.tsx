@@ -183,7 +183,7 @@ export default function Home() {
               <span className="text-blue-600">Content Creation</span> Simple
             </h1>
             <p className="text-gray-600 text-lg mb-8 max-w-2xl mx-auto">
-              Optimize your YouTube thumbnails and titles for better clicks, views, and engagement.
+              Enhance Your YouTube Thumbnails & Titles in Seconds
             </p>
           </motion.div>
         </div>
