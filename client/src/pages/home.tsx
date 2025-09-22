@@ -190,7 +190,7 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <section className="bg-background py-16 pb-8">
+      <section className="bg-background py-8 pb-4">
         <div className="container mx-auto px-6 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -205,26 +205,12 @@ export default function Home() {
               Professional AI enhancement that improves every detail while preserving your original design. 
               Make your thumbnails more eye-catching and boost your CTR instantly.
             </p>
-            <div className="flex items-center justify-center gap-8 text-sm text-gray-600 mb-8">
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                Preserves Originality
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                Professional Enhancement
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                Instant Results
-              </div>
-            </div>
           </motion.div>
         </div>
       </section>
 
       {/* Main Content */}
-      <main className="bg-background container mx-auto px-6 py-0 max-w-4xl">
+      <main className="bg-background container mx-auto px-6 py-4 max-w-4xl">
         
         {/* YouTube Thumbnail & Title Optimizer Tool */}
         <motion.div 
