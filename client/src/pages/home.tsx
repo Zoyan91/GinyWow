@@ -369,6 +369,66 @@ export default function Home() {
                 <div className="space-y-6">
                   <div className="text-center">
                     <h3 className="text-lg font-semibold text-gray-900 mb-2">Optimization Results</h3>
+                  </div>
+
+                  {/* Before/After Thumbnail Comparison */}
+                  {optimizationResult.thumbnailComparison && (
+                    <div className="bg-white rounded-lg p-6 border border-gray-200">
+                      <h4 className="text-md font-medium text-gray-900 mb-4 text-center">Thumbnail Enhancement</h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {/* Before Image */}
+                        <div className="text-center">
+                          <h5 className="text-sm font-medium text-gray-700 mb-3">Before</h5>
+                          <div className="relative w-full aspect-video rounded-md bg-gray-100 overflow-hidden border">
+                            <img 
+                              src={optimizationResult.thumbnailComparison.before} 
+                              alt="Original thumbnail" 
+                              className="absolute inset-0 w-full h-full object-contain object-center"
+                              data-testid="before-thumbnail"
+                            />
+                          </div>
+                          <p className="text-xs text-gray-500 mt-2">Original uploaded thumbnail</p>
+                        </div>
+
+                        {/* After Image */}
+                        <div className="text-center">
+                          <h5 className="text-sm font-medium text-gray-700 mb-3">After</h5>
+                          <div className="relative w-full aspect-video rounded-md bg-gray-100 overflow-hidden border-2 border-green-500">
+                            <img 
+                              src={optimizationResult.thumbnailComparison.after} 
+                              alt="Enhanced thumbnail" 
+                              className="absolute inset-0 w-full h-full object-contain object-center"
+                              data-testid="after-thumbnail"
+                            />
+                          </div>
+                          <p className="text-xs text-green-600 font-medium mt-2">✓ AI-enhanced for better CTR</p>
+                        </div>
+                      </div>
+                      
+                      {/* Enhancement Metrics */}
+                      {optimizationResult.thumbnailComparison.enhancementMetrics && (
+                        <div className="mt-4 bg-blue-50 rounded-lg p-4">
+                          <h6 className="text-sm font-medium text-blue-900 mb-2">Applied Enhancements:</h6>
+                          <div className="grid grid-cols-3 gap-4 text-center">
+                            <div>
+                              <span className="text-lg font-bold text-blue-600">+{optimizationResult.thumbnailComparison.enhancementMetrics.contrast}%</span>
+                              <p className="text-xs text-blue-700">Contrast</p>
+                            </div>
+                            <div>
+                              <span className="text-lg font-bold text-blue-600">+{optimizationResult.thumbnailComparison.enhancementMetrics.saturation}%</span>
+                              <p className="text-xs text-blue-700">Saturation</p>
+                            </div>
+                            <div>
+                              <span className="text-lg font-bold text-blue-600">+{optimizationResult.thumbnailComparison.enhancementMetrics.clarity}%</span>
+                              <p className="text-xs text-blue-700">Clarity</p>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  <div className="text-center">
                     <p className="text-gray-600 text-sm">Here are our suggestions to improve your thumbnail and title</p>
                   </div>
                   

@@ -162,6 +162,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Analyze thumbnail with AI
       const analysis = await analyzeThumbnail(base64Image);
 
+      // Generate enhanced thumbnail image
+      const enhancedImageData = await enhanceThumbnailImage(base64Image, analysis.enhancementSuggestions);
+
+      // Update thumbnail with enhanced version
+      await storage.updateThumbnail(thumbnail.id, {
+        enhancedImageData,
+        enhancementMetrics: {
+          contrast: analysis.enhancementSuggestions.contrast,
+          saturation: analysis.enhancementSuggestions.saturation,
+          clarity: analysis.enhancementSuggestions.clarity,
+          ctrImprovement: analysis.ctrImprovement,
+        },
+      });
+
       // Generate title suggestions
       const titleSuggestions = await optimizeTitles(title.trim(), analysis.description);
 
@@ -193,6 +207,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
         recommendations: analysis.recommendations,
         thumbnailId: thumbnail.id,
         optimizationId: optimization.id,
+        // Add before/after thumbnail comparison
+        thumbnailComparison: {
+          before: `data:image/jpeg;base64,${base64Image}`,
+          after: `data:image/jpeg;base64,${enhancedImageData}`,
+          enhancementMetrics: {
+            contrast: analysis.enhancementSuggestions.contrast,
+            saturation: analysis.enhancementSuggestions.saturation,
+            clarity: analysis.enhancementSuggestions.clarity,
+          }
+        }
       });
     } catch (error) {
       console.error('Error during optimization:', error);

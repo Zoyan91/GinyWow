@@ -203,43 +203,34 @@ function getMockTitleSuggestions(originalTitle: string): TitleSuggestion[] {
 }
 
 export async function enhanceThumbnailImage(base64Image: string, enhancements: { contrast: number; saturation: number; clarity: number }): Promise<string> {
-  // For this implementation, we'll use a simulated enhancement
-  // In a real application, you would use image processing libraries like Sharp
-  // or send to an image enhancement API
-  
   try {
-    // Check if API key is available
-    if (!process.env.OPENAI_API_KEY) {
-      console.log("OpenAI API key not found, returning original image as enhanced");
-      return base64Image; // Return original image when no API key
-    }
-
-    // Generate an enhanced version description for AI to create
-    const response = await openai.chat.completions.create({
-      model: "gpt-5",
-      messages: [
-        {
-          role: "system",
-          content: "You are helping to describe image enhancements. Based on the enhancement parameters provided, describe how the image should look after processing."
-        },
-        {
-          role: "user",
-          content: `Enhancement parameters:
-          - Contrast: +${enhancements.contrast}%
-          - Saturation: +${enhancements.saturation}%
-          - Clarity: +${enhancements.clarity}%
-          
-          Describe the enhanced appearance.`
-        },
-      ],
-      max_completion_tokens: 200,
-    });
-
-    // In a real implementation, process the actual image here with Sharp or similar
-    // For now, return the original with a simulated enhancement marker
-    return base64Image; // This would be the enhanced image data
+    const sharp = require('sharp');
+    
+    // Convert base64 to buffer
+    const imageBuffer = Buffer.from(base64Image, 'base64');
+    
+    // Apply enhancements using Sharp
+    const enhancedBuffer = await sharp(imageBuffer)
+      .modulate({
+        brightness: 1.05, // Slight brightness boost for better visibility
+        saturation: 1 + (enhancements.saturation / 100), // Apply saturation enhancement
+      })
+      .linear(1 + (enhancements.contrast / 100), 0) // Apply contrast enhancement
+      .sharpen({
+        sigma: enhancements.clarity > 15 ? 1 : 0.5, // Apply sharpening based on clarity
+        flat: 1,
+        jagged: 1
+      })
+      .jpeg({ quality: 95 }) // High quality output
+      .toBuffer();
+    
+    // Convert back to base64
+    const enhancedBase64 = enhancedBuffer.toString('base64');
+    console.log("Image enhancement applied successfully");
+    return enhancedBase64;
+    
   } catch (error) {
-    console.error("Error enhancing thumbnail:", error);
+    console.error("Error enhancing thumbnail with Sharp:", error);
     console.log("Falling back to returning original image");
     return base64Image; // Return original image on error
   }
