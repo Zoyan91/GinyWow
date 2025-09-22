@@ -16,6 +16,7 @@ export default function Home() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isOptimizing, setIsOptimizing] = useState(false);
   const [optimizationResult, setOptimizationResult] = useState<any>(null);
+  const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
 
   const handleFileUpload = (file: File) => {
     setUploadError("");
@@ -449,50 +450,64 @@ export default function Home() {
                     </div>
                   )}
 
-                  <div className="text-center">
-                    <p className="text-gray-600 text-sm">Here are our suggestions to improve your thumbnail and title</p>
-                  </div>
-                  
-                  {/* CTR Score */}
-                  {optimizationResult.ctrScore && (
-                    <div className="bg-white rounded-lg p-4 border border-gray-200">
-                      <h4 className="font-semibold text-gray-900 mb-2">Predicted CTR Score</h4>
-                      <div className="flex items-center gap-3">
-                        <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center">
-                          <span className="text-2xl font-bold text-blue-600">{optimizationResult.ctrScore}%</span>
-                        </div>
-                        <div className="flex-1">
-                          <p className="text-sm text-gray-600">{optimizationResult.ctrFeedback || 'Your thumbnail and title combination has good potential for attracting clicks.'}</p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                  
                   {/* Title Suggestions */}
                   {optimizationResult.titleSuggestions && optimizationResult.titleSuggestions.length > 0 && (
-                    <div className="bg-white rounded-lg p-4 border border-gray-200">
-                      <h4 className="font-semibold text-gray-900 mb-3">Improved Title Suggestions</h4>
-                      <div className="space-y-3">
-                        {optimizationResult.titleSuggestions.map((suggestion: any, index: number) => (
-                          <div key={index} className="p-3 bg-gray-50 rounded-lg border border-gray-200">
-                            <p className="text-gray-800 font-medium mb-2">{suggestion.title}</p>
-                            <div className="flex items-center gap-4 text-sm text-gray-600 mb-2">
-                              <span>Score: {suggestion.score}/10</span>
-                              <span>CTR: +{suggestion.estimatedCtr}%</span>
-                              <span>SEO: {suggestion.seoScore}/10</span>
-                            </div>
-                            <p className="text-sm text-gray-600">{suggestion.reasoning}</p>
-                            {suggestion.tags && suggestion.tags.length > 0 && (
-                              <div className="flex flex-wrap gap-1 mt-2">
-                                {suggestion.tags.map((tag: string, tagIndex: number) => (
-                                  <span key={tagIndex} className="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded">
-                                    {tag}
-                                  </span>
-                                ))}
+                    <div className="bg-white rounded-2xl border border-gray-200 shadow-sm">
+                      <div className="p-6 border-b border-gray-100">
+                        <h3 className="text-lg font-semibold text-gray-900">Title Suggestions</h3>
+                        <p className="text-gray-500 text-sm mt-1">Use the copy button to copy any title</p>
+                      </div>
+                      <div className="p-6">
+                        <div className="space-y-3">
+                          {optimizationResult.titleSuggestions.map((suggestion: any, index: number) => (
+                            <div 
+                              key={index} 
+                              className="group flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 rounded-lg border border-gray-200 hover:border-gray-300 transition-all duration-200"
+                            >
+                              <div className="flex-1 mr-3">
+                                <p className="text-gray-800 font-medium leading-relaxed">{suggestion.title}</p>
                               </div>
-                            )}
-                          </div>
-                        ))}
+                              <button
+                                onClick={async () => {
+                                  try {
+                                    await navigator.clipboard.writeText(suggestion.title);
+                                    setCopiedIndex(index);
+                                    setTimeout(() => setCopiedIndex(null), 2000);
+                                  } catch (err) {
+                                    // Fallback for browsers that don't support clipboard API
+                                    const textArea = document.createElement('textarea');
+                                    textArea.value = suggestion.title;
+                                    document.body.appendChild(textArea);
+                                    textArea.focus();
+                                    textArea.select();
+                                    document.execCommand('copy');
+                                    document.body.removeChild(textArea);
+                                    setCopiedIndex(index);
+                                    setTimeout(() => setCopiedIndex(null), 2000);
+                                  }
+                                }}
+                                className="flex-shrink-0 flex items-center gap-2 px-3 py-2 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-md border border-blue-200 hover:border-blue-300 transition-all duration-200 text-sm font-medium"
+                                data-testid={`copy-title-${index}`}
+                              >
+                                {copiedIndex === index ? (
+                                  <>
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                    </svg>
+                                    <span>Copied!</span>
+                                  </>
+                                ) : (
+                                  <>
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                    </svg>
+                                    <span>Copy</span>
+                                  </>
+                                )}
+                              </button>
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     </div>
                   )}
