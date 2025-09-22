@@ -107,9 +107,17 @@ export default function Home() {
   }, [thumbnailPreview]);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative">
+      {/* Animated Background */}
+      <div className="animated-background">
+        <div className="gradient-blob blob-1"></div>
+        <div className="gradient-blob blob-2"></div>
+        <div className="gradient-blob blob-3"></div>
+        <div className="gradient-blob blob-4"></div>
+        <div className="gradient-blob blob-5"></div>
+      </div>
       {/* Header */}
-      <header className="bg-white border-b border-gray-200">
+      <header className="bg-white/90 backdrop-blur-sm border-b border-gray-200 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
@@ -193,7 +201,7 @@ export default function Home() {
       </header>
 
       {/* Content Section */}
-      <section className="bg-background py-12">
+      <section className="bg-background/50 backdrop-blur-sm py-12 relative z-10">
         <div className="container mx-auto px-6 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -213,7 +221,7 @@ export default function Home() {
       </section>
 
       {/* Main Content */}
-      <main className="bg-background container mx-auto px-6 py-4 max-w-4xl">
+      <main className="bg-background/50 backdrop-blur-sm container mx-auto px-6 py-4 max-w-4xl relative z-10">
         
         {/* YouTube Thumbnail & Title Optimizer Tool */}
         <motion.div 
@@ -774,7 +782,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-white border-t border-gray-100 py-12">
+      <footer className="bg-white/90 backdrop-blur-sm border-t border-gray-100 py-12 relative z-10">
         <div className="container mx-auto px-6">
           <div className="grid md:grid-cols-4 gap-8">
             <div>
