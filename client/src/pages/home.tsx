@@ -390,7 +390,7 @@ export default function Home() {
                           <p className="text-xs text-gray-500 mt-2">Original uploaded thumbnail</p>
                         </div>
 
-                        {/* After Image - Premium Enhanced */}
+                        {/* After Image - AI Enhanced */}
                         <div className="text-center">
                           <h5 className="text-sm font-medium text-green-700 mb-3 flex items-center justify-center gap-1">
                             ✨ After - AI Enhanced
@@ -398,60 +398,50 @@ export default function Home() {
                           <div className="relative w-full aspect-video rounded-lg bg-gradient-to-br from-green-50 to-emerald-50 overflow-hidden border-2 border-green-500 shadow-lg shadow-green-200">
                             <img 
                               src={optimizationResult.thumbnailComparison.after} 
-                              alt="Premium AI-Enhanced thumbnail with dramatic visual improvements" 
+                              alt="AI-Enhanced thumbnail" 
                               className="absolute inset-0 w-full h-full object-contain object-center filter drop-shadow-sm"
                               data-testid="after-thumbnail"
                             />
-                            {/* Premium Enhancement Overlay Badge */}
-                            <div className="absolute top-2 right-2 bg-green-500 text-white text-xs px-2 py-1 rounded-full font-bold shadow-md">
-                              ENHANCED
-                            </div>
                           </div>
-                          <div className="mt-3 space-y-1">
-                            <p className="text-xs text-green-600 font-bold flex items-center justify-center gap-1">
-                              🎯 Premium AI Enhancement Applied
-                            </p>
-                            <p className="text-xs text-green-500 font-medium">
-                              Ultra-vivid colors • Crystal clarity • Maximum visual impact
-                            </p>
+                          <div className="mt-3">
+                            <button
+                              onClick={() => {
+                                const link = document.createElement('a');
+                                link.href = optimizationResult.thumbnailComparison.after;
+                                link.download = 'enhanced-thumbnail.jpg';
+                                document.body.appendChild(link);
+                                link.click();
+                                document.body.removeChild(link);
+                              }}
+                              className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white font-medium rounded-lg transition-colors duration-200 flex items-center gap-2 mx-auto"
+                              data-testid="download-enhanced-thumbnail"
+                            >
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-4-4m4 4l4-4m-6 8h8a2 2 0 002-2V7a2 2 0 00-2-2H6a2 2 0 00-2 2v11a2 2 0 002 2z" />
+                              </svg>
+                              Download Enhanced
+                            </button>
                           </div>
                         </div>
                       </div>
                       
-                      {/* Premium Enhancement Metrics */}
+                      {/* Enhancement Metrics */}
                       {optimizationResult.thumbnailComparison.enhancementMetrics && (
-                        <div className="mt-6 p-5 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl border-2 border-green-200 shadow-lg">
-                          <h4 className="text-sm font-bold text-green-800 mb-4 flex items-center justify-center gap-2">
-                            <span>🚀</span>
-                            Premium AI Enhancement Metrics
-                          </h4>
-                          <div className="grid grid-cols-3 gap-6 text-center">
-                            <div className="bg-white rounded-lg p-3 shadow-sm border border-green-100">
-                              <div className="text-2xl font-black text-green-600 mb-1">
-                                +{optimizationResult.thumbnailComparison.enhancementMetrics.contrast}%
-                              </div>
-                              <div className="text-xs font-semibold text-green-700">CONTRAST</div>
-                              <div className="text-xs text-green-500 mt-1">Eye-popping impact</div>
+                        <div className="mt-4 bg-gray-50 rounded-lg p-4">
+                          <h6 className="text-sm font-medium text-gray-900 mb-2">Applied Enhancements:</h6>
+                          <div className="grid grid-cols-3 gap-4 text-center">
+                            <div>
+                              <span className="text-lg font-bold text-green-600">+{optimizationResult.thumbnailComparison.enhancementMetrics.contrast}%</span>
+                              <p className="text-xs text-gray-700">Contrast</p>
                             </div>
-                            <div className="bg-white rounded-lg p-3 shadow-sm border border-green-100">
-                              <div className="text-2xl font-black text-green-600 mb-1">
-                                +{optimizationResult.thumbnailComparison.enhancementMetrics.saturation}%
-                              </div>
-                              <div className="text-xs font-semibold text-green-700">SATURATION</div>
-                              <div className="text-xs text-green-500 mt-1">Ultra-vivid colors</div>
+                            <div>
+                              <span className="text-lg font-bold text-green-600">+{optimizationResult.thumbnailComparison.enhancementMetrics.saturation}%</span>
+                              <p className="text-xs text-gray-700">Saturation</p>
                             </div>
-                            <div className="bg-white rounded-lg p-3 shadow-sm border border-green-100">
-                              <div className="text-2xl font-black text-green-600 mb-1">
-                                +{optimizationResult.thumbnailComparison.enhancementMetrics.clarity}%
-                              </div>
-                              <div className="text-xs font-semibold text-green-700">CLARITY</div>
-                              <div className="text-xs text-green-500 mt-1">Crystal sharpness</div>
+                            <div>
+                              <span className="text-lg font-bold text-green-600">+{optimizationResult.thumbnailComparison.enhancementMetrics.clarity}%</span>
+                              <p className="text-xs text-gray-700">Clarity</p>
                             </div>
-                          </div>
-                          <div className="mt-4 text-center">
-                            <p className="text-xs font-bold text-green-700 bg-green-100 inline-block px-3 py-1 rounded-full">
-                              ⚡ Maximum Visual Appeal Algorithm Applied
-                            </p>
                           </div>
                         </div>
                       )}
