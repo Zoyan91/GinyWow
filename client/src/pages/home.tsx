@@ -190,7 +190,7 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-blue-50 via-white to-blue-50 py-20 pb-12">
+      <section className="bg-background py-16 pb-8">
         <div className="container mx-auto px-6 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -235,17 +235,12 @@ export default function Home() {
           data-testid="optimizer-tool"
         >
           {/* Header */}
-          <div className="text-center mb-10">
-            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white px-6 py-2 rounded-full text-sm font-semibold mb-4">
-              <span>🚀</span>
-              AI Enhancement Tool
-            </div>
-            <h2 className="text-3xl font-bold text-gray-900 mb-3">
+          <div className="text-center mb-8">
+            <h1 className="text-2xl font-semibold text-gray-900 mb-2">
               YouTube Thumbnail & Title Optimizer
-            </h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Upload your thumbnail and enter your title to get professional AI enhancement 
-              that preserves your original design while making it more eye-catching.
+            </h1>
+            <p className="text-gray-600">
+              Upload your thumbnail and enter your title to get optimization suggestions.
             </p>
           </div>
 
