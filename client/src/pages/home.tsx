@@ -390,12 +390,8 @@ export default function Home() {
                   {optimizationResult.thumbnailComparison && (
                     <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 border border-gray-200 shadow-xl">
                       <div className="text-center mb-8">
-                        <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-green-500 text-white px-4 py-2 rounded-full text-sm font-semibold mb-3">
-                          <span>✨</span>
-                          AI Enhancement Results
-                        </div>
                         <h4 className="text-2xl font-bold text-gray-900 mb-2">Thumbnail Comparison</h4>
-                        <p className="text-gray-600">See the professional enhancement applied to your thumbnail</p>
+                        <p className="text-gray-600">See the enhancement applied to your thumbnail</p>
                       </div>
                       
                       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -417,8 +413,8 @@ export default function Home() {
 
                         {/* After Image - AI Enhanced */}
                         <div className="text-center">
-                          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white px-4 py-2 rounded-full text-sm font-semibold mb-4">
-                            ✨ AI Enhanced
+                          <div className="inline-flex items-center gap-2 bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-sm font-medium mb-4">
+                            📸 Enhanced
                           </div>
                           <div className="relative w-full aspect-video rounded-xl bg-gradient-to-br from-green-50 to-emerald-50 overflow-hidden border-2 border-green-500 shadow-xl shadow-green-500/20">
                             <img 
@@ -427,15 +423,8 @@ export default function Home() {
                               className="absolute inset-0 w-full h-full object-contain object-center filter drop-shadow-lg"
                               data-testid="after-thumbnail"
                             />
-                            {/* Enhancement Quality Badge */}
-                            <div className="absolute top-3 right-3 bg-green-500 text-white text-xs px-3 py-1 rounded-full font-bold shadow-lg">
-                              ENHANCED
-                            </div>
                           </div>
                           <div className="mt-4 space-y-3">
-                            <p className="text-sm text-green-600 font-semibold">
-                              🎯 Professional Quality Enhancement Applied
-                            </p>
                             <button
                               onClick={() => {
                                 const link = document.createElement('a');
@@ -445,13 +434,13 @@ export default function Home() {
                                 link.click();
                                 document.body.removeChild(link);
                               }}
-                              className="px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-semibold rounded-xl transition-all duration-200 flex items-center gap-3 mx-auto shadow-lg hover:shadow-xl transform hover:scale-105"
+                              className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white font-medium rounded-lg transition-all duration-200 flex items-center gap-2 mx-auto"
                               data-testid="download-enhanced-thumbnail"
                             >
-                              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-4-4m4 4l4-4m-6 8h8a2 2 0 002-2V7a2 2 0 00-2-2H6a2 2 0 00-2 2v11a2 2 0 002 2z" />
                               </svg>
-                              Download Enhanced Thumbnail
+                              Download
                             </button>
                           </div>
                         </div>
