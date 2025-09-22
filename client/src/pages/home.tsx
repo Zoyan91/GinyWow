@@ -87,9 +87,9 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200">
+      <header className="bg-background border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
@@ -171,7 +171,7 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <section className="bg-white py-16 pb-8">
+      <section className="bg-background py-16 pb-8">
         <div className="container mx-auto px-6 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -190,7 +190,7 @@ export default function Home() {
       </section>
 
       {/* Main Content */}
-      <main className="bg-white container mx-auto px-6 py-0 max-w-2xl">
+      <main className="bg-background container mx-auto px-6 py-0 max-w-2xl">
         
         {/* YouTube Thumbnail & Title Optimizer Tool */}
         <motion.div 
