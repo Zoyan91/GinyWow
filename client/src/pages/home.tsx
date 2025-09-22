@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,6 +9,7 @@ import type { Thumbnail, TitleOptimization } from "@shared/schema";
 export default function Home() {
   const [title, setTitle] = useState("");
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(null);
   const [isDragOver, setIsDragOver] = useState(false);
   const [uploadError, setUploadError] = useState("");
   const [isOptimizing, setIsOptimizing] = useState(false);
@@ -31,6 +32,14 @@ export default function Home() {
       return;
     }
     
+    // Clean up previous preview URL
+    if (thumbnailPreview) {
+      URL.revokeObjectURL(thumbnailPreview);
+    }
+    
+    // Create new preview URL
+    const previewUrl = URL.createObjectURL(file);
+    setThumbnailPreview(previewUrl);
     setUploadedFile(file);
   };
 
@@ -85,6 +94,15 @@ export default function Home() {
       setIsOptimizing(false);
     }
   };
+
+  // Cleanup preview URL on component unmount
+  useEffect(() => {
+    return () => {
+      if (thumbnailPreview) {
+        URL.revokeObjectURL(thumbnailPreview);
+      }
+    };
+  }, [thumbnailPreview]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -264,6 +282,28 @@ export default function Home() {
               </div>
             </div>
           </div>
+
+          {/* Thumbnail Preview Section */}
+          {thumbnailPreview && (
+            <div className="mb-6">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Thumbnail Preview
+              </label>
+              <div className="border border-gray-200 rounded-lg p-4 bg-gray-50">
+                <div className="flex justify-center">
+                  <img 
+                    src={thumbnailPreview} 
+                    alt="Thumbnail preview" 
+                    className="max-w-full max-h-60 rounded-lg shadow-sm object-contain"
+                    data-testid="thumbnail-preview"
+                  />
+                </div>
+                <p className="text-center text-sm text-gray-600 mt-2">
+                  {uploadedFile?.name} ({uploadedFile?.size ? (uploadedFile.size / 1024 / 1024).toFixed(2) : '0'} MB)
+                </p>
+              </div>
+            </div>
+          )}
 
           {/* YouTube Title Section */}
           <div className="mb-6">
