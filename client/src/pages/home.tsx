@@ -278,6 +278,102 @@ export default function Home() {
           </div>
         </motion.div>
 
+        {/* About Section */}
+        <div className="mt-12 bg-gray-50 rounded-lg p-8">
+          <div className="mb-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              What is YouTube Thumbnail & Title Optimizer?
+            </h2>
+            <p className="text-gray-600 leading-relaxed">
+              Our YouTube Thumbnail & Title Optimizer is a powerful, free tool designed to help content creators maximize their video's click-through rate (CTR) and overall engagement. By analyzing your thumbnail and title combination, our tool provides data-driven suggestions to improve visibility, attract more viewers, and boost your YouTube channel's performance.
+            </p>
+          </div>
+
+          <div className="mb-6">
+            <h3 className="text-xl font-bold text-gray-900 mb-6">
+              Why Use Our Optimizer?
+            </h3>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* Feature 1 */}
+            <div className="flex items-start gap-4">
+              <div className="flex-shrink-0">
+                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                  </svg>
+                </div>
+              </div>
+              <div>
+                <h4 className="font-semibold text-gray-900 mb-2">
+                  Increase Click-Through-Rate (CTR)
+                </h4>
+                <p className="text-gray-600 text-sm">
+                  Optimize your thumbnails and titles to attract more clicks and improve your video's performance in YouTube's algorithm.
+                </p>
+              </div>
+            </div>
+
+            {/* Feature 2 */}
+            <div className="flex items-start gap-4">
+              <div className="flex-shrink-0">
+                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                  <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                  </svg>
+                </div>
+              </div>
+              <div>
+                <h4 className="font-semibold text-gray-900 mb-2">
+                  AI-based Title Suggestions
+                </h4>
+                <p className="text-gray-600 text-sm">
+                  Get intelligent recommendations for title improvements based on successful YouTube content patterns and trending keywords.
+                </p>
+              </div>
+            </div>
+
+            {/* Feature 3 */}
+            <div className="flex items-start gap-4">
+              <div className="flex-shrink-0">
+                <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                  <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                </div>
+              </div>
+              <div>
+                <h4 className="font-semibold text-gray-900 mb-2">
+                  Thumbnail Preview for Better Design
+                </h4>
+                <p className="text-gray-600 text-sm">
+                  Visualize how your thumbnail will appear across different devices and screen sizes before publishing your video.
+                </p>
+              </div>
+            </div>
+
+            {/* Feature 4 */}
+            <div className="flex items-start gap-4">
+              <div className="flex-shrink-0">
+                <div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
+                  <svg className="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+                  </svg>
+                </div>
+              </div>
+              <div>
+                <h4 className="font-semibold text-gray-900 mb-2">
+                  Free & Easy to Use
+                </h4>
+                <p className="text-gray-600 text-sm">
+                  No registration required. Simply upload your thumbnail, enter your title, and get instant optimization suggestions at no cost.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </main>
 
       {/* Footer */}
