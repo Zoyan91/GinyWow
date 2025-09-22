@@ -185,35 +185,12 @@ export default function Home() {
             <p className="text-gray-600 text-lg mb-8 max-w-2xl mx-auto">
               Optimize your YouTube thumbnails and titles for better clicks, views, and engagement.
             </p>
-            
-            {/* Search Bar */}
-            <motion.div 
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="max-w-md mx-auto flex gap-2 bg-gray-50 p-2 rounded-lg border border-gray-200"
-            >
-              <input
-                type="text"
-                placeholder="Search tools..."
-                className="flex-1 px-4 py-3 bg-transparent focus:outline-none text-gray-700 placeholder-gray-500"
-                data-testid="hero-search-input"
-              />
-              <Button 
-                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition-colors"
-                data-testid="hero-search-btn"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-              </Button>
-            </motion.div>
           </motion.div>
         </div>
       </section>
 
       {/* Main Content */}
-      <main className="container mx-auto px-6 py-12 max-w-2xl">
+      <main className="container mx-auto px-6 py-4 max-w-2xl">
         
         {/* YouTube Thumbnail & Title Optimizer Tool */}
         <motion.div 
