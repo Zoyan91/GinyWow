@@ -245,13 +245,13 @@ export default function Home() {
               }}
             />
             <div 
-              className={`border-2 border-dashed rounded-lg ${thumbnailPreview ? 'p-0' : 'p-8'} text-center transition-colors ${
+              className={`border-2 border-dashed rounded-lg p-4 text-center transition-colors ${
                 isDragOver 
                   ? 'border-blue-400 bg-blue-50' 
                   : uploadError 
                   ? 'border-red-300 bg-red-50' 
                   : thumbnailPreview
-                  ? 'border-green-300'
+                  ? 'border-green-300 bg-green-50'
                   : 'border-gray-300 hover:border-gray-400'
               }`}
               data-testid="thumbnail-upload-area"
@@ -263,7 +263,7 @@ export default function Home() {
                 <img 
                   src={thumbnailPreview} 
                   alt="Thumbnail preview" 
-                  className="w-full h-full object-cover rounded-lg"
+                  className="w-48 h-32 object-cover rounded-lg mx-auto"
                   data-testid="thumbnail-preview"
                 />
               ) : (
