@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,6 +12,7 @@ export default function Home() {
   const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(null);
   const [isDragOver, setIsDragOver] = useState(false);
   const [uploadError, setUploadError] = useState("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [isOptimizing, setIsOptimizing] = useState(false);
   const [optimizationResult, setOptimizationResult] = useState<any>(null);
 
@@ -234,6 +235,7 @@ export default function Home() {
               Thumbnail
             </label>
             <input 
+              ref={fileInputRef}
               type="file" 
               accept="image/jpeg,image/png,image/webp" 
               className="hidden" 
@@ -260,12 +262,14 @@ export default function Home() {
               onDrop={handleDrop}
             >
               {thumbnailPreview ? (
-                <img 
-                  src={thumbnailPreview} 
-                  alt="Thumbnail preview" 
-                  className="w-full h-48 object-cover rounded-lg"
-                  data-testid="thumbnail-preview"
-                />
+                <div className="relative w-full aspect-video rounded-md bg-white overflow-hidden">
+                  <img 
+                    src={thumbnailPreview} 
+                    alt="Thumbnail preview" 
+                    className="absolute inset-0 w-full h-full object-contain object-center"
+                    data-testid="thumbnail-preview"
+                  />
+                </div>
               ) : (
                 <div className="flex flex-col items-center">
                   <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mb-4">
@@ -282,7 +286,7 @@ export default function Home() {
                   <Button 
                     className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg flex items-center gap-2 transition-colors"
                     data-testid="upload-thumbnail-btn"
-                    onClick={() => document.getElementById('thumbnail-upload')?.click()}
+                    onClick={() => fileInputRef.current?.click()}
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
@@ -299,7 +303,7 @@ export default function Home() {
                 <Button 
                   className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg flex items-center gap-2 transition-colors mx-auto"
                   data-testid="change-thumbnail-btn"
-                  onClick={() => document.getElementById('thumbnail-upload')?.click()}
+                  onClick={() => fileInputRef.current?.click()}
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
