@@ -266,7 +266,7 @@ export default function Home() {
                 <img 
                   src={thumbnailPreview} 
                   alt="Thumbnail preview" 
-                  className="w-full h-48 object-cover cursor-pointer rounded-lg"
+                  className="w-full max-h-64 object-contain cursor-pointer rounded-lg"
                   data-testid="thumbnail-preview"
                   onClick={() => document.getElementById('thumbnail-upload')?.click()}
                 />
