@@ -4,15 +4,53 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Search, ChevronDown } from "lucide-react";
-import ImageUpload from "@/components/image-upload";
-import ThumbnailComparison from "@/components/thumbnail-comparison";
-import TitleOptimizer from "@/components/title-optimizer";
-import AnalyticsDashboard from "@/components/analytics-dashboard";
 import type { Thumbnail, TitleOptimization } from "@shared/schema";
 
 export default function Home() {
-  const [currentThumbnail, setCurrentThumbnail] = useState<Thumbnail | null>(null);
-  const [currentOptimization, setCurrentOptimization] = useState<TitleOptimization | null>(null);
+  const [title, setTitle] = useState("");
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [isDragOver, setIsDragOver] = useState(false);
+  const [uploadError, setUploadError] = useState("");
+
+  const handleFileUpload = (file: File) => {
+    setUploadError("");
+    
+    // Validate file type
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+    if (!allowedTypes.includes(file.type)) {
+      setUploadError("Please upload a JPG, PNG, or WebP image.");
+      return;
+    }
+    
+    // Validate file size (5MB)
+    const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+    if (file.size > maxSize) {
+      setUploadError("File size must be less than 5MB.");
+      return;
+    }
+    
+    setUploadedFile(file);
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragOver(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragOver(false);
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragOver(false);
+    
+    const files = e.dataTransfer.files;
+    if (files && files[0]) {
+      handleFileUpload(files[0]);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -99,95 +137,115 @@ export default function Home() {
       </header>
 
       {/* Main Content */}
-      <main className="container mx-auto px-6 py-12 max-w-6xl">
+      <main className="container mx-auto px-6 py-12 max-w-2xl">
         
-        {/* Hero Section */}
+        {/* YouTube Thumbnail & Title Optimizer Tool */}
         <motion.div 
-          className="text-center mb-16 py-16"
+          className="bg-white rounded-lg shadow-lg p-8 border border-gray-200"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
+          data-testid="optimizer-tool"
         >
-          <h2 className="text-5xl md:text-6xl font-bold mb-6 leading-tight text-gray-900">
-            Free Tools to Make{" "}
-            <span className="text-blue-600">
-              Content Creation
-            </span>
-            {" "}Simple
-          </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-12 leading-relaxed">
-            Optimize your YouTube thumbnails and titles for better clicks, views, and engagement.
-          </p>
-          
-          {/* Search Bar */}
-          <div className="max-w-md mx-auto mb-12">
-            <div className="relative">
-              <Input
-                type="text"
-                placeholder="Search tools..."
-                className="w-full pl-12 pr-16 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm"
-                data-testid="hero-search"
-              />
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+          {/* Header */}
+          <div className="text-center mb-8">
+            <h1 className="text-2xl font-semibold text-gray-900 mb-2">
+              YouTube Thumbnail & Title Optimizer
+            </h1>
+            <p className="text-gray-600">
+              Upload your thumbnail and enter your title to get optimization suggestions.
+            </p>
+          </div>
+
+          {/* Thumbnail Upload Section */}
+          <div className="mb-8">
+            <label className="sr-only">
+              Thumbnail
+            </label>
+            <input 
+              type="file" 
+              accept="image/jpeg,image/png,image/webp" 
+              className="hidden" 
+              id="thumbnail-upload" 
+              onChange={(e) => {
+                if (e.target.files && e.target.files[0]) {
+                  handleFileUpload(e.target.files[0]);
+                }
+              }}
+            />
+            <div 
+              className={`border-2 border-dashed rounded-lg p-12 text-center transition-colors cursor-pointer ${
+                isDragOver 
+                  ? 'border-blue-400 bg-blue-50' 
+                  : uploadError 
+                  ? 'border-red-300 bg-red-50' 
+                  : 'border-gray-300 hover:border-gray-400'
+              }`}
+              data-testid="thumbnail-upload-area"
+              onClick={() => document.getElementById('thumbnail-upload')?.click()}
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+            >
+              <div className="flex flex-col items-center">
+                <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mb-4">
+                  <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <p className={`mb-2 ${
+                  uploadError ? 'text-red-600' : uploadedFile ? 'text-green-600' : 'text-gray-600'
+                }`}>
+                  {uploadError || (uploadedFile ? uploadedFile.name : "Drop your thumbnail here or click to browse")}
+                </p>
+                <p className="text-sm text-gray-500">Supports: JPG, PNG, WebP (Max 5MB)</p>
+              </div>
+            </div>
+            <div className="mt-4">
               <Button 
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
-                data-testid="hero-search-button"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md"
+                data-testid="upload-thumbnail-btn"
+                onClick={() => document.getElementById('thumbnail-upload')?.click()}
               >
-                Search
+                Upload Thumbnail
               </Button>
             </div>
           </div>
-        </motion.div>
 
-        {/* Upload Section */}
-        <motion.div 
-          className="mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
-          <ImageUpload onThumbnailUploaded={setCurrentThumbnail} />
-        </motion.div>
-
-        {/* Thumbnail Comparison Section */}
-        {currentThumbnail && (
-          <motion.div 
-            className="mb-16"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <ThumbnailComparison thumbnail={currentThumbnail} />
-          </motion.div>
-        )}
-
-        {/* Title Optimization Section */}
-        <motion.div 
-          className="mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-        >
-          <TitleOptimizer 
-            thumbnailId={currentThumbnail?.id} 
-            onOptimizationComplete={setCurrentOptimization}
-          />
-        </motion.div>
-
-        {/* Analytics Dashboard */}
-        {(currentThumbnail || currentOptimization) && (
-          <motion.div 
-            className="mb-16"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-          >
-            <AnalyticsDashboard 
-              thumbnail={currentThumbnail} 
-              optimization={currentOptimization} 
+          {/* YouTube Title Section */}
+          <div className="mb-8">
+            <label className="sr-only">
+              YouTube Title
+            </label>
+            <Input 
+              type="text"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="Enter your YouTube title here..."
+              maxLength={100}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              data-testid="youtube-title-input"
             />
-          </motion.div>
-        )}
+            <div className="flex justify-between items-center mt-2">
+              <span className="text-sm text-gray-500" data-testid="character-count">{title.length}/100 characters</span>
+            </div>
+          </div>
+
+          {/* Optimize Button */}
+          <div className="text-center">
+            <Button 
+              className={`px-8 py-3 rounded-md font-medium ${
+                uploadedFile && title.trim() 
+                  ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+              }`}
+              disabled={!uploadedFile || !title.trim()}
+              data-testid="optimize-now-btn"
+            >
+              Optimize Now
+            </Button>
+          </div>
+        </motion.div>
 
       </main>
 
