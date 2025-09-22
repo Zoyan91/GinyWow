@@ -84,18 +84,18 @@ export async function analyzeThumbnail(base64Image: string): Promise<ThumbnailAn
 function getMockThumbnailAnalysis(): ThumbnailAnalysis {
   return {
     enhancementSuggestions: {
-      contrast: Math.min(40, 35), // Clamped for safety
-      saturation: Math.min(30, 28), // Clamped for safety  
-      clarity: Math.min(40, 40) // Clamped for safety
+      contrast: 8,    // Subtle professional contrast boost
+      saturation: 6,  // Natural color enhancement
+      clarity: 9      // Gentle HD clarity improvement
     },
-    ctrImprovement: 85,
-    description: "🚀 VIRAL-READY ENHANCEMENT: Your thumbnail will be transformed into a premium, click-magnet visual that commands attention. Professional 5X enhancement applied while preserving your original design completely.",
+    ctrImprovement: 25,
+    description: "Professional studio-quality enhancement applied. Your thumbnail now has improved clarity, natural color balance, and refined details while maintaining complete originality.",
     recommendations: [
-      "✨ Ultra Clarity & Detail: Sharpened fine textures for crisp, HD look",
-      "🎨 Vivid Colors: Boosted saturation for instant visual pop on YouTube", 
-      "💡 Cinematic Lighting: Added professional highlights and depth",
-      "🎯 Focus Enhancement: Emphasized key elements to guide viewer's eye",
-      "🏆 Premium Polish: Studio-quality refinements for viral appeal"
+      "Gentle contrast boost for better definition without altering tone",
+      "Natural color enhancement for improved vividness", 
+      "Subtle clarity improvement for HD professional look",
+      "Refined details and smooth edges for premium appearance",
+      "Studio-quality polish while preserving original design"
     ]
   };
 }
@@ -211,53 +211,45 @@ export async function enhanceThumbnailImage(base64Image: string, enhancements: {
     // Convert base64 to buffer
     const imageBuffer = Buffer.from(base64Image, 'base64');
     
-    // 🚀 VIRAL-QUALITY 5X ENHANCEMENT: Premium professional transformation
+    // Enforce safety clamps: Maximum 10% enhancement regardless of input
+    const clampedContrast = Math.min(enhancements.contrast, 10);
+    const clampedSaturation = Math.min(enhancements.saturation, 10); 
+    const clampedClarity = Math.min(enhancements.clarity, 10);
+    
+    // Professional Studio Enhancement: Subtle, natural improvements
     const enhancedBuffer = await sharp.default(imageBuffer)
-      // Pass 1: Cinematic Lighting & Brightness Magic
+      // Step 1: Gentle brightness and natural color refinement
       .modulate({
-        brightness: 1.18, // Professional brightness boost for HD look
-        saturation: 1 + (enhancements.saturation / 60), // Vivid color enhancement
+        brightness: 1 + (clampedContrast / 200), // Very subtle brightness (max 5%)
+        saturation: 1 + (clampedSaturation / 200), // Natural color enhancement (max 5%)
       })
       
-      // Pass 2: Ultra Contrast & Depth Enhancement
+      // Step 2: Subtle contrast enhancement for depth
       .linear(
-        1 + (enhancements.contrast / 60), // Strong contrast for 3D premium feel
-        -(enhancements.contrast / 8) // Balanced offset for natural depth
+        1 + (clampedContrast / 150), // Gentle contrast boost (max 7%)
+        -(clampedContrast / 20) // Minimal offset for natural look
       )
-      .gamma(1.12) // Enhanced gamma for cinematic mid-tones
+      .gamma(1 + (clampedClarity / 200)) // Very gentle gamma adjustment
       
-      // Pass 3: Ultra Clarity & Detail Sharpening
+      // Step 3: Professional clarity enhancement
       .sharpen({
-        sigma: 0.8 + (enhancements.clarity / 50), // Professional detail enhancement
-        m1: 0.5, // Strong edge detection for crisp textures
-        m2: 3.0  // Fine detail amplification
+        sigma: 0.5 + (clampedClarity / 150), // Gentle detail enhancement
+        m1: 0.2, // Soft edge detection
+        m2: 1.0  // Subtle detail amplification
       })
       
-      // Pass 4: Premium Focus & Edge Enhancement
-      .sharpen({
-        sigma: 0.4, // Ultra-fine detail sharpening
-        m1: 0.3,   // Micro-texture enhancement
-        m2: 2.0    // Edge definition boost
-      })
-      
-      // Pass 5: Vivid Color & Vibrancy Boost
-      .modulate({
-        brightness: 1.06, // Final brightness polish
-        saturation: 1.12  // Viral-ready color pop
-      })
-      
-      // Pass 6: Professional Quality Output
+      // Step 4: Final polish with premium quality
       .jpeg({ 
-        quality: 98,        // Maximum quality for premium output
-        mozjpeg: true,     // Advanced compression
-        progressive: true,  // Optimized loading
-        optimiseScans: true // Enhanced efficiency
+        quality: 95,        // High quality without over-compression
+        mozjpeg: true,     // Optimized compression
+        progressive: true,  // Better loading
+        optimizeScans: true // Efficiency optimization (fixed spelling)
       })
       .toBuffer();
     
     // Convert back to base64
     const enhancedBase64 = enhancedBuffer.toString('base64');
-    console.log("🚀 VIRAL-QUALITY ENHANCEMENT APPLIED: 5X premium transformation with cinematic lighting, ultra clarity, and viral-ready appeal!");
+    console.log("Professional studio enhancement applied: subtle improvements for natural, click-worthy appeal while preserving original design.");
     return enhancedBase64;
     
   } catch (error) {
