@@ -371,23 +371,15 @@ export default function Home() {
                     <h3 className="text-lg font-semibold text-gray-900 mb-2">Optimization Results</h3>
                   </div>
 
-                  {/* Before/After Thumbnail Comparison - Enhanced Visibility */}
+                  {/* Before/After Thumbnail Comparison */}
                   {optimizationResult.thumbnailComparison && (
-                    <div className="bg-white rounded-xl p-8 border-2 border-blue-200 shadow-xl">
-                      <div className="text-center mb-8">
-                        <h4 className="text-2xl font-bold text-gray-900 mb-2">✨ Thumbnail Enhancement Results</h4>
-                        <p className="text-gray-600">See the dramatic improvement in your thumbnail</p>
-                      </div>
-                      
-                      {/* Large Comparison Grid */}
-                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                    <div className="bg-white rounded-lg p-6 border border-gray-200">
+                      <h4 className="text-md font-medium text-gray-900 mb-4 text-center">Thumbnail Enhancement</h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {/* Before Image */}
                         <div className="text-center">
-                          <div className="mb-4">
-                            <h5 className="text-lg font-bold text-gray-700 mb-2">📸 BEFORE</h5>
-                            <p className="text-sm text-gray-500">Original uploaded thumbnail</p>
-                          </div>
-                          <div className="relative w-full aspect-video rounded-xl bg-gray-100 overflow-hidden border-2 border-gray-300 shadow-lg">
+                          <h5 className="text-sm font-medium text-gray-700 mb-3">Before</h5>
+                          <div className="relative w-full aspect-video rounded-md bg-gray-100 overflow-hidden border">
                             <img 
                               src={optimizationResult.thumbnailComparison.before} 
                               alt="Original thumbnail" 
@@ -395,29 +387,23 @@ export default function Home() {
                               data-testid="before-thumbnail"
                             />
                           </div>
+                          <p className="text-xs text-gray-500 mt-2">Original uploaded thumbnail</p>
                         </div>
 
-                        {/* After Image - Enhanced */}
+                        {/* After Image - AI Enhanced */}
                         <div className="text-center">
-                          <div className="mb-4">
-                            <h5 className="text-lg font-bold text-green-700 mb-2 flex items-center justify-center gap-2">
-                              ⚡ AFTER - AI ENHANCED
-                            </h5>
-                            <p className="text-sm text-green-600 font-semibold">Subtly enhanced for maximum appeal</p>
-                          </div>
-                          <div className="relative w-full aspect-video rounded-xl bg-gradient-to-br from-green-100 to-emerald-100 overflow-hidden border-4 border-green-500 shadow-2xl">
+                          <h5 className="text-sm font-medium text-green-700 mb-3 flex items-center justify-center gap-1">
+                            ✨ After - AI Enhanced
+                          </h5>
+                          <div className="relative w-full aspect-video rounded-lg bg-gradient-to-br from-green-50 to-emerald-50 overflow-hidden border-2 border-green-500 shadow-lg shadow-green-200">
                             <img 
                               src={optimizationResult.thumbnailComparison.after} 
                               alt="AI-Enhanced thumbnail" 
-                              className="absolute inset-0 w-full h-full object-contain object-center filter drop-shadow-lg"
+                              className="absolute inset-0 w-full h-full object-contain object-center filter drop-shadow-sm"
                               data-testid="after-thumbnail"
                             />
-                            {/* Enhancement Badge */}
-                            <div className="absolute top-3 left-3 bg-green-500 text-white text-xs px-3 py-1 rounded-full font-bold shadow-lg animate-pulse">
-                              ENHANCED
-                            </div>
                           </div>
-                          <div className="mt-4">
+                          <div className="mt-3">
                             <button
                               onClick={() => {
                                 const link = document.createElement('a');
@@ -427,48 +413,34 @@ export default function Home() {
                                 link.click();
                                 document.body.removeChild(link);
                               }}
-                              className="px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-bold rounded-xl transition-all duration-200 flex items-center gap-2 mx-auto shadow-lg hover:shadow-xl transform hover:scale-105"
+                              className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white font-medium rounded-lg transition-colors duration-200 flex items-center gap-2 mx-auto"
                               data-testid="download-enhanced-thumbnail"
                             >
-                              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-4-4m4 4l4-4m-6 8h8a2 2 0 002-2V7a2 2 0 00-2-2H6a2 2 0 00-2 2v11a2 2 0 002 2z" />
                               </svg>
-                              Download Enhanced Thumbnail
+                              Download Enhanced
                             </button>
                           </div>
                         </div>
                       </div>
                       
-                      {/* Enhancement Metrics - Prominent Display */}
+                      {/* Enhancement Metrics */}
                       {optimizationResult.thumbnailComparison.enhancementMetrics && (
-                        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 border-2 border-blue-200 shadow-lg">
-                          <div className="text-center mb-6">
-                            <h6 className="text-xl font-bold text-blue-900 mb-2 flex items-center justify-center gap-2">
-                              🎯 Applied Enhancements
-                            </h6>
-                            <p className="text-blue-700">Subtle improvements that make a big difference</p>
-                          </div>
-                          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-                            <div className="bg-white rounded-xl p-6 shadow-lg border border-blue-100 transform hover:scale-105 transition-transform">
-                              <div className="text-3xl font-black text-blue-600 mb-2">
-                                +{optimizationResult.thumbnailComparison.enhancementMetrics.contrast}%
-                              </div>
-                              <div className="text-sm font-bold text-blue-700 uppercase tracking-wide">CONTRAST</div>
-                              <div className="text-xs text-blue-500 mt-1">Better definition</div>
+                        <div className="mt-4 bg-gray-50 rounded-lg p-4">
+                          <h6 className="text-sm font-medium text-gray-900 mb-2">Applied Enhancements:</h6>
+                          <div className="grid grid-cols-3 gap-4 text-center">
+                            <div>
+                              <span className="text-lg font-bold text-green-600">+{optimizationResult.thumbnailComparison.enhancementMetrics.contrast}%</span>
+                              <p className="text-xs text-gray-700">Contrast</p>
                             </div>
-                            <div className="bg-white rounded-xl p-6 shadow-lg border border-blue-100 transform hover:scale-105 transition-transform">
-                              <div className="text-3xl font-black text-blue-600 mb-2">
-                                +{optimizationResult.thumbnailComparison.enhancementMetrics.saturation}%
-                              </div>
-                              <div className="text-sm font-bold text-blue-700 uppercase tracking-wide">SATURATION</div>
-                              <div className="text-xs text-blue-500 mt-1">Vibrant colors</div>
+                            <div>
+                              <span className="text-lg font-bold text-green-600">+{optimizationResult.thumbnailComparison.enhancementMetrics.saturation}%</span>
+                              <p className="text-xs text-gray-700">Saturation</p>
                             </div>
-                            <div className="bg-white rounded-xl p-6 shadow-lg border border-blue-100 transform hover:scale-105 transition-transform">
-                              <div className="text-3xl font-black text-blue-600 mb-2">
-                                +{optimizationResult.thumbnailComparison.enhancementMetrics.clarity}%
-                              </div>
-                              <div className="text-sm font-bold text-blue-700 uppercase tracking-wide">CLARITY</div>
-                              <div className="text-xs text-blue-500 mt-1">Crystal clear</div>
+                            <div>
+                              <span className="text-lg font-bold text-green-600">+{optimizationResult.thumbnailComparison.enhancementMetrics.clarity}%</span>
+                              <p className="text-xs text-gray-700">Clarity</p>
                             </div>
                           </div>
                         </div>
