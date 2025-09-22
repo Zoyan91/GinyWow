@@ -245,7 +245,7 @@ export default function Home() {
               }}
             />
             <div 
-              className={`border-2 border-dashed rounded-lg ${thumbnailPreview ? 'p-0' : 'p-8'} text-center transition-colors ${
+              className={`border-2 border-dashed rounded-lg ${thumbnailPreview ? 'p-2' : 'p-8'} text-center transition-colors ${
                 isDragOver 
                   ? 'border-blue-400 bg-blue-50' 
                   : uploadError 
@@ -263,7 +263,7 @@ export default function Home() {
                 <img 
                   src={thumbnailPreview} 
                   alt="Thumbnail preview" 
-                  className="w-full h-full object-cover rounded-lg"
+                  className="w-full h-48 object-cover rounded-lg"
                   data-testid="thumbnail-preview"
                 />
               ) : (
