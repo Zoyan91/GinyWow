@@ -485,27 +485,90 @@ export default function Home() {
 
       </main>
 
+      {/* Newsletter Section */}
+      <section className="bg-gray-100 py-16 mt-16">
+        <div className="container mx-auto px-6 text-center">
+          <div className="mb-4">
+            <span className="bg-orange-500 text-white px-4 py-2 rounded-full text-sm font-medium">
+              Newsletter
+            </span>
+          </div>
+          <h2 className="text-3xl font-bold text-gray-900 mb-8">
+            Subscribe for Our Latest Update
+          </h2>
+          <div className="max-w-md mx-auto flex gap-2 mb-4">
+            <input
+              type="email"
+              placeholder="Enter your email"
+              className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+              data-testid="newsletter-email-input"
+            />
+            <Button 
+              className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-medium"
+              data-testid="subscribe-now-btn"
+            >
+              Subscribe Now
+            </Button>
+          </div>
+          <p className="text-gray-500 text-sm">
+            We respect your privacy. Unsubscribe at any time.
+          </p>
+        </div>
+      </section>
+
       {/* Footer */}
-      <footer className="bg-gray-50 border-t border-gray-100 py-12 mt-16">
+      <footer className="bg-white border-t border-gray-100 py-12">
         <div className="container mx-auto px-6">
-          <div className="text-center">
-            <div className="flex items-center justify-center space-x-3 mb-4">
-              <span className="text-xl font-bold text-gray-900">GinyWow</span>
-            </div>
-            <p className="text-gray-600 mb-6 max-w-md mx-auto">
-              We offer PDF, video, image and other online tools to make your life easier
-            </p>
-            <div className="flex justify-center space-x-6 text-sm text-gray-500">
-              <a href="#" className="hover:text-gray-900 transition-colors">Privacy Policy</a>
-              <a href="#" className="hover:text-gray-900 transition-colors">Terms of Service</a>
-              <a href="#" className="hover:text-gray-900 transition-colors">Support</a>
-              <a href="#" className="hover:text-gray-900 transition-colors">API</a>
-            </div>
-            <div className="mt-6 pt-6 border-t border-gray-200">
-              <p className="text-sm text-gray-500">
-                © 2024 GinyWow. All rights reserved. • Built with ❤️ for making business simple
+          <div className="grid md:grid-cols-4 gap-8">
+            <div>
+              <h3 className="font-bold text-gray-900 mb-4">GinyWow</h3>
+              <p className="text-gray-600 text-sm mb-4">
+                Free tools to make content creation simple and efficient for creators worldwide.
+              </p>
+              <p className="text-gray-500 text-sm italic">
+                We'll keep coming soon!
               </p>
             </div>
+            
+            <div>
+              <h4 className="font-semibold text-gray-900 mb-4">PDF Tools</h4>
+              <ul className="space-y-2 text-sm text-gray-600">
+                <li><a href="#" className="hover:text-gray-900">PDF Converter</a></li>
+                <li><a href="#" className="hover:text-gray-900">PDF Merger</a></li>
+                <li><a href="#" className="hover:text-gray-900">PDF Splitter</a></li>
+                <li><a href="#" className="hover:text-gray-900">PDF Compressor</a></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="font-semibold text-gray-900 mb-4">Write</h4>
+              <ul className="space-y-2 text-sm text-gray-600">
+                <li><a href="#" className="hover:text-gray-900">Essay Writer</a></li>
+                <li><a href="#" className="hover:text-gray-900">Paragraph Writer</a></li>
+                <li><a href="#" className="hover:text-gray-900">Article Writer</a></li>
+                <li><a href="#" className="hover:text-gray-900">Grammar Fixer</a></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="font-semibold text-gray-900 mb-4">Image Converter</h4>
+              <ul className="space-y-2 text-sm text-gray-600">
+                <li><a href="#" className="hover:text-gray-900">JPG to PNG</a></li>
+                <li><a href="#" className="hover:text-gray-900">PNG to JPG</a></li>
+                <li><a href="#" className="hover:text-gray-900">WebP to JPG</a></li>
+                <li><a href="#" className="hover:text-gray-900">GIF to PNG</a></li>
+              </ul>
+            </div>
+          </div>
+          
+          <div className="border-t border-gray-200 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+            <div className="flex space-x-6 mb-4 md:mb-0">
+              <a href="#" className="text-sm text-gray-600 hover:text-gray-900">About</a>
+              <a href="#" className="text-sm text-gray-600 hover:text-gray-900">Contact</a>
+              <a href="#" className="text-sm text-gray-600 hover:text-gray-900">Privacy Policy</a>
+              <a href="#" className="text-sm text-gray-600 hover:text-gray-900">Terms of Service</a>
+            </div>
+            <p className="text-sm text-gray-600">© 2024 GinyWow.com. All rights reserved.</p>
           </div>
         </div>
       </footer>
