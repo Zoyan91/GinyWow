@@ -178,7 +178,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="text-4xl md:text-6xl font-medium text-gray-900 mb-4">
+            <h1 className="text-3xl md:text-5xl font-normal text-gray-900 mb-4 leading-tight">
               Free Tools to Make{' '}
               <span className="text-blue-600">Content Creation</span> Simple
             </h1>
