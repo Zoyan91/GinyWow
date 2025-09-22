@@ -84,17 +84,17 @@ export async function analyzeThumbnail(base64Image: string): Promise<ThumbnailAn
 function getMockThumbnailAnalysis(): ThumbnailAnalysis {
   return {
     enhancementSuggestions: {
-      contrast: 35,
-      saturation: 25,
-      clarity: 40
+      contrast: 28,
+      saturation: 22,
+      clarity: 32
     },
-    ctrImprovement: 45,
-    description: "Your thumbnail will be dramatically enhanced with vibrant colors, sharp details, and maximum visual impact to dominate YouTube feeds.",
+    ctrImprovement: 38,
+    description: "Your thumbnail will be professionally enhanced with refined clarity, vibrant colors, and polished depth for superior YouTube performance.",
     recommendations: [
-      "Dramatically boost contrast for eye-popping visual impact",
-      "Enhance saturation for ultra-vivid, attention-grabbing colors", 
-      "Apply premium clarity enhancement for razor-sharp details",
-      "Optimize color grading for maximum click appeal"
+      "Enhance contrast and brightness to highlight key elements",
+      "Boost color saturation for better visibility in YouTube feeds", 
+      "Apply professional sharpening for crystal-clear details",
+      "Add subtle depth and polish for a modern, premium appearance"
     ]
   };
 }
@@ -204,39 +204,56 @@ function getMockTitleSuggestions(originalTitle: string): TitleSuggestion[] {
 
 export async function enhanceThumbnailImage(base64Image: string, enhancements: { contrast: number; saturation: number; clarity: number }): Promise<string> {
   try {
-    const sharp = require('sharp');
+    // Dynamic import for Sharp in ES modules
+    const sharp = await import('sharp');
     
     // Convert base64 to buffer
     const imageBuffer = Buffer.from(base64Image, 'base64');
     
-    // Apply dramatic enhancements for maximum eye-catching appeal
-    const enhancedBuffer = await sharp(imageBuffer)
-      // First pass: Color and brightness enhancement
+    // Professional multi-pass enhancement for maximum visual appeal
+    const enhancedBuffer = await sharp.default(imageBuffer)
+      // Pass 1: Advanced color enhancement and brightness optimization
       .modulate({
-        brightness: 1.15, // Significant brightness boost for vibrant look
-        saturation: 1 + (enhancements.saturation / 100), // Enhanced saturation for vivid colors
-        hue: 5 // Slight hue shift for more appealing colors
+        brightness: 1.12, // Optimized brightness for better visibility
+        saturation: 1 + (enhancements.saturation / 100), // Enhanced saturation for vibrant colors
+        hue: 3 // Subtle hue adjustment for more appealing color palette
       })
-      // Second pass: Contrast enhancement with gamma correction
-      .linear(1 + (enhancements.contrast / 100), -(enhancements.contrast / 4)) // Enhanced contrast with offset
-      .gamma(1.1) // Gamma correction for better mid-tones
-      // Third pass: Premium sharpening for crystal clarity
+      
+      // Pass 2: Sophisticated contrast and gamma correction
+      .linear(
+        1 + (enhancements.contrast / 100), // Contrast enhancement
+        -(enhancements.contrast / 6) // Refined offset for better balance
+      )
+      .gamma(1.08) // Optimized gamma for professional mid-tone enhancement
+      
+      // Pass 3: Professional edge enhancement and clarity
       .sharpen({
-        sigma: enhancements.clarity > 30 ? 1.5 : 1.2, // Aggressive sharpening for eye-catching details
-        flat: 0.8,
-        jagged: 0.9
+        sigma: 1.0 + (enhancements.clarity / 50) // Adaptive sharpening for professional clarity
       })
-      // Fourth pass: Color grading for cinematic appeal
+      
+      // Pass 4: Additional refinement for premium clarity
+      .normalise() // Normalize luminance for better contrast distribution
+      
+      // Pass 5: Professional color grading and depth enhancement
       .modulate({
-        brightness: 1.02, // Final brightness touch-up
-        saturation: 1.05 // Extra saturation punch
+        brightness: 1.03, // Final brightness polish
+        saturation: 1.08 // Enhanced saturation for YouTube feed visibility
       })
-      .jpeg({ quality: 98, mozjpeg: true }) // Premium quality output
+      
+      // Pass 6: Subtle shadow/highlight adjustment for depth
+      .linear(1.05, -2) // Micro-contrast for subtle depth
+      
+      .jpeg({ 
+        quality: 96, 
+        mozjpeg: true,
+        progressive: true,
+        optimiseScans: true
+      }) // Optimized professional quality output
       .toBuffer();
     
     // Convert back to base64
     const enhancedBase64 = enhancedBuffer.toString('base64');
-    console.log("Premium eye-catching enhancement applied successfully with dramatic visual improvements");
+    console.log("Professional multi-pass enhancement applied: refined clarity, vibrant colors, enhanced depth");
     return enhancedBase64;
     
   } catch (error) {
