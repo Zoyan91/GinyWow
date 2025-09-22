@@ -179,11 +179,10 @@ export default function Home() {
             transition={{ duration: 0.6 }}
           >
             <h1 className="text-3xl md:text-5xl font-medium text-gray-900 mb-4 leading-tight">
-              Free Tools to Make{' '}
-              <span className="text-blue-600">Content Creation</span> Simple
+              Enhance Your YouTube Thumbnails & Titles in Seconds
             </h1>
             <p className="text-gray-600 text-lg mb-8 max-w-2xl mx-auto">
-              Enhance Your YouTube Thumbnails & Titles in Seconds
+              Optimize your YouTube thumbnails and titles for better clicks, views, and engagement.
             </p>
           </motion.div>
         </div>
