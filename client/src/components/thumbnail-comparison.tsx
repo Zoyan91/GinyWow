@@ -97,38 +97,6 @@ export default function ThumbnailComparison({ thumbnail }: ThumbnailComparisonPr
           </div>
         </div>
 
-        {/* Enhancement Details */}
-        <div className="grid md:grid-cols-3 gap-4 mb-6">
-          <motion.div 
-            className="bg-muted rounded-lg p-4 text-center"
-            whileHover={{ y: -2 }}
-            data-testid="contrast-metric"
-          >
-            <i className="fas fa-adjust text-primary text-2xl mb-2"></i>
-            <h5 className="font-medium mb-1">Contrast</h5>
-            <p className="text-sm text-muted-foreground">+{metrics.contrast}% Enhanced</p>
-          </motion.div>
-          
-          <motion.div 
-            className="bg-muted rounded-lg p-4 text-center"
-            whileHover={{ y: -2 }}
-            data-testid="saturation-metric"
-          >
-            <i className="fas fa-palette text-primary text-2xl mb-2"></i>
-            <h5 className="font-medium mb-1">Saturation</h5>
-            <p className="text-sm text-muted-foreground">+{metrics.saturation}% Boosted</p>
-          </motion.div>
-          
-          <motion.div 
-            className="bg-muted rounded-lg p-4 text-center"
-            whileHover={{ y: -2 }}
-            data-testid="clarity-metric"
-          >
-            <i className="fas fa-eye text-primary text-2xl mb-2"></i>
-            <h5 className="font-medium mb-1">Clarity</h5>
-            <p className="text-sm text-muted-foreground">+{metrics.clarity}% Sharper</p>
-          </motion.div>
-        </div>
 
         <div className="flex justify-center">
           <Button 
