@@ -189,19 +189,19 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="bg-background py-8 pb-4">
+      {/* Content Section */}
+      <section className="bg-background py-6">
         <div className="container mx-auto px-6 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight">
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3 leading-tight">
               Enhance Your YouTube Thumbnails<br/>
               & Titles in Seconds
             </h1>
-            <p className="text-gray-700 text-xl mb-8 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-gray-700 text-base mb-0 max-w-2xl mx-auto leading-relaxed">
               Professional AI enhancement that improves every detail while preserving your original design. 
               Make your thumbnails more eye-catching and boost your CTR instantly.
             </p>
