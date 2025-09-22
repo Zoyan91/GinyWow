@@ -250,6 +250,8 @@ export default function Home() {
                   ? 'border-blue-400 bg-blue-50' 
                   : uploadError 
                   ? 'border-red-300 bg-red-50' 
+                  : thumbnailPreview
+                  ? 'border-green-300 bg-green-50'
                   : 'border-gray-300 hover:border-gray-400'
               }`}
               data-testid="thumbnail-upload-area"
@@ -257,53 +259,62 @@ export default function Home() {
               onDragLeave={handleDragLeave}
               onDrop={handleDrop}
             >
-              <div className="flex flex-col items-center">
-                <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mb-4">
-                  <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
+              {thumbnailPreview ? (
+                <div className="flex flex-col items-center space-y-4">
+                  <div className="relative">
+                    <img 
+                      src={thumbnailPreview} 
+                      alt="Thumbnail preview" 
+                      className="max-w-full max-h-40 rounded-lg shadow-sm object-contain"
+                      data-testid="thumbnail-preview"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <p className="text-green-600 font-medium">
+                      {uploadedFile?.name}
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      {uploadedFile?.size ? (uploadedFile.size / 1024 / 1024).toFixed(2) : '0'} MB
+                    </p>
+                  </div>
+                  <Button 
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg flex items-center gap-2 transition-colors"
+                    data-testid="change-thumbnail-btn"
+                    onClick={() => document.getElementById('thumbnail-upload')?.click()}
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                    Change Thumbnail
+                  </Button>
                 </div>
-                <p className={`mb-2 ${
-                  uploadError ? 'text-red-600' : uploadedFile ? 'text-green-600' : 'text-gray-600'
-                }`}>
-                  {uploadError || (uploadedFile ? uploadedFile.name : "Drop your thumbnail here or click to browse")}
-                </p>
-                <p className="text-sm text-gray-500 mb-4">Supports: JPG, PNG, WebP (Max 5MB)</p>
-                <Button 
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg flex items-center gap-2 transition-colors"
-                  data-testid="upload-thumbnail-btn"
-                  onClick={() => document.getElementById('thumbnail-upload')?.click()}
-                >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                  </svg>
-                  Upload Thumbnail
-                </Button>
-              </div>
+              ) : (
+                <div className="flex flex-col items-center">
+                  <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mb-4">
+                    <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <p className={`mb-2 ${
+                    uploadError ? 'text-red-600' : 'text-gray-600'
+                  }`}>
+                    {uploadError || "Drop your thumbnail here or click to browse"}
+                  </p>
+                  <p className="text-sm text-gray-500 mb-4">Supports: JPG, PNG, WebP (Max 5MB)</p>
+                  <Button 
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg flex items-center gap-2 transition-colors"
+                    data-testid="upload-thumbnail-btn"
+                    onClick={() => document.getElementById('thumbnail-upload')?.click()}
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                    </svg>
+                    Upload Thumbnail
+                  </Button>
+                </div>
+              )}
             </div>
           </div>
-
-          {/* Thumbnail Preview Section */}
-          {thumbnailPreview && (
-            <div className="mb-6">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Thumbnail Preview
-              </label>
-              <div className="border border-gray-200 rounded-lg p-4 bg-gray-50">
-                <div className="flex justify-center">
-                  <img 
-                    src={thumbnailPreview} 
-                    alt="Thumbnail preview" 
-                    className="max-w-full max-h-60 rounded-lg shadow-sm object-contain"
-                    data-testid="thumbnail-preview"
-                  />
-                </div>
-                <p className="text-center text-sm text-gray-600 mt-2">
-                  {uploadedFile?.name} ({uploadedFile?.size ? (uploadedFile.size / 1024 / 1024).toFixed(2) : '0'} MB)
-                </p>
-              </div>
-            </div>
-          )}
 
           {/* YouTube Title Section */}
           <div className="mb-6">
