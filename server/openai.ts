@@ -69,7 +69,7 @@ export async function analyzeThumbnail(base64Image: string): Promise<ThumbnailAn
         },
       ],
       response_format: { type: "json_object" },
-      max_completion_tokens: 1000,
+      max_tokens: 1000,
     });
 
     const result = JSON.parse(response.choices[0].message.content || "{}");
@@ -109,7 +109,7 @@ export async function optimizeTitles(originalTitle: string, thumbnailContext?: s
     }
 
     const contextPrompt = thumbnailContext 
-      ? `Consider this thumbnail context: ${thumbnailContext}\n\n`
+      ? `Thumbnail context: ${thumbnailContext}\n\n`
       : "";
 
     const response = await openai.chat.completions.create({
@@ -117,16 +117,24 @@ export async function optimizeTitles(originalTitle: string, thumbnailContext?: s
       messages: [
         {
           role: "system",
-          content: `You are a YouTube SEO and title optimization expert. Generate 5 highly optimized, click-worthy YouTube titles based on the original title provided.
+          content: `You are a professional YouTube SEO & Title Expert. When a user provides a YouTube video title, generate **EXACTLY 5 new title suggestions**.
 
-          ${contextPrompt}Focus on:
-          - High CTR potential with emotional triggers
-          - SEO optimization with trending keywords
-          - Optimal character length (50-70 characters)
-          - Clear value proposition
-          - Current year relevance (2024)
+          ### CRITICAL RULES:
+
+          1. **Language Detection:** Automatically detect the language of the original title.
+             * All 5 suggestions MUST be generated in the **same language** as the original title.
           
-          Respond with JSON in this exact format:
+          2. **Human-Friendly & Natural:** Suggestions must sound 100% natural, like a real human YouTuber wrote them — not robotic or AI-generated.
+          
+          3. **Highly Clickable:** Use emotional triggers, curiosity, or urgency to make titles irresistible to click.
+          
+          4. **SEO Optimized:** Include relevant keywords naturally without keyword stuffing.
+          
+          5. **Stay True to Original:** Do NOT change the video topic or mislead. Only improve readability, appeal, and click-worthiness.
+          
+          6. **Length:** Keep each title under **70 characters** for better YouTube performance.
+
+          ${contextPrompt}Respond with JSON in this exact format:
           {
             "titles": [
               {
@@ -142,15 +150,18 @@ export async function optimizeTitles(originalTitle: string, thumbnailContext?: s
         },
         {
           role: "user",
-          content: `Original title: "${originalTitle}"\n\nGenerate 5 optimized alternatives ranked by potential performance.`
+          content: `Original title: "${originalTitle}"\n\nGenerate exactly 5 powerful, human-friendly, and clickable titles that work in the same language as the original.`
         },
       ],
       response_format: { type: "json_object" },
-      max_completion_tokens: 2000,
+      max_tokens: 2500,
     });
 
     const result = JSON.parse(response.choices[0].message.content || "{}");
-    return result.titles || [];
+    const titles = result.titles || [];
+    
+    // Post-validation: ensure exactly 5 titles, each under 70 characters
+    return validateAndFixTitleSuggestions(titles, originalTitle);
   } catch (error) {
     console.error("Error optimizing titles:", error);
     console.log("Falling back to mock title suggestions");
@@ -158,49 +169,68 @@ export async function optimizeTitles(originalTitle: string, thumbnailContext?: s
   }
 }
 
+// Helper function to validate and fix title suggestions
+function validateAndFixTitleSuggestions(titles: TitleSuggestion[], originalTitle: string): TitleSuggestion[] {
+  // Ensure we have valid title suggestions array
+  if (!Array.isArray(titles)) {
+    return getMockTitleSuggestions(originalTitle);
+  }
+
+  // Process titles to ensure they meet requirements
+  const processedTitles = titles
+    .filter(t => t && typeof t === 'object' && t.title) // Remove invalid entries
+    .map(suggestion => ({
+      ...suggestion,
+      // Ensure title is strictly under 70 characters (≤69) - smart truncation preserving words
+      title: suggestion.title.length >= 70 
+        ? suggestion.title.substring(0, 66).replace(/\s+\S*$/, '') + '...'
+        : suggestion.title,
+      // Ensure valid scores
+      score: Math.min(10, Math.max(1, suggestion.score || 7)),
+      estimatedCtr: Math.min(100, Math.max(0, suggestion.estimatedCtr || 25)),
+      seoScore: Math.min(10, Math.max(1, suggestion.seoScore || 7)),
+      tags: Array.isArray(suggestion.tags) ? suggestion.tags : [],
+      reasoning: suggestion.reasoning || "Optimized for better click-through rate"
+    }))
+    .slice(0, 5); // Take only first 5
+
+  // If we don't have exactly 5 valid titles, fill with mock suggestions
+  if (processedTitles.length < 5) {
+    const mockSuggestions = getMockTitleSuggestions(originalTitle);
+    const needed = 5 - processedTitles.length;
+    processedTitles.push(...mockSuggestions.slice(0, needed));
+  }
+
+  return processedTitles.slice(0, 5); // Ensure exactly 5
+}
+
 function getMockTitleSuggestions(originalTitle: string): TitleSuggestion[] {
-  return [
-    {
-      title: `🚀 AMAZING: ${originalTitle} (You Won't Believe This!)`,
-      score: 9,
-      estimatedCtr: 35,
-      seoScore: 8,
-      tags: ["viral", "amazing", "trending", "youtube"],
-      reasoning: "Uses emotional trigger words and promises surprise value to increase click-through rates"
-    },
-    {
-      title: `${originalTitle} - The ULTIMATE Guide (2024)`,
-      score: 8,
-      estimatedCtr: 28,
-      seoScore: 9,
-      tags: ["guide", "tutorial", "2024", "ultimate"],
-      reasoning: "Appeals to viewers seeking comprehensive information with current year relevance"
-    },
-    {
-      title: `Why ${originalTitle} is Going VIRAL Right Now!`,
-      score: 8,
-      estimatedCtr: 32,
-      seoScore: 7,
-      tags: ["viral", "trending", "popular", "now"],
-      reasoning: "Creates urgency and taps into FOMO (fear of missing out) psychology"
-    },
-    {
-      title: `The SECRET Behind ${originalTitle} (Finally Revealed)`,
-      score: 7,
-      estimatedCtr: 29,
-      seoScore: 6,
-      tags: ["secret", "revealed", "behind", "exclusive"],
-      reasoning: "Promises exclusive knowledge and insider information"
-    },
-    {
-      title: `${originalTitle}: From Zero to Hero in 30 Days`,
-      score: 7,
-      estimatedCtr: 26,
-      seoScore: 8,
-      tags: ["transformation", "success", "30days", "hero"],
-      reasoning: "Offers specific timeframe and transformation promise"
-    }
+  // Create truly language-agnostic mock suggestions using only symbols, numbers, punctuation
+  const maxBaseLength = 62; // Leave room for additions while staying under 70
+  const baseTitle = originalTitle.length > maxBaseLength ? originalTitle.substring(0, maxBaseLength-3) + "..." : originalTitle;
+  
+  // Generate 5 variations using only universal symbols/punctuation - no English words
+  const variations = [
+    `${baseTitle} (2025)`, // Year addition
+    `${baseTitle}!`, // Excitement punctuation
+    `${baseTitle} — 5️⃣`, // Em dash with number emoji
+    `[${baseTitle}]`, // Brackets for emphasis
+    `${baseTitle} ⭐` // Star emoji for attention
   ];
+
+  return variations.map((title, index) => {
+    // Ensure strictly under 70 characters (≤69)
+    const finalTitle = title.length >= 70 ? title.substring(0, 69) : title;
+    
+    return {
+      title: finalTitle,
+      score: 8 - (index * 0.2), // Decreasing scores
+      estimatedCtr: 30 - (index * 3), // Decreasing CTR estimates
+      seoScore: 8 - (index * 0.3),
+      tags: ["optimized", "enhanced", "improved", "2025"],
+      reasoning: `Language-neutral variation #${index + 1} using ${index === 0 ? 'year relevance' : index === 1 ? 'excitement punctuation' : index === 2 ? 'visual emphasis' : index === 3 ? 'bracket formatting' : 'attention symbol'}`
+    };
+  });
 }
 
 export async function enhanceThumbnailImage(base64Image: string, enhancements: { contrast: number; saturation: number; clarity: number }): Promise<string> {
