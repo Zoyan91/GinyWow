@@ -193,7 +193,7 @@ export default function Home() {
       </header>
 
       {/* Content Section */}
-      <section className="bg-background py-6">
+      <section className="bg-background py-12">
         <div className="container mx-auto px-6 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
