@@ -421,6 +421,21 @@ export default function Home() {
                             />
                           </div>
                           <div className="mt-4 space-y-3">
+                            {/* Enhancement Metrics */}
+                            {optimizationResult.thumbnailComparison.enhancementMetrics && (
+                              <div className="flex justify-center gap-3 mb-3">
+                                <span className="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded font-medium">
+                                  +{optimizationResult.thumbnailComparison.enhancementMetrics.contrast}% Contrast
+                                </span>
+                                <span className="text-xs bg-purple-100 text-purple-600 px-2 py-1 rounded font-medium">
+                                  +{optimizationResult.thumbnailComparison.enhancementMetrics.saturation}% Saturation
+                                </span>
+                                <span className="text-xs bg-green-100 text-green-600 px-2 py-1 rounded font-medium">
+                                  +{optimizationResult.thumbnailComparison.enhancementMetrics.clarity}% Clarity
+                                </span>
+                              </div>
+                            )}
+                            
                             <button
                               onClick={() => {
                                 const link = document.createElement('a');
@@ -442,32 +457,6 @@ export default function Home() {
                         </div>
                       </div>
                       
-                      {/* Professional Enhancement Metrics */}
-                      {optimizationResult.thumbnailComparison.enhancementMetrics && (
-                        <div className="mt-8 bg-white rounded-xl p-6 border border-gray-200 shadow-lg">
-                          <div className="text-center mb-6">
-                            <h5 className="text-lg font-bold text-gray-900 mb-2">Enhancement Breakdown</h5>
-                            <p className="text-gray-600 text-sm">Detailed improvements applied to your thumbnail</p>
-                          </div>
-                          <div className="grid grid-cols-3 gap-6">
-                            <div className="text-center bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-4 border border-blue-200">
-                              <div className="text-2xl font-black text-blue-600 mb-2">+{optimizationResult.thumbnailComparison.enhancementMetrics.contrast}%</div>
-                              <div className="text-sm font-semibold text-blue-800 mb-1">CONTRAST</div>
-                              <div className="text-xs text-blue-600">Better definition</div>
-                            </div>
-                            <div className="text-center bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-4 border border-purple-200">
-                              <div className="text-2xl font-black text-purple-600 mb-2">+{optimizationResult.thumbnailComparison.enhancementMetrics.saturation}%</div>
-                              <div className="text-sm font-semibold text-purple-800 mb-1">SATURATION</div>
-                              <div className="text-xs text-purple-600">Vibrant colors</div>
-                            </div>
-                            <div className="text-center bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-4 border border-green-200">
-                              <div className="text-2xl font-black text-green-600 mb-2">+{optimizationResult.thumbnailComparison.enhancementMetrics.clarity}%</div>
-                              <div className="text-sm font-semibold text-green-800 mb-1">CLARITY</div>
-                              <div className="text-xs text-green-600">Sharp details</div>
-                            </div>
-                          </div>
-                        </div>
-                      )}
                     </div>
                   )}
 
