@@ -434,6 +434,55 @@ export default function Home() {
           </div>
         </div>
 
+        {/* FAQ Section */}
+        <div className="mt-12 bg-white rounded-lg p-8 border border-gray-200">
+          <h2 className="text-2xl font-bold text-gray-900 mb-8">
+            Frequently Asked Questions
+          </h2>
+          
+          <div className="space-y-6">
+            {/* FAQ 1 */}
+            <div className="border-b border-gray-100 pb-6">
+              <h3 className="font-semibold text-gray-900 mb-3">
+                Is the YouTube Thumbnail & Title Optimizer really free?
+              </h3>
+              <p className="text-gray-600">
+                Yes, our optimizer is completely free to use. You can upload thumbnails, analyze titles, and receive optimization suggestions without any cost or registration requirements.
+              </p>
+            </div>
+
+            {/* FAQ 2 */}
+            <div className="border-b border-gray-100 pb-6">
+              <h3 className="font-semibold text-gray-900 mb-3">
+                What file formats do you support for thumbnails?
+              </h3>
+              <p className="text-gray-600">
+                We support JPG, PNG, and WebP image formats. The maximum file size is 5MB, which covers most YouTube thumbnail requirements.
+              </p>
+            </div>
+
+            {/* FAQ 3 */}
+            <div className="border-b border-gray-100 pb-6">
+              <h3 className="font-semibold text-gray-900 mb-3">
+                How does the AI-based title suggestion work?
+              </h3>
+              <p className="text-gray-600">
+                Our AI analyzes successful YouTube video patterns, trending keywords, and engagement metrics to provide data-driven suggestions for improving your titles and increasing click-through rates.
+              </p>
+            </div>
+
+            {/* FAQ 4 */}
+            <div>
+              <h3 className="font-semibold text-gray-900 mb-3">
+                Do you store my uploaded thumbnails or titles?
+              </h3>
+              <p className="text-gray-600">
+                No, we prioritize your privacy. Uploaded thumbnails and titles are processed in real-time and are not stored on our servers. Your content remains completely private and secure.
+              </p>
+            </div>
+          </div>
+        </div>
+
       </main>
 
       {/* Footer */}
