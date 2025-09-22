@@ -197,7 +197,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3 leading-tight">
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 leading-tight">
               Enhance Your YouTube Thumbnails<br/>
               & Titles in Seconds
             </h1>
