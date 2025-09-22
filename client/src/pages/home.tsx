@@ -374,6 +374,66 @@ export default function Home() {
           </div>
         </div>
 
+        {/* How to Use Section */}
+        <div className="mt-12 bg-gray-50 rounded-lg p-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-8">
+            How to Use the Tool?
+          </h2>
+          
+          <div className="space-y-6">
+            {/* Step 1 */}
+            <div className="flex items-start gap-4">
+              <div className="flex-shrink-0">
+                <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                  1
+                </div>
+              </div>
+              <div>
+                <h3 className="font-semibold text-gray-900 mb-2">
+                  Upload your thumbnail
+                </h3>
+                <p className="text-gray-600">
+                  Click the upload area or drag and drop your YouTube thumbnail image. We support JPG, PNG, and WebP formats up to 5MB.
+                </p>
+              </div>
+            </div>
+
+            {/* Step 2 */}
+            <div className="flex items-start gap-4">
+              <div className="flex-shrink-0">
+                <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                  2
+                </div>
+              </div>
+              <div>
+                <h3 className="font-semibold text-gray-900 mb-2">
+                  Enter your video title
+                </h3>
+                <p className="text-gray-600">
+                  Type your current or planned YouTube video title in the text field. Our tool will analyze it for optimization opportunities.
+                </p>
+              </div>
+            </div>
+
+            {/* Step 3 */}
+            <div className="flex items-start gap-4">
+              <div className="flex-shrink-0">
+                <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                  3
+                </div>
+              </div>
+              <div>
+                <h3 className="font-semibold text-gray-900 mb-2">
+                  Click Optimize Now and get results
+                </h3>
+                <p className="text-gray-600">
+                  Get instant feedback on your thumbnail and title combination with actionable suggestions to improve your video's performance.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </main>
 
       {/* Footer */}
