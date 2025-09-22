@@ -779,7 +779,9 @@ export default function Home() {
           <div className="grid md:grid-cols-4 gap-8">
             <div>
               <Link href="/">
-                <h3 className="font-bold text-gray-900 mb-4 cursor-pointer hover:opacity-80 transition-opacity">GinyWow</h3>
+                <h3 className="text-xl font-bold mb-4 cursor-pointer hover:opacity-80 transition-opacity">
+                  <span className="text-gray-900">Giny</span><span className="text-blue-600">Wow</span>
+                </h3>
               </Link>
               <p className="text-gray-600 text-sm mb-4">
                 Free tools to make content creation simple and efficient for creators worldwide.
