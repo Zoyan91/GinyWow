@@ -558,80 +558,7 @@ export default function AppOpener() {
       </div>
 
       {/* What is GinyWow App Opener Section */}
-      <section className="py-24 bg-white">
-        <div className="container mx-auto px-4 max-w-5xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center"
-          >
-            <div className="inline-flex items-center px-4 py-2 bg-blue-50 text-blue-700 text-sm font-medium rounded-full mb-8">
-              <span className="mr-2">🔗</span>
-              What is App Opener?
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8 leading-tight">
-              Turn Browser Links into App Links
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Convert your social media links to open directly in apps instead of browsers. 
-              Perfect for <span className="font-semibold text-gray-800">YouTubers</span>, <span className="font-semibold text-gray-800">influencers</span>, and <span className="font-semibold text-gray-800">businesses</span> 
-              who want more subscribers and better engagement.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Why Use Section */}
-      <section className="py-24 bg-gradient-to-b from-gray-50 to-white">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                Why Choose App Opener?
-              </h2>
-              <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                Get better results with direct app links
-              </p>
-            </div>
-            
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
-              <div className="group p-8 bg-white rounded-2xl border border-gray-100 hover:border-blue-200 hover:shadow-xl transition-all duration-300">
-                <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <Zap className="w-7 h-7 text-white" />
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">More Conversions</h3>
-                <p className="text-gray-600 leading-relaxed">Direct app access means higher engagement and more subscribers</p>
-              </div>
-              
-              <div className="group p-8 bg-white rounded-2xl border border-gray-100 hover:border-green-200 hover:shadow-xl transition-all duration-300">
-                <div className="w-14 h-14 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <CheckCircle className="w-7 h-7 text-white" />
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">Better Experience</h3>
-                <p className="text-gray-600 leading-relaxed">Skip browsers, open apps directly for seamless user journey</p>
-              </div>
-              
-              <div className="group p-8 bg-white rounded-2xl border border-gray-100 hover:border-purple-200 hover:shadow-xl transition-all duration-300 md:col-span-2 lg:col-span-1">
-                <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <Users className="w-7 h-7 text-white" />
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">Creator Ready</h3>
-                <p className="text-gray-600 leading-relaxed">Built for influencers, YouTubers, and content creators</p>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* How It Works Section */}
-      <section className="py-24 bg-white">
+      <section className="py-20 bg-white">
         <div className="container mx-auto px-4 max-w-4xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -639,43 +566,82 @@ export default function AppOpener() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                How It Works
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                What is GinyWow App Opener?
               </h2>
-              <p className="text-xl text-gray-600">
-                Simple 3-step process
-              </p>
             </div>
             
-            <div className="space-y-8">
-              <div className="flex items-center gap-6 p-6 rounded-2xl bg-gradient-to-r from-blue-50 to-transparent">
-                <div className="w-16 h-16 bg-blue-600 text-white rounded-2xl flex items-center justify-center text-2xl font-bold flex-shrink-0">
-                  1
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Paste Your YouTube URL</h3>
-                  <p className="text-gray-600 text-lg">Copy any YouTube link and paste it in the generator above</p>
+            <div className="prose prose-lg mx-auto text-gray-600">
+              <p className="text-lg leading-relaxed mb-6">
+                <strong>GinyWow App Opener</strong>, also known as Link Opener, YouTube Opener, Instagram Link Opener, and more, is a direct-to-app redirection tool that helps social media influencers, affiliate marketers, and businesses convert their social media visitors into <strong>YouTube subscribers</strong> and loyal followers.
+              </p>
+              
+              <p className="text-lg leading-relaxed mb-6">
+                The <strong>GinyWow App Opener link generator</strong> allows creators to generate custom links for social media profiles including <strong>YouTube, Facebook, Instagram, Twitter</strong>, and many others. Normally, when you share a YouTube channel link on Instagram or Facebook, it opens in a browser instead of the app, which creates a poor user experience.
+              </p>
+              
+              <p className="text-lg leading-relaxed">
+                To solve this problem, we created <strong>GinyWow App Opener</strong>. With this tool, any creator can redirect their users directly to the app from any social media profile link — ensuring higher engagement and better conversions.
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Why Use Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="container mx-auto px-4 max-w-4xl">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+                Why Use GinyWow App Opener?
+              </h2>
+            </div>
+            
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="bg-white p-8 rounded-xl shadow-sm">
+                <div className="flex items-start space-x-4">
+                  <div className="w-3 h-3 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-3">Better Conversions</h3>
+                    <p className="text-gray-600">Visitors directly land on the app, which means more followers, subscribers, and engagement.</p>
+                  </div>
                 </div>
               </div>
               
-              <div className="flex items-center gap-6 p-6 rounded-2xl bg-gradient-to-r from-green-50 to-transparent">
-                <div className="w-16 h-16 bg-green-600 text-white rounded-2xl flex items-center justify-center text-2xl font-bold flex-shrink-0">
-                  2
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Generate Smart Link</h3>
-                  <p className="text-gray-600 text-lg">Get a custom link that opens apps automatically</p>
+              <div className="bg-white p-8 rounded-xl shadow-sm">
+                <div className="flex items-start space-x-4">
+                  <div className="w-3 h-3 bg-green-600 rounded-full mt-2 flex-shrink-0"></div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-3">Improved User Experience</h3>
+                    <p className="text-gray-600">No unnecessary browser redirects, just smooth app opening.</p>
+                  </div>
                 </div>
               </div>
               
-              <div className="flex items-center gap-6 p-6 rounded-2xl bg-gradient-to-r from-purple-50 to-transparent">
-                <div className="w-16 h-16 bg-purple-600 text-white rounded-2xl flex items-center justify-center text-2xl font-bold flex-shrink-0">
-                  3
+              <div className="bg-white p-8 rounded-xl shadow-sm">
+                <div className="flex items-start space-x-4">
+                  <div className="w-3 h-3 bg-purple-600 rounded-full mt-2 flex-shrink-0"></div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-3">Creator-Friendly</h3>
+                    <p className="text-gray-600">Perfect for YouTubers, Instagram influencers, and digital marketers.</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Share & Get More Subscribers</h3>
-                  <p className="text-gray-600 text-lg">Use your smart link everywhere for better engagement</p>
+              </div>
+              
+              <div className="bg-white p-8 rounded-xl shadow-sm">
+                <div className="flex items-start space-x-4">
+                  <div className="w-3 h-3 bg-orange-600 rounded-full mt-2 flex-shrink-0"></div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-3">All-in-One Tool</h3>
+                    <p className="text-gray-600">Works for multiple apps like YouTube, Instagram, Twitter, Facebook, and more.</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -683,39 +649,133 @@ export default function AppOpener() {
         </div>
       </section>
 
-
-      {/* FAQ Section */}
-      <section className="py-24 bg-gray-50">
-        <div className="container mx-auto px-4 max-w-3xl">
+      {/* How It Works Section */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4 max-w-4xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                Common Questions
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+                How Does GinyWow App Opener Work?
               </h2>
-              <p className="text-xl text-gray-600">
-                Quick answers to help you get started
-              </p>
+              <p className="text-lg text-gray-600 mb-8">Using the tool is simple:</p>
             </div>
             
-            <div className="space-y-4">
-              <div className="bg-white rounded-2xl p-8 border border-gray-100">
-                <h3 className="text-xl font-bold text-gray-900 mb-3">Is it free?</h3>
-                <p className="text-gray-600 text-lg">Yes, completely free with unlimited links.</p>
+            <div className="space-y-6">
+              <div className="flex items-start space-x-4">
+                <div className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 mt-1">
+                  1
+                </div>
+                <div className="prose prose-lg">
+                  <p className="text-lg text-gray-600 m-0">Copy your profile or channel link.</p>
+                </div>
               </div>
               
-              <div className="bg-white rounded-2xl p-8 border border-gray-100">
-                <h3 className="text-xl font-bold text-gray-900 mb-3">Which apps work?</h3>
-                <p className="text-gray-600 text-lg">YouTube, Instagram, Facebook, Twitter and more coming soon.</p>
+              <div className="flex items-start space-x-4">
+                <div className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 mt-1">
+                  2
+                </div>
+                <div className="prose prose-lg">
+                  <p className="text-lg text-gray-600 m-0">Paste it into the <strong>GinyWow App Opener generator</strong>.</p>
+                </div>
               </div>
               
-              <div className="bg-white rounded-2xl p-8 border border-gray-100">
-                <h3 className="text-xl font-bold text-gray-900 mb-3">Need to sign up?</h3>
-                <p className="text-gray-600 text-lg">No registration required. Just paste, generate and share.</p>
+              <div className="flex items-start space-x-4">
+                <div className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 mt-1">
+                  3
+                </div>
+                <div className="prose prose-lg">
+                  <p className="text-lg text-gray-600 m-0">Get your customized app opener link.</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start space-x-4">
+                <div className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 mt-1">
+                  4
+                </div>
+                <div className="prose prose-lg">
+                  <p className="text-lg text-gray-600 m-0">Share it on your social media profiles.</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="mt-12 text-center">
+              <p className="text-lg text-gray-600">
+                Now, whenever someone clicks your link, instead of a browser, the app will open directly.
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+
+      {/* Benefits Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="container mx-auto px-4 max-w-4xl">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+                Benefits for Creators & Businesses
+              </h2>
+            </div>
+            
+            <div className="prose prose-lg mx-auto text-gray-600">
+              <p className="text-lg leading-relaxed">
+                With the <strong>GinyWow App Opener tool</strong>, you don't lose traffic due to browser redirects. It's easier for your audience to subscribe, follow, or interact with your content directly inside the app, which increases your growth and reach.
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4 max-w-4xl">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+                Frequently Asked Questions (FAQ)
+              </h2>
+            </div>
+            
+            <div className="space-y-8">
+              <div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">1. Is GinyWow App Opener free to use?</h3>
+                <p className="text-lg text-gray-600">Yes! <strong>GinyWow App Opener</strong> is completely free. You can generate unlimited app opener links without any hidden charges.</p>
+              </div>
+              
+              <div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">2. Which apps are supported by GinyWow App Opener?</h3>
+                <p className="text-lg text-gray-600">Currently, our tool supports popular apps like <strong>YouTube, Instagram, Facebook, and Twitter</strong>. We are working to add support for even more apps very soon.</p>
+              </div>
+              
+              <div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">3. Why should I use GinyWow App Opener instead of a normal link?</h3>
+                <p className="text-lg text-gray-600">A normal link usually opens in a browser, which lowers engagement. With <strong>GinyWow App Opener</strong>, your audience will directly land inside the app, making it easier for them to <strong>subscribe, follow, or engage</strong> with your content.</p>
+              </div>
+              
+              <div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">4. Do I need to sign up to use GinyWow App Opener?</h3>
+                <p className="text-lg text-gray-600">No sign-up is required. Just paste your link, generate the opener link, and share it anywhere. Simple and fast!</p>
+              </div>
+              
+              <div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3">5. Can businesses also use GinyWow App Opener?</h3>
+                <p className="text-lg text-gray-600">Absolutely! Whether you're a <strong>YouTuber, influencer, digital marketer, or business owner</strong>, this tool helps you drive better conversions and improve customer experience.</p>
               </div>
             </div>
           </motion.div>
