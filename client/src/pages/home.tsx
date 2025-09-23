@@ -978,25 +978,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Benefits Section */}
-        <section className="py-16 bg-blue-50" data-testid="benefits-section">
-          <div className="container mx-auto px-4 max-w-4xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <div className="text-center">
-                <div className="prose prose-lg mx-auto text-gray-700">
-                  <p className="text-lg leading-relaxed">
-                    With <strong>GinyWow YouTube Thumbnail & Title Optimizer</strong>, you don't waste time guessing what works. Instead, you get professional, engaging, and SEO-optimized suggestions that <strong>increase clicks, views, and subscribers</strong>. Perfect for creators who want to grow their channel faster and businesses looking to boost brand awareness on YouTube.
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </section>
 
         {/* How It Works Section */}
         <section className="py-20 bg-white" data-testid="how-it-works-section">
