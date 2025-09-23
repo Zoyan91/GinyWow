@@ -733,11 +733,12 @@ export default function Home() {
         >
           <div className="mb-8">
             <div className="text-center mb-6">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 px-2">
                 What is YouTube Thumbnail & Title Optimizer?
               </h2>
-              <p className="text-gray-600 leading-relaxed max-w-3xl mx-auto">
-                Our YouTube Thumbnail & Title Optimizer is a powerful, free tool designed to help content creators maximize their video's click-through rate (CTR) and overall engagement. By analyzing your thumbnail and title combination, our tool provides data-driven suggestions to improve visibility, attract more viewers, and boost your YouTube channel's performance.
+              <p className="text-gray-600 leading-relaxed max-w-3xl mx-auto text-sm sm:text-base px-4 sm:px-2">
+                <span className="block sm:inline">Our YouTube Thumbnail & Title Optimizer is a powerful, free tool designed to help content creators maximize their video's click-through rate (CTR) and overall engagement.</span>
+                <span className="block sm:inline mt-3 sm:mt-0"> By analyzing your thumbnail and title combination, our tool provides data-driven suggestions to improve visibility, attract more viewers, and boost your YouTube channel's performance.</span>
               </p>
             </div>
           </div>
