@@ -20,7 +20,7 @@ export default function Footer() {
             <h4 className="font-bold text-gray-900 mb-6 text-lg">Menus</h4>
             <ul className="space-y-3">
               <li>
-                <Link href="/app-opener">
+                <Link href="/">
                   <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm">
                     App Opener
                   </span>
