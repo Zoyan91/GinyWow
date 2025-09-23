@@ -247,7 +247,7 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             className="text-center"
           >
-            <h1 className="text-responsive-xl font-bold lg:font-normal text-gray-900 mb-4 sm:mb-6 leading-tight">
+            <h1 className="text-responsive-lg font-bold lg:font-normal text-gray-900 mb-4 sm:mb-6 leading-tight">
               App Opener Link Generator Link Directly<br />Open in YouTube App
             </h1>
             
