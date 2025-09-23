@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Search, ChevronDown } from "lucide-react";
+import { Search, ChevronDown, Menu, X } from "lucide-react";
 import { Link } from "wouter";
 import type { Thumbnail, TitleOptimization } from "@shared/schema";
 
@@ -22,6 +22,9 @@ export default function Home() {
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [isSubscribing, setIsSubscribing] = useState(false);
   const [subscriptionMessage, setSubscriptionMessage] = useState<{type: 'success' | 'error', text: string} | null>(null);
+  
+  // Mobile navigation state
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleFileUpload = (file: File) => {
     setUploadError("");
@@ -177,8 +180,8 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background relative">
-      {/* Header */}
-      <header className="bg-white/90 backdrop-blur-sm border-b border-gray-200 relative z-10">
+      {/* Header - Mobile Friendly */}
+      <header className="bg-white/95 backdrop-blur-sm border-b border-gray-200 relative z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
@@ -190,7 +193,7 @@ export default function Home() {
               </Link>
             </div>
             
-            {/* Main Navigation */}
+            {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
               <DropdownMenu>
                 <DropdownMenuTrigger className="flex items-center text-gray-600 hover:text-gray-900 transition-colors font-medium" data-testid="nav-pdf">
@@ -231,12 +234,10 @@ export default function Home() {
                   <DropdownMenuItem>Content Improver</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
-              
             </div>
             
-            {/* Search and Sign In */}
-            <div className="flex items-center space-x-4">
-              {/* Search */}
+            {/* Desktop Search and Sign In */}
+            <div className="hidden md:flex items-center space-x-4">
               <div className="relative hidden lg:block">
                 <Input
                   type="text"
@@ -247,7 +248,6 @@ export default function Home() {
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
               </div>
               
-              {/* Sign In */}
               <Button 
                 variant="outline" 
                 size="sm"
@@ -257,9 +257,124 @@ export default function Home() {
                 Sign In
               </Button>
             </div>
+
+            {/* Mobile Hamburger Menu Button */}
+            <div className="md:hidden">
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+                data-testid="mobile-menu-button"
+                aria-label="Toggle mobile menu"
+              >
+                {isMobileMenuOpen ? (
+                  <X className="w-6 h-6" />
+                ) : (
+                  <Menu className="w-6 h-6" />
+                )}
+              </button>
+            </div>
           </div>
         </div>
       </header>
+
+      {/* Mobile Sidebar Navigation */}
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 z-40 md:hidden">
+          {/* Backdrop */}
+          <div 
+            className="fixed inset-0 bg-black bg-opacity-50 transition-opacity"
+            onClick={() => setIsMobileMenuOpen(false)}
+          ></div>
+          
+          {/* Sidebar */}
+          <motion.nav
+            initial={{ x: '-100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '-100%' }}
+            transition={{ type: 'tween', duration: 0.3 }}
+            className="fixed top-0 left-0 bottom-0 w-80 max-w-[85vw] bg-white shadow-xl overflow-y-auto"
+          >
+            {/* Sidebar Header */}
+            <div className="flex items-center justify-between p-6 border-b border-gray-200">
+              <h2 className="text-xl font-bold text-gray-900">Categories</h2>
+              <button
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg"
+                data-testid="close-mobile-menu"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Navigation Items */}
+            <div className="p-6 space-y-6">
+              {/* PDF Tools */}
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-3" data-testid="mobile-nav-pdf">
+                  PDF Tools
+                </h3>
+                <div className="space-y-2 ml-4">
+                  <button className="block w-full text-left text-gray-600 hover:text-gray-900 py-2">Edit PDF</button>
+                  <button className="block w-full text-left text-gray-600 hover:text-gray-900 py-2">PDF to Word</button>
+                  <button className="block w-full text-left text-gray-600 hover:text-gray-900 py-2">Merge PDF</button>
+                  <button className="block w-full text-left text-gray-600 hover:text-gray-900 py-2">Split PDF</button>
+                </div>
+              </div>
+
+              {/* App Opener */}
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-3" data-testid="mobile-nav-app-opener">
+                  App Opener
+                </h3>
+                <div className="space-y-2 ml-4">
+                  <button className="block w-full text-left text-gray-600 hover:text-gray-900 py-2">Open App Files</button>
+                  <button className="block w-full text-left text-gray-600 hover:text-gray-900 py-2">Extract App Data</button>
+                </div>
+              </div>
+
+              {/* Image Tools */}
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-3" data-testid="mobile-nav-image-converter">
+                  Image Tools
+                </h3>
+                <div className="space-y-2 ml-4">
+                  <button className="block w-full text-left text-gray-600 hover:text-gray-900 py-2">Remove Background</button>
+                  <button className="block w-full text-left text-gray-600 hover:text-gray-900 py-2">Resize Image</button>
+                  <button className="block w-full text-left text-gray-600 hover:text-gray-900 py-2">Compress Image</button>
+                  <button className="block w-full text-left text-gray-600 hover:text-gray-900 py-2">Image to Text</button>
+                </div>
+              </div>
+
+              {/* Writing Tools */}
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-3" data-testid="mobile-nav-write">
+                  Writing Tools
+                </h3>
+                <div className="space-y-2 ml-4">
+                  <button className="block w-full text-left text-gray-600 hover:text-gray-900 py-2">Essay Writer</button>
+                  <button className="block w-full text-left text-gray-600 hover:text-gray-900 py-2">Paragraph Writer</button>
+                  <button className="block w-full text-left text-gray-600 hover:text-gray-900 py-2">Grammar Fixer</button>
+                  <button className="block w-full text-left text-gray-600 hover:text-gray-900 py-2">Content Improver</button>
+                </div>
+              </div>
+
+              {/* Mobile Search */}
+              <div className="pt-4 border-t border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-900 mb-3">Search</h3>
+                <div className="relative">
+                  <Input
+                    type="text"
+                    placeholder="Search tools..."
+                    className="pl-10 pr-4 py-3 w-full border-gray-300 focus:border-blue-500"
+                    data-testid="mobile-search-input"
+                  />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                </div>
+              </div>
+            </div>
+          </motion.nav>
+        </div>
+      )}
 
       {/* Content Section */}
       <section className="bg-background/50 backdrop-blur-sm py-12 relative z-10">
