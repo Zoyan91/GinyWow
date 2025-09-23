@@ -484,7 +484,7 @@ export default function AppOpener() {
             className="max-w-2xl mx-auto text-center"
           >
             {/* Title */}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-normal text-gray-900 mb-6 leading-tight tracking-tight">
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
               App Opener Link Generator Link Directly Open in YouTube App
             </h1>
             
