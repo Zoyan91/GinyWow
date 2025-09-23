@@ -563,15 +563,20 @@ export default function Home() {
             className="max-w-4xl mx-auto"
           >
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight px-2">
-              <span className="block sm:inline">YouTube Thumbnail & Title</span>
-              <span className="block sm:inline">&nbsp;Optimizer</span>
+              <span className="block sm:inline">Enhance Your YouTube Thumbnails</span>
+              <span className="block sm:inline">&nbsp;& Titles in Seconds</span>
             </h1>
             <p className="text-gray-700 text-sm sm:text-base md:text-lg mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed px-6 sm:px-4">
-              <span className="block mb-4 text-center">
-                <strong>GinyWow YouTube Thumbnail & Title Optimizer</strong> is a smart tool designed for creators who want to grow their YouTube channel faster. It helps YouTubers, digital marketers, and businesses create <strong>eye-catching thumbnails</strong> and <strong>click-worthy titles</strong> that attract more viewers and boost video performance.
+              {/* Mobile - Original Text */}
+              <span className="block sm:hidden">
+                <span className="block mb-3 text-center">Professional AI enhancement that improves every detail while preserving your original design.</span>
+                <span className="block text-center">Make your thumbnails more eye-catching and boost your CTR instantly.</span>
               </span>
-              <span className="block text-center">
-                Normally, creators struggle with low CTR (Click Through Rate) because their thumbnails don't stand out, or their titles aren't appealing enough. That's why we built this tool – to give every creator a simple way to make their videos more engaging and clickable.
+              
+              {/* Desktop - Original */}
+              <span className="hidden sm:block">
+                <span className="inline">Professional AI enhancement that improves every detail while preserving your original design.</span>
+                <span className="inline"> Make your thumbnails more eye-catching and boost your CTR instantly.</span>
               </span>
             </p>
           </motion.div>
@@ -875,6 +880,33 @@ export default function Home() {
           )}
         </motion.div>
 
+        {/* What is YouTube Thumbnail & Title Optimizer Section */}
+        <section className="py-20 bg-white">
+          <div className="container mx-auto px-4 max-w-4xl">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              <div className="text-center mb-12">
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                  YouTube Thumbnail & Title Optimizer
+                </h2>
+              </div>
+              
+              <div className="prose prose-lg mx-auto text-gray-600">
+                <p className="text-lg leading-relaxed mb-6">
+                  <strong>GinyWow YouTube Thumbnail & Title Optimizer</strong> is a smart tool designed for creators who want to grow their YouTube channel faster. It helps YouTubers, digital marketers, and businesses create <strong>eye-catching thumbnails</strong> and <strong>click-worthy titles</strong> that attract more viewers and boost video performance.
+                </p>
+                
+                <p className="text-lg leading-relaxed">
+                  Normally, creators struggle with low CTR (Click Through Rate) because their thumbnails don't stand out, or their titles aren't appealing enough. That's why we built this tool – to give every creator a simple way to make their videos more engaging and clickable.
+                </p>
+              </div>
+            </motion.div>
+          </div>
+        </section>
 
         {/* Why Use Section */}
         <section className="py-20 bg-gray-50">
