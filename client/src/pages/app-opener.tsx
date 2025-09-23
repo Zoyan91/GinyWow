@@ -270,7 +270,7 @@ export default function AppOpener() {
                 <Button
                   onClick={handleGenerate}
                   disabled={isGenerating}
-                  className={`btn-mobile w-full bg-gradient-to-r from-red-500 to-orange-400 hover:from-red-600 hover:to-orange-500 text-white shadow-lg ${
+                  className={`btn-mobile w-auto px-8 bg-gradient-to-r from-red-500 to-orange-400 hover:from-red-600 hover:to-orange-500 text-white shadow-lg ${
                     isGenerating ? 'opacity-70 cursor-not-allowed' : 'hover:scale-105'
                   }`}
                   data-testid="generate-button"
