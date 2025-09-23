@@ -191,6 +191,61 @@ export default function Home() {
     }
   };
 
+  const pasteFromClipboard = async () => {
+    console.log("Paste button clicked!");
+    try {
+      // Check if clipboard API is available
+      if (!navigator.clipboard) {
+        console.log("Clipboard API not available");
+        toast({
+          title: "Paste not supported",
+          description: "Clipboard API not available in this browser",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      // Check secure context
+      if (!window.isSecureContext) {
+        console.log("Not in secure context");
+        toast({
+          title: "Paste not supported", 
+          description: "Clipboard access requires HTTPS",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      console.log("Attempting to read clipboard...");
+      const text = await navigator.clipboard.readText();
+      console.log("Clipboard content:", text);
+      
+      if (text && text.trim()) {
+        console.log("Setting URL:", text.trim());
+        setYoutubeUrl(text.trim());
+        toast({
+          title: "Pasted!",
+          description: "Link pasted from clipboard",
+        });
+      } else {
+        console.log("Clipboard empty");
+        toast({
+          title: "Clipboard empty",
+          description: "No content found in clipboard",
+          variant: "destructive"
+        });
+      }
+    } catch (error) {
+      console.error("Paste error:", error);
+      const errorMessage = error instanceof Error ? error.message : "Please paste the link manually";
+      toast({
+        title: "Paste failed",
+        description: `Error: ${errorMessage}`,
+        variant: "destructive"
+      });
+    }
+  };
+
   const copyToClipboard = () => {
     try {
       if (navigator.clipboard && window.isSecureContext) {
@@ -304,15 +359,17 @@ export default function Home() {
                     placeholder="Paste Your URL Here"
                     value={youtubeUrl}
                     onChange={(e) => setYoutubeUrl(e.target.value)}
-                    className="flex-1 border-0 bg-transparent px-6 py-4 text-base focus:ring-0 focus:outline-none placeholder-gray-500"
+                    className="flex-1 border-0 bg-transparent px-6 py-4 text-base focus:ring-0 focus:outline-none focus-visible:ring-0 focus-visible:outline-none placeholder-gray-500"
                     data-testid="url-input-desktop"
+                    style={{ outline: 'none', boxShadow: 'none' }}
                   />
                   <div className="flex">
                     <button
-                      onClick={handleGenerate}
+                      onClick={pasteFromClipboard}
                       disabled={isGenerating}
                       className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-4 py-4 transition-colors flex items-center justify-center"
-                      data-testid="generate-icon-button"
+                      data-testid="paste-button"
+                      title="Paste from clipboard"
                     >
                       <Clipboard className="w-5 h-5" />
                     </button>
