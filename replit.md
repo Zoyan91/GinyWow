@@ -2,7 +2,7 @@
 
 ## Overview
 
-GinyWow is a web application that offers PDF, video, image and other online tools to make your life easier. The platform provides various tools for content creation, file conversion, and productivity enhancement, similar to TinyWow's approach to simplifying everyday tasks.
+GinyWow is a web application that focuses on the App Opener tool as its primary feature. The App Opener converts social media links to custom short URLs with intelligent platform-specific redirects, helping content creators gain more followers by enabling users to open links directly in native apps instead of in-app browsers.
 
 ## User Preferences
 
@@ -39,9 +39,8 @@ Preferred communication style: Simple, everyday language.
 - **Security**: Environment-based API key management for external services
 
 ### External Service Integrations
-- **AI Processing**: OpenAI GPT-5 for thumbnail analysis and title optimization
-- **Image Enhancement**: AI-powered image processing for contrast, saturation, and clarity improvements
-- **Performance Analytics**: CTR prediction and SEO scoring algorithms
+- **Link Processing**: Smart URL processing and platform detection for app-specific redirects
+- **Short URL Generation**: Custom short link creation for social media optimization
 
 ## External Dependencies
 
@@ -70,4 +69,4 @@ Preferred communication style: Simple, everyday language.
 - **drizzle-zod**: Integration between Drizzle ORM and Zod validation
 - **typescript**: Static type checking throughout the application
 
-The application follows a modern full-stack architecture with strong type safety, automated database migrations, and AI-powered features for productivity and content creation tools.
+The application follows a modern full-stack architecture with strong type safety, mobile-first responsive design, and App Opener as the central tool for social media link optimization.
