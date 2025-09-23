@@ -248,7 +248,7 @@ export default function Home() {
             className="text-center"
           >
             <h1 className="text-responsive-xl font-bold lg:font-normal text-gray-900 mb-4 sm:mb-6 leading-tight">
-              App Opener Link Generator - Open Links Directly in Apps
+              App Opener Link Generator Link Directly<br />Open in YouTube App
             </h1>
             
             <p className="text-responsive-sm text-gray-600 mb-6 sm:mb-8 leading-relaxed max-w-2xl mx-auto px-4">
