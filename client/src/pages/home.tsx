@@ -457,11 +457,16 @@ export default function Home() {
           <div className="bg-white rounded-lg p-8">
           <div className="text-center mb-8">
             <h2 className="text-xl font-bold text-gray-900 mb-4">
-              How it works
+              What is a YouTube Thumbnail & Title Optimizer?
             </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Upload your thumbnail and enter your title. Our AI analyzes both and provides specific suggestions to improve your click-through rate.
-            </p>
+            <div className="text-gray-600 max-w-4xl mx-auto space-y-4">
+              <p>
+                YouTube Thumbnail & Title Optimizer is a smart online tool which helps YouTubers, social media influencers, affiliate marketers and businesses to create <strong>SEO-friendly titles</strong> and <strong>engaging thumbnails</strong> that convert viewers into subscribers.
+              </p>
+              <p>
+                YouTube Thumbnail & Title Optimizer helps creators to generate custom <strong>5 best titles</strong> for their videos and optimize thumbnails to make them more attractive. You all know that if we don't use a proper title and thumbnail on YouTube videos, then users mostly skip the video because it doesn't look clickable or appealing. So for this we have created a <strong>YouTube Thumbnail & Title Optimizer Tool</strong>. With this tool, any creator can generate <strong>natural, human-friendly titles</strong> and get <strong>optimized thumbnails</strong> that directly increase video clicks and audience growth.
+              </p>
+            </div>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8 text-center">
