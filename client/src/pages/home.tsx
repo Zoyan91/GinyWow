@@ -880,318 +880,94 @@ export default function Home() {
           )}
         </motion.div>
 
-        {/* About Section */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="mt-8 sm:mt-12 bg-gray-50 rounded-lg p-4 sm:p-8"
-        >
-          <div className="mb-8">
-            <div className="text-center mb-6">
-              <h2 className="text-xl sm:text-2xl font-extrabold sm:font-bold text-gray-900 mb-4 px-2 leading-tight">
-                What is YouTube Thumbnail & Title Optimizer?
-              </h2>
-              <p className="text-gray-600 leading-relaxed max-w-3xl mx-auto text-sm sm:text-base px-4 sm:px-2">
-                <span className="block sm:inline"><strong>GinyWow YouTube Thumbnail & Title Optimizer</strong> is a smart tool designed for creators who want to grow their YouTube channel faster.</span>
-                <span className="block sm:inline mt-3 sm:mt-0"> It helps YouTubers, digital marketers, and businesses create <strong>eye-catching thumbnails</strong> and <strong>click-worthy titles</strong> that attract more viewers and boost video performance.</span>
-              </p>
-              <p className="text-gray-600 leading-relaxed max-w-3xl mx-auto text-sm sm:text-base px-4 sm:px-2 mt-4">
-                Normally, creators struggle with low CTR (Click Through Rate) because their thumbnails don't stand out, or their titles aren't appealing enough. That's why we built the <strong>GinyWow YouTube Thumbnail & Title Optimizer</strong> – to give every creator a simple way to make their videos more engaging and clickable.
-              </p>
-            </div>
-          </div>
-
-          <div className="mb-6">
-            <h3 className="text-lg sm:text-xl font-bold text-center text-gray-900 mb-6 sm:mb-8 px-2">
-              Why Use GinyWow YouTube Thumbnail & Title Optimizer?
-            </h3>
-          </div>
-
-          <div className="space-y-4 sm:space-y-6">
-            {/* Benefit 1 */}
-            <div className="bg-white rounded-lg p-4 sm:p-6 border border-gray-200">
-              <div className="flex items-start gap-3 sm:gap-4">
-                <div className="flex-shrink-0">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                    <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                    </svg>
-                  </div>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-gray-900 mb-2 text-sm sm:text-base">
-                    📈 Higher Click-Through Rate
-                  </h4>
-                  <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
-                    Attractive titles and thumbnails that encourage users to click
-                  </p>
-                </div>
+        {/* What is YouTube Thumbnail & Title Optimizer Section */}
+        <section className="py-20 bg-white">
+          <div className="container mx-auto px-4 max-w-4xl">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              <div className="text-center mb-12">
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                  What is YouTube Thumbnail & Title Optimizer?
+                </h2>
               </div>
-            </div>
-
-            {/* Benefit 2 */}
-            <div className="bg-white rounded-lg p-4 sm:p-6 border border-gray-200">
-              <div className="flex items-start gap-3 sm:gap-4">
-                <div className="flex-shrink-0">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                    <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                  </div>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-gray-900 mb-2 text-sm sm:text-base">
-                    🔍 SEO-Friendly Titles
-                  </h4>
-                  <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
-                    Generate titles that rank better on YouTube search and Google
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Benefit 3 */}
-            <div className="bg-white rounded-lg p-4 sm:p-6 border border-gray-200">
-              <div className="flex items-start gap-3 sm:gap-4">
-                <div className="flex-shrink-0">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-purple-100 rounded-lg flex items-center justify-center">
-                    <svg className="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                    </svg>
-                  </div>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-gray-900 mb-2 text-sm sm:text-base">
-                    👥 Human-Friendly Suggestions
-                  </h4>
-                  <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
-                    Get natural, engaging, and audience-focused titles
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Benefit 4 */}
-            <div className="bg-white rounded-lg p-4 sm:p-6 border border-gray-200">
-              <div className="flex items-start gap-3 sm:gap-4">
-                <div className="flex-shrink-0">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-orange-100 rounded-lg flex items-center justify-center">
-                    <svg className="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                    </svg>
-                  </div>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-gray-900 mb-2 text-sm sm:text-base">
-                    🚀 Boost Engagement
-                  </h4>
-                  <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
-                    Thumbnails and titles optimized for maximum visibility
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Benefit 5 */}
-            <div className="bg-white rounded-lg p-4 sm:p-6 border border-gray-200">
-              <div className="flex items-start gap-3 sm:gap-4">
-                <div className="flex-shrink-0">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-yellow-100 rounded-lg flex items-center justify-center">
-                    <svg className="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
-                    </svg>
-                  </div>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-gray-900 mb-2 text-sm sm:text-base">
-                    👨‍💼 Perfect for All Creators
-                  </h4>
-                  <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
-                    Whether you're a vlogger, educator, gamer, or business channel, this tool works for everyone
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* How to Use Section */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-8 sm:mt-12 bg-white rounded-lg border border-gray-200 p-4 sm:p-8"
-        >
-          <h2 className="text-lg sm:text-2xl font-bold text-center text-gray-900 mb-6 sm:mb-8 px-2">
-            How Does GinyWow YouTube Thumbnail & Title Optimizer Work?
-          </h2>
-          
-          <div className="mb-4 text-center">
-            <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
-              Using the tool is quick and simple:
-            </p>
-          </div>
-          
-          <div className="space-y-4 sm:space-y-6">
-            {/* Step 1 */}
-            <div className="flex items-start gap-3 sm:gap-4">
-              <div className="flex-shrink-0">
-                <div className="w-7 h-7 sm:w-8 sm:h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-xs sm:text-sm">
-                  1
-                </div>
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-900 mb-2 text-sm sm:text-base">
-                  📤 Upload your thumbnail
-                </h3>
-                <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
-                  Upload your <strong>thumbnail</strong> and enter your <strong>video title or idea</strong>
+              
+              <div className="prose prose-lg mx-auto text-gray-600">
+                <p className="text-lg leading-relaxed mb-6">
+                  <strong>GinyWow YouTube Thumbnail & Title Optimizer</strong> is a smart tool designed for creators who want to grow their YouTube channel faster. It helps YouTubers, digital marketers, and businesses create <strong>eye-catching thumbnails</strong> and <strong>click-worthy titles</strong> that attract more viewers and boost video performance.
+                </p>
+                
+                <p className="text-lg leading-relaxed">
+                  Normally, creators struggle with low CTR (Click Through Rate) because their thumbnails don't stand out, or their titles aren't appealing enough. That's why we built the <strong>GinyWow YouTube Thumbnail & Title Optimizer</strong> – to give every creator a simple way to make their videos more engaging and clickable.
                 </p>
               </div>
-            </div>
+            </motion.div>
+          </div>
+        </section>
 
-            {/* Step 2 */}
-            <div className="flex items-start gap-3 sm:gap-4">
-              <div className="flex-shrink-0">
-                <div className="w-7 h-7 sm:w-8 sm:h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-xs sm:text-sm">
-                  2
+        {/* Why Use Section */}
+        <section className="py-20 bg-gray-50">
+          <div className="container mx-auto px-4 max-w-4xl">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              <div className="text-center mb-12">
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+                  Why Use GinyWow YouTube Thumbnail & Title Optimizer?
+                </h2>
+              </div>
+              
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="bg-white p-8 rounded-xl shadow-sm">
+                  <div className="flex items-start space-x-4">
+                    <div className="w-3 h-3 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div>
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-900 mb-3">Higher Click-Through Rate</h3>
+                      <p className="text-gray-600">Attractive titles and thumbnails that encourage users to click</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="bg-white p-8 rounded-xl shadow-sm">
+                  <div className="flex items-start space-x-4">
+                    <div className="w-3 h-3 bg-green-600 rounded-full mt-2 flex-shrink-0"></div>
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-900 mb-3">SEO-Friendly Titles</h3>
+                      <p className="text-gray-600">Generate titles that rank better on YouTube search and Google</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="bg-white p-8 rounded-xl shadow-sm">
+                  <div className="flex items-start space-x-4">
+                    <div className="w-3 h-3 bg-purple-600 rounded-full mt-2 flex-shrink-0"></div>
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-900 mb-3">Boost Engagement</h3>
+                      <p className="text-gray-600">Thumbnails and titles optimized for maximum visibility</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="bg-white p-8 rounded-xl shadow-sm">
+                  <div className="flex items-start space-x-4">
+                    <div className="w-3 h-3 bg-orange-600 rounded-full mt-2 flex-shrink-0"></div>
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-900 mb-3">Perfect for All Creators</h3>
+                      <p className="text-gray-600">Whether you're a vlogger, educator, gamer, or business channel</p>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div>
-                <h3 className="font-semibold text-gray-900 mb-2 text-sm sm:text-base">
-                  🤖 Get AI-powered title suggestions
-                </h3>
-                <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
-                  Get <strong>5 AI-powered optimized title suggestions</strong>
-                </p>
-              </div>
-            </div>
-
-            {/* Step 3 */}
-            <div className="flex items-start gap-3 sm:gap-4">
-              <div className="flex-shrink-0">
-                <div className="w-7 h-7 sm:w-8 sm:h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-xs sm:text-sm">
-                  3
-                </div>
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-900 mb-2 text-sm sm:text-base">
-                  ✨ Improve thumbnail design
-                </h3>
-                <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
-                  Instantly improve your <strong>thumbnail design</strong> with better enhancements
-                </p>
-              </div>
-            </div>
-
-            {/* Step 4 */}
-            <div className="flex items-start gap-3 sm:gap-4">
-              <div className="flex-shrink-0">
-                <div className="w-7 h-7 sm:w-8 sm:h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-xs sm:text-sm">
-                  4
-                </div>
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-900 mb-2 text-sm sm:text-base">
-                  🚀 Use optimized results
-                </h3>
-                <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
-                  Use the optimized results on your YouTube video
-                </p>
-              </div>
-            </div>
+            </motion.div>
           </div>
-          
-          <div className="mt-6 text-center">
-            <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
-              With just a few clicks, your video becomes more appealing, rankable, and ready to attract more views.
-            </p>
-          </div>
-        </motion.div>
+        </section>
 
-        {/* Benefits for YouTubers & Businesses Section */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="mt-8 sm:mt-12 bg-gray-50 rounded-lg p-4 sm:p-8"
-        >
-          <div className="text-center mb-6">
-            <h2 className="text-lg sm:text-2xl font-bold text-gray-900 mb-4 px-2 leading-tight">
-              Benefits for YouTubers & Businesses
-            </h2>
-            <p className="text-gray-600 leading-relaxed max-w-3xl mx-auto text-sm sm:text-base px-4 sm:px-2">
-              With <strong>GinyWow YouTube Thumbnail & Title Optimizer</strong>, you don't waste time guessing what works. 
-              Instead, you get professional, engaging, and SEO-optimized suggestions that <strong>increase clicks, views, and subscribers</strong>. 
-              Perfect for creators who want to grow their channel faster and businesses looking to boost brand awareness on YouTube.
-            </p>
-          </div>
-        </motion.div>
-
-        {/* FAQ Section */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="mt-8 sm:mt-12 bg-gray-50 rounded-lg p-4 sm:p-8"
-        >
-          <h2 className="text-lg sm:text-2xl font-bold text-gray-900 mb-6 sm:mb-8 px-2">
-            Frequently Asked Questions (FAQ)
-          </h2>
-          
-          <div className="space-y-4 sm:space-y-6">
-            {/* FAQ 1 */}
-            <div className="border-b border-gray-100 pb-4 sm:pb-6">
-              <h3 className="font-semibold text-gray-900 mb-2 sm:mb-3 text-sm sm:text-base">
-                💰 Is GinyWow YouTube Thumbnail & Title Optimizer free to use?
-              </h3>
-              <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
-                Yes! You can generate unlimited thumbnail and title suggestions for free.
-              </p>
-            </div>
-
-            {/* FAQ 2 */}
-            <div className="border-b border-gray-100 pb-4 sm:pb-6">
-              <h3 className="font-semibold text-gray-900 mb-2 sm:mb-3 text-sm sm:text-base">
-                ⭐ What makes GinyWow different from other tools?
-              </h3>
-              <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
-                Unlike generic generators, <strong>GinyWow</strong> creates <strong>SEO-optimized, human-friendly, and clickable results</strong> that truly engage your audience.
-              </p>
-            </div>
-
-            {/* FAQ 3 */}
-            <div className="border-b border-gray-100 pb-4 sm:pb-6">
-              <h3 className="font-semibold text-gray-900 mb-2 sm:mb-3 text-sm sm:text-base">
-                🎯 Can I use this tool for any type of channel?
-              </h3>
-              <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
-                Absolutely! Whether you're making content in <strong>tech, finance, gaming, lifestyle, or education</strong>, this tool works for all creators.
-              </p>
-            </div>
-
-            {/* FAQ 4 */}
-            <div className="border-b border-gray-100 pb-4 sm:pb-6">
-              <h3 className="font-semibold text-gray-900 mb-2 sm:mb-3 text-sm sm:text-base">
-                🎨 Do I need any design or SEO knowledge to use this tool?
-              </h3>
-              <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
-                No! The tool is made for everyone. Just upload your thumbnail, enter your title, and get optimized results instantly.
-              </p>
-            </div>
-
-            {/* FAQ 5 */}
-            <div>
-              <h3 className="font-semibold text-gray-900 mb-2 sm:mb-3 text-sm sm:text-base">
-                📈 How does this help in channel growth?
-              </h3>
-              <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
-                Better thumbnails and titles mean <strong>higher CTR, more watch time, and more subscribers</strong>, which leads to faster YouTube channel growth.
-              </p>
-            </div>
-          </div>
-        </motion.div>
 
       </main>
 
