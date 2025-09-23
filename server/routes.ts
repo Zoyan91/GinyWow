@@ -455,9 +455,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
         ? `http://localhost:5000` 
         : `https://ginywow.com`;
       
+      // Generate platform-specific prefix
+      const getPlatformPrefix = (platform: string) => {
+        switch (platform) {
+          case 'youtube': return 'yt';
+          case 'instagram': return 'ig';
+          case 'tiktok': return 'tt';
+          case 'twitter': return 'tw';
+          case 'facebook': return 'fb';
+          case 'linkedin': return 'li';
+          default: return 'web';
+        }
+      };
+      
+      const platformPrefix = getPlatformPrefix(parsed.platform);
+      
       res.json({
         success: true,
-        shortUrl: `${baseUrl}/yt/${shortCode}`,
+        shortUrl: `${baseUrl}/${platformPrefix}/${shortCode}`,
         originalUrl: url,
         platform: parsed.platform,
         type: parsed.type
@@ -479,8 +494,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Redirect short URLs
-  app.get('/yt/:shortCode', async (req, res) => {
+  // Redirect short URLs for all platforms
+  app.get('/:platform(yt|ig|tt|tw|fb|li|web)/:shortCode', async (req, res) => {
     try {
       const { shortCode } = req.params;
       const shortUrl = await storage.getShortUrl(shortCode);
