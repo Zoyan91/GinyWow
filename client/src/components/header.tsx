@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Search, Menu, X, ChevronDown } from "lucide-react";
+import { Menu, ChevronDown } from "lucide-react";
 import { Link, useLocation } from "wouter";
-import { motion, AnimatePresence } from "framer-motion";
 
 interface HeaderProps {
   currentPage?: string;
@@ -13,65 +11,8 @@ interface HeaderProps {
 
 export default function Header({ currentPage }: HeaderProps) {
   const [location] = useLocation();
-  const [searchQuery, setSearchQuery] = useState("");
-  const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // Search functionality
-  const searchableItems = [
-    {
-      id: "url-opener",
-      title: "URL Opener",
-      description: "Generate smart app-opening links",
-      category: "Tools",
-      path: "/"
-    },
-    {
-      id: "thumbnail-downloader",
-      title: "Thumbnail Downloader", 
-      description: "Download YouTube thumbnails easily",
-      category: "Tools",
-      path: "/thumbnail-downloader"
-    },
-    {
-      id: "contact",
-      title: "Contact Us",
-      description: "Get in touch with our team",
-      category: "Pages",
-      path: "/contact"
-    },
-    {
-      id: "blog",
-      title: "Blog",
-      description: "Latest tips and tutorials",
-      category: "Pages", 
-      path: "/blog"
-    },
-    {
-      id: "about",
-      title: "About",
-      description: "Learn more about GinyWow",
-      category: "Pages",
-      path: "/about"
-    }
-  ];
-
-  const searchResults = searchableItems.filter(item =>
-    item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    item.description.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value);
-  };
-
-  const handleSearchItemClick = (item: any) => {
-    if (item.path) {
-      window.location.href = item.path;
-    }
-    setSearchQuery("");
-    setIsSearchFocused(false);
-  };
 
   const isActive = (path: string) => {
     if (path === "/" && location === "/") return true;
@@ -148,69 +89,12 @@ export default function Header({ currentPage }: HeaderProps) {
             ))}
           </nav>
           
-          {/* Desktop Search and Actions */}
-          <div className="hidden md:flex items-center space-x-3 lg:space-x-4">
-            {/* Search */}
-            <div className="relative hidden lg:block">
-              <Input
-                type="text"
-                placeholder="Search tools..."
-                className="pl-10 pr-4 py-2 w-48 xl:w-64 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm"
-                data-testid="search-input"
-                value={searchQuery}
-                onChange={handleSearchChange}
-                onFocus={() => setIsSearchFocused(true)}
-                onBlur={() => setTimeout(() => setIsSearchFocused(false), 200)}
-              />
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-              
-              {/* Search Results Dropdown */}
-              <AnimatePresence>
-                {isSearchFocused && searchQuery.trim().length > 0 && (
-                  <motion.div 
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-xl z-[9999] max-h-96 overflow-y-auto mt-2"
-                  >
-                    {searchResults.length > 0 ? (
-                      searchResults.map((item) => (
-                        <button
-                          key={item.id}
-                          className="w-full text-left px-4 py-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0 focus:outline-none focus:bg-blue-50 transition-colors"
-                          onMouseDown={() => handleSearchItemClick(item)}
-                          data-testid={`search-result-${item.id}`}
-                        >
-                          <div className="flex items-start justify-between">
-                            <div className="flex-1">
-                              <h4 className="text-sm font-medium text-gray-900 mb-1">
-                                {item.title}
-                              </h4>
-                              <p className="text-xs text-gray-600 mb-1">
-                                {item.description}
-                              </p>
-                              <span className="inline-block px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full">
-                                {item.category}
-                              </span>
-                            </div>
-                          </div>
-                        </button>
-                      ))
-                    ) : (
-                      <div className="px-4 py-3 text-sm text-gray-500 text-center" data-testid="no-results-message">
-                        No results found for "{searchQuery}"
-                      </div>
-                    )}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-            
-            {/* Sign In */}
+          {/* Desktop Sign In */}
+          <div className="hidden lg:flex items-center">
             <Button 
               variant="outline" 
               size="sm"
-              className="border-gray-300 text-gray-700 hover:bg-gray-50 font-medium hidden lg:flex"
+              className="border-gray-300 text-gray-700 hover:bg-gray-50 font-medium"
               data-testid="sign-in"
             >
               Sign In
@@ -242,52 +126,9 @@ export default function Header({ currentPage }: HeaderProps) {
               </SheetTrigger>
               <SheetContent side="right" className="w-80 sm:w-96">
                 <div className="flex flex-col h-full">
-                  {/* Mobile Search */}
-                  <div className="mb-6">
-                    <div className="relative">
-                      <Input
-                        type="text"
-                        placeholder="Search tools..."
-                        className="pl-10 pr-4 py-3 w-full border-gray-300 rounded-lg text-base"
-                        data-testid="mobile-search-input"
-                        value={searchQuery}
-                        onChange={handleSearchChange}
-                      />
-                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                    </div>
-                    
-                    {/* Mobile Search Results */}
-                    {searchQuery.trim().length > 0 && (
-                      <div className="mt-3 space-y-2">
-                        {searchResults.length > 0 ? (
-                          searchResults.map((item) => (
-                            <button
-                              key={item.id}
-                              className="w-full text-left p-3 hover:bg-gray-50 rounded-lg border border-gray-200 transition-colors"
-                              onClick={() => {
-                                handleSearchItemClick(item);
-                                setIsMobileMenuOpen(false);
-                              }}
-                            >
-                              <h4 className="text-sm font-medium text-gray-900 mb-1">
-                                {item.title}
-                              </h4>
-                              <p className="text-xs text-gray-600">
-                                {item.description}
-                              </p>
-                            </button>
-                          ))
-                        ) : (
-                          <div className="p-3 text-sm text-gray-500 text-center">
-                            No results found
-                          </div>
-                        )}
-                      </div>
-                    )}
-                  </div>
 
                   {/* Mobile Navigation Links */}
-                  <nav className="flex-1 space-y-2">
+                  <nav className="flex-1 space-y-2 mt-6">
                     {/* App Opener Section */}
                     <div className="border border-gray-200 rounded-lg p-2">
                       <div className="text-sm font-medium text-gray-900 px-2 py-1 mb-2">App Opener</div>
