@@ -295,7 +295,7 @@ export default function Home() {
               </button>
               
               <button className="flex items-center text-gray-600 hover:text-gray-900 transition-colors font-medium" data-testid="nav-app-opener">
-                YouTube App Opener
+                App Opener
               </button>
               
               <button className="flex items-center text-gray-600 hover:text-gray-900 transition-colors font-medium" data-testid="nav-contact">
@@ -385,7 +385,7 @@ export default function Home() {
 
                 <div className="border-b border-gray-100 pb-3">
                   <button className="block text-gray-600 hover:text-gray-900 py-3 text-base font-medium" data-testid="mobile-nav-app-opener">
-                    YouTube App Opener
+                    App Opener
                   </button>
                 </div>
 
