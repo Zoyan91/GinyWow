@@ -83,7 +83,7 @@ export async function sendWelcomeEmail(email: string): Promise<boolean> {
 
   return await sendEmail({
     to: email,
-    from: 'no-reply@ginywow.com', // Replace with your verified sender email
+    from: process.env.SENDGRID_FROM_EMAIL || 'no-reply@ginywow.com', // Replace with your verified sender email
     subject: '🎉 Welcome to GinyWow Newsletter!',
     text: 'Welcome to GinyWow! Thank you for subscribing to our newsletter. You will receive the latest updates on YouTube optimization tools and features.',
     html: welcomeHtml
@@ -98,8 +98,8 @@ export async function sendSubscriptionNotification(email: string): Promise<boole
   }
 
   return await sendEmail({
-    to: 'admin@ginywow.com', // Replace with your admin email
-    from: 'no-reply@ginywow.com',
+    to: process.env.ADMIN_EMAIL || 'admin@ginywow.com', // Replace with your admin email
+    from: process.env.SENDGRID_FROM_EMAIL || 'no-reply@ginywow.com',
     subject: '📬 New Newsletter Subscription',
     text: `New subscriber: ${email}`,
     html: `

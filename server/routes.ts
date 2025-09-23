@@ -2,8 +2,9 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import multer from "multer";
 import { storage } from "./storage";
-import { insertThumbnailSchema, insertTitleOptimizationSchema } from "@shared/schema";
+import { insertThumbnailSchema, insertTitleOptimizationSchema, insertNewsletterSchema } from "@shared/schema";
 import { analyzeThumbnail, optimizeTitles, enhanceThumbnailImage } from "./openai";
+import { sendWelcomeEmail, sendSubscriptionNotification } from "./sendgrid";
 
 // Configure multer for file uploads
 const upload = multer({
@@ -226,6 +227,111 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Error during optimization:', error);
       res.status(500).json({ error: 'Failed to optimize thumbnail and title' });
+    }
+  });
+
+  // Newsletter subscription endpoint
+  app.post('/api/newsletter/subscribe', async (req, res) => {
+    try {
+      const { email } = req.body;
+      
+      if (!email || !email.trim()) {
+        return res.status(400).json({ error: 'Email is required' });
+      }
+
+      // Validate email format
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email.trim())) {
+        return res.status(400).json({ error: 'Please enter a valid email address' });
+      }
+
+      // Check if already subscribed
+      const existing = await storage.getNewsletterSubscription(email.trim().toLowerCase());
+      if (existing && existing.isActive === "true") {
+        return res.status(409).json({ error: 'This email is already subscribed to our newsletter' });
+      }
+
+      // Create or reactivate subscription
+      const newsletterData = insertNewsletterSchema.parse({
+        email: email.trim().toLowerCase(),
+        source: "website"
+      });
+
+      let newsletter;
+      if (existing && existing.isActive === "false") {
+        // Reactivate existing subscription
+        newsletter = await storage.updateNewsletterSubscription(email.trim().toLowerCase(), {
+          isActive: "true",
+          subscribedAt: new Date(),
+          unsubscribedAt: null
+        });
+      } else {
+        // Create new subscription
+        newsletter = await storage.createNewsletterSubscription(newsletterData);
+      }
+
+      // Send welcome email (async, don't wait for result)
+      sendWelcomeEmail(email.trim().toLowerCase()).catch(console.error);
+      
+      // Send notification to admin (async, don't wait for result)
+      sendSubscriptionNotification(email.trim().toLowerCase()).catch(console.error);
+
+      console.log('📧 New newsletter subscription:', email.trim().toLowerCase());
+
+      res.json({
+        success: true,
+        message: 'Successfully subscribed! Welcome email sent to your inbox.',
+        email: newsletter?.email
+      });
+    } catch (error) {
+      console.error('Error subscribing to newsletter:', error);
+      res.status(500).json({ error: 'Failed to subscribe. Please try again.' });
+    }
+  });
+
+  // Newsletter unsubscribe endpoint
+  app.post('/api/newsletter/unsubscribe', async (req, res) => {
+    try {
+      const { email } = req.body;
+      
+      if (!email || !email.trim()) {
+        return res.status(400).json({ error: 'Email is required' });
+      }
+
+      const success = await storage.unsubscribeNewsletter(email.trim().toLowerCase());
+      
+      if (!success) {
+        return res.status(404).json({ error: 'Email not found in our newsletter list' });
+      }
+
+      console.log('📧 Newsletter unsubscribed:', email.trim().toLowerCase());
+
+      res.json({
+        success: true,
+        message: 'Successfully unsubscribed from newsletter'
+      });
+    } catch (error) {
+      console.error('Error unsubscribing from newsletter:', error);
+      res.status(500).json({ error: 'Failed to unsubscribe. Please try again.' });
+    }
+  });
+
+  // Get newsletter stats (for admin)
+  app.get('/api/newsletter/stats', async (req, res) => {
+    try {
+      const activeSubscribers = await storage.getAllActiveSubscribers();
+      
+      res.json({
+        totalActiveSubscribers: activeSubscribers.length,
+        subscribers: activeSubscribers.map(sub => ({
+          email: sub.email,
+          subscribedAt: sub.subscribedAt,
+          source: sub.source
+        }))
+      });
+    } catch (error) {
+      console.error('Error getting newsletter stats:', error);
+      res.status(500).json({ error: 'Failed to get newsletter stats' });
     }
   });
 
