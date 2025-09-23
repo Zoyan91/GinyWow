@@ -397,51 +397,46 @@ export async function enhanceThumbnailImage(base64Image: string, enhancements: {
     const metadata = await sharp.default(imageBuffer).metadata();
     console.log(`Processing image: ${metadata.format}, ${metadata.width}x${metadata.height}`);
     
-    // 4K DETAIL Enhancement - Originality 100% Preserved, Only Details Enhanced
-    const fourKEnhanced = await sharp.default(imageBuffer)
-      // Step 1: Convert to Lab color space for luminance-only processing
-      .toColorspace('lab')
-      
-      // Step 2: Professional 4K-level detail enhancement
-      // Only sharpen the luminance (L) channel, preserving all colors (a,b channels)
-      .sharpen({
-        sigma: 0.8,           // Optimal radius for 4K detail enhancement
-        m1: 0.6,              // Professional edge detection threshold
-        m2: 1.2,              // Moderate enhancement strength for natural look
-        x1: 5,                // Threshold to avoid halos and artifacts
-        y2: 8,                // Conservative maximum enhancement
-        y3: 12                // Controlled edge boost for crisp details
-      })
-      
-      // Step 3: Convert back to sRGB for final output
+    // ULTRA NATURAL Enhancement - बिल्कुल subtle और human-friendly
+    const naturalEnhanced = await sharp.default(imageBuffer)
+      // Convert to RGB if needed to avoid format issues
       .toColorspace('srgb')
       
-      // Step 4: Export with maximum fidelity to preserve originality
-      .jpeg({ 
-        quality: 98,                    // Maximum quality for 4K-level detail
-        progressive: true,              // Progressive loading
-        mozjpeg: true,                  // Advanced compression
-        chromaSubsampling: '4:4:4',     // No chroma subsampling - preserve all color information
-        optimizeScans: true             // Optimize scan order for best quality
+      // बहुत gentle color enhancement - barely noticeable
+      .modulate({
+        brightness: 1.02,     // सिर्फ 2% brightness boost - very subtle
+        saturation: 1.03,     // सिर्फ 3% saturation - natural look
+        hue: 0               // No hue change - keep original colors
       })
-      .withMetadata()                   // Preserve all original metadata and color profiles
+      
+      // Very gentle contrast - just to make it slightly crisp
+      .linear(1.01, -1)       // 1% contrast increase - barely visible
+      
+      // Minimal sharpening - just to enhance text/details slightly
+      .sharpen({
+        sigma: 0.3,           // Very light sharpening
+        m1: 0.3,              // Gentle edge detection
+        m2: 0.8               // Minimal enhancement
+      })
+      
+      // Always export as JPEG for consistency and compatibility
+      .jpeg({ 
+        quality: 95,          // High quality but not over-compressed
+        progressive: true     // Progressive loading
+      })
       .toBuffer();
     
     // Convert back to base64
-    const enhancedBase64 = fourKEnhanced.toString('base64');
-    console.log("💎 4K DETAIL Enhancement Applied - 100% Originality Preserved:");
-    console.log("🔬 Lab color space processing - only luminance enhanced, colors untouched");
-    console.log("💯 Professional 4K-level detail sharpening with optimal parameters");
-    console.log("🎯 Edge-aware enhancement with halo prevention (x1=5 threshold)");
-    console.log("🌈 ALL original colors, tones, and brightness completely preserved");
-    console.log("📸 Maximum quality export with 4:4:4 chroma sampling");
-    console.log("✨ Metadata and color profiles preserved for authentic reproduction");
-    console.log("🚀 Pure detail enhancement - NO artificial changes to image character");
+    const enhancedBase64 = naturalEnhanced.toString('base64');
+    console.log("✨ Natural Thumbnail Enhancement Applied - 100% Human-Friendly:");
+    console.log("📸 Barely noticeable improvements for natural look");
+    console.log("🎯 Subtle enhancement that maintains original beauty");
+    console.log("💯 No artificial processing - pure natural enhancement");
     
     return {
       enhancedImage: enhancedBase64,
       success: true,
-      message: "4K-level detail enhancement applied successfully! Your thumbnail now has crystal clear details, enhanced sharpness, and professional quality while preserving 100% of the original colors, brightness, and character. Pure detail improvement without any artificial changes."
+      message: "Natural enhancement applied successfully. Your thumbnail now has subtle improvements for better clarity while maintaining its original character."
     };
     
   } catch (error) {
