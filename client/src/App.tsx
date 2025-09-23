@@ -8,6 +8,7 @@ import About from "@/pages/about";
 import Contact from "@/pages/contact";
 import Blog from "@/pages/blog";
 import Privacy from "@/pages/privacy";
+import ThumbnailDownloader from "@/pages/thumbnail-downloader";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -18,6 +19,7 @@ function Router() {
       <Route path="/contact" component={Contact} />
       <Route path="/blog" component={Blog} />
       <Route path="/privacy" component={Privacy} />
+      <Route path="/thumbnail-downloader" component={ThumbnailDownloader} />
       <Route component={NotFound} />
     </Switch>
   );
