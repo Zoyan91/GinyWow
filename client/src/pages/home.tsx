@@ -738,7 +738,7 @@ export default function Home() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="mt-12 bg-gray-50 rounded-lg p-8"
+          className="mt-8 sm:mt-12 bg-gray-50 rounded-lg p-4 sm:p-8"
         >
           <div className="mb-8">
             <div className="text-center mb-6">
@@ -753,91 +753,91 @@ export default function Home() {
           </div>
 
           <div className="mb-6">
-            <h3 className="text-xl font-bold text-center text-gray-900 mb-8">
+            <h3 className="text-lg sm:text-xl font-bold text-center text-gray-900 mb-6 sm:mb-8 px-2">
               Why Use Our Optimizer?
             </h3>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
             {/* Feature 1 */}
-            <div className="bg-white rounded-lg p-6 border border-gray-200">
-              <div className="flex items-start gap-4">
+            <div className="bg-white rounded-lg p-4 sm:p-6 border border-gray-200">
+              <div className="flex items-start gap-3 sm:gap-4">
                 <div className="flex-shrink-0">
-                  <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-blue-100 rounded-lg flex items-center justify-center">
                     <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                     </svg>
                   </div>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-900 mb-2">
-                    Increase Click-Through-Rate (CTR)
+                  <h4 className="font-semibold text-gray-900 mb-2 text-sm sm:text-base">
+                    📈 Increase CTR
                   </h4>
-                  <p className="text-gray-600 text-sm">
-                    Optimize your thumbnails and titles to attract more clicks and improve your video's performance in YouTube's algorithm.
+                  <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
+                    Get more clicks and better YouTube ranking
                   </p>
                 </div>
               </div>
             </div>
 
             {/* Feature 2 */}
-            <div className="bg-white rounded-lg p-6 border border-gray-200">
-              <div className="flex items-start gap-4">
+            <div className="bg-white rounded-lg p-4 sm:p-6 border border-gray-200">
+              <div className="flex items-start gap-3 sm:gap-4">
                 <div className="flex-shrink-0">
-                  <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-green-100 rounded-lg flex items-center justify-center">
                     <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                     </svg>
                   </div>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-900 mb-2">
-                    AI-based Title Suggestions
+                  <h4 className="font-semibold text-gray-900 mb-2 text-sm sm:text-base">
+                    🤖 AI Title Ideas
                   </h4>
-                  <p className="text-gray-600 text-sm">
-                    Get intelligent recommendations for title improvements based on successful YouTube content patterns and trending keywords.
+                  <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
+                    Smart title suggestions based on trending patterns
                   </p>
                 </div>
               </div>
             </div>
 
             {/* Feature 3 */}
-            <div className="bg-white rounded-lg p-6 border border-gray-200">
-              <div className="flex items-start gap-4">
+            <div className="bg-white rounded-lg p-4 sm:p-6 border border-gray-200">
+              <div className="flex items-start gap-3 sm:gap-4">
                 <div className="flex-shrink-0">
-                  <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-purple-100 rounded-lg flex items-center justify-center">
                     <svg className="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
                   </div>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-900 mb-2">
-                    Thumbnail Preview for Better Design
+                  <h4 className="font-semibold text-gray-900 mb-2 text-sm sm:text-base">
+                    🖼️ Preview Design
                   </h4>
-                  <p className="text-gray-600 text-sm">
-                    Visualize how your thumbnail will appear across different devices and screen sizes before publishing your video.
+                  <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
+                    See how thumbnails look on different devices
                   </p>
                 </div>
               </div>
             </div>
 
             {/* Feature 4 */}
-            <div className="bg-white rounded-lg p-6 border border-gray-200">
-              <div className="flex items-start gap-4">
+            <div className="bg-white rounded-lg p-4 sm:p-6 border border-gray-200">
+              <div className="flex items-start gap-3 sm:gap-4">
                 <div className="flex-shrink-0">
-                  <div className="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-yellow-100 rounded-lg flex items-center justify-center">
                     <svg className="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
                     </svg>
                   </div>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-900 mb-2">
-                    Free & Easy to Use
+                  <h4 className="font-semibold text-gray-900 mb-2 text-sm sm:text-base">
+                    🎆 Free & Easy
                   </h4>
-                  <p className="text-gray-600 text-sm">
-                    No registration required. Simply upload your thumbnail, enter your title, and get instant optimization suggestions at no cost.
+                  <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
+                    No signup needed - instant optimization
                   </p>
                 </div>
               </div>
@@ -850,60 +850,60 @@ export default function Home() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-12 bg-white rounded-lg border border-gray-200 p-8"
+          className="mt-8 sm:mt-12 bg-white rounded-lg border border-gray-200 p-4 sm:p-8"
         >
-          <h2 className="text-2xl font-bold text-center text-gray-900 mb-8">
+          <h2 className="text-lg sm:text-2xl font-bold text-center text-gray-900 mb-6 sm:mb-8 px-2">
             How to Use the Tool?
           </h2>
           
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {/* Step 1 */}
-            <div className="flex items-start gap-4">
+            <div className="flex items-start gap-3 sm:gap-4">
               <div className="flex-shrink-0">
-                <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-sm">
+                <div className="w-7 h-7 sm:w-8 sm:h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-xs sm:text-sm">
                   1
                 </div>
               </div>
               <div>
-                <h3 className="font-semibold text-gray-900 mb-2">
-                  Upload your thumbnail
+                <h3 className="font-semibold text-gray-900 mb-2 text-sm sm:text-base">
+                  📤 Upload Thumbnail
                 </h3>
-                <p className="text-gray-600 text-sm">
-                  Click the upload area or drag and drop your YouTube thumbnail image. We support JPG, PNG, and WebP formats up to 5MB.
+                <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
+                  Drag & drop your image (JPG, PNG, WebP)
                 </p>
               </div>
             </div>
 
             {/* Step 2 */}
-            <div className="flex items-start gap-4">
+            <div className="flex items-start gap-3 sm:gap-4">
               <div className="flex-shrink-0">
-                <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-sm">
+                <div className="w-7 h-7 sm:w-8 sm:h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-xs sm:text-sm">
                   2
                 </div>
               </div>
               <div>
-                <h3 className="font-semibold text-gray-900 mb-2">
-                  Enter your video title
+                <h3 className="font-semibold text-gray-900 mb-2 text-sm sm:text-base">
+                  ✏️ Add Your Title
                 </h3>
-                <p className="text-gray-600 text-sm">
-                  Type your current or planned YouTube video title in the text field. Our tool will analyze it for optimization opportunities.
+                <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
+                  Type your video title for analysis
                 </p>
               </div>
             </div>
 
             {/* Step 3 */}
-            <div className="flex items-start gap-4">
+            <div className="flex items-start gap-3 sm:gap-4">
               <div className="flex-shrink-0">
-                <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-sm">
+                <div className="w-7 h-7 sm:w-8 sm:h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-xs sm:text-sm">
                   3
                 </div>
               </div>
               <div>
-                <h3 className="font-semibold text-gray-900 mb-2">
-                  Click Optimize Now and get results
+                <h3 className="font-semibold text-gray-900 mb-2 text-sm sm:text-base">
+                  🚀 Get Results
                 </h3>
-                <p className="text-gray-600 text-sm">
-                  Get instant feedback on your thumbnail and title combination with actionable suggestions to improve your video's performance.
+                <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
+                  Click Optimize & get instant suggestions
                 </p>
               </div>
             </div>
@@ -915,50 +915,50 @@ export default function Home() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="mt-12 bg-gray-50 rounded-lg p-8"
+          className="mt-8 sm:mt-12 bg-gray-50 rounded-lg p-4 sm:p-8"
         >
-          <h2 className="text-2xl font-bold text-gray-900 mb-8">
+          <h2 className="text-lg sm:text-2xl font-bold text-gray-900 mb-6 sm:mb-8 px-2">
             Frequently Asked Questions
           </h2>
           
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {/* FAQ 1 */}
-            <div className="border-b border-gray-100 pb-6">
-              <h3 className="font-semibold text-gray-900 mb-3">
-                Is the YouTube Thumbnail & Title Optimizer really free?
+            <div className="border-b border-gray-100 pb-4 sm:pb-6">
+              <h3 className="font-semibold text-gray-900 mb-2 sm:mb-3 text-sm sm:text-base">
+                ❓ Is it really free?
               </h3>
-              <p className="text-gray-600">
-                Yes, our optimizer is completely free to use. You can upload thumbnails, analyze titles, and receive optimization suggestions without any cost or registration requirements.
+              <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
+                Yes! Upload, analyze and get suggestions at no cost.
               </p>
             </div>
 
             {/* FAQ 2 */}
-            <div className="border-b border-gray-100 pb-6">
-              <h3 className="font-semibold text-gray-900 mb-3">
-                What file formats do you support for thumbnails?
+            <div className="border-b border-gray-100 pb-4 sm:pb-6">
+              <h3 className="font-semibold text-gray-900 mb-2 sm:mb-3 text-sm sm:text-base">
+                🖼️ What formats supported?
               </h3>
-              <p className="text-gray-600">
-                We support JPG, PNG, and WebP image formats. The maximum file size is 5MB, which covers most YouTube thumbnail requirements.
+              <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
+                JPG, PNG, WebP files up to 5MB
               </p>
             </div>
 
             {/* FAQ 3 */}
-            <div className="border-b border-gray-100 pb-6">
-              <h3 className="font-semibold text-gray-900 mb-3">
-                How does the AI-based title suggestion work?
+            <div className="border-b border-gray-100 pb-4 sm:pb-6">
+              <h3 className="font-semibold text-gray-900 mb-2 sm:mb-3 text-sm sm:text-base">
+                🤖 How does AI work?
               </h3>
-              <p className="text-gray-600">
-                Our AI analyzes successful YouTube video patterns, trending keywords, and engagement metrics to provide data-driven suggestions for improving your titles and increasing click-through rates.
+              <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
+                AI analyzes trending patterns and keywords for better titles
               </p>
             </div>
 
             {/* FAQ 4 */}
             <div>
-              <h3 className="font-semibold text-gray-900 mb-3">
-                Do you store my uploaded thumbnails or titles?
+              <h3 className="font-semibold text-gray-900 mb-2 sm:mb-3 text-sm sm:text-base">
+                🔒 Is my data private?
               </h3>
-              <p className="text-gray-600">
-                No, we prioritize your privacy. Uploaded thumbnails and titles are processed in real-time and are not stored on our servers. Your content remains completely private and secure.
+              <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
+                Yes! Nothing is stored - your content stays private
               </p>
             </div>
           </div>
