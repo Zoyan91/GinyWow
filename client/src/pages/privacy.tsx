@@ -304,16 +304,16 @@ export default function Privacy() {
           
           {/* Bottom Section */}
           <div className="border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center">
-            <div className="flex items-center mb-4 md:mb-0">
-              <p className="text-sm text-gray-600">© 2025 GinyWow.com | All rights reserved</p>
-            </div>
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-4 order-1 md:order-2 mb-4 md:mb-0">
               <Link href="/">
                 <div className="flex items-center cursor-pointer hover:opacity-80 transition-opacity">
                   <span className="text-lg font-bold text-gray-900">Giny</span>
                   <span className="text-lg font-bold text-blue-600">Wow</span>
                 </div>
               </Link>
+            </div>
+            <div className="flex items-center order-2 md:order-1">
+              <p className="text-sm text-gray-600">© 2025 GinyWow.com | All rights reserved</p>
             </div>
           </div>
         </div>
