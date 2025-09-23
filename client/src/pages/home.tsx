@@ -178,10 +178,32 @@ export default function Home() {
     }
   }, [subscriptionMessage]);
 
+  // Handle mobile menu keyboard events
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && isMobileMenuOpen) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    if (isMobileMenuOpen) {
+      document.addEventListener('keydown', handleKeyDown);
+      // Prevent body scroll when menu is open
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMobileMenuOpen]);
+
   return (
     <div className="min-h-screen bg-background relative">
       {/* Header - Mobile Friendly */}
-      <header className="bg-white/95 backdrop-blur-sm border-b border-gray-200 relative z-50">
+      <header className="bg-white/95 backdrop-blur-sm border-b border-gray-200 relative z-30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
@@ -262,7 +284,7 @@ export default function Home() {
             <div className="md:hidden">
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+                className="p-3 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
                 data-testid="mobile-menu-button"
                 aria-label="Toggle mobile menu"
               >
@@ -279,11 +301,13 @@ export default function Home() {
 
       {/* Mobile Sidebar Navigation */}
       {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-40 md:hidden">
+        <div className="fixed inset-0 z-50 md:hidden">
           {/* Backdrop */}
           <div 
-            className="fixed inset-0 bg-black bg-opacity-50 transition-opacity"
+            className="fixed inset-0 bg-black bg-opacity-50 transition-opacity cursor-pointer"
             onClick={() => setIsMobileMenuOpen(false)}
+            role="button"
+            aria-label="Close mobile menu"
           ></div>
           
           {/* Sidebar */}
@@ -292,7 +316,7 @@ export default function Home() {
             animate={{ x: 0 }}
             exit={{ x: '-100%' }}
             transition={{ type: 'tween', duration: 0.3 }}
-            className="fixed top-0 left-0 bottom-0 w-80 max-w-[85vw] bg-white shadow-xl overflow-y-auto"
+            className="fixed top-0 left-0 bottom-0 w-80 max-w-[85vw] bg-white shadow-xl overflow-y-auto z-10"
           >
             {/* Sidebar Header */}
             <div className="flex items-center justify-between p-6 border-b border-gray-200">
@@ -376,19 +400,20 @@ export default function Home() {
         </div>
       )}
 
-      {/* Content Section */}
-      <section className="bg-background/50 backdrop-blur-sm py-12 relative z-10">
-        <div className="container mx-auto px-6 text-center">
+      {/* Content Section - Mobile Optimized */}
+      <section className="bg-background/50 backdrop-blur-sm py-8 md:py-12 relative z-10">
+        <div className="container mx-auto px-4 md:px-6 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 leading-tight">
-              Enhance Your YouTube Thumbnails<br/>
-              & Titles in Seconds
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 leading-tight px-2">
+              Enhance Your YouTube Thumbnails<br className="hidden sm:block"/>
+              <span className="sm:hidden">& Titles in Seconds</span>
+              <span className="hidden sm:inline">& Titles in Seconds</span>
             </h1>
-            <p className="text-gray-700 text-base mb-0 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-gray-700 text-sm sm:text-base mb-0 max-w-2xl mx-auto leading-relaxed px-4">
               Professional AI enhancement that improves every detail while preserving your original design. 
               Make your thumbnails more eye-catching and boost your CTR instantly.
             </p>
@@ -396,23 +421,23 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Main Content */}
-      <main className="bg-background/50 backdrop-blur-sm container mx-auto px-6 py-4 max-w-4xl relative z-10">
+      {/* Main Content - Mobile Optimized */}
+      <main className="bg-background/50 backdrop-blur-sm container mx-auto px-4 md:px-6 py-4 max-w-4xl relative z-10">
         
         {/* YouTube Thumbnail & Title Optimizer Tool */}
         <motion.div 
-          className="bg-white rounded-2xl border border-gray-200 p-10 shadow-xl shadow-blue-500/10"
+          className="bg-white rounded-2xl border border-gray-200 p-4 sm:p-6 md:p-10 shadow-xl shadow-blue-500/10"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
           data-testid="optimizer-tool"
         >
-          {/* Header */}
-          <div className="text-center mb-8">
-            <h1 className="text-2xl font-semibold text-gray-900 mb-2">
+          {/* Header - Mobile Optimized */}
+          <div className="text-center mb-6 md:mb-8">
+            <h1 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-2 px-2">
               YouTube Thumbnail & Title Optimizer
             </h1>
-            <p className="text-gray-600">
+            <p className="text-gray-600 text-sm sm:text-base px-4">
               Upload your thumbnail and enter your title to get optimization suggestions.
             </p>
           </div>
@@ -472,7 +497,7 @@ export default function Home() {
                   </p>
                   <p className="text-sm text-gray-500 mb-4">Supports: JPG, PNG, WebP (Max 5MB)</p>
                   <Button 
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg flex items-center gap-2 transition-colors"
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg flex items-center gap-2 transition-colors min-h-[44px]"
                     data-testid="upload-thumbnail-btn"
                     onClick={() => fileInputRef.current?.click()}
                   >
@@ -509,7 +534,7 @@ export default function Home() {
             </label>
             <Input 
               type="text"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+              className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors min-h-[44px]"
               placeholder="Enter your YouTube title here..."
               maxLength={100}
               value={title}
@@ -978,14 +1003,14 @@ export default function Home() {
                   placeholder="Enter your email"
                   value={newsletterEmail}
                   onChange={(e) => setNewsletterEmail(e.target.value)}
-                  className="flex-1 px-6 py-4 text-base bg-transparent border-0 outline-none placeholder-gray-500"
+                  className="flex-1 px-6 py-4 text-base bg-transparent border-0 outline-none placeholder-gray-500 min-h-[44px]"
                   data-testid="newsletter-email-input"
                   disabled={isSubscribing}
                 />
                 <Button 
                   type="submit"
                   disabled={isSubscribing}
-                  className={`px-8 py-4 text-base font-medium rounded-xl transition-all duration-200 ${
+                  className={`px-8 py-4 text-base font-medium rounded-xl transition-all duration-200 min-h-[44px] ${
                     isSubscribing 
                       ? 'bg-orange-400 cursor-not-allowed text-white' 
                       : 'bg-orange-500 hover:bg-orange-600 text-white'
