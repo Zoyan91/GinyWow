@@ -397,64 +397,68 @@ export async function enhanceThumbnailImage(base64Image: string, enhancements: {
     const metadata = await sharp.default(imageBuffer).metadata();
     console.log(`Processing image: ${metadata.format}, ${metadata.width}x${metadata.height}`);
     
-    // DETAILED NATURAL Enhancement - हर detail को बारीकी से improve करना
+    // AGGRESSIVE NATURAL Enhancement - Face को crystal clear बनाना
     const naturalEnhanced = await sharp.default(imageBuffer)
       // Convert to RGB if needed to avoid format issues
       .toColorspace('srgb')
       
-      // Step 1: Intelligent brightness and exposure correction
+      // Step 1: Major brightness boost for face visibility
       .modulate({
-        brightness: 1.08,     // 8% brightness boost - noticeable but natural
-        saturation: 1.12,     // 12% saturation - vibrant but realistic colors
-        hue: 2               // Slight warm tone for appealing look
+        brightness: 1.25,     // 25% brightness boost - significant improvement
+        saturation: 1.22,     // 22% saturation - vivid but natural colors
+        hue: 3               // Warm tone for appealing skin tones
       })
       
-      // Step 2: Enhanced contrast for better depth and detail
-      .linear(1.15, -8)       // 15% contrast increase with shadow lift - visible improvement
-      .gamma(1.1)             // Gamma correction for natural mid-tones
+      // Step 2: Strong contrast for dramatic depth and clarity
+      .linear(1.35, -15)      // 35% contrast increase with major shadow lift
+      .gamma(1.2)             // Strong gamma correction for mid-tone punch
       
-      // Step 3: Professional detail enhancement for face clarity
+      // Step 3: Aggressive face and detail sharpening
       .sharpen({
-        sigma: 1.0,           // Medium sharpening for clear details
-        m1: 0.7,              // Strong edge detection for facial features
-        m2: 1.8,              // Good enhancement for text and fine details
-        x1: 2,                // Flat area threshold - preserve smooth areas
-        y2: 10,               // Maximum enhancement limit
-        y3: 15                // Edge boost for crisp text/graphics
+        sigma: 1.5,           // Strong sharpening for crystal clear details
+        m1: 0.9,              // Very strong edge detection for facial features
+        m2: 2.5,              // High enhancement for text and fine details
+        x1: 1,                // Lower threshold for more detail enhancement
+        y2: 15,               // Higher maximum enhancement
+        y3: 25                // Strong edge boost for super crisp text/graphics
       })
       
-      // Step 4: Color grading for natural skin tone enhancement
+      // Step 4: Additional brightness and vibrancy boost
       .modulate({
-        brightness: 1.04,     // Additional brightness for healthy glow
-        saturation: 1.06,     // Final saturation tweak for natural vibrancy
-        hue: 0               // Maintain color balance
+        brightness: 1.08,     // Extra brightness for glowing effect
+        saturation: 1.12,     // More saturation for vibrant appearance
+        hue: 0               // Maintain balanced color
       })
       
-      // Step 5: Final polish with balanced gamma
-      .gamma(1.05)            // Subtle gamma for natural finishing
+      // Step 5: Final gamma enhancement for face pop
+      .gamma(1.15)            // Strong gamma for face visibility and clarity
+      
+      // Step 6: Additional contrast boost for final polish
+      .linear(1.12, -5)       // Final contrast enhancement
       
       // Always export as JPEG for consistency and compatibility
       .jpeg({ 
-        quality: 96,          // Higher quality for better detail preservation
+        quality: 98,          // Maximum quality for crystal clear details
         progressive: true,    // Progressive loading
-        mozjpeg: true         // Advanced compression for better quality
+        mozjpeg: true         // Advanced compression for best quality
       })
       .toBuffer();
     
     // Convert back to base64
     const enhancedBase64 = naturalEnhanced.toString('base64');
-    console.log("🎨 Detailed Natural Enhancement Applied - Every Detail Improved:");
-    console.log("✨ 8% brightness boost for better visibility and natural glow");
-    console.log("🌈 12% saturation increase for vibrant but realistic colors");
-    console.log("🔍 Professional detail sharpening for facial features and text clarity");
-    console.log("⚡ 15% contrast enhancement for better depth and definition");
-    console.log("🎯 Warm tone adjustment for appealing and natural skin tones");
-    console.log("💯 Multi-step enhancement while maintaining 100% natural look");
+    console.log("🚀 AGGRESSIVE Natural Enhancement Applied - Crystal Clear Face & Details:");
+    console.log("🔥 25% brightness boost + extra 8% glow for maximum face visibility");
+    console.log("🌈 22% + 12% saturation = 34% total for vibrant vivid colors");
+    console.log("⚡ 35% + 12% contrast = 47% total for dramatic depth and clarity");
+    console.log("🔍 Aggressive sharpening with 1.5 sigma for crystal clear facial features");
+    console.log("✨ Strong gamma correction (1.2 + 1.15) for face pop and mid-tone punch");
+    console.log("🎯 Warm tone adjustment + major shadow lift for appealing skin tones");
+    console.log("💯 Multi-layer aggressive enhancement while maintaining natural appearance");
     
     return {
       enhancedImage: enhancedBase64,
       success: true,
-      message: "Detailed natural enhancement applied successfully. Your thumbnail now has improved brightness, vibrant colors, enhanced facial details, and better overall clarity while maintaining a completely natural look."
+      message: "Aggressive natural enhancement applied successfully! Your thumbnail now has crystal clear facial features, dramatic brightness boost, vibrant colors, and exceptional clarity. Face details are now highly visible while maintaining a natural appearance."
     };
     
   } catch (error) {
