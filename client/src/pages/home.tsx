@@ -419,9 +419,9 @@ export default function Home() {
               <span className="block sm:inline">Enhance Your YouTube Thumbnails</span>
               <span className="block sm:inline">&nbsp;& Titles in Seconds</span>
             </h1>
-            <p className="text-gray-700 text-base sm:text-lg mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed px-4">
-              Professional AI enhancement that improves every detail while preserving your original design. 
-              Make your thumbnails more eye-catching and boost your CTR instantly.
+            <p className="text-gray-700 text-sm sm:text-base md:text-lg mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed px-6 sm:px-4">
+              <span className="block sm:inline">Professional AI enhancement that improves every detail while preserving your original design.</span>
+              <span className="block sm:inline mt-2 sm:mt-0"> Make your thumbnails more eye-catching and boost your CTR instantly.</span>
             </p>
           </motion.div>
         </div>
