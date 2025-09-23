@@ -202,279 +202,112 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background relative">
-      {/* Header - Mobile Friendly */}
-      <header className="bg-white/95 backdrop-blur-sm border-b border-gray-200 relative z-30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            {/* Logo */}
-            <div className="flex items-center">
-              <Link href="/">
-                <h1 className="text-2xl font-bold text-gray-900 cursor-pointer hover:opacity-80 transition-opacity" data-testid="logo">
-                  <span className="text-gray-900">Giny</span><span className="text-blue-600">Wow</span>
-                </h1>
-              </Link>
-            </div>
-            
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-8">
-              <DropdownMenu>
-                <DropdownMenuTrigger className="flex items-center text-gray-600 hover:text-gray-900 transition-colors font-medium" data-testid="nav-pdf">
-                  PDF <ChevronDown className="ml-1 w-4 h-4" />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuItem>Edit PDF</DropdownMenuItem>
-                  <DropdownMenuItem>PDF to Word</DropdownMenuItem>
-                  <DropdownMenuItem>Merge PDF</DropdownMenuItem>
-                  <DropdownMenuItem>Split PDF</DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-              
-              <button className="flex items-center text-gray-600 hover:text-gray-900 transition-colors font-medium" data-testid="nav-app-opener">
-                App Opener <ChevronDown className="ml-1 w-4 h-4" />
-              </button>
-              
-              <DropdownMenu>
-                <DropdownMenuTrigger className="flex items-center text-gray-600 hover:text-gray-900 transition-colors font-medium" data-testid="nav-image-converter">
-                  Image Converter <ChevronDown className="ml-1 w-4 h-4" />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuItem>Remove Background</DropdownMenuItem>
-                  <DropdownMenuItem>Resize Image</DropdownMenuItem>
-                  <DropdownMenuItem>Compress Image</DropdownMenuItem>
-                  <DropdownMenuItem>Image to Text</DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-              
-              <DropdownMenu>
-                <DropdownMenuTrigger className="flex items-center text-gray-600 hover:text-gray-900 transition-colors font-medium" data-testid="nav-write">
-                  Write <ChevronDown className="ml-1 w-4 h-4" />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuItem>Essay Writer</DropdownMenuItem>
-                  <DropdownMenuItem>Paragraph Writer</DropdownMenuItem>
-                  <DropdownMenuItem>Grammar Fixer</DropdownMenuItem>
-                  <DropdownMenuItem>Content Improver</DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-            
-            {/* Desktop Search and Sign In */}
-            <div className="hidden md:flex items-center space-x-4">
-              <div className="relative hidden lg:block">
-                <Input
-                  type="text"
-                  placeholder="Search tools..."
-                  className="pl-10 pr-4 py-2 w-64 border-gray-300 rounded-lg"
-                  data-testid="search-input"
-                />
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-              </div>
-              
-              <Button 
-                variant="outline" 
-                size="sm"
-                className="border-gray-300 text-gray-700 hover:bg-gray-50"
-                data-testid="sign-in"
-              >
-                Sign In
-              </Button>
-            </div>
+      {/* Header - Opener.one Style */}
+      <header className="bg-white border-b border-gray-200">
+        <div className="container mx-auto px-6 h-16 flex items-center justify-between">
+          {/* Logo */}
+          <Link to="/">
+            <h1 className="text-2xl font-bold text-gray-900 cursor-pointer hover:opacity-80 transition-opacity" data-testid="logo">
+              <span className="text-gray-900">Giny</span><span className="text-blue-600">Wow</span>
+            </h1>
+          </Link>
 
-            {/* Mobile Hamburger Menu Button */}
-            <div className="md:hidden">
-              <button
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="p-3 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
-                data-testid="mobile-menu-button"
-                aria-label="Toggle mobile menu"
-              >
-                {isMobileMenuOpen ? (
-                  <X className="w-6 h-6" />
-                ) : (
-                  <Menu className="w-6 h-6" />
-                )}
-              </button>
-            </div>
-          </div>
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-8">
+            <a href="#" className="text-gray-700 hover:text-gray-900 font-medium">Tools</a>
+            <a href="#" className="text-gray-700 hover:text-gray-900 font-medium">About</a>
+            <a href="#" className="text-gray-700 hover:text-gray-900 font-medium">Contact</a>
+          </nav>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+            aria-label="Toggle mobile menu"
+            data-testid="mobile-menu-toggle"
+          >
+            {isMobileMenuOpen ? (
+              <X className="w-6 h-6 text-gray-700" />
+            ) : (
+              <Menu className="w-6 h-6 text-gray-700" />
+            )}
+          </button>
         </div>
       </header>
 
-      {/* Mobile Sidebar Navigation */}
+      {/* Mobile Sidebar */}
       {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-50 md:hidden">
-          {/* Backdrop */}
-          <div 
-            className="fixed inset-0 bg-black bg-opacity-50 transition-opacity cursor-pointer"
-            onClick={() => setIsMobileMenuOpen(false)}
-            role="button"
-            aria-label="Close mobile menu"
-          ></div>
-          
-          {/* Sidebar */}
-          <motion.nav
-            initial={{ x: '-100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '-100%' }}
-            transition={{ type: 'tween', duration: 0.3 }}
-            className="fixed top-0 left-0 bottom-0 w-80 max-w-[85vw] bg-white shadow-xl overflow-y-auto z-10"
-          >
-            {/* Sidebar Header */}
-            <div className="flex items-center justify-between p-6 border-b border-gray-200">
-              <h2 className="text-xl font-bold text-gray-900">Categories</h2>
-              <button
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg"
-                data-testid="close-mobile-menu"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            {/* Navigation Items */}
-            <div className="p-6 space-y-6">
-              {/* PDF Tools */}
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-3" data-testid="mobile-nav-pdf">
-                  PDF Tools
-                </h3>
-                <div className="space-y-2 ml-4">
-                  <button className="block w-full text-left text-gray-600 hover:text-gray-900 py-2">Edit PDF</button>
-                  <button className="block w-full text-left text-gray-600 hover:text-gray-900 py-2">PDF to Word</button>
-                  <button className="block w-full text-left text-gray-600 hover:text-gray-900 py-2">Merge PDF</button>
-                  <button className="block w-full text-left text-gray-600 hover:text-gray-900 py-2">Split PDF</button>
-                </div>
-              </div>
-
-              {/* App Opener */}
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-3" data-testid="mobile-nav-app-opener">
-                  App Opener
-                </h3>
-                <div className="space-y-2 ml-4">
-                  <button className="block w-full text-left text-gray-600 hover:text-gray-900 py-2">Open App Files</button>
-                  <button className="block w-full text-left text-gray-600 hover:text-gray-900 py-2">Extract App Data</button>
-                </div>
-              </div>
-
-              {/* Image Tools */}
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-3" data-testid="mobile-nav-image-converter">
-                  Image Tools
-                </h3>
-                <div className="space-y-2 ml-4">
-                  <button className="block w-full text-left text-gray-600 hover:text-gray-900 py-2">Remove Background</button>
-                  <button className="block w-full text-left text-gray-600 hover:text-gray-900 py-2">Resize Image</button>
-                  <button className="block w-full text-left text-gray-600 hover:text-gray-900 py-2">Compress Image</button>
-                  <button className="block w-full text-left text-gray-600 hover:text-gray-900 py-2">Image to Text</button>
-                </div>
-              </div>
-
-              {/* Writing Tools */}
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-3" data-testid="mobile-nav-write">
-                  Writing Tools
-                </h3>
-                <div className="space-y-2 ml-4">
-                  <button className="block w-full text-left text-gray-600 hover:text-gray-900 py-2">Essay Writer</button>
-                  <button className="block w-full text-left text-gray-600 hover:text-gray-900 py-2">Paragraph Writer</button>
-                  <button className="block w-full text-left text-gray-600 hover:text-gray-900 py-2">Grammar Fixer</button>
-                  <button className="block w-full text-left text-gray-600 hover:text-gray-900 py-2">Content Improver</button>
-                </div>
-              </div>
-
-              {/* Mobile Search */}
-              <div className="pt-4 border-t border-gray-200">
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">Search</h3>
-                <div className="relative">
-                  <Input
-                    type="text"
-                    placeholder="Search tools..."
-                    className="pl-10 pr-4 py-3 w-full border-gray-300 focus:border-blue-500"
-                    data-testid="mobile-search-input"
-                  />
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                </div>
-              </div>
-            </div>
-          </motion.nav>
+        <div className="md:hidden fixed inset-0 top-16 bg-white z-40 overflow-y-auto">
+          <div className="p-6 space-y-6">
+            <nav className="space-y-4">
+              <a href="#" className="block text-lg font-medium text-gray-900 hover:text-blue-600">Tools</a>
+              <a href="#" className="block text-lg font-medium text-gray-900 hover:text-blue-600">About</a>
+              <a href="#" className="block text-lg font-medium text-gray-900 hover:text-blue-600">Contact</a>
+            </nav>
+          </div>
         </div>
       )}
 
-      {/* Content Section - Opener.one Style */}
-      <section className="bg-white py-12 md:py-16 relative z-10">
-        <div className="container mx-auto px-6 md:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="max-w-3xl mx-auto"
-          >
-            <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
-              Enhance Your YouTube Thumbnails & Titles
-            </h1>
-            <p className="text-gray-600 text-lg md:text-xl mb-0 leading-relaxed font-light">
-              Professional AI enhancement that improves every detail while preserving your original design.
-            </p>
-          </motion.div>
+      {/* Hero Section - Opener.one Style */}
+      <section className="bg-white py-16 md:py-24">
+        <div className="container mx-auto px-6 text-center">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+            YouTube Thumbnail & Title Optimizer
+          </h1>
+          <p className="text-lg md:text-xl text-gray-600 mb-12 max-w-4xl mx-auto">
+            We help you get more views and subscribers by optimizing your thumbnails and titles with AI-powered enhancement.
+          </p>
         </div>
       </section>
 
-      {/* Main Content - Opener.one Style */}
-      <main className="bg-white container mx-auto px-6 md:px-8 py-8 md:py-12 max-w-2xl relative z-10">
-        
-        {/* YouTube Thumbnail & Title Optimizer Tool */}
-        <motion.div 
-          className="space-y-8"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          data-testid="optimizer-tool"
-        >
-
-          {/* Thumbnail Upload Section */}
-          <div className="space-y-6">
-            <h2 className="text-xl md:text-2xl font-semibold text-gray-900 text-center">Upload Thumbnail</h2>
+      {/* Main Tool Section - Opener.one Style */}
+      <main className="bg-white py-12 md:py-16">
+        <div className="container mx-auto px-6 max-w-2xl">
+          
+          {/* Tool Input Area */}
+          <div className="space-y-8 text-center">
             
-            <input 
-              ref={fileInputRef}
-              type="file" 
-              accept="image/jpeg,image/png,image/webp" 
-              className="hidden" 
-              id="thumbnail-upload" 
-              onChange={(e) => {
-                if (e.target.files && e.target.files[0]) {
-                  handleFileUpload(e.target.files[0]);
-                }
-              }}
-            />
-            
-            {thumbnailPreview ? (
-              <div className="space-y-4 text-center">
-                <div className="relative w-full max-w-md mx-auto aspect-video rounded-lg overflow-hidden bg-gray-100">
-                  <img 
-                    src={thumbnailPreview} 
-                    alt="Thumbnail preview" 
-                    className="absolute inset-0 w-full h-full object-contain object-center"
-                    data-testid="thumbnail-preview"
-                  />
+            {/* Upload Area */}
+            <div className="space-y-4">
+              <input 
+                ref={fileInputRef}
+                type="file" 
+                accept="image/jpeg,image/png,image/webp" 
+                className="hidden" 
+                id="thumbnail-upload" 
+                onChange={(e) => {
+                  if (e.target.files && e.target.files[0]) {
+                    handleFileUpload(e.target.files[0]);
+                  }
+                }}
+              />
+              
+              {thumbnailPreview ? (
+                <div className="space-y-4">
+                  <div className="relative w-full max-w-sm mx-auto aspect-video rounded-lg overflow-hidden bg-gray-100 border-2 border-gray-200">
+                    <img 
+                      src={thumbnailPreview} 
+                      alt="Thumbnail preview" 
+                      className="absolute inset-0 w-full h-full object-contain object-center"
+                      data-testid="thumbnail-preview"
+                    />
+                  </div>
+                  <button 
+                    className="text-blue-600 hover:text-blue-700 font-medium"
+                    data-testid="change-thumbnail-btn"
+                    onClick={() => fileInputRef.current?.click()}
+                  >
+                    Change thumbnail
+                  </button>
                 </div>
-                <button 
-                  className="text-blue-600 hover:text-blue-700 font-medium text-base"
-                  data-testid="change-thumbnail-btn"
-                  onClick={() => fileInputRef.current?.click()}
-                >
-                  Change Thumbnail
-                </button>
-              </div>
-            ) : (
-              <div className="text-center">
+              ) : (
                 <div 
-                  className={`w-full max-w-md mx-auto p-8 border-2 border-dashed rounded-lg transition-colors cursor-pointer ${
+                  className={`w-full max-w-lg mx-auto p-12 border-2 border-dashed rounded-lg transition-colors cursor-pointer ${
                     isDragOver 
                       ? 'border-blue-400 bg-blue-50' 
                       : uploadError 
                       ? 'border-red-300 bg-red-50' 
-                      : 'border-gray-300 hover:border-gray-400 bg-gray-50'
+                      : 'border-gray-300 hover:border-blue-400 bg-gray-50'
                   }`}
                   data-testid="thumbnail-upload-area"
                   onDragOver={handleDragOver}
@@ -489,57 +322,51 @@ export default function Home() {
                       </svg>
                     </div>
                     <div>
-                      <p className="text-gray-700 font-medium">Drop thumbnail here or click to upload</p>
-                      <p className="text-sm text-gray-500 mt-1">JPG, PNG, WebP (Max 5MB)</p>
+                      <p className="text-gray-700 font-medium text-lg">Upload Your Thumbnail</p>
+                      <p className="text-gray-500">JPG, PNG, WebP (Max 5MB)</p>
                     </div>
                   </div>
                 </div>
-                
-                {uploadError && (
-                  <p className="text-red-600 text-sm mt-2">{uploadError}</p>
-                )}
-              </div>
-            )}
-          </div>
+              )}
+              
+              {uploadError && (
+                <p className="text-red-600 text-sm">{uploadError}</p>
+              )}
+            </div>
 
-          {/* YouTube Title Section */}
-          <div className="space-y-6">
-            <h2 className="text-xl md:text-2xl font-semibold text-gray-900 text-center">Enter Your Title</h2>
-            
-            <div className="space-y-3">
+            {/* Title Input */}
+            <div className="space-y-4">
               <Input 
                 type="text"
-                className="w-full px-4 py-4 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors min-h-[44px] text-center"
-                placeholder="Your YouTube title here..."
+                className="w-full px-6 py-4 text-lg border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-center"
+                placeholder="Paste your YouTube title here..."
                 maxLength={100}
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 data-testid="youtube-title-input"
               />
-              <div className="text-center">
-                <span className="text-sm text-gray-500" data-testid="character-count">{title.length}/100 characters</span>
-              </div>
+              <p className="text-sm text-gray-500" data-testid="character-count">{title.length}/100 characters</p>
             </div>
-          </div>
 
-          {/* Optimize Button */}
-          <div className="text-center space-y-4">
-            <Button 
-              className={`px-12 py-4 text-lg font-medium rounded-lg transition-colors min-h-[44px] ${
-                uploadedFile && title.trim() 
-                  ? 'bg-blue-600 hover:bg-blue-700 text-white'
-                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-              }`}
-              disabled={!uploadedFile || !title.trim() || isOptimizing}
-              onClick={handleOptimize}
-              data-testid="optimize-now-btn"
-            >
-              {isOptimizing ? 'Optimizing...' : 'Optimize Now'}
-            </Button>
-          </div>
+            {/* Generate Button */}
+            <div className="pt-4">
+              <Button 
+                className={`px-16 py-4 text-xl font-semibold rounded-lg transition-all ${
+                  uploadedFile && title.trim() 
+                    ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-xl'
+                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                }`}
+                disabled={!uploadedFile || !title.trim() || isOptimizing}
+                onClick={handleOptimize}
+                data-testid="optimize-now-btn"
+              >
+                {isOptimizing ? 'Optimizing...' : 'Generate'}
+              </Button>
+            </div>
+        </div>
 
-          {/* Results Section */}
-          {optimizationResult && (
+        {/* Results Section */}
+        {optimizationResult && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -693,8 +520,10 @@ export default function Home() {
             </motion.div>
           )}
         </motion.div>
+        </div>
+      </main>
 
-        {/* About Section */}
+      {/* About Section */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
