@@ -17,16 +17,20 @@ export default function About() {
           transition={{ duration: 0.6 }}
         >
           <h1 className="text-responsive-xl font-bold text-gray-900 mb-6 sm:mb-8">
-            About GinyWow
+            About Us
           </h1>
           
           <div className="prose prose-gray max-w-none">
             <p className="text-gray-700 text-responsive-sm leading-relaxed mb-6">
-              GinyWow is a free online platform that provides smart and easy-to-use tools for digital creators and businesses. Our goal is to make content creation and online growth simpler. With tools like the <strong>YouTube Thumbnail & Title Optimizer</strong>, creators can generate SEO-friendly, clickable titles and engaging thumbnails to increase video views. We also offer an <strong>App Opener tool</strong> that helps redirect social media visitors directly into apps like YouTube, Instagram, or Facebook instead of opening links in a browser, making conversions faster and more effective.
+              <strong>GinyWow</strong> is a free online platform that provides smart and easy-to-use tools for digital creators, influencers, and businesses. Our goal is to make online growth and engagement simpler with powerful tools that actually solve real problems.
+            </p>
+            
+            <p className="text-gray-700 text-responsive-sm leading-relaxed mb-6">
+              Our main tool, the <strong>GinyWow App Opener</strong>, helps redirect social media visitors directly into apps like <strong>YouTube, Instagram, Facebook, and Twitter</strong> instead of opening links in a browser. This creates a smoother experience for your audience and leads to <strong>faster conversions, more followers, and higher engagement</strong>.
             </p>
             
             <p className="text-gray-700 text-responsive-sm leading-relaxed">
-              At GinyWow, we believe in giving creators simple, powerful, and reliable tools — all in one place.
+              At <strong>GinyWow</strong>, we believe in giving creators simple, reliable, and effective tools — all in one place.
             </p>
           </div>
 
