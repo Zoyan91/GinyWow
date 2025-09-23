@@ -1,0 +1,104 @@
+**Privacy Policy**
+
+This Privacy Policy describes how **GinyWow** collects, uses, and protects your personal information when you use our Service. It also informs you of your privacy rights and how data protection laws apply to you.
+
+By accessing or using GinyWow, you agree to the collection and use of information in accordance with this policy.
+
+---
+
+## Interpretation & Definitions
+
+**Interpretation**
+Words with capitalized first letters have special meanings defined below. These definitions apply whether the terms appear in singular or plural.
+
+**Definitions**
+
+* **Account**: A unique account created for you to access parts of our Service.
+* **Company**, **We**, **Us**, **Our**: Refers to **GinyWow**.
+* **Cookies**: Small files placed on your device by a website, storing browsing history and preferences.
+* **Country**: Uttar Pradesh, India.
+* **Device**: Any device capable of accessing our Service (computer, smartphone, tablet, etc.).
+* **Personal Data**: Any information that identifies or can identify an individual.
+* **Service**: The GinyWow Website and associated tools.
+* **Service Provider**: Third parties who assist GinyWow in providing or maintaining the Service.
+* **Usage Data**: Data automatically collected when you use the Service (e.g. pages visited, time spent).
+* **Website**: GinyWow, accessible at [https://ginywow.com](https://ginywow.com)
+* **You**: The individual or entity using or accessing our Service.
+
+---
+
+## Collecting & Using Your Personal Data
+
+**Types of Data Collected**
+
+* **Personal Data**: We may ask you for certain identifiable information, such as your email address, when you register or contact us.
+* **Usage Data**: Collected automatically when you access the Service. This can include IP address, browser type, pages visited, time & date of visit, and other diagnostic information.
+
+**Use of Cookies & Tracking Technologies**
+
+We use cookies and similar tools (tags, scripts) to track user activity, store settings, preferences, and to improve our Service. These include:
+
+* **Necessary / Essential Cookies**: Required for core functionality.
+* **Persistent Cookies**: Remember preferences or settings across sessions.
+* **Session Cookies**: Temporary, deleted when browser is closed.
+
+---
+
+## How We Use Your Data
+
+We may use your data to:
+
+* Provide, maintain, and improve the Service.
+* Manage your Account and registration.
+* Send you updates, newsletters, or other information about features or tools.
+* Analyse usage trends to improve content, design, and performance.
+* Fulfill legal obligations or respond to lawful requests from authorities.
+
+---
+
+## Data Retention
+
+We keep your personal data only as long as needed for the purposes stated above. Usage Data may be stored for shorter or longer periods depending on business needs, legal requirements, or security needs.
+
+---
+
+## Transfer & Disclosure of Your Data
+
+We may transfer your data to locations outside your country if needed. If we do so, we ensure adequate protections are in place.
+
+We may share your information with:
+
+* Service Providers assisting us in operating the Service.
+* Business partners for promotions or new features.
+* Legal entities when required by law or to protect rights or safety.
+
+---
+
+## Security of Your Data
+
+We take reasonable measures to protect your data. But no system is completely secure — we cannot guarantee absolute protection.
+
+---
+
+## Children’s Privacy
+
+Our Service is not intended for children under 13. We do not knowingly collect data from anyone under 13. If you believe we have, please contact us so we can remove that information.
+
+---
+
+## Links to Other Sites
+
+Our Service may contain links to third-party websites. We are not responsible for their privacy practices. Please review their policies before providing any personal information.
+
+---
+
+## Changes to This Privacy Policy
+
+We may update this Privacy Policy occasionally. Whenever we do, we will update the “Last updated” date. We recommend you check this page periodically for changes.
+
+---
+
+## Contact Us
+
+If you have any questions about this Privacy Policy, you can contact us at:
+**Email:** [info@ginywow.com](mailto:info@ginywow.com)
