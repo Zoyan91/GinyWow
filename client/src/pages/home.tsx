@@ -519,17 +519,18 @@ export default function Home() {
               )}
             </motion.div>
           )}
-        </motion.div>
         </div>
       </main>
 
       {/* About Section */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="mt-12 bg-gray-50 rounded-lg p-8"
-        >
+      <section className="bg-gray-50 py-16">
+        <div className="container mx-auto px-6 max-w-4xl">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="bg-white rounded-lg p-8"
+          >
           <div className="mb-8">
             <div className="text-center mb-6">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">
@@ -751,9 +752,9 @@ export default function Home() {
               </p>
             </div>
           </div>
-        </motion.div>
-
-      </main>
+          </motion.div>
+        </div>
+      </section>
 
       {/* Newsletter Section - Simple & Modern Style */}
       <section className="bg-gray-50 py-20 mt-16 relative overflow-hidden">
