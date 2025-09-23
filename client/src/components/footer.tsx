@@ -20,13 +20,6 @@ export default function Footer() {
             <h4 className="font-bold text-gray-900 mb-6 text-lg">Menus</h4>
             <ul className="space-y-3">
               <li>
-                <Link href="/">
-                  <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm">
-                    App Opener
-                  </span>
-                </Link>
-              </li>
-              <li>
                 <Link href="/contact">
                   <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm">
                     Contact Us
@@ -121,13 +114,6 @@ export default function Footer() {
             </CollapsibleTrigger>
             <CollapsibleContent className="mt-2">
               <ul className="space-y-3 p-4">
-                <li>
-                  <Link href="/">
-                    <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm block py-2">
-                      App Opener
-                    </span>
-                  </Link>
-                </li>
                 <li>
                   <Link href="/contact">
                     <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm block py-2">
