@@ -77,6 +77,16 @@ export const insertShortUrlSchema = createInsertSchema(shortUrls).pick({
   urlType: true,
 });
 
+export const thumbnailDownloaderSchema = z.object({
+  youtubeUrl: z.string()
+    .min(1, "Please enter a YouTube URL")
+    .url("Please enter a valid URL")
+    .refine(
+      (url) => /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)/.test(url),
+      "Please enter a valid YouTube URL"
+    ),
+});
+
 export type InsertThumbnail = z.infer<typeof insertThumbnailSchema>;
 export type Thumbnail = typeof thumbnails.$inferSelect;
 export type InsertTitleOptimization = z.infer<typeof insertTitleOptimizationSchema>;
@@ -85,3 +95,4 @@ export type InsertNewsletterSubscription = z.infer<typeof insertNewsletterSubscr
 export type NewsletterSubscription = typeof newsletterSubscriptions.$inferSelect;
 export type InsertShortUrl = z.infer<typeof insertShortUrlSchema>;
 export type ShortUrl = typeof shortUrls.$inferSelect;
+export type ThumbnailDownloaderForm = z.infer<typeof thumbnailDownloaderSchema>;
