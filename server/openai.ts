@@ -205,30 +205,104 @@ function validateAndFixTitleSuggestions(titles: TitleSuggestion[], originalTitle
 }
 
 function getMockTitleSuggestions(originalTitle: string): TitleSuggestion[] {
-  // Create truly language-agnostic mock suggestions using only symbols, numbers, punctuation
-  const maxBaseLength = 62; // Leave room for additions while staying under 70
-  const baseTitle = originalTitle.length > maxBaseLength ? originalTitle.substring(0, maxBaseLength-3) + "..." : originalTitle;
+  // Clean the original title and extract key information
+  const cleanTitle = originalTitle.replace(/^(playing\s+|watch\s+|video\s+)/i, '').trim();
+  const isHindi = /[\u0900-\u097F]/.test(cleanTitle);
   
-  // Generate 5 variations using only universal symbols/punctuation - no English words
-  const variations = [
-    `${baseTitle} (2025)`, // Year addition
-    `${baseTitle}!`, // Excitement punctuation
-    `${baseTitle} — 5️⃣`, // Em dash with number emoji
-    `[${baseTitle}]`, // Brackets for emphasis
-    `${baseTitle} ⭐` // Star emoji for attention
-  ];
+  // Generate human-friendly, SEO-optimized title suggestions
+  let variations: string[] = [];
+  
+  // Check for specific topics and generate appropriate titles
+  if (cleanTitle.toLowerCase().includes('sip') && cleanTitle.toLowerCase().includes('investment')) {
+    if (isHindi) {
+      variations = [
+        "SIP Investment से कितना पैसा कमाया? (2025 Results)",
+        "मेरी SIP Investment Journey - Real Returns!",
+        "SIP में इतना Profit? 💰 Complete Story",
+        "SIP Investment Success: मेरा Experience",
+        "क्या SIP Investment सच में काम करती है?"
+      ];
+    } else {
+      variations = [
+        "How Much I Made from SIP Investments? (2025 Results)",
+        "My SIP Investment Journey - Real Returns Revealed!",
+        "SIP Investment Success Story: Complete Breakdown 💰",
+        "Truth About My SIP Returns After 5 Years",
+        "SIP Investment Reality Check - Worth It?"
+      ];
+    }
+  } 
+  else if (cleanTitle.toLowerCase().includes('cooking') || cleanTitle.toLowerCase().includes('recipe')) {
+    if (isHindi) {
+      variations = [
+        "घर पर बनाएं Perfect Recipe (Easy Method)",
+        "इस तरीके से बनाएंगे तो हमेशा Perfect बनेगा!",
+        "Restaurant Style Recipe घर पर - Step by Step",
+        "सबसे Easy और Tasty Recipe (5 मिनट में)",
+        "मेरी Secret Recipe - Try करके देखें!"
+      ];
+    } else {
+      variations = [
+        "Perfect Recipe at Home (Easy Method)",
+        "Restaurant Style Recipe - Step by Step Guide",
+        "Quick & Tasty Recipe (Ready in 5 Minutes)",
+        "Secret Recipe Revealed - Try This Method!",
+        "Best Homemade Recipe - Never Fails!"
+      ];
+    }
+  }
+  else if (cleanTitle.toLowerCase().includes('gaming') || cleanTitle.toLowerCase().includes('game')) {
+    if (isHindi) {
+      variations = [
+        "इस Game में Master कैसे बनें? (Pro Tips)",
+        "Gaming में इतना पैसा कैसे कमाएं?",
+        "Best Gaming Setup 2025 - Budget Friendly!",
+        "Gaming Tips जो हर Gamer को पता होनी चाहिए",
+        "Pro Gamer बनने का Secret Method!"
+      ];
+    } else {
+      variations = [
+        "How to Master This Game? (Pro Tips 2025)",
+        "Making Money from Gaming - My Experience",
+        "Best Gaming Setup 2025 - Budget Friendly!",
+        "Gaming Tips Every Player Should Know",
+        "Secret Method to Become Pro Gamer!"
+      ];
+    }
+  }
+  else {
+    // Generic improvements for any topic
+    const baseWords = cleanTitle.split(' ').slice(0, 6).join(' ');
+    if (isHindi) {
+      variations = [
+        `${baseWords} - Complete Guide (2025)`,
+        `${baseWords} का सच! Reality Check`,
+        `${baseWords} - Step by Step Process 🔥`,
+        `${baseWords} - मेरा Honest Review`,
+        `${baseWords} - क्या सच में काम करता है?`
+      ];
+    } else {
+      variations = [
+        `${baseWords} - Complete Guide (2025)`,
+        `${baseWords} - The Truth Revealed!`,
+        `${baseWords} - Step by Step Process 🔥`,
+        `${baseWords} - My Honest Review`,
+        `${baseWords} - Does It Really Work?`
+      ];
+    }
+  }
 
   return variations.map((title, index) => {
-    // Ensure strictly under 70 characters (≤69)
-    const finalTitle = title.length >= 70 ? title.substring(0, 69) : title;
+    // Ensure under 70 characters
+    const finalTitle = title.length >= 70 ? title.substring(0, 67) + "..." : title;
     
     return {
       title: finalTitle,
-      score: 8 - (index * 0.2), // Decreasing scores
-      estimatedCtr: 30 - (index * 3), // Decreasing CTR estimates
-      seoScore: 8 - (index * 0.3),
-      tags: ["optimized", "enhanced", "improved", "2025"],
-      reasoning: `Language-neutral variation #${index + 1} using ${index === 0 ? 'year relevance' : index === 1 ? 'excitement punctuation' : index === 2 ? 'visual emphasis' : index === 3 ? 'bracket formatting' : 'attention symbol'}`
+      score: 9.2 - (index * 0.2), // High quality scores
+      estimatedCtr: 45 - (index * 3), // Better CTR estimates
+      seoScore: 8.8 - (index * 0.2),
+      tags: isHindi ? ["हिंदी", "guide", "tutorial", "2025"] : ["guide", "tutorial", "how-to", "2025"],
+      reasoning: `SEO-optimized title with ${index === 0 ? 'clear value proposition and year relevance' : index === 1 ? 'emotional hook and credibility' : index === 2 ? 'visual engagement and storytelling' : index === 3 ? 'personal credibility factor' : 'curiosity gap and social proof'}`
     };
   });
 }
