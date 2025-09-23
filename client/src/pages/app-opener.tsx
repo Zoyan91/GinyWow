@@ -195,31 +195,18 @@ export default function AppOpener() {
     if (!youtubeUrl.trim()) {
       toast({
         title: "Error",
-        description: "Please enter a YouTube URL",
+        description: "Please enter a valid URL",
         variant: "destructive"
       });
       return;
     }
 
     try {
-      const urlObj = new URL(youtubeUrl);
-      const isValidDomain = urlObj.hostname === 'youtu.be' || 
-                           urlObj.hostname === 'youtube.com' || 
-                           urlObj.hostname === 'www.youtube.com' ||
-                           urlObj.hostname === 'm.youtube.com';
-      
-      if (!isValidDomain) {
-        toast({
-          title: "Invalid URL",
-          description: "Please enter a valid YouTube URL",
-          variant: "destructive"
-        });
-        return;
-      }
+      new URL(youtubeUrl);
     } catch {
       toast({
         title: "Invalid URL",
-        description: "Please enter a valid YouTube URL",
+        description: "Please enter a valid URL",
         variant: "destructive"
       });
       return;
@@ -235,7 +222,7 @@ export default function AppOpener() {
         setGeneratedLink(result.shortUrl);
         toast({
           title: "Success!",
-          description: "Your app opener link has been generated",
+          description: `Your ${result.platform || 'app opener'} link has been generated successfully!`,
         });
       } else {
         throw new Error(result.error || 'Failed to generate link');
@@ -485,12 +472,12 @@ export default function AppOpener() {
           >
             {/* Title */}
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
-              App Opener Link Generator Link Directly Open in YouTube App
+              App Opener Link Generator - Open Links Directly in Apps
             </h1>
             
             {/* Subtitle */}
             <p className="text-lg md:text-xl text-gray-600 mb-12 leading-relaxed">
-              We help you gain more followers on socials by enabling users to open a link directly in an app instead of an in-app browser.
+              Convert any social media or website link into smart links that open directly in mobile apps instead of browsers.
             </p>
 
             {/* URL Input and Generate Button */}
@@ -498,11 +485,11 @@ export default function AppOpener() {
               <div className="flex flex-col sm:flex-row gap-4">
                 <Input
                   type="url"
-                  placeholder="Paste Your URL Here"
+                  placeholder="https://instagram.com/p/..., https://tiktok.com/..., https://youtube.com/..."
                   value={youtubeUrl}
                   onChange={(e) => setYoutubeUrl(e.target.value)}
                   className="flex-1 h-14 px-6 text-lg border-2 border-gray-200 rounded-xl focus:border-orange-400 focus:ring-orange-400"
-                  data-testid="youtube-url-input"
+                  data-testid="url-input"
                 />
                 <Button
                   onClick={handleGenerate}
@@ -574,11 +561,11 @@ export default function AppOpener() {
             
             <div className="prose prose-lg mx-auto text-gray-600">
               <p className="text-lg leading-relaxed mb-6">
-                <strong>GinyWow App Opener</strong>, also known as Link Opener, YouTube Opener, Instagram Link Opener, and more, is a direct-to-app redirection tool that helps social media influencers, affiliate marketers, and businesses convert their social media visitors into <strong>YouTube subscribers</strong> and loyal followers.
+                <strong>GinyWow App Opener</strong>, also known as Link Opener, Social Media Opener, and Universal Link Opener, is a direct-to-app redirection tool that helps social media influencers, affiliate marketers, and businesses convert their visitors into <strong>app users</strong> and loyal followers across all platforms.
               </p>
               
               <p className="text-lg leading-relaxed mb-6">
-                The <strong>GinyWow App Opener link generator</strong> allows creators to generate custom links for social media profiles including <strong>YouTube, Facebook, Instagram, Twitter</strong>, and many others. Normally, when you share a YouTube channel link on Instagram or Facebook, it opens in a browser instead of the app, which creates a poor user experience.
+                The <strong>GinyWow App Opener link generator</strong> allows creators to generate custom links for social media profiles including <strong>YouTube, Instagram, TikTok, Facebook, Twitter, LinkedIn</strong>, and many others. Normally, when you share social media links across platforms, they open in a browser instead of the native app, which creates a poor user experience.
               </p>
               
               <p className="text-lg leading-relaxed">
@@ -760,7 +747,7 @@ export default function AppOpener() {
               
               <div>
                 <h3 className="text-xl font-bold text-gray-900 mb-3">2. Which apps are supported by GinyWow App Opener?</h3>
-                <p className="text-lg text-gray-600">Currently, our tool supports popular apps like <strong>YouTube, Instagram, Facebook, and Twitter</strong>. We are working to add support for even more apps very soon.</p>
+                <p className="text-lg text-gray-600">Currently, our tool supports popular apps like <strong>YouTube, Instagram, TikTok, Facebook, Twitter, LinkedIn</strong>, and many other websites. We are continuously adding support for more platforms.</p>
               </div>
               
               <div>

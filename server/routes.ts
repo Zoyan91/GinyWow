@@ -274,7 +274,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Generate short URL for YouTube links
+  // Generate short URL for any social media or website links
   app.post('/api/short-url', async (req, res) => {
     try {
       const { url } = req.body;
@@ -282,58 +282,74 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!url) {
         return res.status(400).json({ 
           success: false,
-          error: 'Please provide a valid YouTube URL' 
+          error: 'Please provide a valid URL' 
         });
       }
 
-      // Strict domain validation
+      // Basic URL validation
       try {
-        const urlObj = new URL(url);
-        const isValidDomain = urlObj.hostname === 'youtu.be' || 
-                             urlObj.hostname === 'youtube.com' || 
-                             urlObj.hostname === 'www.youtube.com' ||
-                             urlObj.hostname === 'm.youtube.com';
-        
-        if (!isValidDomain) {
-          return res.status(400).json({ 
-            success: false,
-            error: 'Please provide a valid YouTube URL' 
-          });
-        }
+        new URL(url);
       } catch {
         return res.status(400).json({ 
           success: false,
-          error: 'Please provide a valid YouTube URL' 
+          error: 'Please provide a valid URL' 
         });
       }
 
-      // Parse YouTube URL
-      const parseYouTubeUrl = (url: string) => {
+      // Parse URL for any platform
+      const parseUrl = (url: string) => {
         try {
           const urlObj = new URL(url);
+          const hostname = urlObj.hostname.toLowerCase();
           
-          if (urlObj.hostname.includes('youtube.com')) {
-            if (urlObj.pathname === '/watch') {
-              return { type: 'video', id: urlObj.searchParams.get('v'), path: urlObj.pathname + urlObj.search };
-            } else if (urlObj.pathname.startsWith('/playlist')) {
-              return { type: 'playlist', id: urlObj.searchParams.get('list'), path: urlObj.pathname + urlObj.search };
-            } else if (urlObj.pathname.startsWith('/channel/')) {
-              const channelId = urlObj.pathname.split('/channel/')[1];
-              return { type: 'channel', id: channelId, path: urlObj.pathname, isUcid: channelId.startsWith('UC') };
-            } else if (urlObj.pathname.startsWith('/c/')) {
-              const customName = urlObj.pathname.split('/c/')[1];
-              return { type: 'channel', id: customName, path: urlObj.pathname, isUcid: false };
-            } else if (urlObj.pathname.startsWith('/@')) {
-              const handle = urlObj.pathname.split('/@')[1];
-              return { type: 'channel', id: handle, path: urlObj.pathname, isUcid: false };
+          // YouTube
+          if (hostname.includes('youtube.com') || hostname === 'youtu.be') {
+            if (hostname === 'youtu.be') {
+              return { platform: 'youtube', type: 'video', id: urlObj.pathname.slice(1), path: `/watch?v=${urlObj.pathname.slice(1)}` };
+            } else if (urlObj.pathname === '/watch') {
+              return { platform: 'youtube', type: 'video', id: urlObj.searchParams.get('v'), path: urlObj.pathname + urlObj.search };
             } else if (urlObj.pathname.startsWith('/shorts/')) {
-              return { type: 'shorts', id: urlObj.pathname.split('/shorts/')[1], path: urlObj.pathname };
+              return { platform: 'youtube', type: 'shorts', id: urlObj.pathname.split('/shorts/')[1], path: urlObj.pathname };
+            } else {
+              return { platform: 'youtube', type: 'general', id: null, path: urlObj.pathname + urlObj.search };
             }
-          } else if (urlObj.hostname === 'youtu.be') {
-            return { type: 'video', id: urlObj.pathname.slice(1), path: `/watch?v=${urlObj.pathname.slice(1)}` };
           }
           
-          return null;
+          // Instagram
+          if (hostname.includes('instagram.com')) {
+            if (urlObj.pathname.startsWith('/p/') || urlObj.pathname.startsWith('/reel/')) {
+              return { platform: 'instagram', type: 'post', id: urlObj.pathname.split('/')[2], path: urlObj.pathname };
+            } else {
+              return { platform: 'instagram', type: 'general', id: null, path: urlObj.pathname };
+            }
+          }
+          
+          // TikTok
+          if (hostname.includes('tiktok.com')) {
+            if (urlObj.pathname.includes('/video/')) {
+              return { platform: 'tiktok', type: 'video', id: urlObj.pathname.split('/video/')[1], path: urlObj.pathname };
+            } else {
+              return { platform: 'tiktok', type: 'general', id: null, path: urlObj.pathname };
+            }
+          }
+          
+          // Twitter/X
+          if (hostname.includes('twitter.com') || hostname.includes('x.com')) {
+            return { platform: 'twitter', type: 'general', id: null, path: urlObj.pathname };
+          }
+          
+          // Facebook
+          if (hostname.includes('facebook.com') || hostname.includes('fb.com')) {
+            return { platform: 'facebook', type: 'general', id: null, path: urlObj.pathname };
+          }
+          
+          // LinkedIn
+          if (hostname.includes('linkedin.com')) {
+            return { platform: 'linkedin', type: 'general', id: null, path: urlObj.pathname };
+          }
+          
+          // Default for any other website
+          return { platform: 'web', type: 'general', id: null, path: urlObj.pathname };
         } catch {
           return null;
         }
@@ -345,34 +361,61 @@ export async function registerRoutes(app: Express): Promise<Server> {
         let iosLink = '';
         let androidLink = '';
         
-        if (parsed.type === 'video') {
-          iosLink = `youtube://watch?v=${parsed.id}`;
-          androidLink = `intent://www.youtube.com/watch?v=${parsed.id}#Intent;scheme=https;package=com.google.android.youtube;S.browser_fallback_url=${encodedUrl};end`;
-        } else if (parsed.type === 'playlist') {
-          iosLink = `youtube://playlist?list=${parsed.id}`;
-          androidLink = `intent://www.youtube.com/playlist?list=${parsed.id}#Intent;scheme=https;package=com.google.android.youtube;S.browser_fallback_url=${encodedUrl};end`;
-        } else if (parsed.type === 'channel') {
-          if (parsed.isUcid) {
-            iosLink = `youtube://www.youtube.com/channel/${parsed.id}`;
-            androidLink = `intent://www.youtube.com/channel/${parsed.id}#Intent;scheme=https;package=com.google.android.youtube;S.browser_fallback_url=${encodedUrl};end`;
-          } else {
-            iosLink = `youtube://www.youtube.com${parsed.path}`;
-            androidLink = `intent://www.youtube.com${parsed.path}#Intent;scheme=https;package=com.google.android.youtube;S.browser_fallback_url=${encodedUrl};end`;
-          }
-        } else if (parsed.type === 'shorts') {
-          iosLink = `youtube://shorts/${parsed.id}`;
-          androidLink = `intent://www.youtube.com/shorts/${parsed.id}#Intent;scheme=https;package=com.google.android.youtube;S.browser_fallback_url=${encodedUrl};end`;
+        switch (parsed.platform) {
+          case 'youtube':
+            if (parsed.type === 'video') {
+              iosLink = `youtube://watch?v=${parsed.id}`;
+              androidLink = `intent://www.youtube.com/watch?v=${parsed.id}#Intent;scheme=https;package=com.google.android.youtube;S.browser_fallback_url=${encodedUrl};end`;
+            } else if (parsed.type === 'shorts') {
+              iosLink = `youtube://shorts/${parsed.id}`;
+              androidLink = `intent://www.youtube.com/shorts/${parsed.id}#Intent;scheme=https;package=com.google.android.youtube;S.browser_fallback_url=${encodedUrl};end`;
+            } else {
+              iosLink = `youtube://${originalUrl}`;
+              androidLink = `intent://${originalUrl.replace('https://', '')}#Intent;scheme=https;package=com.google.android.youtube;S.browser_fallback_url=${encodedUrl};end`;
+            }
+            break;
+            
+          case 'instagram':
+            iosLink = `instagram://media?id=${parsed.id || ''}`;
+            androidLink = `intent://${originalUrl.replace('https://', '')}#Intent;scheme=https;package=com.instagram.android;S.browser_fallback_url=${encodedUrl};end`;
+            break;
+            
+          case 'tiktok':
+            iosLink = `snssdk1233://aweme/detail/${parsed.id || ''}`;
+            androidLink = `intent://${originalUrl.replace('https://', '')}#Intent;scheme=https;package=com.zhiliaoapp.musically;S.browser_fallback_url=${encodedUrl};end`;
+            break;
+            
+          case 'twitter':
+            iosLink = `twitter://${originalUrl.replace('https://twitter.com', '').replace('https://x.com', '')}`;
+            androidLink = `intent://${originalUrl.replace('https://', '')}#Intent;scheme=https;package=com.twitter.android;S.browser_fallback_url=${encodedUrl};end`;
+            break;
+            
+          case 'facebook':
+            iosLink = `fb://${originalUrl.replace('https://facebook.com', '').replace('https://www.facebook.com', '')}`;
+            androidLink = `intent://${originalUrl.replace('https://', '')}#Intent;scheme=https;package=com.facebook.katana;S.browser_fallback_url=${encodedUrl};end`;
+            break;
+            
+          case 'linkedin':
+            iosLink = `linkedin://${originalUrl.replace('https://linkedin.com', '').replace('https://www.linkedin.com', '')}`;
+            androidLink = `intent://${originalUrl.replace('https://', '')}#Intent;scheme=https;package=com.linkedin.android;S.browser_fallback_url=${encodedUrl};end`;
+            break;
+            
+          default:
+            // For general websites, just use the original URL
+            iosLink = originalUrl;
+            androidLink = originalUrl;
+            break;
         }
         
         return { iosLink, androidLink, webLink: originalUrl };
       };
 
-      const parsed = parseYouTubeUrl(url);
+      const parsed = parseUrl(url);
       
-      if (!parsed || !parsed.id) {
+      if (!parsed) {
         return res.status(400).json({ 
           success: false,
-          error: 'Could not parse YouTube URL. Please check the format.' 
+          error: 'Could not parse the URL. Please check the format.' 
         });
       }
 
@@ -403,7 +446,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         originalUrl: url,
         iosDeepLink: iosLink,
         androidDeepLink: androidLink,
-        urlType: parsed.type,
+        urlType: `${parsed.platform}_${parsed.type}`,
       });
 
       const shortUrl = await storage.createShortUrl(shortUrlData);
@@ -416,6 +459,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         success: true,
         shortUrl: `${baseUrl}/yt/${shortCode}`,
         originalUrl: url,
+        platform: parsed.platform,
         type: parsed.type
       });
     } catch (error: any) {
