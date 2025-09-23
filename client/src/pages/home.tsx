@@ -394,9 +394,11 @@ export default function Home() {
                 YouTube Optimizer
               </button>
               
-              <button className="flex items-center text-gray-600 hover:text-gray-900 transition-colors font-medium" data-testid="nav-app-opener">
-                App Opener
-              </button>
+              <Link href="/app-opener">
+                <button className="flex items-center text-gray-600 hover:text-gray-900 transition-colors font-medium" data-testid="nav-app-opener">
+                  App Opener
+                </button>
+              </Link>
               
               <Link href="/contact">
                 <button className="flex items-center text-gray-600 hover:text-gray-900 transition-colors font-medium" data-testid="nav-contact">
@@ -429,7 +431,7 @@ export default function Home() {
                 
                 {/* Search Results Dropdown */}
                 {isSearchFocused && searchQuery.trim().length > 0 && (
-                  <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-96 overflow-y-auto mt-1">
+                  <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg z-[9999] max-h-96 overflow-y-auto mt-1">
                     {searchResults.length > 0 ? (
                       searchResults.map((item) => (
                         <button
@@ -523,12 +525,11 @@ export default function Home() {
                   <button className="block text-gray-600 hover:text-gray-900 py-3 text-base font-medium" data-testid="mobile-nav-youtube-optimizer">
                     YouTube Optimizer
                   </button>
-                </div>
-
-                <div className="border-b border-gray-100 pb-3">
-                  <button className="block text-gray-600 hover:text-gray-900 py-3 text-base font-medium" data-testid="mobile-nav-app-opener">
-                    App Opener
-                  </button>
+                  <Link href="/app-opener">
+                    <button className="block text-gray-600 hover:text-gray-900 py-3 text-base font-medium" data-testid="mobile-nav-app-opener">
+                      App Opener
+                    </button>
+                  </Link>
                 </div>
 
                 <div className="border-b border-gray-100 pb-3">
