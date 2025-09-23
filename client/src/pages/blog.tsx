@@ -21,13 +21,9 @@ export default function Blog() {
             <div className="hidden md:flex items-center space-x-8">
               <Link href="/">
                 <button className="flex items-center text-gray-600 hover:text-gray-900 transition-colors font-medium">
-                  YouTube Optimizer
+                  App Opener
                 </button>
               </Link>
-              
-              <button className="flex items-center text-gray-600 hover:text-gray-900 transition-colors font-medium">
-                App Opener
-              </button>
               
               <Link href="/contact">
                 <button className="flex items-center text-gray-600 hover:text-gray-900 transition-colors font-medium">
@@ -53,7 +49,7 @@ export default function Blog() {
       {/* Footer */}
       <footer className="bg-white/90 backdrop-blur-sm border-t border-gray-100 py-12 relative z-10 mt-16">
         <div className="container mx-auto px-6">
-          <div className="grid md:grid-cols-3 gap-8 mb-8">
+          <div className="grid md:grid-cols-2 gap-8 mb-8">
             {/* Menus */}
             <div>
               <h4 className="font-bold text-gray-900 mb-6 text-lg">Menus</h4>
@@ -62,15 +58,6 @@ export default function Blog() {
                 <li><Link href="/contact" className="text-gray-600 hover:text-gray-900 transition-colors">Contact Us</Link></li>
                 <li><Link href="/blog" className="text-gray-600 hover:text-gray-900 transition-colors">Blog</Link></li>
                 <li><Link href="/privacy" className="text-gray-600 hover:text-gray-900 transition-colors">Privacy Policy</Link></li>
-              </ul>
-            </div>
-            
-            {/* YouTube Tools */}
-            <div>
-              <h4 className="font-bold text-gray-900 mb-6 text-lg">YouTube Tools</h4>
-              <ul className="space-y-3">
-                <li><Link href="/" className="text-gray-600 hover:text-gray-900 transition-colors">Thumbnail & Title Optimizer</Link></li>
-                <li><a href="#" className="text-gray-600 hover:text-gray-900 transition-colors">YouTube App Opener</a></li>
               </ul>
             </div>
             
