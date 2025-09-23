@@ -1,48 +1,12 @@
 import { motion } from 'framer-motion';
 import { Link } from 'wouter';
-import { SiFacebook, SiX, SiLinkedin, SiYoutube, SiPinterest } from 'react-icons/si';
+import Header from '@/components/header';
+import Footer from '@/components/footer';
 
 export default function About() {
   return (
     <div className="min-h-screen bg-background relative w-full overflow-x-hidden">
-      {/* Header */}
-      <header className="bg-white/90 backdrop-blur-sm border-b border-gray-200 relative z-10">
-        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            {/* Logo */}
-            <div className="flex items-center">
-              <Link href="/">
-                <h1 className="text-xl sm:text-2xl font-bold text-gray-900 cursor-pointer hover:opacity-80 transition-opacity" data-testid="logo">
-                  <span className="text-gray-900">Giny</span><span className="text-blue-600">Wow</span>
-                </h1>
-              </Link>
-            </div>
-            
-            {/* Navigation */}
-            <div className="hidden md:flex items-center space-x-8">
-              <Link href="/">
-                <button className="flex items-center text-gray-600 hover:text-gray-900 transition-colors font-medium">
-                  YouTube Optimizer
-                </button>
-              </Link>
-              
-              <button className="flex items-center text-gray-600 hover:text-gray-900 transition-colors font-medium">
-                App Opener
-              </button>
-              
-              <button className="flex items-center text-gray-600 hover:text-gray-900 transition-colors font-medium">
-                Contact Us
-              </button>
-              
-              <Link href="/blog">
-                <button className="flex items-center text-gray-600 hover:text-gray-900 transition-colors font-medium">
-                  Blog
-                </button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header currentPage="about" />
 
       {/* About Content */}
       <main className="bg-background/50 backdrop-blur-sm container mx-auto px-4 sm:px-6 py-8 max-w-4xl relative z-10">

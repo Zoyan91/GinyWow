@@ -6,6 +6,8 @@ import { Upload, CheckCircle2, ArrowRight, Sparkles, Users, Zap, Shield, Target,
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import ImageUpload from "@/components/image-upload";
+import TitleOptimizer from "@/components/title-optimizer";
+import ThumbnailComparison from "@/components/thumbnail-comparison";
 import type { Thumbnail, TitleOptimization } from "@shared/schema";
 
 export default function Home() {

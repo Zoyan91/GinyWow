@@ -5,7 +5,6 @@ import { Copy, Clipboard, CheckCircle, Users, Zap, Shield, ArrowRight, MessageCi
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
 import { apiRequest } from "@/lib/queryClient";
-import { Link } from "wouter";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 
