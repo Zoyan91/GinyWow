@@ -454,7 +454,7 @@ export default function Home() {
           >
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight px-2">
               <span className="block sm:inline">Enhance Your YouTube Thumbnails</span>
-              <span className="block sm:inline"> & Titles in Seconds</span>
+              <span className="block sm:inline">&nbsp;& Titles in Seconds</span>
             </h1>
             <p className="text-gray-700 text-base sm:text-lg mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed px-4">
               Professional AI enhancement that improves every detail while preserving your original design. 
