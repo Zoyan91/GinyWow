@@ -17,6 +17,11 @@ export default function Home() {
   const [isOptimizing, setIsOptimizing] = useState(false);
   const [optimizationResult, setOptimizationResult] = useState<any>(null);
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
+  
+  // Newsletter subscription state
+  const [newsletterEmail, setNewsletterEmail] = useState('');
+  const [isSubscribing, setIsSubscribing] = useState(false);
+  const [subscriptionMessage, setSubscriptionMessage] = useState<{type: 'success' | 'error', text: string} | null>(null);
 
   const handleFileUpload = (file: File) => {
     setUploadError("");
@@ -106,6 +111,69 @@ export default function Home() {
       }
     };
   }, [thumbnailPreview]);
+
+  // Newsletter subscription handler
+  const handleNewsletterSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!newsletterEmail.trim()) {
+      setSubscriptionMessage({ type: 'error', text: 'Please enter your email address' });
+      return;
+    }
+
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(newsletterEmail.trim())) {
+      setSubscriptionMessage({ type: 'error', text: 'Please enter a valid email address' });
+      return;
+    }
+
+    setIsSubscribing(true);
+    setSubscriptionMessage(null);
+
+    try {
+      const response = await fetch('/api/newsletter/subscribe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: newsletterEmail.trim() }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSubscriptionMessage({ 
+          type: 'success', 
+          text: 'Successfully subscribed! Welcome email sent to your inbox.' 
+        });
+        setNewsletterEmail(''); // Clear the input
+      } else {
+        setSubscriptionMessage({ 
+          type: 'error', 
+          text: data.error || 'Subscription failed. Please try again.' 
+        });
+      }
+    } catch (error) {
+      console.error('Newsletter subscription error:', error);
+      setSubscriptionMessage({ 
+        type: 'error', 
+        text: 'Network error. Please check your connection and try again.' 
+      });
+    } finally {
+      setIsSubscribing(false);
+    }
+  };
+
+  // Clear subscription message after 5 seconds
+  useEffect(() => {
+    if (subscriptionMessage) {
+      const timer = setTimeout(() => {
+        setSubscriptionMessage(null);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [subscriptionMessage]);
 
   return (
     <div className="min-h-screen bg-background relative">
@@ -753,20 +821,48 @@ export default function Home() {
           <h2 className="text-3xl font-bold text-gray-900 mb-8">
             Subscribe for Our Latest Update
           </h2>
-          <div className="max-w-md mx-auto flex gap-2 mb-4">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-              data-testid="newsletter-email-input"
-            />
-            <Button 
-              className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-medium"
-              data-testid="subscribe-now-btn"
-            >
-              Subscribe Now
-            </Button>
-          </div>
+          <form onSubmit={handleNewsletterSubscribe} className="max-w-md mx-auto">
+            <div className="flex gap-2 mb-4">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                value={newsletterEmail}
+                onChange={(e) => setNewsletterEmail(e.target.value)}
+                className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                data-testid="newsletter-email-input"
+                disabled={isSubscribing}
+              />
+              <Button 
+                type="submit"
+                disabled={isSubscribing}
+                className={`px-6 py-3 rounded-lg font-medium transition-colors ${
+                  isSubscribing 
+                    ? 'bg-orange-400 cursor-not-allowed text-white' 
+                    : 'bg-orange-500 hover:bg-orange-600 text-white'
+                }`}
+                data-testid="subscribe-now-btn"
+              >
+                {isSubscribing ? 'Subscribing...' : 'Subscribe Now'}
+              </Button>
+            </div>
+            
+            {/* Subscription message */}
+            {subscriptionMessage && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+                className={`mb-4 p-3 rounded-lg text-sm ${
+                  subscriptionMessage.type === 'success'
+                    ? 'bg-green-100 text-green-800 border border-green-200'
+                    : 'bg-red-100 text-red-800 border border-red-200'
+                }`}
+                data-testid="subscription-message"
+              >
+                {subscriptionMessage.text}
+              </motion.div>
+            )}
+          </form>
           <p className="text-gray-500 text-sm">
             We respect your privacy. Unsubscribe at any time.
           </p>
