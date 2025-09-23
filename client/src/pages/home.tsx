@@ -249,23 +249,23 @@ export default function Home() {
       )}
 
       {/* Hero Section - Opener.one Style */}
-      <section className="bg-white py-16 md:py-24">
+      <section className="bg-white py-12 md:py-16">
         <div className="container mx-auto px-6 text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
             YouTube Thumbnail & Title Optimizer
           </h1>
-          <p className="text-lg md:text-xl text-gray-600 mb-12 max-w-4xl mx-auto">
-            We help you get more views and subscribers by optimizing your thumbnails and titles with AI-powered enhancement.
+          <p className="text-lg text-gray-500 mb-8 max-w-2xl mx-auto">
+            Optimize your thumbnails and titles for maximum click-through rate
           </p>
         </div>
       </section>
 
       {/* Main Tool Section - Opener.one Style */}
-      <main className="bg-white py-12 md:py-16">
-        <div className="container mx-auto px-6 max-w-2xl">
+      <main className="bg-white py-8 md:py-12">
+        <div className="container mx-auto px-6 max-w-xl">
           
           {/* Tool Input Area */}
-          <div className="space-y-8 text-center">
+          <div className="space-y-6">
             
             {/* Upload Area */}
             <div className="space-y-4">
