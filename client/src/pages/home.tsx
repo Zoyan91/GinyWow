@@ -290,45 +290,17 @@ export default function Home() {
             
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
-              <DropdownMenu>
-                <DropdownMenuTrigger className="flex items-center text-gray-600 hover:text-gray-900 transition-colors font-medium" data-testid="nav-pdf">
-                  PDF <ChevronDown className="ml-1 w-4 h-4" />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuItem>Edit PDF</DropdownMenuItem>
-                  <DropdownMenuItem>PDF to Word</DropdownMenuItem>
-                  <DropdownMenuItem>Merge PDF</DropdownMenuItem>
-                  <DropdownMenuItem>Split PDF</DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-              
               <button className="flex items-center text-gray-600 hover:text-gray-900 transition-colors font-medium" data-testid="nav-app-opener">
-                App Opener <ChevronDown className="ml-1 w-4 h-4" />
+                App Opener
               </button>
               
-              <DropdownMenu>
-                <DropdownMenuTrigger className="flex items-center text-gray-600 hover:text-gray-900 transition-colors font-medium" data-testid="nav-image-converter">
-                  Image Converter <ChevronDown className="ml-1 w-4 h-4" />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuItem>Remove Background</DropdownMenuItem>
-                  <DropdownMenuItem>Resize Image</DropdownMenuItem>
-                  <DropdownMenuItem>Compress Image</DropdownMenuItem>
-                  <DropdownMenuItem>Image to Text</DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <button className="flex items-center text-gray-600 hover:text-gray-900 transition-colors font-medium" data-testid="nav-contact">
+                Contact Us
+              </button>
               
-              <DropdownMenu>
-                <DropdownMenuTrigger className="flex items-center text-gray-600 hover:text-gray-900 transition-colors font-medium" data-testid="nav-write">
-                  Write <ChevronDown className="ml-1 w-4 h-4" />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuItem>Essay Writer</DropdownMenuItem>
-                  <DropdownMenuItem>Paragraph Writer</DropdownMenuItem>
-                  <DropdownMenuItem>Grammar Fixer</DropdownMenuItem>
-                  <DropdownMenuItem>Content Improver</DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <button className="flex items-center text-gray-600 hover:text-gray-900 transition-colors font-medium" data-testid="nav-blog">
+                Blog
+              </button>
             </div>
             
             {/* Desktop Search and Sign In */}
@@ -402,40 +374,21 @@ export default function Home() {
               {/* Mobile Navigation Links */}
               <div className="space-y-3">
                 <div className="border-b border-gray-100 pb-3">
-                  <h3 className="font-semibold text-gray-900 mb-2 text-lg">PDF Tools</h3>
-                  <div className="space-y-2 pl-3">
-                    <button className="block text-gray-600 hover:text-gray-900 py-2 text-base" data-testid="mobile-nav-edit-pdf">Edit PDF</button>
-                    <button className="block text-gray-600 hover:text-gray-900 py-2 text-base" data-testid="mobile-nav-pdf-to-word">PDF to Word</button>
-                    <button className="block text-gray-600 hover:text-gray-900 py-2 text-base" data-testid="mobile-nav-merge-pdf">Merge PDF</button>
-                    <button className="block text-gray-600 hover:text-gray-900 py-2 text-base" data-testid="mobile-nav-split-pdf">Split PDF</button>
-                  </div>
+                  <button className="block text-gray-600 hover:text-gray-900 py-3 text-base font-medium" data-testid="mobile-nav-app-opener">
+                    App Opener
+                  </button>
                 </div>
 
                 <div className="border-b border-gray-100 pb-3">
-                  <h3 className="font-semibold text-gray-900 mb-2 text-lg">App Opener</h3>
-                  <div className="pl-3">
-                    <button className="block text-gray-600 hover:text-gray-900 py-2 text-base" data-testid="mobile-nav-app-opener">Open Apps</button>
-                  </div>
-                </div>
-
-                <div className="border-b border-gray-100 pb-3">
-                  <h3 className="font-semibold text-gray-900 mb-2 text-lg">Image Converter</h3>
-                  <div className="space-y-2 pl-3">
-                    <button className="block text-gray-600 hover:text-gray-900 py-2 text-base" data-testid="mobile-nav-remove-bg">Remove Background</button>
-                    <button className="block text-gray-600 hover:text-gray-900 py-2 text-base" data-testid="mobile-nav-resize-image">Resize Image</button>
-                    <button className="block text-gray-600 hover:text-gray-900 py-2 text-base" data-testid="mobile-nav-compress-image">Compress Image</button>
-                    <button className="block text-gray-600 hover:text-gray-900 py-2 text-base" data-testid="mobile-nav-image-to-text">Image to Text</button>
-                  </div>
+                  <button className="block text-gray-600 hover:text-gray-900 py-3 text-base font-medium" data-testid="mobile-nav-contact">
+                    Contact Us
+                  </button>
                 </div>
 
                 <div className="pb-3">
-                  <h3 className="font-semibold text-gray-900 mb-2 text-lg">Writing Tools</h3>
-                  <div className="space-y-2 pl-3">
-                    <button className="block text-gray-600 hover:text-gray-900 py-2 text-base" data-testid="mobile-nav-essay-writer">Essay Writer</button>
-                    <button className="block text-gray-600 hover:text-gray-900 py-2 text-base" data-testid="mobile-nav-paragraph-writer">Paragraph Writer</button>
-                    <button className="block text-gray-600 hover:text-gray-900 py-2 text-base" data-testid="mobile-nav-grammar-fixer">Grammar Fixer</button>
-                    <button className="block text-gray-600 hover:text-gray-900 py-2 text-base" data-testid="mobile-nav-content-improver">Content Improver</button>
-                  </div>
+                  <button className="block text-gray-600 hover:text-gray-900 py-3 text-base font-medium" data-testid="mobile-nav-blog">
+                    Blog
+                  </button>
                 </div>
               </div>
             </div>
