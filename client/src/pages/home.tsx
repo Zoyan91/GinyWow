@@ -298,9 +298,11 @@ export default function Home() {
                 App Opener
               </button>
               
-              <button className="flex items-center text-gray-600 hover:text-gray-900 transition-colors font-medium" data-testid="nav-contact">
-                Contact Us
-              </button>
+              <Link href="/contact">
+                <button className="flex items-center text-gray-600 hover:text-gray-900 transition-colors font-medium" data-testid="nav-contact">
+                  Contact Us
+                </button>
+              </Link>
               
               <button className="flex items-center text-gray-600 hover:text-gray-900 transition-colors font-medium" data-testid="nav-blog">
                 Blog
@@ -390,9 +392,11 @@ export default function Home() {
                 </div>
 
                 <div className="border-b border-gray-100 pb-3">
-                  <button className="block text-gray-600 hover:text-gray-900 py-3 text-base font-medium" data-testid="mobile-nav-contact">
-                    Contact Us
-                  </button>
+                  <Link href="/contact">
+                    <button className="block text-gray-600 hover:text-gray-900 py-3 text-base font-medium" data-testid="mobile-nav-contact">
+                      Contact Us
+                    </button>
+                  </Link>
                 </div>
 
                 <div className="pb-3">
@@ -1002,7 +1006,7 @@ export default function Home() {
           <div className="border-t border-gray-200 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
             <div className="flex space-x-6 mb-4 md:mb-0">
               <Link href="/about" className="text-sm text-gray-600 hover:text-gray-900">About</Link>
-              <a href="#" className="text-sm text-gray-600 hover:text-gray-900">Contact</a>
+              <Link href="/contact" className="text-sm text-gray-600 hover:text-gray-900">Contact</Link>
               <a href="#" className="text-sm text-gray-600 hover:text-gray-900">Privacy Policy</a>
               <a href="#" className="text-sm text-gray-600 hover:text-gray-900">Terms of Service</a>
             </div>
