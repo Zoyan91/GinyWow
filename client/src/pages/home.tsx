@@ -1005,10 +1005,10 @@ export default function Home() {
           
           <div className="border-t border-gray-200 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
             <div className="flex space-x-6 mb-4 md:mb-0">
-              <Link href="/about" className="text-sm text-gray-600 hover:text-gray-900">About</Link>
-              <Link href="/contact" className="text-sm text-gray-600 hover:text-gray-900">Contact</Link>
+              <Link href="/about" className="text-sm text-gray-600 hover:text-gray-900">About Us</Link>
+              <Link href="/contact" className="text-sm text-gray-600 hover:text-gray-900">Contact Us</Link>
+              <a href="#" className="text-sm text-gray-600 hover:text-gray-900">Blog</a>
               <Link href="/privacy" className="text-sm text-gray-600 hover:text-gray-900">Privacy Policy</Link>
-              <a href="#" className="text-sm text-gray-600 hover:text-gray-900">Terms of Service</a>
             </div>
             <p className="text-sm text-gray-600">© 2024 GinyWow.com. All rights reserved.</p>
           </div>
