@@ -264,14 +264,15 @@ export default function Home() {
 
             {/* URL Input and Generate Button */}
             <div className="max-w-2xl mx-auto mb-8 px-4">
-              <div className="flex flex-col gap-4">
+              {/* Mobile Layout - Separate Elements */}
+              <div className="flex flex-col gap-4 sm:hidden">
                 <Input
                   type="url"
                   placeholder="Paste Your URL Here"
                   value={youtubeUrl}
                   onChange={(e) => setYoutubeUrl(e.target.value)}
-                  className="input-mobile text-center sm:text-left"
-                  data-testid="url-input"
+                  className="input-mobile text-center"
+                  data-testid="url-input-mobile"
                 />
                 <Button
                   onClick={handleGenerate}
@@ -279,7 +280,7 @@ export default function Home() {
                   className={`btn-mobile w-auto px-8 bg-gradient-to-r from-red-500 to-orange-400 hover:from-red-600 hover:to-orange-500 text-white shadow-lg ${
                     isGenerating ? 'opacity-70 cursor-not-allowed' : 'hover:scale-105'
                   }`}
-                  data-testid="generate-button"
+                  data-testid="generate-button-mobile"
                 >
                   {isGenerating ? (
                     <div className="flex items-center justify-center">
@@ -293,6 +294,47 @@ export default function Home() {
                     </div>
                   )}
                 </Button>
+              </div>
+
+              {/* Desktop Layout - Integrated Design */}
+              <div className="hidden sm:block">
+                <div className="flex items-center bg-white rounded-full shadow-lg border border-gray-200 overflow-hidden max-w-xl mx-auto">
+                  <Input
+                    type="url"
+                    placeholder="Paste Your URL Here"
+                    value={youtubeUrl}
+                    onChange={(e) => setYoutubeUrl(e.target.value)}
+                    className="flex-1 border-0 bg-transparent px-6 py-4 text-base focus:ring-0 focus:outline-none placeholder-gray-500"
+                    data-testid="url-input-desktop"
+                  />
+                  <div className="flex">
+                    <button
+                      onClick={handleGenerate}
+                      disabled={isGenerating}
+                      className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-4 py-4 transition-colors flex items-center justify-center"
+                      data-testid="generate-icon-button"
+                    >
+                      <Clipboard className="w-5 h-5" />
+                    </button>
+                    <button
+                      onClick={handleGenerate}
+                      disabled={isGenerating}
+                      className={`bg-gradient-to-r from-yellow-400 to-orange-400 hover:from-yellow-500 hover:to-orange-500 text-white px-6 py-4 font-semibold transition-colors ${
+                        isGenerating ? 'opacity-70 cursor-not-allowed' : ''
+                      }`}
+                      data-testid="generate-text-button"
+                    >
+                      {isGenerating ? (
+                        <div className="flex items-center">
+                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                          <span>Generating...</span>
+                        </div>
+                      ) : (
+                        'Generate'
+                      )}
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
 
