@@ -2,10 +2,14 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Upload, CheckCircle2, ArrowRight, Sparkles, Users, Zap, Shield, Target, TrendingUp } from "lucide-react";
+import { Upload, CheckCircle2, ArrowRight, Sparkles, Users, Zap, Shield, Target, TrendingUp, Copy } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { useMutation } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import ImageUpload from "@/components/image-upload";
+import ThumbnailComparison from "@/components/thumbnail-comparison";
 import type { Thumbnail, TitleOptimization } from "@shared/schema";
 
 export default function Home() {
@@ -13,6 +17,8 @@ export default function Home() {
   const [uploadedThumbnail, setUploadedThumbnail] = useState<Thumbnail | null>(null);
   const [optimizationResult, setOptimizationResult] = useState<any>(null);
   const [isOptimizing, setIsOptimizing] = useState(false);
+  const [titleSuggestions, setTitleSuggestions] = useState<any[]>([]);
+  const { toast } = useToast();
 
   // Newsletter subscription functionality
   const NewsletterSection = () => {
@@ -154,12 +160,67 @@ export default function Home() {
     setIsOptimizing(false);
   };
 
+  // Optimization API call
+  const optimizeMutation = useMutation({
+    mutationFn: async () => {
+      if (!uploadedThumbnail || !title.trim()) {
+        throw new Error('Please upload a thumbnail and enter a title');
+      }
+
+      const response = await apiRequest('POST', '/api/titles/optimize', {
+        originalTitle: title.trim(),
+        thumbnailId: uploadedThumbnail.id,
+      });
+      return response.json();
+    },
+    onSuccess: (data) => {
+      setTitleSuggestions(data.suggestions || []);
+      setOptimizationResult(data);
+      setIsOptimizing(false);
+      toast({
+        title: "Optimization Complete!",
+        description: "Your title suggestions are ready below.",
+      });
+    },
+    onError: (error: any) => {
+      setIsOptimizing(false);
+      toast({
+        title: "Optimization Failed",
+        description: error.message || "Please try again with a valid title and thumbnail.",
+        variant: "destructive",
+      });
+    },
+  });
+
   const handleOptimize = async () => {
-    if (!uploadedThumbnail || !title.trim()) return;
+    if (!title.trim()) {
+      toast({
+        title: "Title Required",
+        description: "Please enter a video title to optimize.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    if (!uploadedThumbnail) {
+      toast({
+        title: "Thumbnail Required", 
+        description: "Please upload a thumbnail image first.",
+        variant: "destructive",
+      });
+      return;
+    }
     
     setIsOptimizing(true);
-    // This would trigger the optimization process
-    // The actual optimization logic would be handled by TitleOptimizer component
+    optimizeMutation.mutate();
+  };
+
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text);
+    toast({
+      title: "Copied!",
+      description: "Title copied to clipboard.",
+    });
   };
 
   return (
@@ -214,6 +275,36 @@ export default function Home() {
             {/* Image Upload */}
             <div className="mb-6 sm:mb-8">
               <ImageUpload onThumbnailUploaded={handleThumbnailUploaded} />
+              
+              {/* Thumbnail Preview */}
+              {uploadedThumbnail && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4 }}
+                  className="mt-6"
+                >
+                  <div className="card-mobile p-4 sm:p-6">
+                    <h4 className="text-responsive-sm font-semibold text-gray-900 mb-4 flex items-center">
+                      <CheckCircle2 className="w-5 h-5 text-green-500 mr-2" />
+                      Thumbnail Preview
+                    </h4>
+                    <div className="flex justify-center">
+                      <div className="relative max-w-sm w-full">
+                        <img
+                          src={`data:image/jpeg;base64,${uploadedThumbnail.originalImageData}`}
+                          alt="Uploaded thumbnail"
+                          className="w-full aspect-video object-cover rounded-lg shadow-md"
+                          data-testid="thumbnail-preview"
+                        />
+                        <div className="absolute top-2 right-2 bg-green-500 text-white text-xs px-2 py-1 rounded-full">
+                          ✓ Ready
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
             </div>
 
             {/* Title Input */}
@@ -261,80 +352,128 @@ export default function Home() {
             </div>
 
             {/* Results */}
-            {optimizationResult && (
+            {(titleSuggestions.length > 0 || (uploadedThumbnail && uploadedThumbnail.enhancedImageData)) && (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
                 className="space-y-6 sm:space-y-8"
               >
-                {/* CTR Score */}
-                <div className="card-mobile p-4 sm:p-6 text-center">
-                  <h4 className="text-responsive-sm font-semibold text-gray-900 mb-3">
-                    Predicted CTR Score
-                  </h4>
-                  <div className="text-3xl sm:text-4xl font-bold text-blue-600 mb-2">
-                    {optimizationResult.ctrScore}%
-                  </div>
-                  <p className="text-sm text-gray-600">
-                    {optimizationResult.ctrFeedback}
-                  </p>
-                </div>
-
-                {/* Title Suggestions */}
-                {optimizationResult.titleSuggestions && (
+                {/* Before & After Title */}
+                {titleSuggestions.length > 0 && (
                   <div className="card-mobile p-4 sm:p-6">
-                    <h4 className="text-responsive-sm font-semibold text-gray-900 mb-4">
-                      Optimized Title Suggestions
+                    <h4 className="text-responsive-sm font-semibold text-gray-900 mb-4 flex items-center">
+                      <Sparkles className="w-5 h-5 text-blue-600 mr-2" />
+                      Title Optimization: Before & After
                     </h4>
-                    <div className="space-y-3">
-                      {optimizationResult.titleSuggestions.map((suggestion: any, index: number) => (
-                        <div key={index} className="p-3 bg-gray-50 rounded-lg">
-                          <p className="text-sm sm:text-base text-gray-800">{suggestion.title}</p>
-                          {suggestion.score && (
-                            <p className="text-xs text-gray-600 mt-1">Score: {suggestion.score}/100</p>
-                          )}
+                    
+                    <div className="space-y-4">
+                      {/* Original Title */}
+                      <div className="p-4 bg-red-50 border-l-4 border-red-400 rounded-lg">
+                        <div className="flex items-center mb-2">
+                          <span className="text-sm font-medium text-red-700">BEFORE (Original)</span>
                         </div>
+                        <p className="text-gray-800 font-medium">{title}</p>
+                        <p className="text-xs text-gray-600 mt-1">{title.length} characters</p>
+                      </div>
+                      
+                      {/* Best Optimized Title */}
+                      <div className="p-4 bg-green-50 border-l-4 border-green-400 rounded-lg">
+                        <div className="flex items-center mb-2">
+                          <span className="text-sm font-medium text-green-700">AFTER (AI Optimized)</span>
+                          <span className="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">
+                            Score: {titleSuggestions[0]?.score || 'N/A'}/10
+                          </span>
+                        </div>
+                        <p className="text-gray-800 font-medium">{titleSuggestions[0]?.title}</p>
+                        <p className="text-xs text-gray-600 mt-1">
+                          {titleSuggestions[0]?.title?.length || 0} characters • Est. CTR: +{titleSuggestions[0]?.estimatedCtr || 0}%
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* SEO Optimized Title Suggestions */}
+                {titleSuggestions.length > 0 && (
+                  <div className="card-mobile p-4 sm:p-6">
+                    <h4 className="text-responsive-sm font-semibold text-gray-900 mb-4 flex items-center">
+                      <Target className="w-5 h-5 text-purple-600 mr-2" />
+                      5 SEO-Optimized Title Suggestions
+                    </h4>
+                    <p className="text-sm text-gray-600 mb-4">Click any title to copy it to your clipboard</p>
+                    
+                    <div className="space-y-3">
+                      {titleSuggestions.map((suggestion: any, index: number) => (
+                        <motion.div
+                          key={index}
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ duration: 0.3, delay: index * 0.1 }}
+                          className="group p-4 bg-white border border-gray-200 rounded-lg hover:border-blue-300 hover:shadow-md transition-all cursor-pointer"
+                          onClick={() => copyToClipboard(suggestion.title)}
+                          data-testid={`title-suggestion-${index}`}
+                        >
+                          <div className="flex items-start justify-between mb-2">
+                            <div className="flex-1">
+                              <div className="flex items-center mb-1">
+                                <span className="text-sm font-medium text-blue-600">#{index + 1}</span>
+                                <div className="ml-2 flex items-center space-x-2">
+                                  <span className={`text-xs px-2 py-1 rounded-full font-medium ${
+                                    suggestion.score >= 8 ? 'bg-green-100 text-green-800' :
+                                    suggestion.score >= 6 ? 'bg-yellow-100 text-yellow-800' :
+                                    'bg-red-100 text-red-800'
+                                  }`}>
+                                    Score: {suggestion.score}/10
+                                  </span>
+                                  <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
+                                    +{suggestion.estimatedCtr}% CTR
+                                  </span>
+                                </div>
+                              </div>
+                              <p className="text-gray-800 font-medium text-sm sm:text-base leading-relaxed">
+                                {suggestion.title}
+                              </p>
+                              <p className="text-xs text-gray-500 mt-2">
+                                {suggestion.title.length} characters • SEO Score: {suggestion.seoScore}/10
+                              </p>
+                              {suggestion.reasoning && (
+                                <p className="text-xs text-gray-600 mt-1 italic">
+                                  💡 {suggestion.reasoning}
+                                </p>
+                              )}
+                            </div>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="opacity-0 group-hover:opacity-100 transition-opacity ml-2"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                copyToClipboard(suggestion.title);
+                              }}
+                            >
+                              <Copy className="w-4 h-4" />
+                            </Button>
+                          </div>
+                          
+                          {suggestion.tags && suggestion.tags.length > 0 && (
+                            <div className="flex flex-wrap gap-1 mt-2">
+                              {suggestion.tags.slice(0, 3).map((tag: string, tagIndex: number) => (
+                                <span key={tagIndex} className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">
+                                  {tag}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+                        </motion.div>
                       ))}
                     </div>
                   </div>
                 )}
 
                 {/* Thumbnail Comparison */}
-                {optimizationResult.thumbnailComparison && (
-                  <div className="card-mobile p-4 sm:p-6">
-                    <h4 className="text-responsive-sm font-semibold text-gray-900 mb-4">
-                      Thumbnail Enhancement
-                    </h4>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <h5 className="text-sm font-medium text-gray-700 mb-2">Before</h5>
-                        <img 
-                          src={optimizationResult.thumbnailComparison.before} 
-                          alt="Original thumbnail" 
-                          className="w-full rounded-lg"
-                        />
-                      </div>
-                      <div>
-                        <h5 className="text-sm font-medium text-gray-700 mb-2">After</h5>
-                        <img 
-                          src={optimizationResult.thumbnailComparison.after} 
-                          alt="Enhanced thumbnail" 
-                          className="w-full rounded-lg"
-                        />
-                      </div>
-                    </div>
-                    {optimizationResult.thumbnailComparison.enhancementMetrics && (
-                      <div className="mt-4 p-3 bg-blue-50 rounded-lg">
-                        <h6 className="text-sm font-medium text-blue-900 mb-2">Enhancement Metrics</h6>
-                        <div className="text-xs text-blue-800 space-y-1">
-                          <p>Contrast: +{optimizationResult.thumbnailComparison.enhancementMetrics.contrast}%</p>
-                          <p>Saturation: +{optimizationResult.thumbnailComparison.enhancementMetrics.saturation}%</p>
-                          <p>Clarity: +{optimizationResult.thumbnailComparison.enhancementMetrics.clarity}%</p>
-                        </div>
-                      </div>
-                    )}
-                  </div>
+                {uploadedThumbnail && uploadedThumbnail.enhancedImageData && (
+                  <ThumbnailComparison thumbnail={uploadedThumbnail} />
                 )}
               </motion.div>
             )}
