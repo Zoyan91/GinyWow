@@ -110,68 +110,6 @@ export default function Home() {
     };
   }, [thumbnailPreview]);
 
-  // Newsletter subscription handler
-  const handleNewsletterSubscribe = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!newsletterEmail.trim()) {
-      setSubscriptionMessage({ type: 'error', text: 'Please enter your email address' });
-      return;
-    }
-
-    // Basic email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(newsletterEmail.trim())) {
-      setSubscriptionMessage({ type: 'error', text: 'Please enter a valid email address' });
-      return;
-    }
-
-    setIsSubscribing(true);
-    setSubscriptionMessage(null);
-
-    try {
-      const response = await fetch('/api/newsletter/subscribe', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email: newsletterEmail.trim() }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setSubscriptionMessage({ 
-          type: 'success', 
-          text: 'Successfully subscribed! Welcome email sent to your inbox.' 
-        });
-        setNewsletterEmail(''); // Clear the input
-      } else {
-        setSubscriptionMessage({ 
-          type: 'error', 
-          text: data.error || 'Subscription failed. Please try again.' 
-        });
-      }
-    } catch (error) {
-      console.error('Newsletter subscription error:', error);
-      setSubscriptionMessage({ 
-        type: 'error', 
-        text: 'Network error. Please check your connection and try again.' 
-      });
-    } finally {
-      setIsSubscribing(false);
-    }
-  };
-
-  // Clear subscription message after 5 seconds
-  useEffect(() => {
-    if (subscriptionMessage) {
-      const timer = setTimeout(() => {
-        setSubscriptionMessage(null);
-      }, 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [subscriptionMessage]);
 
   // Handle mobile menu keyboard events
   useEffect(() => {
