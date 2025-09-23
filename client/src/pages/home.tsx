@@ -420,10 +420,10 @@ export default function Home() {
               <span className="block sm:inline">&nbsp;& Titles in Seconds</span>
             </h1>
             <p className="text-gray-700 text-sm sm:text-base md:text-lg mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed px-6 sm:px-4">
-              {/* Mobile - Mobile Friendly */}
+              {/* Mobile - Original Text */}
               <span className="block sm:hidden">
-                <span className="block mb-3 text-center">AI enhancement that improves every detail while preserving your design.</span>
-                <span className="block text-center">Make thumbnails eye-catching and boost CTR instantly.</span>
+                <span className="block mb-3 text-center">Professional AI enhancement that improves every detail while preserving your original design.</span>
+                <span className="block text-center">Make your thumbnails more eye-catching and boost your CTR instantly.</span>
               </span>
               
               {/* Desktop - Original */}
