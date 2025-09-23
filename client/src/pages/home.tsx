@@ -810,62 +810,85 @@ export default function Home() {
 
       </main>
 
-      {/* Newsletter Section */}
-      <section className="bg-gray-100 py-16 mt-16">
-        <div className="container mx-auto px-6 text-center">
-          <div className="mb-4">
-            <span className="bg-orange-500 text-white px-4 py-2 rounded-full text-sm font-medium">
+      {/* Newsletter Section - Opener.one Style */}
+      <section className="bg-gradient-to-br from-blue-50 to-indigo-100 py-20 mt-16 relative overflow-hidden">
+        {/* Background decorative elements */}
+        <div className="absolute inset-0 opacity-10" aria-hidden="true">
+          <div className="absolute top-10 left-10 w-20 h-20 bg-blue-200 rounded-full pointer-events-none"></div>
+          <div className="absolute top-32 right-20 w-16 h-16 bg-purple-200 rounded-full pointer-events-none"></div>
+          <div className="absolute bottom-20 left-1/4 w-12 h-12 bg-indigo-200 rounded-full pointer-events-none"></div>
+          <div className="absolute bottom-10 right-10 w-24 h-24 bg-blue-300 rounded-full pointer-events-none"></div>
+        </div>
+        
+        <div className="container mx-auto px-6 text-center relative z-10">
+          <div className="mb-6">
+            <span className="bg-blue-600 text-white px-6 py-3 rounded-full text-sm font-semibold uppercase tracking-wide shadow-lg">
               Newsletter
             </span>
           </div>
-          <h2 className="text-3xl font-bold text-gray-900 mb-8">
-            Subscribe for Our Latest Update
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8 leading-tight">
+            Subscribe for Our Latest <span className="text-blue-600">Update</span>
           </h2>
-          <form onSubmit={handleNewsletterSubscribe} className="max-w-md mx-auto">
-            <div className="flex gap-2 mb-4">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                value={newsletterEmail}
-                onChange={(e) => setNewsletterEmail(e.target.value)}
-                className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                data-testid="newsletter-email-input"
-                disabled={isSubscribing}
-              />
-              <Button 
-                type="submit"
-                disabled={isSubscribing}
-                className={`px-6 py-3 rounded-lg font-medium transition-colors ${
-                  isSubscribing 
-                    ? 'bg-orange-400 cursor-not-allowed text-white' 
-                    : 'bg-orange-500 hover:bg-orange-600 text-white'
-                }`}
-                data-testid="subscribe-now-btn"
-              >
-                {isSubscribing ? 'Subscribing...' : 'Subscribe Now'}
-              </Button>
-            </div>
+          
+          <div className="max-w-lg mx-auto">
+            <form onSubmit={handleNewsletterSubscribe}>
+              <div className="flex flex-col sm:flex-row gap-4 mb-6">
+                <label htmlFor="newsletter-email" className="sr-only">
+                  Email address for newsletter subscription
+                </label>
+                <input
+                  id="newsletter-email"
+                  type="email"
+                  placeholder="Enter your email address"
+                  value={newsletterEmail}
+                  onChange={(e) => setNewsletterEmail(e.target.value)}
+                  className="flex-1 w-full sm:w-auto px-6 py-4 text-lg border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 shadow-sm"
+                  data-testid="newsletter-email-input"
+                  disabled={isSubscribing}
+                />
+                <Button 
+                  type="submit"
+                  disabled={isSubscribing}
+                  className={`w-full sm:w-auto px-8 py-4 text-lg font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg ${
+                    isSubscribing 
+                      ? 'bg-blue-400 cursor-not-allowed text-white' 
+                      : 'bg-blue-600 hover:bg-blue-700 text-white hover:shadow-xl'
+                  }`}
+                  data-testid="subscribe-now-btn"
+                >
+                  {isSubscribing ? 'Subscribing...' : 'Subscribe Now'}
+                </Button>
+              </div>
+              
+              {/* Subscription message */}
+              <div aria-live="polite" aria-atomic="true">
+                {subscriptionMessage && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className={`mb-6 p-4 rounded-xl text-sm font-medium shadow-lg ${
+                      subscriptionMessage.type === 'success'
+                        ? 'bg-green-100 text-green-800 border-2 border-green-200'
+                        : 'bg-red-100 text-red-800 border-2 border-red-200'
+                    }`}
+                    data-testid="subscription-message"
+                    role="alert"
+                  >
+                    {subscriptionMessage.text}
+                  </motion.div>
+                )}
+              </div>
+            </form>
             
-            {/* Subscription message */}
-            {subscriptionMessage && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-                className={`mb-4 p-3 rounded-lg text-sm ${
-                  subscriptionMessage.type === 'success'
-                    ? 'bg-green-100 text-green-800 border border-green-200'
-                    : 'bg-red-100 text-red-800 border border-red-200'
-                }`}
-                data-testid="subscription-message"
-              >
-                {subscriptionMessage.text}
-              </motion.div>
-            )}
-          </form>
-          <p className="text-gray-500 text-sm">
-            We respect your privacy. Unsubscribe at any time.
-          </p>
+            <p className="text-gray-600 text-base leading-relaxed">
+              Join thousands of creators getting weekly insights on YouTube optimization, 
+              thumbnail strategies, and the latest tools to grow your channel.
+            </p>
+            <p className="text-gray-500 text-sm mt-2">
+              We respect your privacy. Unsubscribe at any time.
+            </p>
+          </div>
         </div>
       </section>
 
