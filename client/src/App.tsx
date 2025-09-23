@@ -8,7 +8,6 @@ import About from "@/pages/about";
 import Contact from "@/pages/contact";
 import Blog from "@/pages/blog";
 import Privacy from "@/pages/privacy";
-import AppOpener from "@/pages/app-opener";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -19,7 +18,6 @@ function Router() {
       <Route path="/contact" component={Contact} />
       <Route path="/blog" component={Blog} />
       <Route path="/privacy" component={Privacy} />
-      <Route path="/app-opener" component={AppOpener} />
       <Route component={NotFound} />
     </Switch>
   );
