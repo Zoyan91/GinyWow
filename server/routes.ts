@@ -45,11 +45,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const analysis = await analyzeThumbnail(base64Image);
 
       // Generate enhanced image
-      const enhancedImageData = await enhanceThumbnailImage(base64Image, analysis.enhancementSuggestions);
+      const enhancementResult = await enhanceThumbnailImage(base64Image, analysis.enhancementSuggestions);
 
       // Update thumbnail with analysis results
       const updatedThumbnail = await storage.updateThumbnail(thumbnail.id, {
-        enhancedImageData,
+        enhancedImageData: enhancementResult.enhancedImage,
         enhancementMetrics: {
           contrast: analysis.enhancementSuggestions.contrast,
           saturation: analysis.enhancementSuggestions.saturation,
@@ -163,11 +163,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const analysis = await analyzeThumbnail(base64Image);
 
       // Generate enhanced thumbnail image
-      const enhancedImageData = await enhanceThumbnailImage(base64Image, analysis.enhancementSuggestions);
+      const enhancementResult = await enhanceThumbnailImage(base64Image, analysis.enhancementSuggestions);
 
       // Update thumbnail with enhanced version
       await storage.updateThumbnail(thumbnail.id, {
-        enhancedImageData,
+        enhancedImageData: enhancementResult.enhancedImage,
         enhancementMetrics: {
           contrast: analysis.enhancementSuggestions.contrast,
           saturation: analysis.enhancementSuggestions.saturation,
@@ -210,12 +210,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
         // Add before/after thumbnail comparison
         thumbnailComparison: {
           before: `data:image/jpeg;base64,${base64Image}`,
-          after: `data:image/jpeg;base64,${enhancedImageData}`,
+          after: `data:image/jpeg;base64,${enhancementResult.enhancedImage}`,
           enhancementMetrics: {
             contrast: analysis.enhancementSuggestions.contrast,
             saturation: analysis.enhancementSuggestions.saturation,
             clarity: analysis.enhancementSuggestions.clarity,
           }
+        },
+        // Add enhancement status and message
+        enhancementStatus: {
+          success: enhancementResult.success,
+          message: enhancementResult.message
         }
       });
     } catch (error) {

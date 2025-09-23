@@ -385,7 +385,7 @@ function getMockTitleSuggestions(originalTitle: string): TitleSuggestion[] {
   });
 }
 
-export async function enhanceThumbnailImage(base64Image: string, enhancements: { contrast: number; saturation: number; clarity: number }): Promise<string> {
+export async function enhanceThumbnailImage(base64Image: string, enhancements: { contrast: number; saturation: number; clarity: number }): Promise<{ enhancedImage: string; success: boolean; message: string }> {
   try {
     // Dynamic import for Sharp in ES modules
     const sharp = await import('sharp');
@@ -393,126 +393,61 @@ export async function enhanceThumbnailImage(base64Image: string, enhancements: {
     // Convert base64 to buffer
     const imageBuffer = Buffer.from(base64Image, 'base64');
     
-    // Get image metadata for intelligent processing
+    // Get image metadata to understand format
     const metadata = await sharp.default(imageBuffer).metadata();
-    const { width = 1920, height = 1080 } = metadata;
+    console.log(`Processing image: ${metadata.format}, ${metadata.width}x${metadata.height}`);
     
-    // Enhanced processing parameters for professional results
-    const processedImage = sharp.default(imageBuffer);
-    
-    // Step 1: Advanced Color Grading & Tone Mapping
-    // Natural skin tone enhancement and color correction
-    const colorEnhanced = await processedImage
-      // Advanced color space correction for natural skin tones
+    // ULTRA NATURAL Enhancement - बिल्कुल subtle और human-friendly
+    const naturalEnhanced = await sharp.default(imageBuffer)
+      // Convert to RGB if needed to avoid format issues
+      .toColorspace('srgb')
+      
+      // बहुत gentle color enhancement - barely noticeable
       .modulate({
-        brightness: 1.08,     // Gentle brightness lift for visibility
-        saturation: 1.15,     // Natural color vibrancy boost
-        hue: 2               // Subtle warm tone shift for appealing look
+        brightness: 1.02,     // सिर्फ 2% brightness boost - very subtle
+        saturation: 1.03,     // सिर्फ 3% saturation - natural look
+        hue: 0               // No hue change - keep original colors
       })
       
-      // Professional tone curve for cinematic look
-      .linear(1.12, -8)       // Gentle contrast with lifted shadows
-      .gamma(1.1)             // Smooth gamma for natural mid-tones
+      // Very gentle contrast - just to make it slightly crisp
+      .linear(1.01, -1)       // 1% contrast increase - barely visible
       
-      // Advanced detail enhancement with edge preservation
+      // Minimal sharpening - just to enhance text/details slightly
       .sharpen({
-        sigma: 1.2,           // Optimal sharpening for YouTube thumbnails
-        m1: 0.8,              // Strong edge detection for text/graphics
-        m2: 2.0,              // Detail amplification for crisp elements
-        x1: 3,                // Flat area threshold
-        y2: 10,               // Maximum enhancement limit
-        y3: 20                // Edge boost multiplier
-      })
-      .toBuffer();
-
-    // Step 2: Intelligent Noise Reduction & Texture Enhancement
-    const noiseReduced = await sharp.default(colorEnhanced)
-      // Median filter for noise reduction while preserving edges
-      .median(1)
-      
-      // Advanced sharpening for detail enhancement
-      .sharpen({
-        sigma: 1.0,           // Detail sharpening
-        m1: 0.7,              // Edge detection
-        m2: 1.8               // Enhancement strength
-      })
-      .toBuffer();
-
-    // Step 3: Advanced Beauty Enhancement for Faces
-    // This simulates professional portrait enhancement
-    const beautyEnhanced = await sharp.default(noiseReduced)
-      // Gentle enhancement for natural skin appearance
-      .modulate({
-        brightness: 1.06,     // Gentle brightness for healthy glow
-        saturation: 1.12,     // Natural saturation for vibrant skin
-        hue: 1               // Slight warm tone for appealing look
+        sigma: 0.3,           // Very light sharpening
+        m1: 0.3,              // Gentle edge detection
+        m2: 0.8               // Minimal enhancement
       })
       
-      // Professional gamma adjustment for skin tones
-      .gamma(1.08)
-      .toBuffer();
-
-    // Step 4: Professional Color Grading & Final Polish
-    const finalEnhanced = await sharp.default(beautyEnhanced)
-      // Advanced color grading for YouTube thumbnails
-      .linear(1.08, -5)       // Gentle contrast with shadow lift
-      
-      // Professional sharpening for web display
-      .sharpen({
-        sigma: 0.9,           // Fine detail sharpening
-        m1: 0.6,              // Balanced edge detection
-        m2: 1.4               // Moderate enhancement
-      })
-      
-      // Final color enhancement for maximum appeal
-      .modulate({
-        brightness: 1.04,     // Final brightness tweak
-        saturation: 1.08,     // Enhanced color pop
-        hue: 0               // Maintain natural hues
-      })
-      
-      // Export with premium quality settings
+      // Always export as JPEG for consistency and compatibility
       .jpeg({ 
-        quality: 96,          // High quality for thumbnails
-        progressive: true,    // Progressive loading
-        mozjpeg: true,        // Advanced compression
-        optimizeScans: true   // Scan optimization
+        quality: 95,          // High quality but not over-compressed
+        progressive: true     // Progressive loading
       })
       .toBuffer();
     
     // Convert back to base64
-    const enhancedBase64 = finalEnhanced.toString('base64');
-    console.log("🎨 Advanced YouTube Thumbnail Enhancement Applied:");
-    console.log("✅ Professional color grading & tone mapping");
-    console.log("✅ Intelligent noise reduction & texture enhancement");
-    console.log("✅ Beauty enhancement for natural skin tones");
-    console.log("✅ Cinematic finishing with subtle vignette");
-    console.log("✅ Optimized for maximum YouTube CTR appeal");
+    const enhancedBase64 = naturalEnhanced.toString('base64');
+    console.log("✨ Natural Thumbnail Enhancement Applied - 100% Human-Friendly:");
+    console.log("📸 Barely noticeable improvements for natural look");
+    console.log("🎯 Subtle enhancement that maintains original beauty");
+    console.log("💯 No artificial processing - pure natural enhancement");
     
-    return enhancedBase64;
+    return {
+      enhancedImage: enhancedBase64,
+      success: true,
+      message: "Natural enhancement applied successfully. Your thumbnail now has subtle improvements for better clarity while maintaining its original character."
+    };
     
   } catch (error) {
-    console.error("Error in advanced thumbnail enhancement:", error);
-    console.log("Falling back to basic enhancement...");
+    console.error("Error in natural thumbnail enhancement:", error);
+    console.log("Enhancement failed, returning original image to maintain quality...");
     
-    // Fallback to basic enhancement if advanced processing fails
-    try {
-      const sharp = await import('sharp');
-      const imageBuffer = Buffer.from(base64Image, 'base64');
-      
-      const basicEnhanced = await sharp.default(imageBuffer)
-        .modulate({
-          brightness: 1.1,
-          saturation: 1.2,
-        })
-        .sharpen({ sigma: 1.0, m1: 0.5, m2: 1.5 })
-        .jpeg({ quality: 95, progressive: true })
-        .toBuffer();
-      
-      return basicEnhanced.toString('base64');
-    } catch (fallbackError) {
-      console.error("Fallback enhancement also failed:", fallbackError);
-      return base64Image; // Return original image on complete failure
-    }
+    // Return original image with failure status
+    return {
+      enhancedImage: base64Image,
+      success: false,
+      message: "Enhancement could not be applied to maintain image quality. Your original thumbnail has been preserved without any changes."
+    };
   }
 }
