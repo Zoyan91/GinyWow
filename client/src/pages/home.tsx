@@ -400,53 +400,41 @@ export default function Home() {
         </div>
       )}
 
-      {/* Content Section - Mobile Optimized */}
-      <section className="bg-background/50 backdrop-blur-sm py-8 md:py-12 relative z-10">
-        <div className="container mx-auto px-4 md:px-6 text-center">
+      {/* Content Section - Opener.one Style */}
+      <section className="bg-white py-12 md:py-16 relative z-10">
+        <div className="container mx-auto px-6 md:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
+            className="max-w-3xl mx-auto"
           >
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 leading-tight px-2">
-              Enhance Your YouTube Thumbnails<br className="hidden sm:block"/>
-              <span className="sm:hidden">& Titles in Seconds</span>
-              <span className="hidden sm:inline">& Titles in Seconds</span>
+            <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+              Enhance Your YouTube Thumbnails & Titles
             </h1>
-            <p className="text-gray-700 text-sm sm:text-base mb-0 max-w-2xl mx-auto leading-relaxed px-4">
-              Professional AI enhancement that improves every detail while preserving your original design. 
-              Make your thumbnails more eye-catching and boost your CTR instantly.
+            <p className="text-gray-600 text-lg md:text-xl mb-0 leading-relaxed font-light">
+              Professional AI enhancement that improves every detail while preserving your original design.
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Main Content - Mobile Optimized */}
-      <main className="bg-background/50 backdrop-blur-sm container mx-auto px-4 md:px-6 py-4 max-w-4xl relative z-10">
+      {/* Main Content - Opener.one Style */}
+      <main className="bg-white container mx-auto px-6 md:px-8 py-8 md:py-12 max-w-2xl relative z-10">
         
         {/* YouTube Thumbnail & Title Optimizer Tool */}
         <motion.div 
-          className="bg-white rounded-2xl border border-gray-200 p-4 sm:p-6 md:p-10 shadow-xl shadow-blue-500/10"
+          className="space-y-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
           data-testid="optimizer-tool"
         >
-          {/* Header - Mobile Optimized */}
-          <div className="text-center mb-6 md:mb-8">
-            <h1 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-2 px-2">
-              YouTube Thumbnail & Title Optimizer
-            </h1>
-            <p className="text-gray-600 text-sm sm:text-base px-4 hidden sm:block">
-              Upload your thumbnail and enter your title to get optimization suggestions.
-            </p>
-          </div>
 
           {/* Thumbnail Upload Section */}
-          <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Thumbnail
-            </label>
+          <div className="space-y-6">
+            <h2 className="text-xl md:text-2xl font-semibold text-gray-900 text-center">Upload Thumbnail</h2>
+            
             <input 
               ref={fileInputRef}
               type="file" 
@@ -459,23 +447,10 @@ export default function Home() {
                 }
               }}
             />
-            <div 
-              className={`border-2 border-dashed rounded-lg ${thumbnailPreview ? 'p-2' : 'p-8'} text-center transition-colors ${
-                isDragOver 
-                  ? 'border-blue-400 bg-blue-50' 
-                  : uploadError 
-                  ? 'border-red-300 bg-red-50' 
-                  : thumbnailPreview
-                  ? 'border-green-300'
-                  : 'border-gray-300 hover:border-gray-400'
-              }`}
-              data-testid="thumbnail-upload-area"
-              onDragOver={handleDragOver}
-              onDragLeave={handleDragLeave}
-              onDrop={handleDrop}
-            >
-              {thumbnailPreview ? (
-                <div className="relative w-full aspect-video rounded-md bg-white overflow-hidden">
+            
+            {thumbnailPreview ? (
+              <div className="space-y-4 text-center">
+                <div className="relative w-full max-w-md mx-auto aspect-video rounded-lg overflow-hidden bg-gray-100">
                   <img 
                     src={thumbnailPreview} 
                     alt="Thumbnail preview" 
@@ -483,76 +458,77 @@ export default function Home() {
                     data-testid="thumbnail-preview"
                   />
                 </div>
-              ) : (
-                <div className="flex flex-col items-center">
-                  <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mb-4">
-                    <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                  </div>
-                  <p className={`mb-2 ${
-                    uploadError ? 'text-red-600' : 'text-gray-600'
-                  }`}>
-                    {uploadError || "Drop your thumbnail here or click to browse"}
-                  </p>
-                  <p className="text-sm text-gray-500 mb-4">Supports: JPG, PNG, WebP (Max 5MB)</p>
-                  <Button 
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg flex items-center gap-2 transition-colors min-h-[44px]"
-                    data-testid="upload-thumbnail-btn"
-                    onClick={() => fileInputRef.current?.click()}
-                  >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                    </svg>
-                    Upload Thumbnail
-                  </Button>
-                </div>
-              )}
-            </div>
-            
-            {/* Change Thumbnail Button - Outside Border */}
-            {thumbnailPreview && (
-              <div className="text-center mt-4">
-                <Button 
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg flex items-center gap-2 transition-colors mx-auto"
+                <button 
+                  className="text-blue-600 hover:text-blue-700 font-medium text-base"
                   data-testid="change-thumbnail-btn"
                   onClick={() => fileInputRef.current?.click()}
                 >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                  </svg>
                   Change Thumbnail
-                </Button>
+                </button>
+              </div>
+            ) : (
+              <div className="text-center">
+                <div 
+                  className={`w-full max-w-md mx-auto p-8 border-2 border-dashed rounded-lg transition-colors cursor-pointer ${
+                    isDragOver 
+                      ? 'border-blue-400 bg-blue-50' 
+                      : uploadError 
+                      ? 'border-red-300 bg-red-50' 
+                      : 'border-gray-300 hover:border-gray-400 bg-gray-50'
+                  }`}
+                  data-testid="thumbnail-upload-area"
+                  onDragOver={handleDragOver}
+                  onDragLeave={handleDragLeave}
+                  onDrop={handleDrop}
+                  onClick={() => fileInputRef.current?.click()}
+                >
+                  <div className="space-y-4">
+                    <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto">
+                      <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-gray-700 font-medium">Drop thumbnail here or click to upload</p>
+                      <p className="text-sm text-gray-500 mt-1">JPG, PNG, WebP (Max 5MB)</p>
+                    </div>
+                  </div>
+                </div>
+                
+                {uploadError && (
+                  <p className="text-red-600 text-sm mt-2">{uploadError}</p>
+                )}
               </div>
             )}
           </div>
 
           {/* YouTube Title Section */}
-          <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              YouTube Title
-            </label>
-            <Input 
-              type="text"
-              className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors min-h-[44px]"
-              placeholder="Enter your YouTube title here..."
-              maxLength={100}
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              data-testid="youtube-title-input"
-            />
-            <div className="flex justify-between items-center mt-2">
-              <span className="text-sm text-gray-500" data-testid="character-count">{title.length}/100 characters</span>
+          <div className="space-y-6">
+            <h2 className="text-xl md:text-2xl font-semibold text-gray-900 text-center">Enter Your Title</h2>
+            
+            <div className="space-y-3">
+              <Input 
+                type="text"
+                className="w-full px-4 py-4 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors min-h-[44px] text-center"
+                placeholder="Your YouTube title here..."
+                maxLength={100}
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                data-testid="youtube-title-input"
+              />
+              <div className="text-center">
+                <span className="text-sm text-gray-500" data-testid="character-count">{title.length}/100 characters</span>
+              </div>
             </div>
           </div>
 
           {/* Optimize Button */}
-          <div className="text-center">
+          <div className="text-center space-y-4">
             <Button 
-              className={`px-8 py-3 rounded-lg font-medium transition-colors ${
+              className={`px-12 py-4 text-lg font-medium rounded-lg transition-colors min-h-[44px] ${
                 uploadedFile && title.trim() 
                   ? 'bg-blue-600 hover:bg-blue-700 text-white'
-                  : 'bg-blue-400 text-white cursor-not-allowed'
+                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'
               }`}
               disabled={!uploadedFile || !title.trim() || isOptimizing}
               onClick={handleOptimize}
