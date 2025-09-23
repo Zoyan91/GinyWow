@@ -304,9 +304,11 @@ export default function Home() {
                 </button>
               </Link>
               
-              <button className="flex items-center text-gray-600 hover:text-gray-900 transition-colors font-medium" data-testid="nav-blog">
-                Blog
-              </button>
+              <Link href="/blog">
+                <button className="flex items-center text-gray-600 hover:text-gray-900 transition-colors font-medium" data-testid="nav-blog">
+                  Blog
+                </button>
+              </Link>
             </div>
             
             {/* Desktop Search and Sign In */}
@@ -400,9 +402,11 @@ export default function Home() {
                 </div>
 
                 <div className="pb-3">
-                  <button className="block text-gray-600 hover:text-gray-900 py-3 text-base font-medium" data-testid="mobile-nav-blog">
-                    Blog
-                  </button>
+                  <Link href="/blog">
+                    <button className="block text-gray-600 hover:text-gray-900 py-3 text-base font-medium" data-testid="mobile-nav-blog">
+                      Blog
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -1007,7 +1011,7 @@ export default function Home() {
             <div className="flex space-x-6 mb-4 md:mb-0">
               <Link href="/about" className="text-sm text-gray-600 hover:text-gray-900">About Us</Link>
               <Link href="/contact" className="text-sm text-gray-600 hover:text-gray-900">Contact Us</Link>
-              <a href="#" className="text-sm text-gray-600 hover:text-gray-900">Blog</a>
+              <Link href="/blog" className="text-sm text-gray-600 hover:text-gray-900">Blog</Link>
               <Link href="/privacy" className="text-sm text-gray-600 hover:text-gray-900">Privacy Policy</Link>
             </div>
             <p className="text-sm text-gray-600">© 2025 GinyWow.com | All rights reserved.</p>

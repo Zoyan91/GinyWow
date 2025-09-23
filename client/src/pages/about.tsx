@@ -108,7 +108,7 @@ export default function About() {
             <div className="flex space-x-6 mb-4 md:mb-0">
               <Link href="/about" className="text-sm text-gray-600 hover:text-gray-900">About Us</Link>
               <Link href="/contact" className="text-sm text-gray-600 hover:text-gray-900">Contact Us</Link>
-              <a href="#" className="text-sm text-gray-600 hover:text-gray-900">Blog</a>
+              <Link href="/blog" className="text-sm text-gray-600 hover:text-gray-900">Blog</Link>
               <Link href="/privacy" className="text-sm text-gray-600 hover:text-gray-900">Privacy Policy</Link>
             </div>
             <p className="text-sm text-gray-600">© 2025 GinyWow.com | All rights reserved.</p>
