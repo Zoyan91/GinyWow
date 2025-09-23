@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Search, ChevronDown } from "lucide-react";
+import { Search, ChevronDown, Menu, X } from "lucide-react";
 import { Link } from "wouter";
 import type { Thumbnail, TitleOptimization } from "@shared/schema";
 
@@ -17,6 +17,7 @@ export default function Home() {
   const [isOptimizing, setIsOptimizing] = useState(false);
   const [optimizationResult, setOptimizationResult] = useState<any>(null);
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleFileUpload = (file: File) => {
     setUploadError("");
@@ -116,13 +117,13 @@ export default function Home() {
             {/* Logo */}
             <div className="flex items-center">
               <Link href="/">
-                <h1 className="text-2xl font-bold text-gray-900 cursor-pointer hover:opacity-80 transition-opacity" data-testid="logo">
+                <h1 className="text-xl sm:text-2xl font-bold text-gray-900 cursor-pointer hover:opacity-80 transition-opacity" data-testid="logo">
                   <span className="text-gray-900">Giny</span><span className="text-blue-600">Wow</span>
                 </h1>
               </Link>
             </div>
             
-            {/* Main Navigation */}
+            {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
               <DropdownMenu>
                 <DropdownMenuTrigger className="flex items-center text-gray-600 hover:text-gray-900 transition-colors font-medium" data-testid="nav-pdf">
@@ -163,11 +164,10 @@ export default function Home() {
                   <DropdownMenuItem>Content Improver</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
-              
             </div>
             
-            {/* Search and Sign In */}
-            <div className="flex items-center space-x-4">
+            {/* Desktop Search and Sign In */}
+            <div className="hidden md:flex items-center space-x-4">
               {/* Search */}
               <div className="relative hidden lg:block">
                 <Input
@@ -189,23 +189,109 @@ export default function Home() {
                 Sign In
               </Button>
             </div>
+
+            {/* Mobile Menu Button and Sign In */}
+            <div className="flex md:hidden items-center space-x-2">
+              <Button 
+                variant="outline" 
+                size="sm"
+                className="border-gray-300 text-gray-700 hover:bg-gray-50 text-xs px-3 py-1"
+                data-testid="mobile-sign-in"
+              >
+                Sign In
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="p-2"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                data-testid="mobile-menu-button"
+              >
+                {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              </Button>
+            </div>
           </div>
         </div>
+
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden bg-white border-t border-gray-200"
+            data-testid="mobile-menu"
+          >
+            <div className="px-4 py-4 space-y-4">
+              {/* Mobile Search */}
+              <div className="relative">
+                <Input
+                  type="text"
+                  placeholder="Search tools..."
+                  className="pl-10 pr-4 py-3 w-full border-gray-300 rounded-lg text-base"
+                  data-testid="mobile-search-input"
+                />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              </div>
+
+              {/* Mobile Navigation Links */}
+              <div className="space-y-3">
+                <div className="border-b border-gray-100 pb-3">
+                  <h3 className="font-semibold text-gray-900 mb-2 text-lg">PDF Tools</h3>
+                  <div className="space-y-2 pl-3">
+                    <button className="block text-gray-600 hover:text-gray-900 py-2 text-base" data-testid="mobile-nav-edit-pdf">Edit PDF</button>
+                    <button className="block text-gray-600 hover:text-gray-900 py-2 text-base" data-testid="mobile-nav-pdf-to-word">PDF to Word</button>
+                    <button className="block text-gray-600 hover:text-gray-900 py-2 text-base" data-testid="mobile-nav-merge-pdf">Merge PDF</button>
+                    <button className="block text-gray-600 hover:text-gray-900 py-2 text-base" data-testid="mobile-nav-split-pdf">Split PDF</button>
+                  </div>
+                </div>
+
+                <div className="border-b border-gray-100 pb-3">
+                  <h3 className="font-semibold text-gray-900 mb-2 text-lg">App Opener</h3>
+                  <div className="pl-3">
+                    <button className="block text-gray-600 hover:text-gray-900 py-2 text-base" data-testid="mobile-nav-app-opener">Open Apps</button>
+                  </div>
+                </div>
+
+                <div className="border-b border-gray-100 pb-3">
+                  <h3 className="font-semibold text-gray-900 mb-2 text-lg">Image Converter</h3>
+                  <div className="space-y-2 pl-3">
+                    <button className="block text-gray-600 hover:text-gray-900 py-2 text-base" data-testid="mobile-nav-remove-bg">Remove Background</button>
+                    <button className="block text-gray-600 hover:text-gray-900 py-2 text-base" data-testid="mobile-nav-resize-image">Resize Image</button>
+                    <button className="block text-gray-600 hover:text-gray-900 py-2 text-base" data-testid="mobile-nav-compress-image">Compress Image</button>
+                    <button className="block text-gray-600 hover:text-gray-900 py-2 text-base" data-testid="mobile-nav-image-to-text">Image to Text</button>
+                  </div>
+                </div>
+
+                <div className="pb-3">
+                  <h3 className="font-semibold text-gray-900 mb-2 text-lg">Writing Tools</h3>
+                  <div className="space-y-2 pl-3">
+                    <button className="block text-gray-600 hover:text-gray-900 py-2 text-base" data-testid="mobile-nav-essay-writer">Essay Writer</button>
+                    <button className="block text-gray-600 hover:text-gray-900 py-2 text-base" data-testid="mobile-nav-paragraph-writer">Paragraph Writer</button>
+                    <button className="block text-gray-600 hover:text-gray-900 py-2 text-base" data-testid="mobile-nav-grammar-fixer">Grammar Fixer</button>
+                    <button className="block text-gray-600 hover:text-gray-900 py-2 text-base" data-testid="mobile-nav-content-improver">Content Improver</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
       </header>
 
-      {/* Content Section */}
-      <section className="bg-background/50 backdrop-blur-sm py-12 relative z-10">
-        <div className="container mx-auto px-6 text-center">
+      {/* Hero Section */}
+      <section className="bg-background/50 backdrop-blur-sm py-8 sm:py-12 relative z-10">
+        <div className="container mx-auto px-4 sm:px-6 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
+            className="max-w-4xl mx-auto"
           >
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 leading-tight">
-              Enhance Your YouTube Thumbnails<br/>
-              & Titles in Seconds
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight px-2">
+              <span className="block sm:inline">Enhance Your YouTube Thumbnails</span>
+              <span className="block sm:inline"> & Titles in Seconds</span>
             </h1>
-            <p className="text-gray-700 text-base mb-0 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-gray-700 text-base sm:text-lg mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed px-4">
               Professional AI enhancement that improves every detail while preserving your original design. 
               Make your thumbnails more eye-catching and boost your CTR instantly.
             </p>
@@ -214,29 +300,29 @@ export default function Home() {
       </section>
 
       {/* Main Content */}
-      <main className="bg-background/50 backdrop-blur-sm container mx-auto px-6 py-4 max-w-4xl relative z-10">
+      <main className="bg-background/50 backdrop-blur-sm container mx-auto px-4 sm:px-6 py-4 max-w-4xl relative z-10">
         
         {/* YouTube Thumbnail & Title Optimizer Tool */}
         <motion.div 
-          className="bg-white rounded-2xl border border-gray-200 p-10 shadow-xl shadow-blue-500/10"
+          className="bg-white rounded-2xl border border-gray-200 p-4 sm:p-6 md:p-8 lg:p-10 shadow-xl shadow-blue-500/10"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
           data-testid="optimizer-tool"
         >
           {/* Header */}
-          <div className="text-center mb-8">
-            <h1 className="text-2xl font-semibold text-gray-900 mb-2">
+          <div className="text-center mb-6 sm:mb-8">
+            <h1 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-2 px-2">
               YouTube Thumbnail & Title Optimizer
             </h1>
-            <p className="text-gray-600">
+            <p className="text-gray-600 text-sm sm:text-base px-4">
               Upload your thumbnail and enter your title to get optimization suggestions.
             </p>
           </div>
 
           {/* Thumbnail Upload Section */}
           <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm sm:text-base font-medium text-gray-700 mb-3 px-1">
               Thumbnail
             </label>
             <input 
@@ -252,7 +338,7 @@ export default function Home() {
               }}
             />
             <div 
-              className={`border-2 border-dashed rounded-lg ${thumbnailPreview ? 'p-2' : 'p-8'} text-center transition-colors ${
+              className={`border-2 border-dashed rounded-lg ${thumbnailPreview ? 'p-2 sm:p-3' : 'p-6 sm:p-8'} text-center transition-colors ${
                 isDragOver 
                   ? 'border-blue-400 bg-blue-50' 
                   : uploadError 
@@ -277,19 +363,19 @@ export default function Home() {
                 </div>
               ) : (
                 <div className="flex flex-col items-center">
-                  <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mb-4">
-                    <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="w-14 h-14 sm:w-16 sm:h-16 bg-gray-100 rounded-lg flex items-center justify-center mb-4">
+                    <svg className="w-7 h-7 sm:w-8 sm:h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
                   </div>
-                  <p className={`mb-2 ${
+                  <p className={`mb-3 text-sm sm:text-base px-2 ${
                     uploadError ? 'text-red-600' : 'text-gray-600'
                   }`}>
                     {uploadError || "Drop your thumbnail here or click to browse"}
                   </p>
-                  <p className="text-sm text-gray-500 mb-4">Supports: JPG, PNG, WebP (Max 5MB)</p>
+                  <p className="text-xs sm:text-sm text-gray-500 mb-5 px-2">Supports: JPG, PNG, WebP (Max 5MB)</p>
                   <Button 
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg flex items-center gap-2 transition-colors"
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 sm:px-8 sm:py-3 rounded-lg flex items-center gap-2 transition-colors text-sm sm:text-base font-medium min-h-[44px]"
                     data-testid="upload-thumbnail-btn"
                     onClick={() => fileInputRef.current?.click()}
                   >
@@ -320,28 +406,28 @@ export default function Home() {
           </div>
 
           {/* YouTube Title Section */}
-          <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+          <div className="mb-6 sm:mb-8">
+            <label className="block text-sm sm:text-base font-medium text-gray-700 mb-3 px-1">
               YouTube Title
             </label>
             <Input 
               type="text"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+              className="w-full px-4 py-3 sm:py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-base min-h-[44px]"
               placeholder="Enter your YouTube title here..."
               maxLength={100}
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               data-testid="youtube-title-input"
             />
-            <div className="flex justify-between items-center mt-2">
-              <span className="text-sm text-gray-500" data-testid="character-count">{title.length}/100 characters</span>
+            <div className="flex justify-between items-center mt-2 px-1">
+              <span className="text-xs sm:text-sm text-gray-500" data-testid="character-count">{title.length}/100 characters</span>
             </div>
           </div>
 
           {/* Optimize Button */}
           <div className="text-center">
             <Button 
-              className={`px-8 py-3 rounded-lg font-medium transition-colors ${
+              className={`px-8 py-4 sm:px-12 sm:py-4 rounded-lg font-medium transition-colors text-base sm:text-lg min-h-[52px] w-full sm:w-auto ${
                 uploadedFile && title.trim() 
                   ? 'bg-blue-600 hover:bg-blue-700 text-white'
                   : 'bg-blue-400 text-white cursor-not-allowed'
@@ -360,7 +446,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="mt-8 bg-gray-50 rounded-lg p-6 border border-gray-200"
+              className="mt-6 sm:mt-8 bg-gray-50 rounded-lg p-4 sm:p-6 border border-gray-200"
               data-testid="optimization-results"
             >
               {optimizationResult.error ? (
@@ -374,13 +460,13 @@ export default function Home() {
                 <div className="space-y-6">
                   {/* Professional Before/After Thumbnail Comparison */}
                   {optimizationResult.thumbnailComparison && (
-                    <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 border border-gray-200 shadow-xl">
-                      <div className="text-center mb-8">
-                        <h4 className="text-2xl font-bold text-gray-900 mb-2">Thumbnail Comparison</h4>
-                        <p className="text-gray-600">See the enhancement applied to your thumbnail</p>
+                    <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-4 sm:p-6 lg:p-8 border border-gray-200 shadow-xl">
+                      <div className="text-center mb-6 sm:mb-8">
+                        <h4 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2 px-2">Thumbnail Comparison</h4>
+                        <p className="text-sm sm:text-base text-gray-600 px-4">See the enhancement applied to your thumbnail</p>
                       </div>
                       
-                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
                         {/* Before Image */}
                         <div className="text-center">
                           <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-full text-sm font-semibold mb-4 shadow-lg">
@@ -410,7 +496,7 @@ export default function Home() {
                               data-testid="after-thumbnail"
                             />
                           </div>
-                          <div className="mt-4">
+                          <div className="mt-4 sm:mt-6">
                             <button
                               onClick={() => {
                                 const link = document.createElement('a');
@@ -420,7 +506,7 @@ export default function Home() {
                                 link.click();
                                 document.body.removeChild(link);
                               }}
-                              className="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200 flex items-center gap-2 mx-auto shadow-md hover:shadow-lg"
+                              className="px-6 py-3 sm:px-8 sm:py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200 flex items-center gap-2 mx-auto shadow-md hover:shadow-lg text-sm sm:text-base min-h-[44px]"
                               data-testid="download-enhanced-thumbnail"
                             >
                               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -438,19 +524,19 @@ export default function Home() {
                   {/* Title Suggestions */}
                   {optimizationResult.titleSuggestions && optimizationResult.titleSuggestions.length > 0 && (
                     <div className="bg-white rounded-2xl border border-gray-200 shadow-sm">
-                      <div className="p-6 border-b border-gray-100">
-                        <h3 className="text-lg font-semibold text-gray-900">Title Suggestions</h3>
-                        <p className="text-gray-500 text-sm mt-1">Use the copy button to copy any title</p>
+                      <div className="p-4 sm:p-6 border-b border-gray-100">
+                        <h3 className="text-base sm:text-lg font-semibold text-gray-900 px-1">Title Suggestions</h3>
+                        <p className="text-gray-500 text-xs sm:text-sm mt-1 px-1">Use the copy button to copy any title</p>
                       </div>
-                      <div className="p-6">
-                        <div className="space-y-3">
+                      <div className="p-4 sm:p-6">
+                        <div className="space-y-3 sm:space-y-4">
                           {optimizationResult.titleSuggestions.map((suggestion: any, index: number) => (
                             <div 
                               key={index} 
-                              className="group flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 rounded-lg border border-gray-200 hover:border-gray-300 transition-all duration-200"
+                              className="group flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:p-5 bg-gray-50 hover:bg-gray-100 rounded-lg border border-gray-200 hover:border-gray-300 transition-all duration-200 gap-3 sm:gap-0"
                             >
-                              <div className="flex-1 mr-3">
-                                <p className="text-gray-800 font-medium leading-relaxed">{suggestion.title}</p>
+                              <div className="flex-1 sm:mr-3">
+                                <p className="text-gray-800 font-medium leading-relaxed text-sm sm:text-base">{suggestion.title}</p>
                               </div>
                               <button
                                 onClick={async () => {
@@ -471,7 +557,7 @@ export default function Home() {
                                     setTimeout(() => setCopiedIndex(null), 2000);
                                   }
                                 }}
-                                className="flex-shrink-0 flex items-center gap-2 px-3 py-2 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-md border border-blue-200 hover:border-blue-300 transition-all duration-200 text-sm font-medium"
+                                className="flex-shrink-0 flex items-center gap-2 px-4 py-3 sm:px-3 sm:py-2 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-md border border-blue-200 hover:border-blue-300 transition-all duration-200 text-sm font-medium min-h-[44px] sm:min-h-auto w-full sm:w-auto justify-center sm:justify-start"
                                 data-testid={`copy-title-${index}`}
                               >
                                 {copiedIndex === index ? (
