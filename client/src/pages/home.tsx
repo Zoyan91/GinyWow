@@ -563,20 +563,15 @@ export default function Home() {
             className="max-w-4xl mx-auto"
           >
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight px-2">
-              <span className="block sm:inline">Enhance Your YouTube Thumbnails</span>
-              <span className="block sm:inline">&nbsp;& Titles in Seconds</span>
+              <span className="block sm:inline">YouTube Thumbnail & Title</span>
+              <span className="block sm:inline">&nbsp;Optimizer</span>
             </h1>
             <p className="text-gray-700 text-sm sm:text-base md:text-lg mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed px-6 sm:px-4">
-              {/* Mobile - Original Text */}
-              <span className="block sm:hidden">
-                <span className="block mb-3 text-center">Professional AI enhancement that improves every detail while preserving your original design.</span>
-                <span className="block text-center">Make your thumbnails more eye-catching and boost your CTR instantly.</span>
+              <span className="block mb-4 text-center">
+                <strong>GinyWow YouTube Thumbnail & Title Optimizer</strong> is a smart tool designed for creators who want to grow their YouTube channel faster. It helps YouTubers, digital marketers, and businesses create <strong>eye-catching thumbnails</strong> and <strong>click-worthy titles</strong> that attract more viewers and boost video performance.
               </span>
-              
-              {/* Desktop - Original */}
-              <span className="hidden sm:block">
-                <span className="inline">Professional AI enhancement that improves every detail while preserving your original design.</span>
-                <span className="inline"> Make your thumbnails more eye-catching and boost your CTR instantly.</span>
+              <span className="block text-center">
+                Normally, creators struggle with low CTR (Click Through Rate) because their thumbnails don't stand out, or their titles aren't appealing enough. That's why we built this tool – to give every creator a simple way to make their videos more engaging and clickable.
               </span>
             </p>
           </motion.div>
@@ -880,33 +875,6 @@ export default function Home() {
           )}
         </motion.div>
 
-        {/* What is YouTube Thumbnail & Title Optimizer Section */}
-        <section className="py-20 bg-white">
-          <div className="container mx-auto px-4 max-w-4xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <div className="text-center mb-12">
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-                  What is YouTube Thumbnail & Title Optimizer?
-                </h2>
-              </div>
-              
-              <div className="prose prose-lg mx-auto text-gray-600">
-                <p className="text-lg leading-relaxed mb-6">
-                  <strong>GinyWow YouTube Thumbnail & Title Optimizer</strong> is a smart tool designed for creators who want to grow their YouTube channel faster. It helps YouTubers, digital marketers, and businesses create <strong>eye-catching thumbnails</strong> and <strong>click-worthy titles</strong> that attract more viewers and boost video performance.
-                </p>
-                
-                <p className="text-lg leading-relaxed">
-                  Normally, creators struggle with low CTR (Click Through Rate) because their thumbnails don't stand out, or their titles aren't appealing enough. That's why we built the <strong>GinyWow YouTube Thumbnail & Title Optimizer</strong> – to give every creator a simple way to make their videos more engaging and clickable.
-                </p>
-              </div>
-            </motion.div>
-          </div>
-        </section>
 
         {/* Why Use Section */}
         <section className="py-20 bg-gray-50">
@@ -946,6 +914,16 @@ export default function Home() {
                 
                 <div className="bg-white p-8 rounded-xl shadow-sm">
                   <div className="flex items-start space-x-4">
+                    <div className="w-3 h-3 bg-red-600 rounded-full mt-2 flex-shrink-0"></div>
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-900 mb-3">Human-Friendly Suggestions</h3>
+                      <p className="text-gray-600">Get natural, engaging, and audience-focused titles</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="bg-white p-8 rounded-xl shadow-sm">
+                  <div className="flex items-start space-x-4">
                     <div className="w-3 h-3 bg-purple-600 rounded-full mt-2 flex-shrink-0"></div>
                     <div>
                       <h3 className="text-xl font-bold text-gray-900 mb-3">Boost Engagement</h3>
@@ -962,6 +940,138 @@ export default function Home() {
                       <p className="text-gray-600">Whether you're a vlogger, educator, gamer, or business channel</p>
                     </div>
                   </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Benefits Section */}
+        <section className="py-16 bg-blue-50" data-testid="benefits-section">
+          <div className="container mx-auto px-4 max-w-4xl">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              <div className="text-center">
+                <div className="prose prose-lg mx-auto text-gray-700">
+                  <p className="text-lg leading-relaxed">
+                    With <strong>GinyWow YouTube Thumbnail & Title Optimizer</strong>, you don't waste time guessing what works. Instead, you get professional, engaging, and SEO-optimized suggestions that <strong>increase clicks, views, and subscribers</strong>. Perfect for creators who want to grow their channel faster and businesses looking to boost brand awareness on YouTube.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* How It Works Section */}
+        <section className="py-20 bg-white" data-testid="how-it-works-section">
+          <div className="container mx-auto px-4 max-w-4xl">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              <div className="text-center mb-12">
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+                  How Does GinyWow YouTube Thumbnail & Title Optimizer Work?
+                </h2>
+                <p className="text-lg text-gray-600">Using the tool is quick and simple:</p>
+              </div>
+              
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
+                  <div className="flex items-start space-x-4">
+                    <div className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">1</div>
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-900 mb-3">Upload & Enter</h3>
+                      <p className="text-gray-600">Upload your <strong>thumbnail</strong> and enter your <strong>video title or idea</strong></p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
+                  <div className="flex items-start space-x-4">
+                    <div className="w-8 h-8 bg-green-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">2</div>
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-900 mb-3">Get AI Suggestions</h3>
+                      <p className="text-gray-600">Get <strong>5 AI-powered optimized title suggestions</strong></p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
+                  <div className="flex items-start space-x-4">
+                    <div className="w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">3</div>
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-900 mb-3">Enhance Design</h3>
+                      <p className="text-gray-600">Instantly improve your <strong>thumbnail design</strong> with better enhancements</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
+                  <div className="flex items-start space-x-4">
+                    <div className="w-8 h-8 bg-orange-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">4</div>
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-900 mb-3">Use Results</h3>
+                      <p className="text-gray-600">Use the optimized results on your YouTube video</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="text-center mt-8">
+                <p className="text-lg text-gray-600">
+                  With just a few clicks, your video becomes more appealing, rankable, and ready to attract more views.
+                </p>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="py-20 bg-gray-50" data-testid="faq-section">
+          <div className="container mx-auto px-4 max-w-4xl">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              <div className="text-center mb-12">
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+                  Frequently Asked Questions
+                </h2>
+              </div>
+              
+              <div className="space-y-6">
+                <div className="bg-white p-6 rounded-xl shadow-sm">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3">💰 Is GinyWow YouTube Thumbnail & Title Optimizer free to use?</h3>
+                  <p className="text-gray-600">Yes! You can generate unlimited thumbnail and title suggestions for free.</p>
+                </div>
+                
+                <div className="bg-white p-6 rounded-xl shadow-sm">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3">⭐ What makes GinyWow different from other tools?</h3>
+                  <p className="text-gray-600">Unlike generic generators, <strong>GinyWow</strong> creates <strong>SEO-optimized, human-friendly, and clickable results</strong> that truly engage your audience.</p>
+                </div>
+                
+                <div className="bg-white p-6 rounded-xl shadow-sm">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3">🎯 Can I use this tool for any type of channel?</h3>
+                  <p className="text-gray-600">Absolutely! Whether you're making content in <strong>tech, finance, gaming, lifestyle, or education</strong>, this tool works for all creators.</p>
+                </div>
+                
+                <div className="bg-white p-6 rounded-xl shadow-sm">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3">🎨 Do I need any design or SEO knowledge to use this tool?</h3>
+                  <p className="text-gray-600">No! The tool is made for everyone. Just upload your thumbnail, enter your title, and get optimized results instantly.</p>
+                </div>
+                
+                <div className="bg-white p-6 rounded-xl shadow-sm">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3">📈 How does this help in channel growth?</h3>
+                  <p className="text-gray-600">Better thumbnails and titles mean <strong>higher CTR, more watch time, and more subscribers</strong>, which leads to faster YouTube channel growth.</p>
                 </div>
               </div>
             </motion.div>
