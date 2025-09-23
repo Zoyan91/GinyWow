@@ -397,46 +397,64 @@ export async function enhanceThumbnailImage(base64Image: string, enhancements: {
     const metadata = await sharp.default(imageBuffer).metadata();
     console.log(`Processing image: ${metadata.format}, ${metadata.width}x${metadata.height}`);
     
-    // ULTRA NATURAL Enhancement - बिल्कुल subtle और human-friendly
+    // DETAILED NATURAL Enhancement - हर detail को बारीकी से improve करना
     const naturalEnhanced = await sharp.default(imageBuffer)
       // Convert to RGB if needed to avoid format issues
       .toColorspace('srgb')
       
-      // बहुत gentle color enhancement - barely noticeable
+      // Step 1: Intelligent brightness and exposure correction
       .modulate({
-        brightness: 1.02,     // सिर्फ 2% brightness boost - very subtle
-        saturation: 1.03,     // सिर्फ 3% saturation - natural look
-        hue: 0               // No hue change - keep original colors
+        brightness: 1.08,     // 8% brightness boost - noticeable but natural
+        saturation: 1.12,     // 12% saturation - vibrant but realistic colors
+        hue: 2               // Slight warm tone for appealing look
       })
       
-      // Very gentle contrast - just to make it slightly crisp
-      .linear(1.01, -1)       // 1% contrast increase - barely visible
+      // Step 2: Enhanced contrast for better depth and detail
+      .linear(1.15, -8)       // 15% contrast increase with shadow lift - visible improvement
+      .gamma(1.1)             // Gamma correction for natural mid-tones
       
-      // Minimal sharpening - just to enhance text/details slightly
+      // Step 3: Professional detail enhancement for face clarity
       .sharpen({
-        sigma: 0.3,           // Very light sharpening
-        m1: 0.3,              // Gentle edge detection
-        m2: 0.8               // Minimal enhancement
+        sigma: 1.0,           // Medium sharpening for clear details
+        m1: 0.7,              // Strong edge detection for facial features
+        m2: 1.8,              // Good enhancement for text and fine details
+        x1: 2,                // Flat area threshold - preserve smooth areas
+        y2: 10,               // Maximum enhancement limit
+        y3: 15                // Edge boost for crisp text/graphics
       })
+      
+      // Step 4: Color grading for natural skin tone enhancement
+      .modulate({
+        brightness: 1.04,     // Additional brightness for healthy glow
+        saturation: 1.06,     // Final saturation tweak for natural vibrancy
+        hue: 0               // Maintain color balance
+      })
+      
+      // Step 5: Final polish with balanced gamma
+      .gamma(1.05)            // Subtle gamma for natural finishing
       
       // Always export as JPEG for consistency and compatibility
       .jpeg({ 
-        quality: 95,          // High quality but not over-compressed
-        progressive: true     // Progressive loading
+        quality: 96,          // Higher quality for better detail preservation
+        progressive: true,    // Progressive loading
+        mozjpeg: true         // Advanced compression for better quality
       })
       .toBuffer();
     
     // Convert back to base64
     const enhancedBase64 = naturalEnhanced.toString('base64');
-    console.log("✨ Natural Thumbnail Enhancement Applied - 100% Human-Friendly:");
-    console.log("📸 Barely noticeable improvements for natural look");
-    console.log("🎯 Subtle enhancement that maintains original beauty");
-    console.log("💯 No artificial processing - pure natural enhancement");
+    console.log("🎨 Detailed Natural Enhancement Applied - Every Detail Improved:");
+    console.log("✨ 8% brightness boost for better visibility and natural glow");
+    console.log("🌈 12% saturation increase for vibrant but realistic colors");
+    console.log("🔍 Professional detail sharpening for facial features and text clarity");
+    console.log("⚡ 15% contrast enhancement for better depth and definition");
+    console.log("🎯 Warm tone adjustment for appealing and natural skin tones");
+    console.log("💯 Multi-step enhancement while maintaining 100% natural look");
     
     return {
       enhancedImage: enhancedBase64,
       success: true,
-      message: "Natural enhancement applied successfully. Your thumbnail now has subtle improvements for better clarity while maintaining its original character."
+      message: "Detailed natural enhancement applied successfully. Your thumbnail now has improved brightness, vibrant colors, enhanced facial details, and better overall clarity while maintaining a completely natural look."
     };
     
   } catch (error) {
