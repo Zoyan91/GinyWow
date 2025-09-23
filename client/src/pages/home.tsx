@@ -441,19 +441,19 @@ export default function Home() {
                   number: 1,
                   title: "Paste Your URL",
                   description: "Copy and paste any social media or website URL into the input field",
-                  color: "blue"
+                  bgColor: "bg-blue-600"
                 },
                 {
                   number: 2,
                   title: "Generate Link",
                   description: "Click 'Generate' to create your smart app-opening link",
-                  color: "green"
+                  bgColor: "bg-green-600"
                 },
                 {
                   number: 3,
                   title: "Share & Engage",
                   description: "Share your new link and watch users open it directly in apps",
-                  color: "purple"
+                  bgColor: "bg-purple-600"
                 }
               ].map((step, index) => (
                 <motion.div
@@ -465,7 +465,7 @@ export default function Home() {
                   className="card-mobile p-4 sm:p-6"
                 >
                   <div className="flex items-start space-x-4">
-                    <div className={`w-10 h-10 sm:w-12 sm:h-12 bg-${step.color}-600 text-white rounded-full flex items-center justify-center text-sm sm:text-base font-bold flex-shrink-0`}>
+                    <div className={`w-10 h-10 sm:w-12 sm:h-12 ${step.bgColor} text-white rounded-full flex items-center justify-center text-sm sm:text-base font-bold flex-shrink-0`}>
                       {step.number}
                     </div>
                     <div>
