@@ -999,7 +999,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="bg-white/90 backdrop-blur-sm border-t border-gray-100 py-12 relative z-10">
         <div className="container mx-auto px-6">
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-2 gap-8">
             <div>
               <Link href="/">
                 <h3 className="text-xl font-bold mb-4 cursor-pointer hover:opacity-80 transition-opacity">
@@ -1015,32 +1015,12 @@ export default function Home() {
             </div>
             
             <div>
-              <h4 className="font-semibold text-gray-900 mb-4">PDF Tools</h4>
+              <h4 className="font-semibold text-gray-900 mb-4">App Opener</h4>
               <ul className="space-y-2 text-sm text-gray-600">
-                <li><a href="#" className="hover:text-gray-900">PDF Converter</a></li>
-                <li><a href="#" className="hover:text-gray-900">PDF Merger</a></li>
-                <li><a href="#" className="hover:text-gray-900">PDF Splitter</a></li>
-                <li><a href="#" className="hover:text-gray-900">PDF Compressor</a></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold text-gray-900 mb-4">Write</h4>
-              <ul className="space-y-2 text-sm text-gray-600">
-                <li><a href="#" className="hover:text-gray-900">Essay Writer</a></li>
-                <li><a href="#" className="hover:text-gray-900">Paragraph Writer</a></li>
-                <li><a href="#" className="hover:text-gray-900">Article Writer</a></li>
-                <li><a href="#" className="hover:text-gray-900">Grammar Fixer</a></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold text-gray-900 mb-4">Image Converter</h4>
-              <ul className="space-y-2 text-sm text-gray-600">
-                <li><a href="#" className="hover:text-gray-900">JPG to PNG</a></li>
-                <li><a href="#" className="hover:text-gray-900">PNG to JPG</a></li>
-                <li><a href="#" className="hover:text-gray-900">WebP to JPG</a></li>
-                <li><a href="#" className="hover:text-gray-900">GIF to PNG</a></li>
+                <li><a href="#" className="hover:text-gray-900">YouTube App Opener</a></li>
+                <li><a href="#" className="hover:text-gray-900">Instagram App Opener</a></li>
+                <li><a href="#" className="hover:text-gray-900">TikTok App Opener</a></li>
+                <li><a href="#" className="hover:text-gray-900">WhatsApp App Opener</a></li>
               </ul>
             </div>
           </div>
