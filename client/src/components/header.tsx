@@ -24,7 +24,6 @@ export default function Header({ currentPage }: HeaderProps) {
     { href: "/thumbnail-downloader", label: "Download Thumbnail", testId: "nav-thumbnail-downloader" },
     { href: "/contact", label: "Contact Us", testId: "nav-contact" },
     { href: "/blog", label: "Blog", testId: "nav-blog" },
-    { href: "/about", label: "About", testId: "nav-about" },
   ];
 
   return (
