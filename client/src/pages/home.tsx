@@ -290,8 +290,12 @@ export default function Home() {
             
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
+              <button className="flex items-center text-gray-600 hover:text-gray-900 transition-colors font-medium" data-testid="nav-youtube-optimizer">
+                YouTube Optimizer
+              </button>
+              
               <button className="flex items-center text-gray-600 hover:text-gray-900 transition-colors font-medium" data-testid="nav-app-opener">
-                App Opener
+                YouTube App Opener
               </button>
               
               <button className="flex items-center text-gray-600 hover:text-gray-900 transition-colors font-medium" data-testid="nav-contact">
@@ -374,8 +378,14 @@ export default function Home() {
               {/* Mobile Navigation Links */}
               <div className="space-y-3">
                 <div className="border-b border-gray-100 pb-3">
+                  <button className="block text-gray-600 hover:text-gray-900 py-3 text-base font-medium" data-testid="mobile-nav-youtube-optimizer">
+                    YouTube Optimizer
+                  </button>
+                </div>
+
+                <div className="border-b border-gray-100 pb-3">
                   <button className="block text-gray-600 hover:text-gray-900 py-3 text-base font-medium" data-testid="mobile-nav-app-opener">
-                    App Opener
+                    YouTube App Opener
                   </button>
                 </div>
 
@@ -952,7 +962,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="bg-white/90 backdrop-blur-sm border-t border-gray-100 py-12 relative z-10">
         <div className="container mx-auto px-6">
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-3 gap-8">
             <div>
               <Link href="/">
                 <h3 className="text-xl font-bold mb-4 cursor-pointer hover:opacity-80 transition-opacity">
@@ -965,12 +975,16 @@ export default function Home() {
             </div>
             
             <div>
+              <h4 className="font-semibold text-gray-900 mb-4">YouTube Optimizer</h4>
+              <ul className="space-y-2 text-sm text-gray-600">
+                <li><Link href="/" className="hover:text-gray-900">Thumbnail & Title Optimizer</Link></li>
+              </ul>
+            </div>
+            
+            <div>
               <h4 className="font-semibold text-gray-900 mb-4">App Opener</h4>
               <ul className="space-y-2 text-sm text-gray-600">
                 <li><a href="#" className="hover:text-gray-900">YouTube App Opener</a></li>
-                <li><a href="#" className="hover:text-gray-900">Instagram App Opener</a></li>
-                <li><a href="#" className="hover:text-gray-900">TikTok App Opener</a></li>
-                <li><a href="#" className="hover:text-gray-900">WhatsApp App Opener</a></li>
               </ul>
             </div>
           </div>
