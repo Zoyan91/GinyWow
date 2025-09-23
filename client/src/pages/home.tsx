@@ -437,7 +437,7 @@ export default function Home() {
             <h1 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-2 px-2">
               YouTube Thumbnail & Title Optimizer
             </h1>
-            <p className="text-gray-600 text-sm sm:text-base px-4">
+            <p className="text-gray-600 text-sm sm:text-base px-4 hidden sm:block">
               Upload your thumbnail and enter your title to get optimization suggestions.
             </p>
           </div>
