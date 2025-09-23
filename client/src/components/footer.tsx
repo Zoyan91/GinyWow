@@ -61,20 +61,7 @@ export default function Footer() {
           <div>
             <h4 className="font-bold text-gray-900 mb-6 text-lg">Tools</h4>
             <ul className="space-y-3">
-              <li>
-                <Link href="/">
-                  <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm">
-                    URL Shortener
-                  </span>
-                </Link>
-              </li>
-              <li>
-                <Link href="/">
-                  <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm">
-                    Social Media Opener
-                  </span>
-                </Link>
-              </li>
+              {/* Tools will be updated in next task */}
             </ul>
           </div>
 
