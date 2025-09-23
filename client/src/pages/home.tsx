@@ -420,8 +420,17 @@ export default function Home() {
               <span className="block sm:inline">&nbsp;& Titles in Seconds</span>
             </h1>
             <p className="text-gray-700 text-sm sm:text-base md:text-lg mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed px-6 sm:px-4">
-              <span className="block sm:inline">Professional AI enhancement that improves every detail while preserving your original design.</span>
-              <span className="block sm:inline mt-2 sm:mt-0"> Make your thumbnails more eye-catching and boost your CTR instantly.</span>
+              {/* Mobile - Simple and Modern */}
+              <span className="block sm:hidden">
+                <span className="block mb-3">✨ AI-powered optimization for better thumbnails</span>
+                <span className="block">🚀 Get more clicks and views instantly</span>
+              </span>
+              
+              {/* Desktop - Original */}
+              <span className="hidden sm:block">
+                <span className="inline">Professional AI enhancement that improves every detail while preserving your original design.</span>
+                <span className="inline"> Make your thumbnails more eye-catching and boost your CTR instantly.</span>
+              </span>
             </p>
           </motion.div>
         </div>
