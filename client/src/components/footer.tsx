@@ -20,13 +20,6 @@ export default function Footer() {
             <h4 className="font-bold text-gray-900 mb-6 text-lg">Menus</h4>
             <ul className="space-y-3">
               <li>
-                <Link href="/">
-                  <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm">
-                    YouTube Optimizer
-                  </span>
-                </Link>
-              </li>
-              <li>
                 <Link href="/app-opener">
                   <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm">
                     App Opener
@@ -71,26 +64,12 @@ export default function Footer() {
               <li>
                 <Link href="/">
                   <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm">
-                    Thumbnail Optimizer
-                  </span>
-                </Link>
-              </li>
-              <li>
-                <Link href="/">
-                  <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm">
-                    Title Generator
-                  </span>
-                </Link>
-              </li>
-              <li>
-                <Link href="/app-opener">
-                  <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm">
                     URL Shortener
                   </span>
                 </Link>
               </li>
               <li>
-                <Link href="/app-opener">
+                <Link href="/">
                   <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm">
                     Social Media Opener
                   </span>
@@ -134,13 +113,6 @@ export default function Footer() {
               <ul className="space-y-3 p-4">
                 <li>
                   <Link href="/">
-                    <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm block py-2">
-                      YouTube Optimizer
-                    </span>
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/app-opener">
                     <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm block py-2">
                       App Opener
                     </span>
@@ -189,26 +161,12 @@ export default function Footer() {
                 <li>
                   <Link href="/">
                     <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm block py-2">
-                      Thumbnail Optimizer
-                    </span>
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/">
-                    <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm block py-2">
-                      Title Generator
-                    </span>
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/app-opener">
-                    <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm block py-2">
                       URL Shortener
                     </span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/app-opener">
+                  <Link href="/">
                     <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm block py-2">
                       Social Media Opener
                     </span>
