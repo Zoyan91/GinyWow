@@ -305,16 +305,16 @@ export default function Home() {
             <h1 className="text-xl sm:text-2xl lg:text-4xl font-bold lg:font-normal text-gray-900 mb-4 sm:mb-6 leading-tight">
               {/* Mobile Version */}
               <span className="block sm:hidden whitespace-pre-line">
-                {"App Opener Link Generator Link \nDirectly Open in YouTube App"}
+                {"Convert Social Media Visitors \ninto Subscribers"}
               </span>
               {/* Desktop/Tablet Version */}
               <span className="hidden sm:block whitespace-pre-line">
-                {"App Opener Link Generator Link Directly\nOpen in YouTube App"}
+                {"Convert Social Media Visitors\ninto Subscribers"}
               </span>
             </h1>
             
             <p className="text-responsive-sm text-gray-600 mb-6 sm:mb-8 leading-relaxed max-w-2xl mx-auto px-4">
-              We help you gain more followers on socials by enabling users to open a link directly in an app instead of an in-app browser.
+              Generate smart app opener links that redirect users directly to native apps, converting your social media visitors into loyal subscribers across all platforms.
             </p>
 
             {/* URL Input and Generate Button */}
