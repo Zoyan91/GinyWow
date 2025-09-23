@@ -960,10 +960,7 @@ export default function Home() {
                 </h3>
               </Link>
               <p className="text-gray-600 text-sm mb-4">
-                Free tools to make content creation simple and efficient for creators worldwide.
-              </p>
-              <p className="text-gray-500 text-sm italic">
-                We'll keep coming soon!
+                GinyWow is a free online tool platform built to help creators grow faster. Our <strong>YouTube Thumbnail & Title Optimizer</strong> generates SEO-friendly, clickable titles and engaging thumbnails to boost video views. We also provide an <strong>App Opener tool</strong> that allows creators to send their audience directly into apps like YouTube, Instagram, or Facebook instead of opening links in a browser — making conversions easier and more effective.
               </p>
             </div>
             
