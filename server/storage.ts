@@ -1,4 +1,4 @@
-import { type Thumbnail, type InsertThumbnail, type TitleOptimization, type InsertTitleOptimization, type NewsletterSubscription, type InsertNewsletterSubscription } from "@shared/schema";
+import { type Thumbnail, type InsertThumbnail, type TitleOptimization, type InsertTitleOptimization, type NewsletterSubscription, type InsertNewsletterSubscription, type ShortUrl, type InsertShortUrl } from "@shared/schema";
 import { randomUUID } from "crypto";
 
 export interface IStorage {
@@ -18,17 +18,24 @@ export interface IStorage {
   getNewsletterSubscription(email: string): Promise<NewsletterSubscription | undefined>;
   updateNewsletterSubscription(email: string, updates: Partial<NewsletterSubscription>): Promise<NewsletterSubscription | undefined>;
   getAllActiveSubscriptions(): Promise<NewsletterSubscription[]>;
+  
+  // Short URL operations
+  createShortUrl(shortUrl: InsertShortUrl): Promise<ShortUrl>;
+  getShortUrl(shortCode: string): Promise<ShortUrl | undefined>;
+  incrementClickCount(shortCode: string): Promise<void>;
 }
 
 export class MemStorage implements IStorage {
   private thumbnails: Map<string, Thumbnail>;
   private titleOptimizations: Map<string, TitleOptimization>;
   private newsletterSubscriptions: Map<string, NewsletterSubscription>;
+  private shortUrls: Map<string, ShortUrl>;
 
   constructor() {
     this.thumbnails = new Map();
     this.titleOptimizations = new Map();
     this.newsletterSubscriptions = new Map();
+    this.shortUrls = new Map();
   }
 
   async createThumbnail(insertThumbnail: InsertThumbnail): Promise<Thumbnail> {
@@ -126,6 +133,30 @@ export class MemStorage implements IStorage {
     return Array.from(this.newsletterSubscriptions.values()).filter(
       sub => sub.isActive === "true"
     );
+  }
+
+  async createShortUrl(insertShortUrl: InsertShortUrl): Promise<ShortUrl> {
+    const id = randomUUID();
+    const shortUrl: ShortUrl = {
+      ...insertShortUrl,
+      id,
+      createdAt: new Date(),
+      clickCount: 0,
+    };
+    this.shortUrls.set(insertShortUrl.shortCode, shortUrl);
+    return shortUrl;
+  }
+
+  async getShortUrl(shortCode: string): Promise<ShortUrl | undefined> {
+    return this.shortUrls.get(shortCode);
+  }
+
+  async incrementClickCount(shortCode: string): Promise<void> {
+    const shortUrl = this.shortUrls.get(shortCode);
+    if (shortUrl) {
+      shortUrl.clickCount = (shortUrl.clickCount || 0) + 1;
+      this.shortUrls.set(shortCode, shortUrl);
+    }
   }
 }
 

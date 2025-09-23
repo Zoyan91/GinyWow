@@ -2,7 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import multer from "multer";
 import { storage } from "./storage";
-import { insertThumbnailSchema, insertTitleOptimizationSchema, insertNewsletterSubscriptionSchema } from "@shared/schema";
+import { insertThumbnailSchema, insertTitleOptimizationSchema, insertNewsletterSubscriptionSchema, insertShortUrlSchema } from "@shared/schema";
 import { analyzeThumbnail, optimizeTitles, enhanceThumbnailImage } from "./openai";
 
 // Configure multer for file uploads
@@ -271,6 +271,324 @@ export async function registerRoutes(app: Express): Promise<Server> {
         error: 'Failed to subscribe to newsletter. Please try again.',
         code: 'SUBSCRIPTION_FAILED'
       });
+    }
+  });
+
+  // Generate short URL for YouTube links
+  app.post('/api/short-url', async (req, res) => {
+    try {
+      const { url } = req.body;
+      
+      if (!url) {
+        return res.status(400).json({ 
+          success: false,
+          error: 'Please provide a valid YouTube URL' 
+        });
+      }
+
+      // Strict domain validation
+      try {
+        const urlObj = new URL(url);
+        const isValidDomain = urlObj.hostname === 'youtu.be' || 
+                             urlObj.hostname === 'youtube.com' || 
+                             urlObj.hostname === 'www.youtube.com' ||
+                             urlObj.hostname === 'm.youtube.com';
+        
+        if (!isValidDomain) {
+          return res.status(400).json({ 
+            success: false,
+            error: 'Please provide a valid YouTube URL' 
+          });
+        }
+      } catch {
+        return res.status(400).json({ 
+          success: false,
+          error: 'Please provide a valid YouTube URL' 
+        });
+      }
+
+      // Parse YouTube URL
+      const parseYouTubeUrl = (url: string) => {
+        try {
+          const urlObj = new URL(url);
+          
+          if (urlObj.hostname.includes('youtube.com')) {
+            if (urlObj.pathname === '/watch') {
+              return { type: 'video', id: urlObj.searchParams.get('v'), path: urlObj.pathname + urlObj.search };
+            } else if (urlObj.pathname.startsWith('/playlist')) {
+              return { type: 'playlist', id: urlObj.searchParams.get('list'), path: urlObj.pathname + urlObj.search };
+            } else if (urlObj.pathname.startsWith('/channel/')) {
+              const channelId = urlObj.pathname.split('/channel/')[1];
+              return { type: 'channel', id: channelId, path: urlObj.pathname, isUcid: channelId.startsWith('UC') };
+            } else if (urlObj.pathname.startsWith('/c/')) {
+              const customName = urlObj.pathname.split('/c/')[1];
+              return { type: 'channel', id: customName, path: urlObj.pathname, isUcid: false };
+            } else if (urlObj.pathname.startsWith('/@')) {
+              const handle = urlObj.pathname.split('/@')[1];
+              return { type: 'channel', id: handle, path: urlObj.pathname, isUcid: false };
+            } else if (urlObj.pathname.startsWith('/shorts/')) {
+              return { type: 'shorts', id: urlObj.pathname.split('/shorts/')[1], path: urlObj.pathname };
+            }
+          } else if (urlObj.hostname === 'youtu.be') {
+            return { type: 'video', id: urlObj.pathname.slice(1), path: `/watch?v=${urlObj.pathname.slice(1)}` };
+          }
+          
+          return null;
+        } catch {
+          return null;
+        }
+      };
+
+      const generateDeepLinks = (parsed: any, originalUrl: string) => {
+        const encodedUrl = encodeURIComponent(originalUrl);
+        
+        let iosLink = '';
+        let androidLink = '';
+        
+        if (parsed.type === 'video') {
+          iosLink = `youtube://watch?v=${parsed.id}`;
+          androidLink = `intent://www.youtube.com/watch?v=${parsed.id}#Intent;scheme=https;package=com.google.android.youtube;S.browser_fallback_url=${encodedUrl};end`;
+        } else if (parsed.type === 'playlist') {
+          iosLink = `youtube://playlist?list=${parsed.id}`;
+          androidLink = `intent://www.youtube.com/playlist?list=${parsed.id}#Intent;scheme=https;package=com.google.android.youtube;S.browser_fallback_url=${encodedUrl};end`;
+        } else if (parsed.type === 'channel') {
+          if (parsed.isUcid) {
+            iosLink = `youtube://www.youtube.com/channel/${parsed.id}`;
+            androidLink = `intent://www.youtube.com/channel/${parsed.id}#Intent;scheme=https;package=com.google.android.youtube;S.browser_fallback_url=${encodedUrl};end`;
+          } else {
+            iosLink = `youtube://www.youtube.com${parsed.path}`;
+            androidLink = `intent://www.youtube.com${parsed.path}#Intent;scheme=https;package=com.google.android.youtube;S.browser_fallback_url=${encodedUrl};end`;
+          }
+        } else if (parsed.type === 'shorts') {
+          iosLink = `youtube://shorts/${parsed.id}`;
+          androidLink = `intent://www.youtube.com/shorts/${parsed.id}#Intent;scheme=https;package=com.google.android.youtube;S.browser_fallback_url=${encodedUrl};end`;
+        }
+        
+        return { iosLink, androidLink, webLink: originalUrl };
+      };
+
+      const parsed = parseYouTubeUrl(url);
+      
+      if (!parsed || !parsed.id) {
+        return res.status(400).json({ 
+          success: false,
+          error: 'Could not parse YouTube URL. Please check the format.' 
+        });
+      }
+
+      const { iosLink, androidLink, webLink } = generateDeepLinks(parsed, url);
+      
+      // Generate unique short code with collision checking
+      let shortCode = '';
+      let attempts = 0;
+      const maxAttempts = 10;
+      
+      do {
+        shortCode = Math.random().toString(36).substring(2, 8);
+        const existing = await storage.getShortUrl(shortCode);
+        if (!existing) break;
+        attempts++;
+      } while (attempts < maxAttempts);
+      
+      if (attempts >= maxAttempts) {
+        return res.status(500).json({ 
+          success: false,
+          error: 'Unable to generate unique short code. Please try again.' 
+        });
+      }
+      
+      // Validate and create short URL
+      const shortUrlData = insertShortUrlSchema.parse({
+        shortCode,
+        originalUrl: url,
+        iosDeepLink: iosLink,
+        androidDeepLink: androidLink,
+        urlType: parsed.type,
+      });
+
+      const shortUrl = await storage.createShortUrl(shortUrlData);
+      
+      const baseUrl = req.headers.host?.includes('localhost') 
+        ? `http://localhost:5000` 
+        : `https://ginywow.com`;
+      
+      res.json({
+        success: true,
+        shortUrl: `${baseUrl}/yt/${shortCode}`,
+        originalUrl: url,
+        type: parsed.type
+      });
+    } catch (error: any) {
+      console.error('Error generating short URL:', error);
+      
+      if (error.name === 'ZodError') {
+        return res.status(400).json({ 
+          success: false,
+          error: 'Invalid URL data provided' 
+        });
+      }
+      
+      res.status(500).json({ 
+        success: false,
+        error: 'Failed to generate short URL. Please try again.' 
+      });
+    }
+  });
+
+  // Redirect short URLs
+  app.get('/yt/:shortCode', async (req, res) => {
+    try {
+      const { shortCode } = req.params;
+      const shortUrl = await storage.getShortUrl(shortCode);
+      
+      if (!shortUrl) {
+        return res.status(404).send(`
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <title>Link Not Found - GinyWow</title>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <style>
+              body { font-family: Arial, sans-serif; text-align: center; padding: 50px; background: #f9f9f9; }
+              .container { max-width: 500px; margin: 0 auto; }
+              h1 { color: #333; }
+              p { color: #666; margin: 20px 0; }
+              .btn { background: #ff4444; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; display: inline-block; margin-top: 20px; }
+              .btn:hover { background: #cc0000; }
+            </style>
+          </head>
+          <body>
+            <div class="container">
+              <h1>Link Not Found</h1>
+              <p>The short link you're looking for doesn't exist or has expired.</p>
+              <a href="/" class="btn">Go to GinyWow</a>
+            </div>
+          </body>
+          </html>
+        `);
+      }
+
+      // Increment click count
+      await storage.incrementClickCount(shortCode);
+
+      // Detect user agent
+      const userAgent = req.headers['user-agent'] || '';
+      const isIOS = /iPad|iPhone|iPod/.test(userAgent);
+      const isAndroid = /Android/.test(userAgent);
+
+      let redirectUrl = shortUrl.originalUrl;
+      
+      if (isIOS) {
+        redirectUrl = shortUrl.iosDeepLink;
+      } else if (isAndroid) {
+        redirectUrl = shortUrl.androidDeepLink;
+      }
+
+      // Send HTML with immediate redirect and fallback
+      res.send(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>Opening YouTube App...</title>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <style>
+            body { 
+              font-family: Arial, sans-serif; 
+              text-align: center; 
+              padding: 50px; 
+              background: #f9f9f9; 
+            }
+            .loading { 
+              color: #666; 
+              font-size: 18px; 
+              margin-bottom: 20px; 
+            }
+            .spinner {
+              border: 4px solid #f3f3f3;
+              border-top: 4px solid #ff4444;
+              border-radius: 50%;
+              width: 40px;
+              height: 40px;
+              animation: spin 1s linear infinite;
+              margin: 20px auto;
+            }
+            @keyframes spin {
+              0% { transform: rotate(0deg); }
+              100% { transform: rotate(360deg); }
+            }
+            .fallback {
+              margin-top: 30px;
+              padding: 20px;
+              background: white;
+              border-radius: 8px;
+              border: 1px solid #ddd;
+            }
+            .btn {
+              background: #ff4444;
+              color: white;
+              padding: 12px 24px;
+              text-decoration: none;
+              border-radius: 5px;
+              display: inline-block;
+              margin: 10px;
+            }
+            .btn:hover { background: #cc0000; }
+          </style>
+        </head>
+        <body>
+          <div class="loading">Opening YouTube App...</div>
+          <div class="spinner"></div>
+          
+          <div class="fallback">
+            <p>If the app didn't open, try these links:</p>
+            ${isIOS ? `<a href="${shortUrl.iosDeepLink}" class="btn">Open in iOS App</a>` : ''}
+            ${isAndroid ? `<a href="${shortUrl.androidDeepLink}" class="btn">Open in Android App</a>` : ''}
+            <a href="${shortUrl.originalUrl}" class="btn">Open in Browser</a>
+          </div>
+
+          <script>
+            // Immediate redirect attempt
+            window.location.href = "${redirectUrl}";
+            
+            // Fallback after 3 seconds
+            setTimeout(function() {
+              if (document.visibilityState === 'visible') {
+                window.location.href = "${shortUrl.originalUrl}";
+              }
+            }, 3000);
+          </script>
+        </body>
+        </html>
+      `);
+    } catch (error) {
+      console.error('Error redirecting short URL:', error);
+      res.status(500).send(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>Error - GinyWow</title>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <style>
+            body { font-family: Arial, sans-serif; text-align: center; padding: 50px; background: #f9f9f9; }
+            .container { max-width: 500px; margin: 0 auto; }
+            h1 { color: #333; }
+            p { color: #666; margin: 20px 0; }
+            .btn { background: #ff4444; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; display: inline-block; margin-top: 20px; }
+            .btn:hover { background: #cc0000; }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <h1>Something went wrong</h1>
+            <p>There was an error processing your request.</p>
+            <a href="/" class="btn">Go to GinyWow</a>
+          </div>
+        </body>
+        </html>
+      `);
     }
   });
 

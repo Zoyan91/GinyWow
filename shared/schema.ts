@@ -41,6 +41,17 @@ export const newsletterSubscriptions = pgTable("newsletter_subscriptions", {
   lastUpdated: timestamp("last_updated").defaultNow(),
 });
 
+export const shortUrls = pgTable("short_urls", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  shortCode: varchar("short_code", { length: 10 }).notNull().unique(),
+  originalUrl: text("original_url").notNull(),
+  iosDeepLink: text("ios_deep_link").notNull(),
+  androidDeepLink: text("android_deep_link").notNull(),
+  urlType: varchar("url_type", { length: 20 }).notNull(), // video, channel, playlist, shorts
+  createdAt: timestamp("created_at").defaultNow(),
+  clickCount: real("click_count").default(0),
+});
+
 export const insertThumbnailSchema = createInsertSchema(thumbnails).pick({
   originalImageData: true,
   fileName: true,
@@ -58,9 +69,19 @@ export const insertNewsletterSubscriptionSchema = createInsertSchema(newsletterS
   email: z.string().email("Please enter a valid email address"),
 });
 
+export const insertShortUrlSchema = createInsertSchema(shortUrls).pick({
+  shortCode: true,
+  originalUrl: true,
+  iosDeepLink: true,
+  androidDeepLink: true,
+  urlType: true,
+});
+
 export type InsertThumbnail = z.infer<typeof insertThumbnailSchema>;
 export type Thumbnail = typeof thumbnails.$inferSelect;
 export type InsertTitleOptimization = z.infer<typeof insertTitleOptimizationSchema>;
 export type TitleOptimization = typeof titleOptimizations.$inferSelect;
 export type InsertNewsletterSubscription = z.infer<typeof insertNewsletterSubscriptionSchema>;
 export type NewsletterSubscription = typeof newsletterSubscriptions.$inferSelect;
+export type InsertShortUrl = z.infer<typeof insertShortUrlSchema>;
+export type ShortUrl = typeof shortUrls.$inferSelect;
