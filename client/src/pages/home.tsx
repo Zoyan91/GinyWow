@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -18,10 +17,6 @@ export default function Home() {
   const [optimizationResult, setOptimizationResult] = useState<any>(null);
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
   
-  // Newsletter subscription state
-  const [newsletterEmail, setNewsletterEmail] = useState('');
-  const [isSubscribing, setIsSubscribing] = useState(false);
-  const [subscriptionMessage, setSubscriptionMessage] = useState<{type: 'success' | 'error', text: string} | null>(null);
   
   // Mobile navigation state
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -367,11 +362,7 @@ export default function Home() {
 
         {/* Results Section */}
         {optimizationResult && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="mt-8 bg-gray-50 rounded-lg p-6 border border-gray-200"
+            <div className="mt-8 bg-gray-50 rounded-lg p-6 border border-gray-200"
               data-testid="optimization-results"
             >
               {optimizationResult.error ? (
@@ -517,105 +508,11 @@ export default function Home() {
                   )}
                 </div>
               )}
-            </motion.div>
+            </div>
           )}
         </div>
       </main>
 
-      {/* About Section */}
-      <section className="bg-gray-50 py-16">
-        <div className="container mx-auto px-6 max-w-4xl">
-          <div className="bg-white rounded-lg p-8">
-          <div className="text-center mb-8">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">
-              How it works
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Upload your thumbnail and enter your title. Our AI analyzes both and provides specific suggestions to improve your click-through rate.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8 text-center">
-            <div>
-              <h4 className="font-medium text-gray-900 mb-1">CTR Analysis</h4>
-              <p className="text-gray-500 text-sm">Predict click-through rates</p>
-            </div>
-            <div>
-              <h4 className="font-medium text-gray-900 mb-1">AI Suggestions</h4>
-              <p className="text-gray-500 text-sm">Improve titles automatically</p>
-            </div>
-            <div>
-              <h4 className="font-medium text-gray-900 mb-1">Enhancement</h4>
-              <p className="text-gray-500 text-sm">Optimize image quality</p>
-            </div>
-          </div>
-
-          </div>
-        </div>
-      </section>
-
-
-
-      {/* Footer */}
-      <footer className="bg-white/90 backdrop-blur-sm border-t border-gray-100 py-12 relative z-10">
-        <div className="container mx-auto px-6">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <Link href="/">
-                <h3 className="text-xl font-bold mb-4 cursor-pointer hover:opacity-80 transition-opacity">
-                  <span className="text-gray-900">Giny</span><span className="text-blue-600">Wow</span>
-                </h3>
-              </Link>
-              <p className="text-gray-600 text-sm mb-4">
-                Free tools to make content creation simple and efficient for creators worldwide.
-              </p>
-              <p className="text-gray-500 text-sm italic">
-                We'll keep coming soon!
-              </p>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold text-gray-900 mb-4">PDF Tools</h4>
-              <ul className="space-y-2 text-sm text-gray-600">
-                <li><a href="#" className="hover:text-gray-900">PDF Converter</a></li>
-                <li><a href="#" className="hover:text-gray-900">PDF Merger</a></li>
-                <li><a href="#" className="hover:text-gray-900">PDF Splitter</a></li>
-                <li><a href="#" className="hover:text-gray-900">PDF Compressor</a></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold text-gray-900 mb-4">Write</h4>
-              <ul className="space-y-2 text-sm text-gray-600">
-                <li><a href="#" className="hover:text-gray-900">Essay Writer</a></li>
-                <li><a href="#" className="hover:text-gray-900">Paragraph Writer</a></li>
-                <li><a href="#" className="hover:text-gray-900">Article Writer</a></li>
-                <li><a href="#" className="hover:text-gray-900">Grammar Fixer</a></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold text-gray-900 mb-4">Image Converter</h4>
-              <ul className="space-y-2 text-sm text-gray-600">
-                <li><a href="#" className="hover:text-gray-900">JPG to PNG</a></li>
-                <li><a href="#" className="hover:text-gray-900">PNG to JPG</a></li>
-                <li><a href="#" className="hover:text-gray-900">WebP to JPG</a></li>
-                <li><a href="#" className="hover:text-gray-900">GIF to PNG</a></li>
-              </ul>
-            </div>
-          </div>
-          
-          <div className="border-t border-gray-200 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-            <div className="flex space-x-6 mb-4 md:mb-0">
-              <a href="#" className="text-sm text-gray-600 hover:text-gray-900">About</a>
-              <a href="#" className="text-sm text-gray-600 hover:text-gray-900">Contact</a>
-              <a href="#" className="text-sm text-gray-600 hover:text-gray-900">Privacy Policy</a>
-              <a href="#" className="text-sm text-gray-600 hover:text-gray-900">Terms of Service</a>
-            </div>
-            <p className="text-sm text-gray-600">© 2024 GinyWow.com. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }
