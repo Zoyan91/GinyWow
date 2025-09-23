@@ -67,37 +67,37 @@ export default function Home() {
     };
 
     return (
-      <section className="relative py-16 sm:py-20 lg:py-24 mt-16 bg-gradient-to-br from-blue-50 to-indigo-100 overflow-hidden">
-        {/* Background decoration */}
+      <section className="relative py-12 sm:py-16 lg:py-20 mt-16 bg-gradient-to-br from-blue-50 to-indigo-100 overflow-hidden">
+        {/* Background decoration - simplified */}
         <div className="absolute inset-0">
-          <div className="absolute -top-24 -right-24 w-96 h-96 bg-blue-200 rounded-full opacity-20 blur-3xl"></div>
-          <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-indigo-200 rounded-full opacity-20 blur-3xl"></div>
+          <div className="absolute top-0 right-0 w-64 h-64 bg-blue-200 rounded-full opacity-10 blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-indigo-200 rounded-full opacity-10 blur-3xl transform -translate-x-1/2 translate-y-1/2"></div>
         </div>
         
         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-          <div className="text-center mb-8 sm:mb-12">
-            <div className="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-full mb-4 sm:mb-6">
+          <div className="text-center mb-6 sm:mb-10">
+            <div className="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-full mb-4">
               <span className="mr-2">📧</span>
               Newsletter
             </div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
               Subscribe for Our Latest Updates
             </h2>
-            <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+            <p className="hidden sm:block text-base sm:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
               Get the latest tools, tips, and tutorials delivered to your inbox. Join thousands of creators who trust us.
             </p>
           </div>
 
           <div className="max-w-lg mx-auto">
-            <form onSubmit={handleNewsletterSubmit} className="space-y-4">
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+            <form onSubmit={handleNewsletterSubmit} className="space-y-3">
+              <div className="flex flex-col sm:flex-row gap-3">
                 <div className="flex-1 relative">
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter your email address"
-                    className="w-full px-4 sm:px-5 py-3 sm:py-4 text-base border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-white shadow-sm placeholder-gray-500"
+                    className="w-full px-4 py-3 text-base border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-white shadow-sm placeholder-gray-500"
                     disabled={isSubscribing}
                     data-testid="newsletter-email-input"
                   />
@@ -112,7 +112,7 @@ export default function Home() {
                 <Button
                   type="submit"
                   disabled={isSubscribing || !email}
-                  className={`px-6 sm:px-8 py-3 sm:py-4 font-semibold rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 min-h-[52px] w-full sm:w-auto ${
+                  className={`px-6 py-3 font-semibold rounded-lg transition-all duration-200 shadow-md hover:shadow-lg min-h-[48px] w-full sm:w-auto ${
                     isSubscribing 
                       ? 'bg-gray-400 cursor-not-allowed' 
                       : 'bg-blue-600 hover:bg-blue-700 text-white'
