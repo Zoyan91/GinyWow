@@ -472,12 +472,12 @@ export default function AppOpener() {
           >
             {/* Title */}
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
-              App Opener Link Generator - Open Links Directly in Apps
+              App Opener Link Generator Link Directly Open in YouTube App
             </h1>
             
             {/* Subtitle */}
             <p className="text-lg md:text-xl text-gray-600 mb-12 leading-relaxed">
-              Convert any social media or website link into smart links that open directly in mobile apps instead of browsers.
+              We help you gain more followers on socials by enabling users to open a link directly in an app instead of an in-app browser.
             </p>
 
             {/* URL Input and Generate Button */}
@@ -485,7 +485,7 @@ export default function AppOpener() {
               <div className="flex flex-col sm:flex-row gap-4">
                 <Input
                   type="url"
-                  placeholder="https://instagram.com/p/..., https://tiktok.com/..., https://youtube.com/..."
+                  placeholder="Paste Your URL Here"
                   value={youtubeUrl}
                   onChange={(e) => setYoutubeUrl(e.target.value)}
                   className="flex-1 h-14 px-6 text-lg border-2 border-gray-200 rounded-xl focus:border-orange-400 focus:ring-orange-400"
@@ -494,7 +494,7 @@ export default function AppOpener() {
                 <Button
                   onClick={handleGenerate}
                   disabled={isGenerating}
-                  className="h-14 px-8 text-lg font-semibold bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-lg transform transition-all duration-200 hover:scale-105 disabled:scale-100 disabled:opacity-70"
+                  className="h-14 px-8 text-lg font-semibold bg-gradient-to-r from-red-500 to-orange-400 hover:from-red-600 hover:to-orange-500 text-white rounded-xl shadow-lg transform transition-all duration-200 hover:scale-105 disabled:scale-100 disabled:opacity-70"
                   data-testid="generate-button"
                 >
                   {isGenerating ? (
