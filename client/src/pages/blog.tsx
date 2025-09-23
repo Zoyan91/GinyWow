@@ -1,30 +1,6 @@
-import { motion } from 'framer-motion';
 import { Link } from 'wouter';
-import { Calendar, Clock, Tag } from 'lucide-react';
 
 export default function Blog() {
-  // Placeholder for future blog articles
-  const blogArticles: Array<{
-    id: number;
-    title: string;
-    excerpt: string;
-    date: string;
-    readTime: string;
-    category: string;
-    slug: string;
-  }> = [
-    // When you add articles, they'll appear here in this format:
-    // {
-    //   id: 1,
-    //   title: "How to Create Eye-Catching YouTube Thumbnails",
-    //   excerpt: "Learn the best practices for creating thumbnails that boost your click-through rates...",
-    //   date: "2025-01-15",
-    //   readTime: "5 min read",
-    //   category: "YouTube Tips",
-    //   slug: "eye-catching-youtube-thumbnails"
-    // }
-  ];
-
   return (
     <div className="min-h-screen bg-background relative w-full overflow-x-hidden">
       {/* Header */}
@@ -68,113 +44,9 @@ export default function Blog() {
         </div>
       </header>
 
-      {/* Blog Content */}
+      {/* Empty Content Area */}
       <main className="bg-background/50 backdrop-blur-sm container mx-auto px-4 sm:px-6 py-8 max-w-6xl relative z-10">
-        <motion.div 
-          className="text-center mb-12"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Blog
-          </h1>
-          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-            Latest tips, tutorials and insights about YouTube optimization, content creation, and digital marketing tools.
-          </p>
-        </motion.div>
-
-        {/* Blog Articles */}
-        <motion.div 
-          className="max-w-4xl mx-auto"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
-          {blogArticles.length === 0 ? (
-            /* Empty State - No Articles Yet */
-            <div className="bg-white rounded-2xl border border-gray-200 p-8 sm:p-12 shadow-xl shadow-blue-500/10 text-center">
-              <div className="max-w-md mx-auto">
-                <div className="bg-gray-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6">
-                  <Tag className="w-8 h-8 text-gray-400" />
-                </div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">Coming Soon!</h2>
-                <p className="text-gray-600 text-base leading-relaxed mb-6">
-                  We're working on amazing blog articles about YouTube optimization, thumbnail creation, content strategy, and digital marketing tips. Stay tuned for valuable insights and tutorials!
-                </p>
-                <div className="space-y-3 text-sm text-gray-500">
-                  <p>📝 YouTube Thumbnail Best Practices</p>
-                  <p>🎯 Title Optimization Strategies</p>
-                  <p>📊 Content Analytics & Performance</p>
-                  <p>🚀 Channel Growth Tips & Tricks</p>
-                </div>
-              </div>
-            </div>
-          ) : (
-            /* Article List - Will show when articles are added */
-            <div className="space-y-8">
-              {blogArticles.map((article) => (
-                <motion.article
-                  key={article.id}
-                  className="bg-white rounded-2xl border border-gray-200 p-6 sm:p-8 shadow-xl shadow-blue-500/10 hover:shadow-2xl transition-shadow"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6 }}
-                >
-                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4">
-                    <div className="flex-1">
-                      <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2 hover:text-blue-600 transition-colors">
-                        <Link href={`/blog/${article.slug}`}>
-                          <span data-testid={`article-title-${article.id}`}>
-                            {article.title}
-                          </span>
-                        </Link>
-                      </h2>
-                      <p className="text-gray-600 text-base leading-relaxed mb-4">
-                        {article.excerpt}
-                      </p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500">
-                    <div className="flex items-center gap-2">
-                      <Calendar className="w-4 h-4" />
-                      <span>{article.date}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Clock className="w-4 h-4" />
-                      <span>{article.readTime}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Tag className="w-4 h-4" />
-                      <span>{article.category}</span>
-                    </div>
-                  </div>
-                  
-                  <div className="mt-4 pt-4 border-t border-gray-100">
-                    <Link href={`/blog/${article.slug}`}>
-                      <span 
-                        className="text-blue-600 hover:text-blue-700 font-medium transition-colors cursor-pointer"
-                        data-testid={`article-read-more-${article.id}`}
-                      >
-                        Read More →
-                      </span>
-                    </Link>
-                  </div>
-                </motion.article>
-              ))}
-            </div>
-          )}
-        </motion.div>
-
-        {/* Back to Home */}
-        <div className="text-center mt-12">
-          <Link href="/">
-            <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors" data-testid="back-to-home">
-              ← Back to Home
-            </button>
-          </Link>
-        </div>
+        
       </main>
 
       {/* Footer */}
