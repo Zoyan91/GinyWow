@@ -33,6 +33,14 @@ export const titleOptimizations = pgTable("title_optimizations", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+export const newsletterSubscriptions = pgTable("newsletter_subscriptions", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  email: varchar("email", { length: 255 }).notNull().unique(),
+  isActive: varchar("is_active").default("true").notNull(),
+  subscriptionDate: timestamp("subscription_date").defaultNow(),
+  lastUpdated: timestamp("last_updated").defaultNow(),
+});
+
 export const insertThumbnailSchema = createInsertSchema(thumbnails).pick({
   originalImageData: true,
   fileName: true,
@@ -44,7 +52,15 @@ export const insertTitleOptimizationSchema = createInsertSchema(titleOptimizatio
   thumbnailId: true,
 });
 
+export const insertNewsletterSubscriptionSchema = createInsertSchema(newsletterSubscriptions).pick({
+  email: true,
+}).extend({
+  email: z.string().email("Please enter a valid email address"),
+});
+
 export type InsertThumbnail = z.infer<typeof insertThumbnailSchema>;
 export type Thumbnail = typeof thumbnails.$inferSelect;
 export type InsertTitleOptimization = z.infer<typeof insertTitleOptimizationSchema>;
 export type TitleOptimization = typeof titleOptimizations.$inferSelect;
+export type InsertNewsletterSubscription = z.infer<typeof insertNewsletterSubscriptionSchema>;
+export type NewsletterSubscription = typeof newsletterSubscriptions.$inferSelect;

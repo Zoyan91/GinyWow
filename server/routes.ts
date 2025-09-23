@@ -2,7 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import multer from "multer";
 import { storage } from "./storage";
-import { insertThumbnailSchema, insertTitleOptimizationSchema } from "@shared/schema";
+import { insertThumbnailSchema, insertTitleOptimizationSchema, insertNewsletterSubscriptionSchema } from "@shared/schema";
 import { analyzeThumbnail, optimizeTitles, enhanceThumbnailImage } from "./openai";
 
 // Configure multer for file uploads
@@ -226,6 +226,51 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Error during optimization:', error);
       res.status(500).json({ error: 'Failed to optimize thumbnail and title' });
+    }
+  });
+
+  // Newsletter subscription endpoint
+  app.post('/api/newsletter/subscribe', async (req, res) => {
+    try {
+      // Validate the email input
+      const subscriptionData = insertNewsletterSubscriptionSchema.parse(req.body);
+      
+      // Try to create the subscription
+      const subscription = await storage.createNewsletterSubscription(subscriptionData);
+      
+      res.json({
+        success: true,
+        message: 'Successfully subscribed to newsletter! Thank you for joining us.',
+        subscription: {
+          id: subscription.id,
+          email: subscription.email,
+          subscriptionDate: subscription.subscriptionDate,
+        }
+      });
+    } catch (error: any) {
+      console.error('Error subscribing to newsletter:', error);
+      
+      if (error.message === 'Email already subscribed') {
+        return res.status(409).json({ 
+          success: false,
+          error: 'This email is already subscribed to our newsletter.',
+          code: 'ALREADY_SUBSCRIBED'
+        });
+      }
+      
+      if (error.name === 'ZodError') {
+        return res.status(400).json({ 
+          success: false,
+          error: 'Please enter a valid email address.',
+          code: 'INVALID_EMAIL'
+        });
+      }
+      
+      res.status(500).json({ 
+        success: false,
+        error: 'Failed to subscribe to newsletter. Please try again.',
+        code: 'SUBSCRIPTION_FAILED'
+      });
     }
   });
 
