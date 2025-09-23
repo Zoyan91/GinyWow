@@ -58,29 +58,12 @@ export default function Header({ currentPage }: HeaderProps) {
             ))}
           </nav>
           
-          {/* Desktop Sign In */}
+          {/* Empty right section */}
           <div className="hidden lg:flex items-center">
-            <Button 
-              variant="outline" 
-              size="sm"
-              className="border-gray-300 text-gray-700 hover:bg-gray-50 font-medium"
-              data-testid="sign-in"
-            >
-              Sign In
-            </Button>
           </div>
 
           {/* Mobile Actions */}
-          <div className="flex md:hidden items-center space-x-2">
-            <Button 
-              variant="outline" 
-              size="sm"
-              className="border-gray-300 text-gray-700 hover:bg-gray-50 text-xs px-3 py-2 font-medium"
-              data-testid="mobile-sign-in"
-            >
-              Sign In
-            </Button>
-            
+          <div className="flex md:hidden items-center">
             {/* Mobile Menu */}
             <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
               <SheetTrigger asChild>
@@ -121,7 +104,7 @@ export default function Header({ currentPage }: HeaderProps) {
           </div>
 
           {/* Tablet Menu (md breakpoint) */}
-          <div className="hidden md:flex lg:hidden items-center space-x-3">
+          <div className="hidden md:flex lg:hidden items-center">
             <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
               <SheetTrigger asChild>
                 <Button
