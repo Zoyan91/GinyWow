@@ -61,7 +61,20 @@ export default function Footer() {
           <div>
             <h4 className="font-bold text-gray-900 mb-6 text-lg">Tools</h4>
             <ul className="space-y-3">
-              {/* Tools will be updated in next task */}
+              <li>
+                <Link href="/">
+                  <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm">
+                    URL Opener
+                  </span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/thumbnail-downloader">
+                  <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm">
+                    Thumbnail Downloader
+                  </span>
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -137,6 +150,31 @@ export default function Footer() {
             </CollapsibleContent>
           </Collapsible>
 
+          {/* Tools */}
+          <Collapsible open={toolsOpen} onOpenChange={setToolsOpen}>
+            <CollapsibleTrigger className="flex items-center justify-between w-full p-4 bg-gray-50 rounded-lg">
+              <h4 className="font-bold text-gray-900 text-base">Tools</h4>
+              <ChevronDown className={`h-4 w-4 transition-transform ${toolsOpen ? 'rotate-180' : ''}`} />
+            </CollapsibleTrigger>
+            <CollapsibleContent className="mt-2">
+              <ul className="space-y-3 p-4">
+                <li>
+                  <Link href="/">
+                    <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm block py-2">
+                      URL Opener
+                    </span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/thumbnail-downloader">
+                    <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm block py-2">
+                      Thumbnail Downloader
+                    </span>
+                  </Link>
+                </li>
+              </ul>
+            </CollapsibleContent>
+          </Collapsible>
 
           {/* Social Media */}
           <Collapsible open={socialOpen} onOpenChange={setSocialOpen}>
