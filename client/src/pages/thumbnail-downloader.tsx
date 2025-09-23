@@ -316,68 +316,181 @@ export default function ThumbnailDownloader() {
         </div>
       </section>
 
-      {/* How it Works Section */}
+      {/* Content Section */}
       <section className="pt-16 sm:pt-24 lg:pt-32 pb-12 sm:pb-16 lg:pb-20 bg-white">
         <div className="container-mobile max-w-4xl">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-12 sm:mb-16"
-          >
-            <h2 className="text-responsive-xl font-bold text-gray-900 mb-4 sm:mb-6">
-              How it Works
-            </h2>
-            <p className="text-responsive-sm text-gray-600 leading-relaxed max-w-2xl mx-auto px-4">
-              Download YouTube thumbnails in just 3 simple steps
-            </p>
-          </motion.div>
+          <div className="prose prose-lg max-w-none">
+            
+            {/* What is a YouTube Thumbnail Downloader */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="mb-12"
+            >
+              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4">
+                What is a YouTube Thumbnail Downloader?
+              </h3>
+              <p className="text-responsive-sm text-gray-600 leading-relaxed mb-4">
+                A <strong>YouTube Thumbnail Downloader</strong> is a free online tool that allows you to download any video's thumbnail in different resolutions like <strong>HD, HQ, and 4K</strong>. Many creators, marketers, and students need thumbnails for presentations, reference, or research. That's why we built the <strong>GinyWow YouTube Thumbnail Downloader</strong> — a simple and reliable tool to get thumbnails instantly.
+              </p>
+            </motion.div>
 
-          <div className="grid sm:grid-cols-3 gap-8 sm:gap-6 lg:gap-8">
-            {[
-              {
-                step: "1",
-                title: "Paste URL",
-                description: "Copy and paste any YouTube video URL into the input field above",
-                icon: LinkIcon
-              },
-              {
-                step: "2", 
-                title: "Extract Thumbnails",
-                description: "Click extract to get all available thumbnail sizes for the video",
-                icon: Download
-              },
-              {
-                step: "3",
-                title: "Download",
-                description: "Choose your preferred size and download the thumbnail instantly",
-                icon: CheckCircle
-              }
-            ].map((item, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="text-center"
-              >
-                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-base">
-                    {item.step}
-                  </div>
+            <hr className="border-gray-300 mb-12" />
+
+            {/* Why Use GinyWow YouTube Thumbnail Downloader */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="mb-12"
+            >
+              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6">
+                Why Use GinyWow YouTube Thumbnail Downloader?
+              </h3>
+              <ul className="space-y-3 text-responsive-sm text-gray-600">
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span><strong>Free & Instant</strong> – Paste the video link and get the thumbnail in seconds.</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span><strong>Multiple Qualities</strong> – Download in default, HQ, or HD as per your needs.</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span><strong>No Watermark</strong> – 100% clean and high-quality thumbnails.</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span><strong>Mobile Friendly</strong> – Works smoothly on any device.</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span><strong>Safe & Secure</strong> – No logins, no hidden charges, just simple downloads.</span>
+                </li>
+              </ul>
+            </motion.div>
+
+            <hr className="border-gray-300 mb-12" />
+
+            {/* How Does GinyWow Thumbnail Downloader Work */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="mb-12"
+            >
+              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6">
+                How Does GinyWow Thumbnail Downloader Work?
+              </h3>
+              <ol className="space-y-3 text-responsive-sm text-gray-600">
+                <li className="flex items-start">
+                  <span className="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-0.5">1</span>
+                  <span>Copy the URL of any YouTube video.</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-0.5">2</span>
+                  <span>Paste it into the GinyWow Thumbnail Downloader input box.</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-0.5">3</span>
+                  <span>Click on the <strong>Download Thumbnail</strong> button.</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-0.5">4</span>
+                  <span>Choose from available thumbnail sizes and download with one click.</span>
+                </li>
+              </ol>
+              <p className="text-responsive-sm text-gray-600 mt-4 font-medium">
+                That's it! Simple, fast, and reliable.
+              </p>
+            </motion.div>
+
+            <hr className="border-gray-300 mb-12" />
+
+            {/* Benefits of Using GinyWow Thumbnail Downloader */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="mb-12"
+            >
+              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6">
+                Benefits of Using GinyWow Thumbnail Downloader
+              </h3>
+              <ul className="space-y-3 text-responsive-sm text-gray-600">
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span>Perfect for <strong>students, designers, creators, and marketers</strong>.</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span>Use thumbnails for inspiration, research, or educational purposes.</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 mr-2">•</span>
+                  <span>Works instantly without waiting or registrations.</span>
+                </li>
+              </ul>
+            </motion.div>
+
+            <hr className="border-gray-300 mb-12" />
+
+            {/* FAQ Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="mb-12"
+            >
+              <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6">
+                Frequently Asked Questions (FAQ)
+              </h3>
+              <div className="space-y-6">
+                <div>
+                  <h4 className="text-lg font-semibold text-gray-900 mb-2">
+                    1. Is GinyWow YouTube Thumbnail Downloader free?
+                  </h4>
+                  <p className="text-responsive-sm text-gray-600">
+                    Yes, it's completely free and always will be.
+                  </p>
                 </div>
                 
-                <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">
-                  {item.title}
-                </h3>
+                <div>
+                  <h4 className="text-lg font-semibold text-gray-900 mb-2">
+                    2. Do I need to install any software?
+                  </h4>
+                  <p className="text-responsive-sm text-gray-600">
+                    No, this tool works online directly in your browser.
+                  </p>
+                </div>
                 
-                <p className="text-responsive-sm text-gray-600 leading-relaxed px-2">
-                  {item.description}
-                </p>
-              </motion.div>
-            ))}
+                <div>
+                  <h4 className="text-lg font-semibold text-gray-900 mb-2">
+                    3. Can I download thumbnails in HD quality?
+                  </h4>
+                  <p className="text-responsive-sm text-gray-600">
+                    Yes, you can download YouTube thumbnails in HQ and HD quality easily.
+                  </p>
+                </div>
+                
+                <div>
+                  <h4 className="text-lg font-semibold text-gray-900 mb-2">
+                    4. Does it work on mobile?
+                  </h4>
+                  <p className="text-responsive-sm text-gray-600">
+                    Yes! GinyWow Thumbnail Downloader is fully responsive and works on all devices.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+
           </div>
         </div>
       </section>
