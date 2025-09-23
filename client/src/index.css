@@ -82,6 +82,11 @@
   body {
     @apply font-sans antialiased bg-background text-foreground;
     position: relative;
+    overflow-x: hidden;
+  }
+  
+  html {
+    overflow-x: hidden;
   }
 }
 

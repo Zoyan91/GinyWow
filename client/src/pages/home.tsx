@@ -109,10 +109,10 @@ export default function Home() {
   }, [thumbnailPreview]);
 
   return (
-    <div className="min-h-screen bg-background relative">
+    <div className="min-h-screen bg-background relative w-full overflow-x-hidden">
       {/* Header */}
       <header className="bg-white/90 backdrop-blur-sm border-b border-gray-200 relative z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex items-center">
