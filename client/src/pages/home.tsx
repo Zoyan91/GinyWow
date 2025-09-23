@@ -531,120 +531,40 @@ export default function Home() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="bg-white rounded-lg p-8"
           >
-          <div className="mb-8">
-            <div className="text-center mb-6">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                What is YouTube Thumbnail & Title Optimizer?
-              </h2>
-              <p className="text-gray-600 leading-relaxed max-w-3xl mx-auto">
-                Our YouTube Thumbnail & Title Optimizer is a powerful, free tool designed to help content creators maximize their video's click-through rate (CTR) and overall engagement. By analyzing your thumbnail and title combination, our tool provides data-driven suggestions to improve visibility, attract more viewers, and boost your YouTube channel's performance.
-              </p>
+          <div className="text-center mb-8">
+            <h2 className="text-xl font-bold text-gray-900 mb-4">
+              How it works
+            </h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Upload your thumbnail and enter your title. Our AI analyzes both and provides specific suggestions to improve your click-through rate.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6 text-center">
+            <div>
+              <div className="text-blue-600 mb-2">📊</div>
+              <h4 className="font-semibold text-gray-900 mb-2">CTR Analysis</h4>
+              <p className="text-gray-600 text-sm">Get click-through rate predictions</p>
+            </div>
+            <div>
+              <div className="text-green-600 mb-2">✨</div>
+              <h4 className="font-semibold text-gray-900 mb-2">AI Suggestions</h4>
+              <p className="text-gray-600 text-sm">Improve titles with AI recommendations</p>
+            </div>
+            <div>
+              <div className="text-purple-600 mb-2">🖼️</div>
+              <h4 className="font-semibold text-gray-900 mb-2">Thumbnail Enhancement</h4>
+              <p className="text-gray-600 text-sm">Optimize image quality and composition</p>
             </div>
           </div>
 
-          <div className="mb-6">
-            <h3 className="text-xl font-bold text-center text-gray-900 mb-8">
-              Why Use Our Optimizer?
-            </h3>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            {/* Feature 1 */}
-            <div className="bg-white rounded-lg p-6 border border-gray-200">
-              <div className="flex items-start gap-4">
-                <div className="flex-shrink-0">
-                  <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                    <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                    </svg>
-                  </div>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-gray-900 mb-2">
-                    Increase Click-Through-Rate (CTR)
-                  </h4>
-                  <p className="text-gray-600 text-sm">
-                    Optimize your thumbnails and titles to attract more clicks and improve your video's performance in YouTube's algorithm.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Feature 2 */}
-            <div className="bg-white rounded-lg p-6 border border-gray-200">
-              <div className="flex items-start gap-4">
-                <div className="flex-shrink-0">
-                  <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                    <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                    </svg>
-                  </div>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-gray-900 mb-2">
-                    AI-based Title Suggestions
-                  </h4>
-                  <p className="text-gray-600 text-sm">
-                    Get intelligent recommendations for title improvements based on successful YouTube content patterns and trending keywords.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Feature 3 */}
-            <div className="bg-white rounded-lg p-6 border border-gray-200">
-              <div className="flex items-start gap-4">
-                <div className="flex-shrink-0">
-                  <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
-                    <svg className="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                  </div>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-gray-900 mb-2">
-                    Thumbnail Preview for Better Design
-                  </h4>
-                  <p className="text-gray-600 text-sm">
-                    Visualize how your thumbnail will appear across different devices and screen sizes before publishing your video.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Feature 4 */}
-            <div className="bg-white rounded-lg p-6 border border-gray-200">
-              <div className="flex items-start gap-4">
-                <div className="flex-shrink-0">
-                  <div className="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center">
-                    <svg className="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
-                    </svg>
-                  </div>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-gray-900 mb-2">
-                    Free & Easy to Use
-                  </h4>
-                  <p className="text-gray-600 text-sm">
-                    No registration required. Simply upload your thumbnail, enter your title, and get instant optimization suggestions at no cost.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
         </motion.div>
 
         {/* How to Use Section */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-12 bg-white rounded-lg border border-gray-200 p-8"
-        >
-          <h2 className="text-2xl font-bold text-center text-gray-900 mb-8">
-            How to Use the Tool?
-          </h2>
+        <div className="mt-8 text-center">
+          <h3 className="text-lg font-semibold text-gray-900 mb-6">
+            Simple steps
+          </h3>
           
           <div className="space-y-6">
             {/* Step 1 */}
@@ -698,18 +618,13 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* FAQ Section */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="mt-12 bg-gray-50 rounded-lg p-8"
-        >
-          <h2 className="text-2xl font-bold text-gray-900 mb-8">
-            Frequently Asked Questions
-          </h2>
+        <div className="mt-12">
+          <h3 className="text-lg font-semibold text-gray-900 mb-6 text-center">
+            FAQ
+          </h3>
           
           <div className="space-y-6">
             {/* FAQ 1 */}
