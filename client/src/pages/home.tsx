@@ -525,12 +525,7 @@ export default function Home() {
       {/* About Section */}
       <section className="bg-gray-50 py-16">
         <div className="container mx-auto px-6 max-w-4xl">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="bg-white rounded-lg p-8"
-          >
+          <div className="bg-white rounded-lg p-8">
           <div className="text-center mb-8">
             <h2 className="text-xl font-bold text-gray-900 mb-4">
               How it works
@@ -540,231 +535,26 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6 text-center">
+          <div className="grid md:grid-cols-3 gap-8 text-center">
             <div>
-              <div className="text-blue-600 mb-2">📊</div>
-              <h4 className="font-semibold text-gray-900 mb-2">CTR Analysis</h4>
-              <p className="text-gray-600 text-sm">Get click-through rate predictions</p>
+              <h4 className="font-medium text-gray-900 mb-1">CTR Analysis</h4>
+              <p className="text-gray-500 text-sm">Predict click-through rates</p>
             </div>
             <div>
-              <div className="text-green-600 mb-2">✨</div>
-              <h4 className="font-semibold text-gray-900 mb-2">AI Suggestions</h4>
-              <p className="text-gray-600 text-sm">Improve titles with AI recommendations</p>
+              <h4 className="font-medium text-gray-900 mb-1">AI Suggestions</h4>
+              <p className="text-gray-500 text-sm">Improve titles automatically</p>
             </div>
             <div>
-              <div className="text-purple-600 mb-2">🖼️</div>
-              <h4 className="font-semibold text-gray-900 mb-2">Thumbnail Enhancement</h4>
-              <p className="text-gray-600 text-sm">Optimize image quality and composition</p>
+              <h4 className="font-medium text-gray-900 mb-1">Enhancement</h4>
+              <p className="text-gray-500 text-sm">Optimize image quality</p>
             </div>
           </div>
 
-        </motion.div>
-
-        {/* How to Use Section */}
-        <div className="mt-8 text-center">
-          <h3 className="text-lg font-semibold text-gray-900 mb-6">
-            Simple steps
-          </h3>
-          
-          <div className="space-y-6">
-            {/* Step 1 */}
-            <div className="flex items-start gap-4">
-              <div className="flex-shrink-0">
-                <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-sm">
-                  1
-                </div>
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-900 mb-2">
-                  Upload your thumbnail
-                </h3>
-                <p className="text-gray-600 text-sm">
-                  Click the upload area or drag and drop your YouTube thumbnail image. We support JPG, PNG, and WebP formats up to 5MB.
-                </p>
-              </div>
-            </div>
-
-            {/* Step 2 */}
-            <div className="flex items-start gap-4">
-              <div className="flex-shrink-0">
-                <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-sm">
-                  2
-                </div>
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-900 mb-2">
-                  Enter your video title
-                </h3>
-                <p className="text-gray-600 text-sm">
-                  Type your current or planned YouTube video title in the text field. Our tool will analyze it for optimization opportunities.
-                </p>
-              </div>
-            </div>
-
-            {/* Step 3 */}
-            <div className="flex items-start gap-4">
-              <div className="flex-shrink-0">
-                <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-sm">
-                  3
-                </div>
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-900 mb-2">
-                  Click Optimize Now and get results
-                </h3>
-                <p className="text-gray-600 text-sm">
-                  Get instant feedback on your thumbnail and title combination with actionable suggestions to improve your video's performance.
-                </p>
-              </div>
-            </div>
           </div>
-        </div>
-
-        {/* FAQ Section */}
-        <div className="mt-12">
-          <h3 className="text-lg font-semibold text-gray-900 mb-6 text-center">
-            FAQ
-          </h3>
-          
-          <div className="space-y-6">
-            {/* FAQ 1 */}
-            <div className="border-b border-gray-100 pb-6">
-              <h3 className="font-semibold text-gray-900 mb-3">
-                Is the YouTube Thumbnail & Title Optimizer really free?
-              </h3>
-              <p className="text-gray-600">
-                Yes, our optimizer is completely free to use. You can upload thumbnails, analyze titles, and receive optimization suggestions without any cost or registration requirements.
-              </p>
-            </div>
-
-            {/* FAQ 2 */}
-            <div className="border-b border-gray-100 pb-6">
-              <h3 className="font-semibold text-gray-900 mb-3">
-                What file formats do you support for thumbnails?
-              </h3>
-              <p className="text-gray-600">
-                We support JPG, PNG, and WebP image formats. The maximum file size is 5MB, which covers most YouTube thumbnail requirements.
-              </p>
-            </div>
-
-            {/* FAQ 3 */}
-            <div className="border-b border-gray-100 pb-6">
-              <h3 className="font-semibold text-gray-900 mb-3">
-                How does the AI-based title suggestion work?
-              </h3>
-              <p className="text-gray-600">
-                Our AI analyzes successful YouTube video patterns, trending keywords, and engagement metrics to provide data-driven suggestions for improving your titles and increasing click-through rates.
-              </p>
-            </div>
-
-            {/* FAQ 4 */}
-            <div>
-              <h3 className="font-semibold text-gray-900 mb-3">
-                Do you store my uploaded thumbnails or titles?
-              </h3>
-              <p className="text-gray-600">
-                No, we prioritize your privacy. Uploaded thumbnails and titles are processed in real-time and are not stored on our servers. Your content remains completely private and secure.
-              </p>
-            </div>
-          </div>
-          </motion.div>
         </div>
       </section>
 
-      {/* Newsletter Section - Simple & Modern Style */}
-      <section className="bg-gray-50 py-20 mt-16 relative overflow-hidden">
-        {/* Subtle decorative elements */}
-        <div className="absolute inset-0" aria-hidden="true">
-          {/* Dotted pattern */}
-          <div className="absolute top-16 left-16 w-20 h-16 opacity-20" style={{
-            background: 'radial-gradient(circle, #666 1px, transparent 1px)',
-            backgroundSize: '8px 8px'
-          }}></div>
-          
-          {/* Leaf illustrations */}
-          <svg className="absolute top-20 left-8 w-16 h-20 text-blue-400 opacity-60" viewBox="0 0 100 120" fill="currentColor">
-            <path d="M20 60c0-20 10-40 30-40s30 20 30 40-10 40-30 40-30-20-30-40z" />
-            <path d="M35 45c0-10 5-20 15-20s15 10 15 20-5 20-15 20-15-10-15-20z" fill="#8B5CF6" />
-          </svg>
-          
-          <svg className="absolute bottom-24 left-12 w-12 h-16 text-purple-300 opacity-50" viewBox="0 0 60 80" fill="currentColor">
-            <path d="M10 40c0-15 8-30 20-30s20 15 20 30-8 30-20 30-20-15-20-30z" />
-          </svg>
-          
-          <svg className="absolute top-32 right-16 w-14 h-18 text-orange-300 opacity-40" viewBox="0 0 70 90" fill="currentColor">
-            <path d="M15 45c0-18 9-35 20-35s20 17 20 35-9 35-20 35-20-17-20-35z" />
-          </svg>
-          
-          <svg className="absolute bottom-16 right-8 w-18 h-22 text-pink-300 opacity-50" viewBox="0 0 90 110" fill="currentColor">
-            <path d="M18 55c0-22 11-42 27-42s27 20 27 42-11 42-27 42-27-20-27-42z" />
-            <path d="M35 40c0-12 6-22 17-22s17 10 17 22-6 22-17 22-17-10-17-22z" fill="#F472B6" />
-          </svg>
-        </div>
-        
-        <div className="container mx-auto px-6 text-center relative z-10">
-          <div className="mb-8">
-            <span className="bg-orange-500 text-white px-5 py-2 rounded-full text-sm font-medium">
-              Newsletter
-            </span>
-          </div>
-          
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 leading-tight max-w-2xl mx-auto">
-            Subscribe for Our Latest Update
-          </h2>
-          
-          <div className="max-w-xl mx-auto">
-            <form onSubmit={handleNewsletterSubscribe}>
-              <div className="flex flex-col sm:flex-row gap-3 mb-6 bg-white rounded-2xl p-2 shadow-lg border border-gray-100">
-                <label htmlFor="newsletter-email" className="sr-only">
-                  Email address for newsletter subscription
-                </label>
-                <input
-                  id="newsletter-email"
-                  type="email"
-                  placeholder="Enter your email"
-                  value={newsletterEmail}
-                  onChange={(e) => setNewsletterEmail(e.target.value)}
-                  className="flex-1 px-6 py-4 text-base bg-transparent border-0 outline-none placeholder-gray-500 min-h-[44px]"
-                  data-testid="newsletter-email-input"
-                  disabled={isSubscribing}
-                />
-                <Button 
-                  type="submit"
-                  disabled={isSubscribing}
-                  className={`px-8 py-4 text-base font-medium rounded-xl transition-all duration-200 min-h-[44px] ${
-                    isSubscribing 
-                      ? 'bg-orange-400 cursor-not-allowed text-white' 
-                      : 'bg-orange-500 hover:bg-orange-600 text-white'
-                  }`}
-                  data-testid="subscribe-now-btn"
-                >
-                  {isSubscribing ? 'Subscribing...' : 'Subscribe Now'}
-                </Button>
-              </div>
-              
-              {/* Subscription message */}
-              <div aria-live="polite" aria-atomic="true">
-                {subscriptionMessage && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className={`mb-6 p-4 rounded-xl text-sm font-medium ${
-                      subscriptionMessage.type === 'success'
-                        ? 'bg-green-50 text-green-700 border border-green-200'
-                        : 'bg-red-50 text-red-700 border border-red-200'
-                    }`}
-                    data-testid="subscription-message"
-                    role="alert"
-                  >
-                    {subscriptionMessage.text}
-                  </motion.div>
-                )}
-              </div>
-            </form>
-          </div>
-        </div>
-      </section>
+
 
       {/* Footer */}
       <footer className="bg-white/90 backdrop-blur-sm border-t border-gray-100 py-12 relative z-10">
