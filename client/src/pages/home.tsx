@@ -810,49 +810,70 @@ export default function Home() {
 
       </main>
 
-      {/* Newsletter Section - Opener.one Style */}
-      <section className="bg-gradient-to-br from-blue-50 to-indigo-100 py-20 mt-16 relative overflow-hidden">
-        {/* Background decorative elements */}
-        <div className="absolute inset-0 opacity-10" aria-hidden="true">
-          <div className="absolute top-10 left-10 w-20 h-20 bg-blue-200 rounded-full pointer-events-none"></div>
-          <div className="absolute top-32 right-20 w-16 h-16 bg-purple-200 rounded-full pointer-events-none"></div>
-          <div className="absolute bottom-20 left-1/4 w-12 h-12 bg-indigo-200 rounded-full pointer-events-none"></div>
-          <div className="absolute bottom-10 right-10 w-24 h-24 bg-blue-300 rounded-full pointer-events-none"></div>
+      {/* Newsletter Section - Simple & Modern Style */}
+      <section className="bg-gray-50 py-20 mt-16 relative overflow-hidden">
+        {/* Subtle decorative elements */}
+        <div className="absolute inset-0" aria-hidden="true">
+          {/* Dotted pattern */}
+          <div className="absolute top-16 left-16 w-20 h-16 opacity-20" style={{
+            background: 'radial-gradient(circle, #666 1px, transparent 1px)',
+            backgroundSize: '8px 8px'
+          }}></div>
+          
+          {/* Leaf illustrations */}
+          <svg className="absolute top-20 left-8 w-16 h-20 text-blue-400 opacity-60" viewBox="0 0 100 120" fill="currentColor">
+            <path d="M20 60c0-20 10-40 30-40s30 20 30 40-10 40-30 40-30-20-30-40z" />
+            <path d="M35 45c0-10 5-20 15-20s15 10 15 20-5 20-15 20-15-10-15-20z" fill="#8B5CF6" />
+          </svg>
+          
+          <svg className="absolute bottom-24 left-12 w-12 h-16 text-purple-300 opacity-50" viewBox="0 0 60 80" fill="currentColor">
+            <path d="M10 40c0-15 8-30 20-30s20 15 20 30-8 30-20 30-20-15-20-30z" />
+          </svg>
+          
+          <svg className="absolute top-32 right-16 w-14 h-18 text-orange-300 opacity-40" viewBox="0 0 70 90" fill="currentColor">
+            <path d="M15 45c0-18 9-35 20-35s20 17 20 35-9 35-20 35-20-17-20-35z" />
+          </svg>
+          
+          <svg className="absolute bottom-16 right-8 w-18 h-22 text-pink-300 opacity-50" viewBox="0 0 90 110" fill="currentColor">
+            <path d="M18 55c0-22 11-42 27-42s27 20 27 42-11 42-27 42-27-20-27-42z" />
+            <path d="M35 40c0-12 6-22 17-22s17 10 17 22-6 22-17 22-17-10-17-22z" fill="#F472B6" />
+          </svg>
         </div>
         
         <div className="container mx-auto px-6 text-center relative z-10">
-          <div className="mb-6">
-            <span className="bg-blue-600 text-white px-6 py-3 rounded-full text-sm font-semibold uppercase tracking-wide shadow-lg">
+          <div className="mb-8">
+            <span className="bg-orange-500 text-white px-5 py-2 rounded-full text-sm font-medium">
               Newsletter
             </span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8 leading-tight">
-            Subscribe for Our Latest <span className="text-blue-600">Update</span>
+          
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-12 leading-tight max-w-2xl mx-auto">
+            Subscribe for Our Latest Update
           </h2>
           
-          <div className="max-w-lg mx-auto">
+          <div className="max-w-xl mx-auto">
             <form onSubmit={handleNewsletterSubscribe}>
-              <div className="flex flex-col sm:flex-row gap-4 mb-6">
+              <div className="flex flex-col sm:flex-row gap-3 mb-6 bg-white rounded-2xl p-2 shadow-lg border border-gray-100">
                 <label htmlFor="newsletter-email" className="sr-only">
                   Email address for newsletter subscription
                 </label>
                 <input
                   id="newsletter-email"
                   type="email"
-                  placeholder="Enter your email address"
+                  placeholder="Enter your email"
                   value={newsletterEmail}
                   onChange={(e) => setNewsletterEmail(e.target.value)}
-                  className="flex-1 w-full sm:w-auto px-6 py-4 text-lg border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300 shadow-sm"
+                  className="flex-1 px-6 py-4 text-base bg-transparent border-0 outline-none placeholder-gray-500"
                   data-testid="newsletter-email-input"
                   disabled={isSubscribing}
                 />
                 <Button 
                   type="submit"
                   disabled={isSubscribing}
-                  className={`w-full sm:w-auto px-8 py-4 text-lg font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg ${
+                  className={`px-8 py-4 text-base font-medium rounded-xl transition-all duration-200 ${
                     isSubscribing 
-                      ? 'bg-blue-400 cursor-not-allowed text-white' 
-                      : 'bg-blue-600 hover:bg-blue-700 text-white hover:shadow-xl'
+                      ? 'bg-orange-400 cursor-not-allowed text-white' 
+                      : 'bg-orange-500 hover:bg-orange-600 text-white'
                   }`}
                   data-testid="subscribe-now-btn"
                 >
@@ -867,10 +888,10 @@ export default function Home() {
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3 }}
-                    className={`mb-6 p-4 rounded-xl text-sm font-medium shadow-lg ${
+                    className={`mb-6 p-4 rounded-xl text-sm font-medium ${
                       subscriptionMessage.type === 'success'
-                        ? 'bg-green-100 text-green-800 border-2 border-green-200'
-                        : 'bg-red-100 text-red-800 border-2 border-red-200'
+                        ? 'bg-green-50 text-green-700 border border-green-200'
+                        : 'bg-red-50 text-red-700 border border-red-200'
                     }`}
                     data-testid="subscription-message"
                     role="alert"
@@ -880,14 +901,6 @@ export default function Home() {
                 )}
               </div>
             </form>
-            
-            <p className="text-gray-600 text-base leading-relaxed">
-              Join thousands of creators getting weekly insights on YouTube optimization, 
-              thumbnail strategies, and the latest tools to grow your channel.
-            </p>
-            <p className="text-gray-500 text-sm mt-2">
-              We respect your privacy. Unsubscribe at any time.
-            </p>
           </div>
         </div>
       </section>
