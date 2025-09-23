@@ -305,11 +305,11 @@ export default function Home() {
             <h1 className="text-xl sm:text-2xl lg:text-4xl font-bold lg:font-normal text-gray-900 mb-4 sm:mb-6 leading-tight">
               {/* Mobile Version */}
               <span className="block sm:hidden whitespace-pre-line">
-                {"Convert Social Media Visitors \ninto Subscribers"}
+                {"App Opener Link Generator Link \nDirectly Open in YouTube App"}
               </span>
               {/* Desktop/Tablet Version */}
               <span className="hidden sm:block whitespace-pre-line">
-                {"Convert Social Media Visitors\ninto Subscribers"}
+                {"App Opener Link Generator Link Directly\nOpen in YouTube App"}
               </span>
             </h1>
             
