@@ -484,7 +484,7 @@ export default function AppOpener() {
             className="max-w-2xl mx-auto text-center"
           >
             {/* Title */}
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+            <h1 className="text-3xl md:text-4xl font-semibold text-gray-900 mb-6 leading-tight">
               App Opener Link Generator Link Directly Open in YouTube App
             </h1>
             
@@ -507,7 +507,7 @@ export default function AppOpener() {
                 <Button
                   onClick={handleGenerate}
                   disabled={isGenerating}
-                  className="h-14 px-8 text-lg font-semibold bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 text-white rounded-xl shadow-lg transform transition-all duration-200 hover:scale-105 disabled:scale-100 disabled:opacity-70"
+                  className="h-14 px-8 text-lg font-semibold bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-lg transform transition-all duration-200 hover:scale-105 disabled:scale-100 disabled:opacity-70"
                   data-testid="generate-button"
                 >
                   {isGenerating ? (
