@@ -19,18 +19,11 @@ export default function Header({ currentPage }: HeaderProps) {
   // Search functionality
   const searchableItems = [
     {
-      id: "youtube-optimizer",
-      title: "YouTube Optimizer",
-      description: "Enhance thumbnails and optimize titles",
-      category: "YouTube Tools",
-      path: "/"
-    },
-    {
       id: "app-opener",
       title: "App Opener",
       description: "Generate smart app-opening links",
       category: "Tools",
-      path: "/app-opener"
+      path: "/"
     },
     {
       id: "contact",
@@ -79,8 +72,7 @@ export default function Header({ currentPage }: HeaderProps) {
   };
 
   const navItems = [
-    { href: "/", label: "YouTube Optimizer", testId: "nav-youtube-optimizer" },
-    { href: "/app-opener", label: "App Opener", testId: "nav-app-opener" },
+    { href: "/", label: "App Opener", testId: "nav-app-opener" },
     { href: "/contact", label: "Contact Us", testId: "nav-contact" },
     { href: "/blog", label: "Blog", testId: "nav-blog" },
     { href: "/about", label: "About", testId: "nav-about" },

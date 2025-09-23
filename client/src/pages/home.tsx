@@ -1,18 +1,18 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Upload, CheckCircle2, ArrowRight, Sparkles, Users, Zap, Shield, Target, TrendingUp } from "lucide-react";
+import { Copy, Clipboard, CheckCircle, Users, Zap, Shield, ArrowRight, MessageCircle } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { motion } from "framer-motion";
+import { apiRequest } from "@/lib/queryClient";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import ImageUpload from "@/components/image-upload";
-import TitleOptimizer from "@/components/title-optimizer";
-import ThumbnailComparison from "@/components/thumbnail-comparison";
-import type { Thumbnail, TitleOptimization } from "@shared/schema";
 
 export default function Home() {
-  const [uploadedThumbnail, setUploadedThumbnail] = useState<Thumbnail | null>(null);
-  const [optimizationResult, setOptimizationResult] = useState<TitleOptimization | null>(null);
+  const [youtubeUrl, setYoutubeUrl] = useState("");
+  const [generatedLink, setGeneratedLink] = useState("");
+  const [isGenerating, setIsGenerating] = useState(false);
+  const { toast } = useToast();
 
   // Newsletter subscription functionality
   const NewsletterSection = () => {
@@ -60,7 +60,6 @@ export default function Home() {
           });
         }
       } catch (error) {
-        console.error('Newsletter subscription error:', error);
         setSubscriptionStatus({
           type: 'error',
           message: 'Network error. Please check your connection and try again.'
@@ -106,7 +105,7 @@ export default function Home() {
                   />
                   {subscriptionStatus.type === 'success' && (
                     <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                      <CheckCircle2 className="w-5 h-5 text-green-500" />
+                      <CheckCircle className="w-5 h-5 text-green-500" />
                     </div>
                   )}
                 </div>
@@ -145,12 +144,94 @@ export default function Home() {
     );
   };
 
-  const handleThumbnailUploaded = (thumbnail: Thumbnail) => {
-    setUploadedThumbnail(thumbnail);
+  const handleGenerate = async () => {
+    if (!youtubeUrl.trim()) {
+      toast({
+        title: "Error",
+        description: "Please enter a valid URL",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    try {
+      new URL(youtubeUrl);
+    } catch {
+      toast({
+        title: "Invalid URL",
+        description: "Please enter a valid URL",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setIsGenerating(true);
+    
+    try {
+      const response = await apiRequest('POST', '/api/short-url', { url: youtubeUrl });
+      const result = await response.json();
+
+      if (result.success) {
+        setGeneratedLink(result.shortUrl);
+        toast({
+          title: "Success!",
+          description: `Your ${result.platform || 'app opener'} link has been generated successfully!`,
+        });
+      } else {
+        throw new Error(result.error || 'Failed to generate link');
+      }
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to generate link. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
-  const handleOptimizationComplete = (optimization: TitleOptimization) => {
-    setOptimizationResult(optimization);
+  const copyToClipboard = () => {
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(generatedLink);
+        toast({
+          title: "Copied!",
+          description: "Link copied to clipboard",
+        });
+      } else {
+        // Fallback for non-secure contexts
+        const textArea = document.createElement('textarea');
+        textArea.value = generatedLink;
+        textArea.style.position = 'fixed';
+        textArea.style.opacity = '0';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        
+        try {
+          document.execCommand('copy');
+          toast({
+            title: "Copied!",
+            description: "Link copied to clipboard",
+          });
+        } catch (err) {
+          toast({
+            title: "Copy failed",
+            description: "Please copy the link manually",
+            variant: "destructive"
+          });
+        } finally {
+          document.body.removeChild(textArea);
+        }
+      }
+    } catch (error) {
+      toast({
+        title: "Copy failed",
+        description: "Please copy the link manually",
+        variant: "destructive"
+      });
+    }
   };
 
   return (
@@ -166,62 +247,75 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             className="text-center"
           >
-            <h1 className="text-responsive-xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight">
-              YouTube Thumbnail & Title Optimizer
+            <h1 className="text-responsive-xl font-bold lg:font-normal text-gray-900 mb-4 sm:mb-6 leading-tight">
+              App Opener Link Generator - Open Links Directly in Apps
             </h1>
             
             <p className="text-responsive-sm text-gray-600 mb-6 sm:mb-8 leading-relaxed max-w-2xl mx-auto px-4">
-              Boost your YouTube CTR with AI-powered thumbnail analysis and title optimization. 
-              Get professional results in seconds.
+              We help you gain more followers on socials by enabling users to open a link directly in an app instead of an in-app browser.
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-8 sm:mb-12 px-4">
-              <div className="flex items-center text-sm text-gray-600">
-                <CheckCircle2 className="w-4 h-4 text-green-500 mr-2" />
-                AI-Powered Analysis
-              </div>
-              <div className="flex items-center text-sm text-gray-600">
-                <CheckCircle2 className="w-4 h-4 text-green-500 mr-2" />
-                Instant Results
-              </div>
-              <div className="flex items-center text-sm text-gray-600">
-                <CheckCircle2 className="w-4 h-4 text-green-500 mr-2" />
-                Higher CTR
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Tool Section - Mobile Optimized */}
-      <section className="py-8 sm:py-12 lg:py-16 bg-white">
-        <div className="container-mobile max-w-5xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="space-responsive-md"
-          >
-            {/* Image Upload Component */}
-            <div className="mb-6 sm:mb-8">
-              <ImageUpload onThumbnailUploaded={handleThumbnailUploaded} />
-            </div>
-
-            {/* Title Optimizer Component */}
-            {uploadedThumbnail && (
-              <div className="mb-6 sm:mb-8">
-                <TitleOptimizer 
-                  thumbnailId={uploadedThumbnail.id}
-                  onOptimizationComplete={handleOptimizationComplete}
+            {/* URL Input and Generate Button */}
+            <div className="max-w-2xl mx-auto mb-8 px-4">
+              <div className="flex flex-col gap-4">
+                <Input
+                  type="url"
+                  placeholder="Paste Your URL Here"
+                  value={youtubeUrl}
+                  onChange={(e) => setYoutubeUrl(e.target.value)}
+                  className="input-mobile text-center sm:text-left"
+                  data-testid="url-input"
                 />
+                <Button
+                  onClick={handleGenerate}
+                  disabled={isGenerating}
+                  className={`btn-mobile w-auto px-8 bg-gradient-to-r from-red-500 to-orange-400 hover:from-red-600 hover:to-orange-500 text-white shadow-lg ${
+                    isGenerating ? 'opacity-70 cursor-not-allowed' : 'hover:scale-105'
+                  }`}
+                  data-testid="generate-button"
+                >
+                  {isGenerating ? (
+                    <div className="flex items-center justify-center">
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                      <span>Generating...</span>
+                    </div>
+                  ) : (
+                    <div className="flex items-center justify-center">
+                      <Clipboard className="w-4 h-4 mr-2" />
+                      <span>Generate</span>
+                    </div>
+                  )}
+                </Button>
               </div>
-            )}
+            </div>
 
-            {/* Thumbnail Comparison Component */}
-            {uploadedThumbnail && uploadedThumbnail.enhancedImageData && (
-              <div className="mb-6 sm:mb-8">
-                <ThumbnailComparison thumbnail={uploadedThumbnail} />
-              </div>
+            {/* Generated Link Result */}
+            {generatedLink && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+                className="max-w-2xl mx-auto px-4"
+              >
+                <div className="card-mobile p-4 sm:p-6">
+                  <div className="flex flex-col sm:flex-row items-center gap-3">
+                    <Input
+                      value={generatedLink}
+                      readOnly
+                      className="flex-1 bg-gray-50 border-gray-300 text-gray-700 cursor-text text-center sm:text-left"
+                      data-testid="generated-link"
+                    />
+                    <Button
+                      onClick={copyToClipboard}
+                      className="btn-mobile-sm bg-blue-500 hover:bg-blue-600 text-white w-full sm:w-auto"
+                      data-testid="copy-button"
+                    >
+                      <Copy className="w-4 h-4 mr-2" />
+                      Copy
+                    </Button>
+                  </div>
+                </div>
+              </motion.div>
             )}
           </motion.div>
         </div>
@@ -238,17 +332,17 @@ export default function Home() {
           >
             <div className="text-center mb-8 sm:mb-12">
               <h2 className="text-responsive-xl font-bold text-gray-900 mb-4 sm:mb-6">
-                YouTube Thumbnail & Title Optimizer
+                What is GinyWow App Opener?
               </h2>
             </div>
             
             <div className="prose prose-lg mx-auto text-gray-600">
               <p className="text-responsive-sm leading-relaxed mb-4 sm:mb-6">
-                <strong>GinyWow YouTube Thumbnail & Title Optimizer</strong> is a smart tool designed for creators who want to grow their YouTube channel faster. It helps YouTubers, digital marketers, and businesses create <strong>eye-catching thumbnails</strong> and <strong>click-worthy titles</strong> that attract more viewers and boost video performance.
+                <strong>GinyWow App Opener</strong>, also known as Link Opener, Social Media Opener, and Universal Link Opener, is a direct-to-app redirection tool that helps social media influencers, affiliate marketers, and businesses convert their visitors into <strong>app users</strong> and loyal followers across all platforms.
               </p>
               
               <p className="text-responsive-sm leading-relaxed">
-                Normally, creators struggle with low CTR (Click Through Rate) because their thumbnails don't stand out, or their titles aren't appealing enough. That's why we built this tool – to give every creator a simple way to make their videos more engaging and clickable.
+                The <strong>GinyWow App Opener link generator</strong> allows creators to generate custom links for social media profiles including <strong>YouTube, Instagram, TikTok, Facebook, Twitter, LinkedIn</strong>, and many others. Normally, when you share social media links across platforms, users end up browsing within in-app browsers which provide a poor user experience and low engagement rates.
               </p>
             </div>
           </motion.div>
@@ -266,41 +360,35 @@ export default function Home() {
           >
             <div className="text-center mb-8 sm:mb-12">
               <h2 className="text-responsive-xl font-bold text-gray-900 mb-4 sm:mb-8">
-                Why Use GinyWow YouTube Thumbnail & Title Optimizer?
+                Why Use GinyWow App Opener?
               </h2>
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
               {[
                 {
-                  icon: Target,
-                  title: "Higher Click-Through Rate",
-                  description: "Attractive titles and thumbnails that encourage users to click",
+                  icon: Users,
+                  title: "Better User Experience",
+                  description: "Open links directly in native apps for smoother navigation",
                   color: "blue"
                 },
                 {
-                  icon: TrendingUp,
-                  title: "Boost Engagement",
-                  description: "Thumbnails and titles optimized for maximum visibility",
-                  color: "purple"
-                },
-                {
                   icon: Zap,
-                  title: "Save Time & Effort",
-                  description: "AI does the hard work so you can focus on creating content",
+                  title: "Higher Engagement",
+                  description: "Native app experience leads to better user retention",
                   color: "green"
                 },
                 {
-                  icon: Users,
-                  title: "Perfect for All Creators",
-                  description: "Whether you're a vlogger, educator, gamer, or business channel",
-                  color: "orange"
+                  icon: Shield,
+                  title: "Universal Compatibility",
+                  description: "Works with all major social media platforms and websites",
+                  color: "purple"
                 },
                 {
-                  icon: Shield,
-                  title: "Data-Driven Results",
-                  description: "Based on proven YouTube optimization strategies",
-                  color: "red"
+                  icon: ArrowRight,
+                  title: "Increased Followers",
+                  description: "Better experience converts more visitors to followers",
+                  color: "orange"
                 }
               ].map((benefit, index) => (
                 <motion.div
@@ -342,36 +430,30 @@ export default function Home() {
           >
             <div className="text-center mb-8 sm:mb-12">
               <h2 className="text-responsive-xl font-bold text-gray-900 mb-4 sm:mb-8">
-                How Does GinyWow YouTube Thumbnail & Title Optimizer Work?
+                How to Use GinyWow App Opener?
               </h2>
-              <p className="text-responsive-sm text-gray-600">Using the tool is quick and simple:</p>
+              <p className="text-responsive-sm text-gray-600">Simple 3-step process:</p>
             </div>
             
             <div className="space-y-6 sm:space-y-8">
               {[
                 {
                   number: 1,
-                  title: "Upload & Enter",
-                  description: "Upload your thumbnail and enter your video title or idea",
+                  title: "Paste Your URL",
+                  description: "Copy and paste any social media or website URL into the input field",
                   color: "blue"
                 },
                 {
                   number: 2,
-                  title: "Get AI Suggestions",
-                  description: "Get 5 AI-powered optimized title suggestions",
+                  title: "Generate Link",
+                  description: "Click 'Generate' to create your smart app-opening link",
                   color: "green"
                 },
                 {
                   number: 3,
-                  title: "See Enhancement",
-                  description: "View your enhanced thumbnail with improved visual appeal",
+                  title: "Share & Engage",
+                  description: "Share your new link and watch users open it directly in apps",
                   color: "purple"
-                },
-                {
-                  number: 4,
-                  title: "Download & Use",
-                  description: "Download optimized assets and boost your video performance",
-                  color: "orange"
                 }
               ].map((step, index) => (
                 <motion.div
@@ -395,65 +477,6 @@ export default function Home() {
                       </p>
                     </div>
                   </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* FAQ Section - Mobile Optimized */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-gray-50">
-        <div className="container-mobile max-w-4xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <div className="text-center mb-8 sm:mb-12">
-              <h2 className="text-responsive-xl font-bold text-gray-900 mb-4 sm:mb-8">
-                Frequently Asked Questions
-              </h2>
-            </div>
-            
-            <div className="space-y-4 sm:space-y-6">
-              {[
-                {
-                  question: "Is the GinyWow YouTube Thumbnail & Title Optimizer free to use?",
-                  answer: "Yes, GinyWow offers free access to basic optimization features. We also provide premium features for advanced users who want more detailed analysis and additional optimization options."
-                },
-                {
-                  question: "How does the AI analyze and optimize my thumbnails?",
-                  answer: "Our AI uses computer vision and machine learning algorithms trained on millions of high-performing YouTube thumbnails. It analyzes visual elements like contrast, text placement, faces, colors, and composition to suggest improvements that typically increase click-through rates."
-                },
-                {
-                  question: "Can I use the optimized thumbnails and titles commercially?",
-                  answer: "Absolutely! All thumbnails and titles generated or optimized through GinyWow are yours to use commercially. There are no restrictions on using them for your YouTube videos, whether for personal or business channels."
-                },
-                {
-                  question: "What file formats are supported for thumbnail uploads?",
-                  answer: "We support the most common image formats: JPEG, PNG, and WebP. Files can be up to 10MB in size. For best results, we recommend uploading high-resolution images (1920x1080 pixels or higher)."
-                },
-                {
-                  question: "How accurate are the CTR predictions?",
-                  answer: "Our CTR predictions are based on analysis of thousands of successful YouTube videos and industry benchmarks. While we can't guarantee exact results (as many factors affect CTR), our predictions help you understand the relative performance potential of your thumbnails and titles."
-                }
-              ].map((faq, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="card-mobile p-4 sm:p-6"
-                >
-                  <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-3">
-                    {faq.question}
-                  </h3>
-                  <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
-                    {faq.answer}
-                  </p>
                 </motion.div>
               ))}
             </div>
