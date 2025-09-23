@@ -121,18 +121,38 @@ export async function optimizeTitles(originalTitle: string, thumbnailContext?: s
 
           ### CRITICAL RULES:
 
-          1. **Language Detection:** Automatically detect the language of the original title.
-             * All 5 suggestions MUST be generated in the **same language** as the original title.
+          1. **Language Detection:** Automatically detect the EXACT language/style of the original title.
+             * If input is in English → Output in English
+             * If input is in Hindi → Output in Hindi  
+             * If input is in Hinglish (Hindi+English mix) → Output in same Hinglish style
+             * NEVER change the language style - match it exactly!
           
-          2. **Human-Friendly & Natural:** Suggestions must sound 100% natural, like a real human YouTuber wrote them — not robotic or AI-generated.
+          2. **100% Human-Friendly & Conversational:** 
+             * Write like a real person talking to friends, not like AI or corporate content
+             * Use natural, everyday language that people actually speak
+             * Include casual phrases, emotions, and relatable expressions
+             * Sound like a popular YouTuber from that language community
           
-          3. **Highly Clickable:** Use emotional triggers, curiosity, or urgency to make titles irresistible to click.
+          3. **Highly Clickable but Natural:** 
+             * Create curiosity without being clickbait
+             * Use emotional hooks but keep them genuine
+             * Include personal elements ("मेरा", "My", "I tried", "मैंने किया")
           
-          4. **SEO Optimized:** Include relevant keywords naturally without keyword stuffing.
+          4. **SEO + Local Language Patterns:** 
+             * For English: Use trending YouTube keywords naturally
+             * For Hindi/Hinglish: Mix popular Hindi phrases with English keywords
+             * Include year (2025) only if relevant
           
-          5. **Stay True to Original:** Do NOT change the video topic or mislead. Only improve readability, appeal, and click-worthiness.
+          5. **Stay True to Original Topic:** Do NOT change the video topic or mislead.
           
-          6. **Length:** Keep each title under **70 characters** for better YouTube performance.
+          6. **Length:** Keep under **70 characters** for better YouTube display.
+
+          ### EXAMPLES:
+          Input (English): "How to invest in stocks"
+          Output: Natural English titles like "Stock Investment Made Simple for Beginners"
+          
+          Input (Hinglish): "Share market me paise kaise banaye"
+          Output: Same Hinglish style like "Share Market Se Paise Banane Ka Asaan Tarika"
 
           ${contextPrompt}Respond with JSON in this exact format:
           {
@@ -205,104 +225,162 @@ function validateAndFixTitleSuggestions(titles: TitleSuggestion[], originalTitle
 }
 
 function getMockTitleSuggestions(originalTitle: string): TitleSuggestion[] {
-  // Clean the original title and extract key information
+  // Clean the original title and detect language more accurately
   const cleanTitle = originalTitle.replace(/^(playing\s+|watch\s+|video\s+)/i, '').trim();
-  const isHindi = /[\u0900-\u097F]/.test(cleanTitle);
   
-  // Generate human-friendly, SEO-optimized title suggestions
+  // Enhanced language detection
+  const hasHindiChars = /[\u0900-\u097F]/.test(cleanTitle);
+  const hasHinglishPattern = /\b(kaise|kya|kare|banaye|me|se|ka|ki|ke|hai|ho|bhi|aur|ya|tha|the|kar|liye|wala|wali)\b/i.test(cleanTitle);
+  const isHinglish = hasHindiChars || hasHinglishPattern;
+  
+  // Generate ultra-natural, human-friendly title suggestions
   let variations: string[] = [];
   
-  // Check for specific topics and generate appropriate titles
-  if (cleanTitle.toLowerCase().includes('sip') && cleanTitle.toLowerCase().includes('investment')) {
-    if (isHindi) {
+  // SIP Investment topics
+  if (/sip|investment|invest|mutual\s*fund|fund/i.test(cleanTitle)) {
+    if (isHinglish) {
       variations = [
-        "SIP Investment से कितना पैसा कमाया? (2025 Results)",
-        "मेरी SIP Investment Journey - Real Returns!",
-        "SIP में इतना Profit? 💰 Complete Story",
-        "SIP Investment Success: मेरा Experience",
-        "क्या SIP Investment सच में काम करती है?"
+        "मैंने SIP Se Kitna Paisa Banaya? Real Returns",
+        "SIP Investment Kaise Start Kare - Easy Guide",
+        "Meri SIP Journey - 5 Saal Baad Kitna Profit?",
+        "SIP Me Invest Karna Chahiye Ya Nahi?",
+        "SIP Se Paise Double Kaise Kare - Secret Tips"
       ];
     } else {
       variations = [
-        "How Much I Made from SIP Investments? (2025 Results)",
-        "My SIP Investment Journey - Real Returns Revealed!",
-        "SIP Investment Success Story: Complete Breakdown 💰",
-        "Truth About My SIP Returns After 5 Years",
-        "SIP Investment Reality Check - Worth It?"
-      ];
-    }
-  } 
-  else if (cleanTitle.toLowerCase().includes('cooking') || cleanTitle.toLowerCase().includes('recipe')) {
-    if (isHindi) {
-      variations = [
-        "घर पर बनाएं Perfect Recipe (Easy Method)",
-        "इस तरीके से बनाएंगे तो हमेशा Perfect बनेगा!",
-        "Restaurant Style Recipe घर पर - Step by Step",
-        "सबसे Easy और Tasty Recipe (5 मिनट में)",
-        "मेरी Secret Recipe - Try करके देखें!"
-      ];
-    } else {
-      variations = [
-        "Perfect Recipe at Home (Easy Method)",
-        "Restaurant Style Recipe - Step by Step Guide",
-        "Quick & Tasty Recipe (Ready in 5 Minutes)",
-        "Secret Recipe Revealed - Try This Method!",
-        "Best Homemade Recipe - Never Fails!"
+        "How I Made Money with SIPs - Real Experience",
+        "SIP Investment for Beginners - Simple Guide",
+        "My SIP Journey After 5 Years - Honest Review",
+        "Should You Start SIP Investment in 2025?",
+        "SIP Investment Mistakes I Made (Learn from Me)"
       ];
     }
   }
-  else if (cleanTitle.toLowerCase().includes('gaming') || cleanTitle.toLowerCase().includes('game')) {
-    if (isHindi) {
+  
+  // Share Market topics
+  else if (/share|stock|market|trading|equity/i.test(cleanTitle)) {
+    if (isHinglish) {
       variations = [
-        "इस Game में Master कैसे बनें? (Pro Tips)",
-        "Gaming में इतना पैसा कैसे कमाएं?",
-        "Best Gaming Setup 2025 - Budget Friendly!",
-        "Gaming Tips जो हर Gamer को पता होनी चाहिए",
-        "Pro Gamer बनने का Secret Method!"
+        "Share Market Me Paise Kaise Banaye - Asaan Tarika",
+        "Beginner Ke Liye Share Market Tips",
+        "मैंने Share Market Se Kitna Kamaya?",
+        "Share Market Start Karne Se Pehle Ye Dekho",
+        "Share Market Me Safe Investment Kaise Kare"
       ];
     } else {
       variations = [
-        "How to Master This Game? (Pro Tips 2025)",
-        "Making Money from Gaming - My Experience",
-        "Best Gaming Setup 2025 - Budget Friendly!",
-        "Gaming Tips Every Player Should Know",
-        "Secret Method to Become Pro Gamer!"
+        "How to Make Money in Stock Market - Beginner Guide",
+        "Stock Market Tips That Actually Work",
+        "My Stock Market Journey - Wins and Losses",
+        "Stock Market for Beginners - Start Here",
+        "Safe Stock Market Investment Strategy"
       ];
     }
   }
+  
+  // Cooking/Recipe topics  
+  else if (/cook|recipe|food|dish|banaye|bana/i.test(cleanTitle)) {
+    if (isHinglish) {
+      variations = [
+        "Ghar Pe Banaye Restaurant Jaisa Khana",
+        "आसान Recipe - 10 Minute Me Ready!",
+        "Secret Recipe Jo Sabko Pasand Aayegi",
+        "Perfect Dish Banane Ka Tarika",
+        "Mummy Ki Recipe - Try Karo Zaroor"
+      ];
+    } else {
+      variations = [
+        "Easy Recipe Anyone Can Make at Home",
+        "Restaurant Style Dish - Made Simple",
+        "Quick Recipe Ready in 10 Minutes",
+        "Secret Recipe That Never Fails",
+        "My Mom's Recipe - You'll Love This"
+      ];
+    }
+  }
+  
+  // Gaming topics
+  else if (/game|gaming|play|player|level/i.test(cleanTitle)) {
+    if (isHinglish) {
+      variations = [
+        "Gaming Se Paise Kaise Kamaye - Real Tips",
+        "Pro Gamer Banne Ka Secret",
+        "Best Gaming Setup Under Budget",
+        "Gaming Tips Jo Kaam Aayenge",
+        "मैं Gaming Se Kitna Kamata Hun?"
+      ];
+    } else {
+      variations = [
+        "How to Make Money Gaming - Real Ways",
+        "Pro Gaming Tips That Actually Work",
+        "Best Budget Gaming Setup Guide",
+        "Gaming Tricks Every Player Should Know",
+        "How Much I Earn from Gaming"
+      ];
+    }
+  }
+  
+  // Technology topics
+  else if (/tech|mobile|phone|app|software|computer/i.test(cleanTitle)) {
+    if (isHinglish) {
+      variations = [
+        "Best Tech Tips For Everyone",
+        "Mobile Me Ye Setting Karo - Game Changer",
+        "Tech Hacks Jo Life Easy Bana Denge",
+        "नई Technology - Kya Faida Hai?",
+        "Tech Review - Lena Chahiye Ya Nahi?"
+      ];
+    } else {
+      variations = [
+        "Tech Tips That Will Change Your Life",
+        "Best Mobile Settings You Should Know",
+        "Tech Hacks Everyone Should Try",
+        "New Technology Review - Worth It?",
+        "Tech Buying Guide - My Honest Opinion"
+      ];
+    }
+  }
+  
+  // Generic topics - Natural human conversation style
   else {
-    // Generic improvements for any topic
-    const baseWords = cleanTitle.split(' ').slice(0, 6).join(' ');
-    if (isHindi) {
+    const baseWords = cleanTitle.split(' ').slice(0, 4).join(' ');
+    if (isHinglish) {
       variations = [
-        `${baseWords} - Complete Guide (2025)`,
-        `${baseWords} का सच! Reality Check`,
-        `${baseWords} - Step by Step Process 🔥`,
-        `${baseWords} - मेरा Honest Review`,
-        `${baseWords} - क्या सच में काम करता है?`
+        `${baseWords} - Mera Experience`,
+        `${baseWords} Kaise Kare - Step by Step`,
+        `${baseWords} Ka Truth - Honest Review`,
+        `${baseWords} - Kya Really Work Karta Hai?`,
+        `${baseWords} - Easy Tips Aur Tricks`
       ];
     } else {
       variations = [
-        `${baseWords} - Complete Guide (2025)`,
-        `${baseWords} - The Truth Revealed!`,
-        `${baseWords} - Step by Step Process 🔥`,
-        `${baseWords} - My Honest Review`,
-        `${baseWords} - Does It Really Work?`
+        `${baseWords} - My Honest Experience`,
+        `${baseWords} - Step by Step Guide`,
+        `${baseWords} - The Real Truth`,
+        `${baseWords} - Does It Actually Work?`,
+        `${baseWords} - Easy Tips and Tricks`
       ];
     }
   }
 
   return variations.map((title, index) => {
-    // Ensure under 70 characters
-    const finalTitle = title.length >= 70 ? title.substring(0, 67) + "..." : title;
+    // Ensure under 70 characters naturally
+    let finalTitle = title;
+    if (title.length >= 70) {
+      // Smart truncation that preserves natural flow
+      finalTitle = title.substring(0, 66).trim();
+      if (!finalTitle.endsWith('.') && !finalTitle.endsWith('?') && !finalTitle.endsWith('!')) {
+        finalTitle = finalTitle.replace(/\s+\S*$/, '') + '...';
+      }
+    }
     
     return {
       title: finalTitle,
-      score: 9.2 - (index * 0.2), // High quality scores
-      estimatedCtr: 45 - (index * 3), // Better CTR estimates
-      seoScore: 8.8 - (index * 0.2),
-      tags: isHindi ? ["हिंदी", "guide", "tutorial", "2025"] : ["guide", "tutorial", "how-to", "2025"],
-      reasoning: `SEO-optimized title with ${index === 0 ? 'clear value proposition and year relevance' : index === 1 ? 'emotional hook and credibility' : index === 2 ? 'visual engagement and storytelling' : index === 3 ? 'personal credibility factor' : 'curiosity gap and social proof'}`
+      score: 9.5 - (index * 0.1), // Higher quality scores
+      estimatedCtr: 50 - (index * 2), // Better CTR estimates
+      seoScore: 9.0 - (index * 0.1),
+      tags: isHinglish ? ["hinglish", "desi", "guide", "tips"] : ["guide", "tips", "tutorial", "review"],
+      reasoning: `Human-friendly title with ${index === 0 ? 'personal experience and relatability' : index === 1 ? 'clear guidance and step-by-step approach' : index === 2 ? 'honesty and trustworthiness' : index === 3 ? 'curiosity and validation' : 'practical value and actionability'}`
     };
   });
 }
