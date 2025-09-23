@@ -9,6 +9,171 @@ import type { Thumbnail, TitleOptimization } from "@shared/schema";
 
 export default function Home() {
   const [title, setTitle] = useState("");
+  
+  // Newsletter subscription functionality
+  const NewsletterSection = () => {
+    const [email, setEmail] = useState("");
+    const [isSubscribing, setIsSubscribing] = useState(false);
+    const [subscriptionStatus, setSubscriptionStatus] = useState<{
+      type: 'idle' | 'success' | 'error';
+      message: string;
+    }>({ type: 'idle', message: '' });
+
+    const handleNewsletterSubmit = async (e: React.FormEvent) => {
+      e.preventDefault();
+      if (!email || !email.includes('@')) {
+        setSubscriptionStatus({
+          type: 'error',
+          message: 'Please enter a valid email address'
+        });
+        return;
+      }
+
+      setIsSubscribing(true);
+      setSubscriptionStatus({ type: 'idle', message: '' });
+
+      try {
+        const response = await fetch('/api/newsletter/subscribe', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          setSubscriptionStatus({
+            type: 'success',
+            message: data.message || 'Successfully subscribed to newsletter!'
+          });
+          setEmail('');
+        } else {
+          setSubscriptionStatus({
+            type: 'error',
+            message: data.error || 'Failed to subscribe. Please try again.'
+          });
+        }
+      } catch (error) {
+        console.error('Newsletter subscription error:', error);
+        setSubscriptionStatus({
+          type: 'error',
+          message: 'Network error. Please check your connection and try again.'
+        });
+      } finally {
+        setIsSubscribing(false);
+      }
+    };
+
+    return (
+      <section className="relative py-16 sm:py-20 lg:py-24 mt-16 bg-gradient-to-br from-blue-50 to-indigo-100 overflow-hidden">
+        {/* Background decoration */}
+        <div className="absolute inset-0">
+          <div className="absolute -top-24 -right-24 w-96 h-96 bg-blue-200 rounded-full opacity-20 blur-3xl"></div>
+          <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-indigo-200 rounded-full opacity-20 blur-3xl"></div>
+        </div>
+        
+        <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+          <div className="text-center mb-8 sm:mb-12">
+            <div className="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-full mb-4 sm:mb-6">
+              <span className="mr-2">📧</span>
+              Newsletter
+            </div>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+              Subscribe for Our Latest Updates
+            </h2>
+            <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+              Get the latest tools, tips, and tutorials delivered to your inbox. Join thousands of creators who trust us.
+            </p>
+          </div>
+
+          <div className="max-w-lg mx-auto">
+            <form onSubmit={handleNewsletterSubmit} className="space-y-4">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                <div className="flex-1 relative">
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter your email address"
+                    className="w-full px-4 sm:px-5 py-3 sm:py-4 text-base border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-white shadow-sm placeholder-gray-500"
+                    disabled={isSubscribing}
+                    data-testid="newsletter-email-input"
+                  />
+                  {subscriptionStatus.type === 'success' && (
+                    <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                      <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                  )}
+                </div>
+                <Button
+                  type="submit"
+                  disabled={isSubscribing || !email}
+                  className={`px-6 sm:px-8 py-3 sm:py-4 font-semibold rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 min-h-[52px] w-full sm:w-auto ${
+                    isSubscribing 
+                      ? 'bg-gray-400 cursor-not-allowed' 
+                      : 'bg-blue-600 hover:bg-blue-700 text-white'
+                  }`}
+                  data-testid="subscribe-now-btn"
+                >
+                  {isSubscribing ? (
+                    <div className="flex items-center justify-center">
+                      <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Subscribing...
+                    </div>
+                  ) : (
+                    <div className="flex items-center justify-center">
+                      <span>Subscribe Now</span>
+                      <svg className="ml-2 w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                  )}
+                </Button>
+              </div>
+              
+              {/* Status messages */}
+              {subscriptionStatus.type !== 'idle' && (
+                <div className={`p-4 rounded-lg text-sm font-medium ${
+                  subscriptionStatus.type === 'success' 
+                    ? 'bg-green-50 text-green-800 border border-green-200'
+                    : 'bg-red-50 text-red-800 border border-red-200'
+                }`}>
+                  <div className="flex items-center">
+                    {subscriptionStatus.type === 'success' ? (
+                      <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                    ) : (
+                      <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                      </svg>
+                    )}
+                    {subscriptionStatus.message}
+                  </div>
+                </div>
+              )}
+            </form>
+            
+            <div className="mt-6 text-center">
+              <p className="text-sm text-gray-500 flex items-center justify-center">
+                <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
+                </svg>
+                We respect your privacy. Unsubscribe anytime.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  };
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(null);
   const [isDragOver, setIsDragOver] = useState(false);
@@ -829,35 +994,7 @@ export default function Home() {
       </main>
 
       {/* Newsletter Section */}
-      <section className="bg-gray-100 py-16 mt-16">
-        <div className="container mx-auto px-6 text-center">
-          <div className="mb-4">
-            <span className="bg-orange-500 text-white px-4 py-2 rounded-full text-sm font-medium">
-              Newsletter
-            </span>
-          </div>
-          <h2 className="text-3xl font-bold text-gray-900 mb-8">
-            Subscribe for Our Latest Update
-          </h2>
-          <div className="max-w-md mx-auto flex gap-2 mb-4">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-              data-testid="newsletter-email-input"
-            />
-            <Button 
-              className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-medium"
-              data-testid="subscribe-now-btn"
-            >
-              Subscribe Now
-            </Button>
-          </div>
-          <p className="text-gray-500 text-sm">
-            We respect your privacy. Unsubscribe at any time.
-          </p>
-        </div>
-      </section>
+      <NewsletterSection />
 
       {/* Footer */}
       <footer className="bg-white/90 backdrop-blur-sm border-t border-gray-100 py-12 relative z-10">
