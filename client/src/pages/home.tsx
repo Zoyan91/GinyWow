@@ -85,7 +85,7 @@ export default function Home() {
             <h2 className="text-responsive-lg font-bold text-gray-900 mb-3 sm:mb-4">
               Subscribe for Our Latest Updates
             </h2>
-            <p className="text-sm sm:text-base text-gray-600 max-w-xl mx-auto leading-relaxed px-4">
+            <p className="hidden sm:block text-sm sm:text-base text-gray-600 max-w-xl mx-auto leading-relaxed px-4">
               Get the latest tools, tips, and tutorials delivered to your inbox. Join thousands of creators who trust us.
             </p>
           </div>
