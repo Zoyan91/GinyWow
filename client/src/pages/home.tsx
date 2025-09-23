@@ -1010,7 +1010,7 @@ export default function Home() {
               <a href="#" className="text-sm text-gray-600 hover:text-gray-900">Blog</a>
               <Link href="/privacy" className="text-sm text-gray-600 hover:text-gray-900">Privacy Policy</Link>
             </div>
-            <p className="text-sm text-gray-600">© 2024 GinyWow.com. All rights reserved.</p>
+            <p className="text-sm text-gray-600">© 2025 GinyWow.com | All rights reserved.</p>
           </div>
         </div>
       </footer>
