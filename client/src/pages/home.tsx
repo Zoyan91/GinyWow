@@ -5,10 +5,11 @@ import { Input } from "@/components/ui/input";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Search, ChevronDown, Menu, X } from "lucide-react";
 import { SiFacebook, SiX, SiLinkedin, SiYoutube, SiPinterest } from 'react-icons/si';
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import type { Thumbnail, TitleOptimization } from "@shared/schema";
 
 export default function Home() {
+  const [, setLocation] = useLocation();
   const [title, setTitle] = useState("");
   
   // Newsletter subscription functionality
@@ -184,6 +185,104 @@ export default function Home() {
   const [optimizationResult, setOptimizationResult] = useState<any>(null);
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const [searchResults, setSearchResults] = useState<Array<{
+    id: string;
+    title: string;
+    description: string;
+    category: string;
+    path?: string;
+    action?: () => void;
+  }>>([]);
+
+  // Search data - available tools and pages
+  const searchableItems = [
+    {
+      id: "thumbnail-optimizer",
+      title: "YouTube Thumbnail Optimizer",
+      description: "Optimize your YouTube thumbnails with AI-powered suggestions",
+      category: "YouTube Tools",
+      action: () => {
+        document.getElementById('thumbnail-upload')?.scrollIntoView({ behavior: 'smooth' });
+        setSearchQuery("");
+        setIsSearchFocused(false);
+      }
+    },
+    {
+      id: "title-optimizer", 
+      title: "YouTube Title Optimizer",
+      description: "Get AI-powered title suggestions for better CTR",
+      category: "YouTube Tools",
+      action: () => {
+        document.getElementById('title-input')?.scrollIntoView({ behavior: 'smooth' });
+        setSearchQuery("");
+        setIsSearchFocused(false);
+      }
+    },
+    {
+      id: "contact",
+      title: "Contact Us",
+      description: "Get in touch with our team",
+      category: "Pages",
+      path: "/contact"
+    },
+    {
+      id: "about",
+      title: "About GinyWow",
+      description: "Learn more about our online tools platform",
+      category: "Pages",
+      path: "/about"
+    },
+    {
+      id: "blog",
+      title: "Blog",
+      description: "Read our latest articles and tips",
+      category: "Pages",
+      path: "/blog"
+    },
+    {
+      id: "privacy",
+      title: "Privacy Policy",
+      description: "Our privacy policy and data handling practices",
+      category: "Pages", 
+      path: "/privacy"
+    }
+  ];
+
+  // Search functionality
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+    
+    if (query.trim().length > 0) {
+      const filtered = searchableItems.filter(item =>
+        item.title.toLowerCase().includes(query.toLowerCase()) ||
+        item.description.toLowerCase().includes(query.toLowerCase()) ||
+        item.category.toLowerCase().includes(query.toLowerCase())
+      );
+      setSearchResults(filtered);
+    } else {
+      setSearchResults([]);
+    }
+  };
+
+  const handleSearchItemClick = (item: {
+    id: string;
+    title: string;
+    description: string;
+    category: string;
+    path?: string;
+    action?: () => void;
+  }) => {
+    if (item.action) {
+      item.action();
+    } else if (item.path) {
+      setLocation(item.path);
+    }
+    setSearchQuery("");
+    setIsSearchFocused(false);
+  };
 
   const handleFileUpload = (file: File) => {
     setUploadError("");
@@ -319,10 +418,48 @@ export default function Home() {
                 <Input
                   type="text"
                   placeholder="Search tools..."
-                  className="pl-10 pr-4 py-2 w-64 border-gray-300 rounded-lg"
+                  className="pl-10 pr-4 py-2 w-64 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                   data-testid="search-input"
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                  onFocus={() => setIsSearchFocused(true)}
+                  onBlur={() => setTimeout(() => setIsSearchFocused(false), 200)}
                 />
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                
+                {/* Search Results Dropdown */}
+                {isSearchFocused && searchQuery.trim().length > 0 && (
+                  <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-96 overflow-y-auto mt-1">
+                    {searchResults.length > 0 ? (
+                      searchResults.map((item) => (
+                        <button
+                          key={item.id}
+                          className="w-full text-left px-4 py-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0 focus:outline-none focus:bg-gray-50"
+                          onMouseDown={() => handleSearchItemClick(item)}
+                          data-testid={`search-result-${item.id}`}
+                        >
+                          <div className="flex items-start justify-between">
+                            <div className="flex-1">
+                              <h4 className="text-sm font-medium text-gray-900 mb-1">
+                                {item.title}
+                              </h4>
+                              <p className="text-xs text-gray-600 mb-1">
+                                {item.description}
+                              </p>
+                              <span className="inline-block px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full">
+                                {item.category}
+                              </span>
+                            </div>
+                          </div>
+                        </button>
+                      ))
+                    ) : (
+                      <div className="px-4 py-3 text-sm text-gray-500 text-center" data-testid="no-results-message">
+                        No results found for "{searchQuery}"
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
               
               {/* Sign In */}
@@ -552,7 +689,7 @@ export default function Home() {
           </div>
 
           {/* YouTube Title Section */}
-          <div className="mb-6 sm:mb-8">
+          <div className="mb-6 sm:mb-8" id="title-input">
             <label className="block text-sm sm:text-base font-medium text-gray-700 mb-3 px-1">
               YouTube Title
             </label>
