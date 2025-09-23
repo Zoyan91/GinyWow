@@ -124,9 +124,11 @@ export default function Blog() {
                   <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4">
                     <div className="flex-1">
                       <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2 hover:text-blue-600 transition-colors">
-                        <a href={`/blog/${article.slug}`} data-testid={`article-title-${article.id}`}>
-                          {article.title}
-                        </a>
+                        <Link href={`/blog/${article.slug}`}>
+                          <span data-testid={`article-title-${article.id}`}>
+                            {article.title}
+                          </span>
+                        </Link>
                       </h2>
                       <p className="text-gray-600 text-base leading-relaxed mb-4">
                         {article.excerpt}
@@ -150,13 +152,14 @@ export default function Blog() {
                   </div>
                   
                   <div className="mt-4 pt-4 border-t border-gray-100">
-                    <a 
-                      href={`/blog/${article.slug}`}
-                      className="text-blue-600 hover:text-blue-700 font-medium transition-colors"
-                      data-testid={`article-read-more-${article.id}`}
-                    >
-                      Read More →
-                    </a>
+                    <Link href={`/blog/${article.slug}`}>
+                      <span 
+                        className="text-blue-600 hover:text-blue-700 font-medium transition-colors cursor-pointer"
+                        data-testid={`article-read-more-${article.id}`}
+                      >
+                        Read More →
+                      </span>
+                    </Link>
                   </div>
                 </motion.article>
               ))}

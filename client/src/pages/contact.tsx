@@ -91,9 +91,11 @@ export default function Contact() {
                 </button>
               </Link>
               
-              <button className="flex items-center text-gray-600 hover:text-gray-900 transition-colors font-medium">
-                Blog
-              </button>
+              <Link href="/blog">
+                <button className="flex items-center text-gray-600 hover:text-gray-900 transition-colors font-medium">
+                  Blog
+                </button>
+              </Link>
             </div>
           </div>
         </div>
