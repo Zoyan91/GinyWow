@@ -4,6 +4,22 @@ import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetDescription } from 
 import { Menu } from "lucide-react";
 import { Link, useLocation } from "wouter";
 
+// Preload pages on hover for instant navigation
+const preloadPage = (path: string) => {
+  if (path === "/") return;
+  if (path === "/thumbnail-downloader") {
+    import("@/pages/thumbnail-downloader");
+  } else if (path === "/format-converter") {
+    import("@/pages/format-converter");
+  } else if (path === "/contact") {
+    import("@/pages/contact");
+  } else if (path === "/blog") {
+    import("@/pages/blog");
+  } else if (path === "/about") {
+    import("@/pages/about");
+  }
+};
+
 interface HeaderProps {
   currentPage?: string;
 }
@@ -52,6 +68,7 @@ export default function Header({ currentPage }: HeaderProps) {
                       : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
                   }`}
                   data-testid={item.testId}
+                  onMouseEnter={() => preloadPage(item.href)}
                 >
                   {item.label}
                 </button>
@@ -94,6 +111,7 @@ export default function Header({ currentPage }: HeaderProps) {
                               : "text-gray-700 hover:bg-gray-50 border border-transparent"
                           }`}
                           onClick={() => setIsMobileMenuOpen(false)}
+                          onTouchStart={() => preloadPage(item.href)}
                           data-testid={`mobile-${item.testId}`}
                         >
                           {item.label}
@@ -133,6 +151,7 @@ export default function Header({ currentPage }: HeaderProps) {
                             : "text-gray-700 hover:bg-gray-50"
                         }`}
                         onClick={() => setIsMobileMenuOpen(false)}
+                        onTouchStart={() => preloadPage(item.href)}
                       >
                         {item.label}
                       </button>
