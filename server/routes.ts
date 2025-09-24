@@ -721,10 +721,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
         case 'bmp':
           processedBuffer = await sharp(req.file.buffer)
-            .bmp()
+            .png()
             .toBuffer();
-          mimeType = 'image/bmp';
-          extension = 'bmp';
+          mimeType = 'image/png';
+          extension = 'png';
           break;
 
         case 'tiff':
