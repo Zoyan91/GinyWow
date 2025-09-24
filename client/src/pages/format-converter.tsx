@@ -222,12 +222,7 @@ export default function FormatConverterPage() {
         {/* Simple Hero Section */}
         <div className="bg-white py-12 lg:py-16 border-b">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div className="flex justify-center mb-6">
-              <div className="p-4 bg-blue-100 rounded-2xl">
-                <FileImage className="h-12 w-12 text-blue-600" />
-              </div>
-            </div>
-            <h1 className="text-xl sm:text-2xl lg:text-4xl font-bold lg:font-normal text-gray-900 mb-4 sm:mb-6 leading-tight" data-testid="page-title">
+            <h1 className="text-xl sm:text-2xl lg:text-4xl font-semibold text-gray-900 mb-4 sm:mb-6 leading-tight" data-testid="page-title">
               Free Image Format Converter Online
             </h1>
             <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed" data-testid="hero-description">
