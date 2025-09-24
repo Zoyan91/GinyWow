@@ -478,7 +478,7 @@ export default function FormatConverterPage() {
             
             {/* What is Section */}
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-gray-900 mb-6">
                 What is an Image Format Converter?
               </h2>
               <p className="text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
