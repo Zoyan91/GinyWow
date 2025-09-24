@@ -23,6 +23,14 @@ GinyWow is a comprehensive tool website with the tagline "Convert Social Media V
   - Mobile-responsive design with professional FAQ section
   - Application now includes: URL Opener, Thumbnail Downloader, and Format Converter
 
+- **Simplified Format Converter Design** per user feedback
+  - Removed complex gradient backgrounds and animations from hero section
+  - Changed from multi-column (3-column) layout to single centered column design
+  - Simplified card styling by removing gradient headers and complex shadow effects
+  - Streamlined upload area with basic styling instead of fancy transforms
+  - Maintained all core functionality (upload, convert, download, SEO content)
+  - Clean, straightforward user interface prioritizing simplicity over visual complexity
+
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
