@@ -590,6 +590,68 @@ export default function Home() {
         </div>
       </section>
 
+      {/* FAQ Section */}
+      <section className="py-12 sm:py-16 lg:py-20 bg-gray-50">
+        <div className="container-mobile max-w-4xl">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <div className="text-center mb-8 sm:mb-12">
+              <h2 className="text-responsive-xl font-bold text-gray-900 mb-4 sm:mb-8">
+                Frequently Asked Questions (FAQ)
+              </h2>
+            </div>
+            
+            <div className="space-y-6 sm:space-y-8">
+              {[
+                {
+                  question: "Is the App Opener tool free to use?",
+                  answer: "Yes! Our App Opener tool is completely free. You can generate unlimited app opener links without any hidden charges."
+                },
+                {
+                  question: "Which apps are supported by the App Opener?",
+                  answer: "Currently, our tool supports popular apps like **YouTube, Instagram, Facebook, and Twitter**. We are working to add support for even more apps very soon."
+                },
+                {
+                  question: "Why should I use App Opener instead of a normal link?",
+                  answer: "A normal link usually opens in a browser, which lowers engagement. With App Opener, your audience will directly land inside the app, making it easier for them to **subscribe, follow, or engage** with your content."
+                },
+                {
+                  question: "Do I need to sign up to use this tool?",
+                  answer: "No sign-up is required. Just paste your link, generate the App Opener link, and share it anywhere. Simple and fast!"
+                },
+                {
+                  question: "Can businesses also use the App Opener?",
+                  answer: "Absolutely! Whether you're a **YouTuber, influencer, digital marketer, or business owner**, this tool helps you drive better conversions and improve customer experience."
+                }
+              ].map((faq, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className="card-mobile p-4 sm:p-6"
+                  data-testid={`faq-item-${index + 1}`}
+                >
+                  <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-3">
+                    {faq.question}
+                  </h3>
+                  <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
+                    {faq.answer.split('**').map((part, i) => 
+                      i % 2 === 1 ? <strong key={i} className="font-semibold text-gray-800">{part}</strong> : part
+                    )}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Newsletter Section */}
       <NewsletterSection />
 
