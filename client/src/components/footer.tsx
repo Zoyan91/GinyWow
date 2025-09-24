@@ -27,6 +27,13 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/blog">
+                  <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm">
+                    Blog
+                  </span>
+                </Link>
+              </li>
+              <li>
                 <Link href="/about">
                   <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm">
                     About Us
@@ -125,6 +132,13 @@ export default function Footer() {
                   <Link href="/contact">
                     <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm block py-2">
                       Contact Us
+                    </span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/blog">
+                    <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm block py-2">
+                      Blog
                     </span>
                   </Link>
                 </li>

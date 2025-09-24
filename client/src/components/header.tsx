@@ -13,8 +13,8 @@ const preloadPage = (path: string) => {
     import("@/pages/format-converter");
   } else if (path === "/contact") {
     import("@/pages/contact");
-  } else if (path === "/blog") {
-    import("@/pages/blog");
+  } else if (path === "/video-downloader") {
+    import("@/pages/video-downloader");
   } else if (path === "/about") {
     import("@/pages/about");
   }
@@ -39,8 +39,8 @@ export default function Header({ currentPage }: HeaderProps) {
     { href: "/", label: "URL Opener", testId: "nav-url-opener" },
     { href: "/thumbnail-downloader", label: "Download Thumbnail", testId: "nav-thumbnail-downloader" },
     { href: "/format-converter", label: "Format Converter", testId: "nav-format-converter" },
+    { href: "/video-downloader", label: "Video Downloader", testId: "nav-video-downloader" },
     { href: "/contact", label: "Contact Us", testId: "nav-contact" },
-    { href: "/blog", label: "Blog", testId: "nav-blog" },
   ];
 
   return (
