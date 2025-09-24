@@ -19,17 +19,8 @@ const Blog = lazy(() => import("@/pages/blog"));
 const Privacy = lazy(() => import("@/pages/privacy"));
 const NotFound = lazy(() => import("@/pages/not-found"));
 
-// Preload ALL pages on app start for truly instant navigation
-setTimeout(() => {
-  import("@/pages/home");
-  import("@/pages/thumbnail-downloader");
-  import("@/pages/format-converter");
-  import("@/pages/contact");
-  import("@/pages/blog");
-  import("@/pages/about");
-  import("@/pages/privacy");
-  import("@/pages/not-found");
-}, 100);
+// Removed aggressive preloading for faster initial load (sub-2-second target)
+// Pages now load on-demand for optimal initial performance
 
 // Minimal loading component to prevent blank flashes
 function PageLoader() {
