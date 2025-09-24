@@ -240,8 +240,8 @@ export default function FormatConverterPage() {
           </div>
           <Card className="shadow-lg">
             <CardHeader>
-              <CardTitle className="flex items-center gap-3">
-                <Upload className="h-6 w-6 text-blue-600" />
+              <CardTitle className="flex items-center gap-3 text-lg sm:text-xl">
+                <Upload className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600" />
                 Convert Image Format
               </CardTitle>
               <CardDescription>
