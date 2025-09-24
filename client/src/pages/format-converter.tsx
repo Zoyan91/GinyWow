@@ -225,7 +225,7 @@ export default function FormatConverterPage() {
             <h1 className="text-xl sm:text-2xl lg:text-4xl font-semibold text-gray-900 mb-4 sm:mb-6 leading-tight" data-testid="page-title">
               Free Image Format Converter Online
             </h1>
-            <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed" data-testid="hero-description">
+            <p className="text-base sm:text-lg lg:text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed" data-testid="hero-description">
               Convert images between 12+ popular formats instantly. High-quality conversion with adjustable settings. No signup required, completely free forever.
             </p>
             <div className="flex flex-wrap justify-center gap-2">
