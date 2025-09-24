@@ -486,6 +486,9 @@ export default function Home() {
                   <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
                     Format Converter
                   </h3>
+                  <p className="text-gray-600 text-sm mt-2">
+                    Free online tool to convert images into any format instantly
+                  </p>
                 </div>
               </motion.div>
             </div>
