@@ -206,7 +206,7 @@ export default function FormatConverterPage() {
   ];
 
   const supportedFormats = [
-    "PNG", "JPEG", "JPG", "WebP", "GIF", "BMP", "TIFF", "AVIF", "ICO", "HEIC", "SVG", "PDF"
+    "PNG", "JPEG", "JPG", "WebP", "GIF", "BMP", "TIFF", "AVIF", "ICO"
   ];
 
   return (
@@ -225,7 +225,7 @@ export default function FormatConverterPage() {
               Free Image Format Converter Online
             </h1>
             <p className="text-base sm:text-lg lg:text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed" data-testid="hero-description">
-              Convert images between 12+ popular formats instantly. High-quality conversion with adjustable settings. No signup required, completely free forever.
+              Convert images between 9+ popular formats instantly. High-quality conversion with adjustable settings. No signup required, completely free forever.
             </p>
             <div className="flex flex-wrap justify-center gap-2">
               {supportedFormats.slice(0, 8).map((format) => (
@@ -234,7 +234,7 @@ export default function FormatConverterPage() {
                 </Badge>
               ))}
               <Badge variant="outline" className="text-sm px-3 py-1">
-                +4 More
+                +1 More
               </Badge>
             </div>
           </div>

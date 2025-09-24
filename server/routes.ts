@@ -694,8 +694,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         case 'png':
           processedBuffer = await sharp(req.file.buffer)
             .png({ 
-              quality: qualityValue,
-              compressionLevel: Math.min(9, Math.max(0, Math.floor((100 - qualityValue) / 10)))
+              compressionLevel: Math.min(9, Math.max(0, Math.floor((100 - qualityValue) / 10))),
+              progressive: true
             })
             .toBuffer();
           mimeType = 'image/png';
@@ -705,7 +705,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         case 'jpeg':
         case 'jpg':
           processedBuffer = await sharp(req.file.buffer)
-            .jpeg({ quality: qualityValue })
+            .jpeg({ quality: qualityValue, progressive: true })
             .toBuffer();
           mimeType = 'image/jpeg';
           extension = 'jpg';
@@ -713,24 +713,83 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
         case 'webp':
           processedBuffer = await sharp(req.file.buffer)
-            .webp({ quality: qualityValue })
+            .webp({ quality: qualityValue, effort: 6 })
             .toBuffer();
           mimeType = 'image/webp';
           extension = 'webp';
           break;
 
         case 'bmp':
-          processedBuffer = await sharp(req.file.buffer)
-            .png()
-            .toBuffer();
-          mimeType = 'image/png';
-          extension = 'png';
+          // Convert to proper BMP format using Sharp's raw output and manual BMP header
+          const rawImageData = await sharp(req.file.buffer)
+            .raw()
+            .toBuffer({ resolveWithObject: true });
+          
+          // Create BMP file manually with proper row padding
+          const { data, info } = rawImageData;
+          const bmpHeaderSize = 54;
+          
+          // Calculate row stride with padding (must be multiple of 4 bytes)
+          const rowBytes = info.width * 3; // 3 bytes per pixel (RGB)
+          const rowStride = Math.ceil(rowBytes / 4) * 4; // Align to 4-byte boundary
+          const paddingBytes = rowStride - rowBytes;
+          
+          const imageSize = rowStride * info.height;
+          const fileSize = bmpHeaderSize + imageSize;
+          
+          // Create BMP buffer
+          const bmpBuffer = Buffer.alloc(fileSize);
+          
+          // BMP File Header
+          bmpBuffer.write('BM', 0); // Signature
+          bmpBuffer.writeUInt32LE(fileSize, 2); // File size
+          bmpBuffer.writeUInt32LE(0, 6); // Reserved
+          bmpBuffer.writeUInt32LE(bmpHeaderSize, 10); // Data offset
+          
+          // BMP Info Header
+          bmpBuffer.writeUInt32LE(40, 14); // Info header size
+          bmpBuffer.writeUInt32LE(info.width, 18); // Width
+          bmpBuffer.writeUInt32LE(info.height, 22); // Height
+          bmpBuffer.writeUInt16LE(1, 26); // Planes
+          bmpBuffer.writeUInt16LE(24, 28); // Bits per pixel
+          bmpBuffer.writeUInt32LE(0, 30); // Compression
+          bmpBuffer.writeUInt32LE(imageSize, 34); // Image size
+          bmpBuffer.writeUInt32LE(2835, 38); // X pixels per meter
+          bmpBuffer.writeUInt32LE(2835, 42); // Y pixels per meter
+          bmpBuffer.writeUInt32LE(0, 46); // Colors used
+          bmpBuffer.writeUInt32LE(0, 50); // Important colors
+          
+          // Convert RGBA to BGR and flip vertically (BMP is bottom-up) with proper row padding
+          let dstOffset = bmpHeaderSize;
+          for (let y = 0; y < info.height; y++) {
+            const srcRowStart = (info.height - 1 - y) * info.width * info.channels;
+            
+            // Copy pixel data for this row
+            for (let x = 0; x < info.width; x++) {
+              const srcIndex = srcRowStart + (x * info.channels);
+              
+              bmpBuffer[dstOffset] = data[srcIndex + 2]; // B
+              bmpBuffer[dstOffset + 1] = data[srcIndex + 1]; // G  
+              bmpBuffer[dstOffset + 2] = data[srcIndex]; // R
+              dstOffset += 3;
+            }
+            
+            // Add row padding (fill with zeros)
+            for (let p = 0; p < paddingBytes; p++) {
+              bmpBuffer[dstOffset] = 0;
+              dstOffset++;
+            }
+          }
+          
+          processedBuffer = bmpBuffer;
+          mimeType = 'image/bmp';
+          extension = 'bmp';
           break;
 
         case 'tiff':
         case 'tif':
           processedBuffer = await sharp(req.file.buffer)
-            .tiff({ quality: qualityValue })
+            .tiff({ quality: qualityValue, compression: 'lzw' })
             .toBuffer();
           mimeType = 'image/tiff';
           extension = 'tiff';
@@ -738,7 +797,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
         case 'gif':
           processedBuffer = await sharp(req.file.buffer)
-            .gif()
+            .gif({ progressive: true })
             .toBuffer();
           mimeType = 'image/gif';
           extension = 'gif';
@@ -746,21 +805,50 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
         case 'avif':
           processedBuffer = await sharp(req.file.buffer)
-            .avif({ quality: qualityValue })
+            .avif({ quality: qualityValue, effort: 6 })
             .toBuffer();
           mimeType = 'image/avif';
           extension = 'avif';
           break;
 
         case 'ico':
-          // ICO format needs special handling - convert to PNG first then resize
+          // Convert to ICO format with proper sizing
           processedBuffer = await sharp(req.file.buffer)
             .resize(256, 256, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
             .png()
             .toBuffer();
-          mimeType = 'image/png'; // ICO support is limited, return PNG
-          extension = 'png';
+          
+          // Create ICO file format manually
+          const icoHeaderSize = 6;
+          const iconDirSize = 16;
+          const pngData = processedBuffer;
+          const icoFileSize = icoHeaderSize + iconDirSize + pngData.length;
+          
+          const icoBuffer = Buffer.alloc(icoFileSize);
+          
+          // ICO Header
+          icoBuffer.writeUInt16LE(0, 0); // Reserved
+          icoBuffer.writeUInt16LE(1, 2); // Type (1 = ICO)
+          icoBuffer.writeUInt16LE(1, 4); // Number of images
+          
+          // Icon Directory Entry
+          icoBuffer.writeUInt8(0, 6); // Width (0 = 256)
+          icoBuffer.writeUInt8(0, 7); // Height (0 = 256)
+          icoBuffer.writeUInt8(0, 8); // Color count
+          icoBuffer.writeUInt8(0, 9); // Reserved
+          icoBuffer.writeUInt16LE(1, 10); // Planes
+          icoBuffer.writeUInt16LE(32, 12); // Bits per pixel
+          icoBuffer.writeUInt32LE(pngData.length, 14); // Size of image data
+          icoBuffer.writeUInt32LE(icoHeaderSize + iconDirSize, 18); // Offset to image data
+          
+          // Copy PNG data
+          pngData.copy(icoBuffer, icoHeaderSize + iconDirSize);
+          
+          processedBuffer = icoBuffer;
+          mimeType = 'image/x-icon';
+          extension = 'ico';
           break;
+
 
         default:
           return res.status(400).json({ error: `Unsupported format: ${format}` });
