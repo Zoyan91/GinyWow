@@ -218,16 +218,16 @@ export default function FormatConverterPage() {
         {/* Header */}
         <Header currentPage="/format-converter" />
         
-        {/* Simple Hero Section */}
-        <div className="bg-white py-12 lg:py-16 border-b">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-xl sm:text-2xl lg:text-4xl font-semibold text-gray-900 mb-4 sm:mb-6 leading-tight" data-testid="page-title">
+        {/* Simple Converter Section - Moved Up */}
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="text-center mb-8">
+            <h1 className="text-2xl md:text-3xl font-semibold text-gray-900 mb-4" data-testid="page-title">
               Free Image Format Converter Online
             </h1>
-            <p className="text-base sm:text-lg lg:text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed" data-testid="hero-description">
-              Convert images between 9+ popular formats instantly. High-quality conversion with adjustable settings. No signup required, completely free forever.
+            <p className="text-gray-600 mb-6" data-testid="hero-description">
+              Convert images between 9+ popular formats instantly. High-quality conversion with adjustable settings.
             </p>
-            <div className="flex flex-wrap justify-center gap-2">
+            <div className="hidden md:flex flex-wrap justify-center gap-2">
               {supportedFormats.slice(0, 8).map((format) => (
                 <Badge key={format} variant="secondary" className="text-sm px-3 py-1">
                   {format}
@@ -238,10 +238,6 @@ export default function FormatConverterPage() {
               </Badge>
             </div>
           </div>
-        </div>
-
-        {/* Simple Converter Section */}
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <Card className="shadow-lg">
             <CardHeader>
               <CardTitle className="flex items-center gap-3">
