@@ -479,19 +479,6 @@ export default function Home() {
                   <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
                     Format Converter
                   </h3>
-                  <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
-                    Convert images between 12+ popular formats including PNG, JPEG, WebP, GIF, and more. Free, fast, and high-quality conversion.
-                  </p>
-                  <div className="pt-4">
-                    <Button
-                      onClick={() => window.location.href = '/format-converter'}
-                      className="btn-mobile bg-blue-600 hover:bg-blue-700 text-white px-6 py-3"
-                      data-testid="format-converter-button"
-                    >
-                      Try Format Converter
-                      <ArrowRight className="w-4 h-4 ml-2" />
-                    </Button>
-                  </div>
                 </div>
               </motion.div>
             </div>
