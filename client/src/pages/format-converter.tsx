@@ -219,22 +219,28 @@ export default function FormatConverterPage() {
         {/* Header */}
         <Header currentPage="/format-converter" />
         
-        {/* Simple Hero Section */}
-        <div className="bg-white py-12 lg:py-16 border-b">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-xl sm:text-2xl lg:text-4xl font-semibold text-gray-900 mb-4 sm:mb-6 leading-tight" data-testid="page-title">
+        {/* Gradient Hero Section */}
+        <div className="relative py-12 lg:py-20 bg-gradient-to-br from-blue-600 via-purple-600 to-blue-800 overflow-hidden">
+          {/* Background Animation */}
+          <div className="absolute inset-0">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/10 rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2"></div>
+          </div>
+          
+          <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 className="text-xl sm:text-2xl lg:text-4xl font-semibold text-white mb-4 sm:mb-6 leading-tight" data-testid="page-title">
               Free Image Format Converter Online
             </h1>
-            <p className="text-base sm:text-lg lg:text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed" data-testid="hero-description">
+            <p className="text-base sm:text-lg lg:text-xl text-blue-100 mb-8 max-w-3xl mx-auto leading-relaxed" data-testid="hero-description">
               Convert images between 12+ popular formats instantly. High-quality conversion with adjustable settings. No signup required, completely free forever.
             </p>
             <div className="flex flex-wrap justify-center gap-2">
               {supportedFormats.slice(0, 8).map((format) => (
-                <Badge key={format} variant="secondary" className="text-sm px-3 py-1">
+                <Badge key={format} variant="secondary" className="text-sm px-3 py-1 bg-white/20 text-white border-0 hover:bg-white/30">
                   {format}
                 </Badge>
               ))}
-              <Badge variant="outline" className="text-sm px-3 py-1">
+              <Badge variant="outline" className="text-sm px-3 py-1 border-white/30 text-white hover:bg-white/10">
                 +4 More
               </Badge>
             </div>
@@ -242,22 +248,24 @@ export default function FormatConverterPage() {
         </div>
 
         {/* Main Converter Section */}
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid grid-cols-1 gap-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             
-            {/* Main Converter Interface */}
-            <div className="w-full">
-              <Card className="h-full shadow-lg">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-3">
+            {/* Upload & Settings Column */}
+            <div className="lg:col-span-2 space-y-6">
+              
+              {/* Upload Section */}
+              <Card className="shadow-lg border-0">
+                <CardHeader className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-t-lg">
+                  <CardTitle className="flex items-center gap-3 text-xl">
                     <Upload className="h-6 w-6 text-blue-600" />
-                    Convert Image Format
+                    Upload Your Image
                   </CardTitle>
-                  <CardDescription>
-                    Upload your image and convert it to any format with custom quality settings
+                  <CardDescription className="text-gray-600">
+                    Drag & drop your image or click to browse
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-6">
+                <CardContent className="p-6">
                   
                   {/* Upload Area or Preview */}
                   {!originalImage ? (
