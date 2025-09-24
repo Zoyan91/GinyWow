@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import { Link, useLocation } from "wouter";
 
@@ -79,6 +79,8 @@ export default function Header({ currentPage }: HeaderProps) {
               </SheetTrigger>
               <SheetContent side="right" className="w-80 sm:w-96">
                 <div className="flex flex-col h-full">
+                  <SheetTitle className="sr-only">Mobile Navigation Menu</SheetTitle>
+                  <SheetDescription className="sr-only">Navigate between different sections of the website</SheetDescription>
 
                   {/* Mobile Navigation Links */}
                   <nav className="flex-1 space-y-2 mt-6">
@@ -118,6 +120,8 @@ export default function Header({ currentPage }: HeaderProps) {
                 </Button>
               </SheetTrigger>
               <SheetContent side="right" className="w-80">
+                <SheetTitle className="sr-only">Tablet Navigation Menu</SheetTitle>
+                <SheetDescription className="sr-only">Navigate between different sections of the website</SheetDescription>
                 <nav className="space-y-3 mt-6">
                   {/* All Navigation Items */}
                   {allNavItems.map((item) => (

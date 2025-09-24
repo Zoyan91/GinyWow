@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { SiFacebook, SiX, SiLinkedin, SiYoutube, SiPinterest } from 'react-icons/si';
+import { Facebook, Twitter, Linkedin, Youtube, Hash } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
@@ -84,27 +84,27 @@ export default function Footer() {
             <div className="flex flex-wrap gap-4">
               <Link href="/thumbnail-downloader">
                 <span className="text-gray-400 hover:text-blue-600 transition-colors p-2 rounded-lg hover:bg-blue-50 block" aria-label="Facebook">
-                  <SiFacebook className="w-5 h-5" />
+                  <Facebook className="w-5 h-5" />
                 </span>
               </Link>
               <Link href="/thumbnail-downloader">
                 <span className="text-gray-400 hover:text-gray-900 transition-colors p-2 rounded-lg hover:bg-gray-50 block" aria-label="Twitter">
-                  <SiX className="w-5 h-5" />
+                  <Twitter className="w-5 h-5" />
                 </span>
               </Link>
               <Link href="/thumbnail-downloader">
                 <span className="text-gray-400 hover:text-blue-700 transition-colors p-2 rounded-lg hover:bg-blue-50 block" aria-label="LinkedIn">
-                  <SiLinkedin className="w-5 h-5" />
+                  <Linkedin className="w-5 h-5" />
                 </span>
               </Link>
               <Link href="/thumbnail-downloader">
                 <span className="text-gray-400 hover:text-red-600 transition-colors p-2 rounded-lg hover:bg-red-50 block" aria-label="YouTube">
-                  <SiYoutube className="w-5 h-5" />
+                  <Youtube className="w-5 h-5" />
                 </span>
               </Link>
               <Link href="/thumbnail-downloader">
                 <span className="text-gray-400 hover:text-red-500 transition-colors p-2 rounded-lg hover:bg-red-50 block" aria-label="Pinterest">
-                  <SiPinterest className="w-5 h-5" />
+                  <Hash className="w-5 h-5" />
                 </span>
               </Link>
             </div>
@@ -196,31 +196,31 @@ export default function Footer() {
               <div className="flex flex-wrap gap-4 p-4">
                 <Link href="/thumbnail-downloader">
                   <span className="text-gray-400 hover:text-blue-600 transition-colors p-3 rounded-lg hover:bg-blue-50 flex items-center space-x-2 cursor-pointer" aria-label="Facebook">
-                    <SiFacebook className="w-5 h-5" />
+                    <Facebook className="w-5 h-5" />
                     <span className="text-sm">Facebook</span>
                   </span>
                 </Link>
                 <Link href="/thumbnail-downloader">
                   <span className="text-gray-400 hover:text-gray-900 transition-colors p-3 rounded-lg hover:bg-gray-50 flex items-center space-x-2 cursor-pointer" aria-label="Twitter">
-                    <SiX className="w-5 h-5" />
+                    <Twitter className="w-5 h-5" />
                     <span className="text-sm">Twitter</span>
                   </span>
                 </Link>
                 <Link href="/thumbnail-downloader">
                   <span className="text-gray-400 hover:text-blue-700 transition-colors p-3 rounded-lg hover:bg-blue-50 flex items-center space-x-2 cursor-pointer" aria-label="LinkedIn">
-                    <SiLinkedin className="w-5 h-5" />
+                    <Linkedin className="w-5 h-5" />
                     <span className="text-sm">LinkedIn</span>
                   </span>
                 </Link>
                 <Link href="/thumbnail-downloader">
                   <span className="text-gray-400 hover:text-red-600 transition-colors p-3 rounded-lg hover:bg-red-50 flex items-center space-x-2 cursor-pointer" aria-label="YouTube">
-                    <SiYoutube className="w-5 h-5" />
+                    <Youtube className="w-5 h-5" />
                     <span className="text-sm">YouTube</span>
                   </span>
                 </Link>
                 <Link href="/thumbnail-downloader">
                   <span className="text-gray-400 hover:text-red-500 transition-colors p-3 rounded-lg hover:bg-red-50 flex items-center space-x-2 cursor-pointer" aria-label="Pinterest">
-                    <SiPinterest className="w-5 h-5" />
+                    <Hash className="w-5 h-5" />
                     <span className="text-sm">Pinterest</span>
                   </span>
                 </Link>
