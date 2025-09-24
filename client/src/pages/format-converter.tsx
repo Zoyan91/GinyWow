@@ -28,7 +28,6 @@ import {
   formatConverterFAQs,
   formatConverterHowToSteps
 } from "@/lib/seo";
-import { StatsSection } from "@/components/trust-badges";
 
 interface ConvertImageResponse {
   success: boolean;
@@ -472,8 +471,6 @@ export default function FormatConverterPage() {
           </div>
         </div>
 
-        {/* Stats Section */}
-        <StatsSection />
 
         {/* Content Sections */}
         <div className="bg-white py-16 lg:py-20">
