@@ -428,7 +428,7 @@ export default function Home() {
       </section>
 
       {/* Our More Tools Section */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-white">
+      <section className="py-12 sm:py-16 lg:py-20 bg-white border-t-2 border-dashed border-gray-300">
         <div className="container-mobile max-w-4xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -437,7 +437,7 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-8 sm:mb-12"
           >
-            <h2 className="text-responsive-xl font-bold text-gray-900 mb-8 sm:mb-12">
+            <h2 className="text-responsive-xl font-medium text-gray-900 mb-8 sm:mb-12">
               Our More Tools : Try It
             </h2>
             
