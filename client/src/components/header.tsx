@@ -69,6 +69,7 @@ export default function Header({ currentPage }: HeaderProps) {
                   }`}
                   data-testid={item.testId}
                   onMouseEnter={() => preloadPage(item.href)}
+                  onFocus={() => preloadPage(item.href)}
                 >
                   {item.label}
                 </button>
@@ -112,6 +113,7 @@ export default function Header({ currentPage }: HeaderProps) {
                           }`}
                           onClick={() => setIsMobileMenuOpen(false)}
                           onTouchStart={() => preloadPage(item.href)}
+                          onFocus={() => preloadPage(item.href)}
                           data-testid={`mobile-${item.testId}`}
                         >
                           {item.label}
@@ -152,6 +154,7 @@ export default function Header({ currentPage }: HeaderProps) {
                         }`}
                         onClick={() => setIsMobileMenuOpen(false)}
                         onTouchStart={() => preloadPage(item.href)}
+                        onFocus={() => preloadPage(item.href)}
                       >
                         {item.label}
                       </button>

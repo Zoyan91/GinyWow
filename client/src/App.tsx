@@ -19,16 +19,25 @@ const Blog = lazy(() => import("@/pages/blog"));
 const Privacy = lazy(() => import("@/pages/privacy"));
 const NotFound = lazy(() => import("@/pages/not-found"));
 
-// Preload critical pages on app start for instant navigation
+// Preload ALL pages on app start for truly instant navigation
 setTimeout(() => {
   import("@/pages/home");
   import("@/pages/thumbnail-downloader");
   import("@/pages/format-converter");
+  import("@/pages/contact");
+  import("@/pages/blog");
+  import("@/pages/about");
+  import("@/pages/privacy");
+  import("@/pages/not-found");
 }, 100);
 
-// Invisible loading component for instant navigation
+// Minimal loading component to prevent blank flashes
 function PageLoader() {
-  return null; // No visible loading state for instant feel
+  return (
+    <div className="min-h-screen bg-white">
+      {/* Preserves layout without visible loading indicator */}
+    </div>
+  );
 }
 
 // Scroll to top component for instant navigation
