@@ -221,8 +221,8 @@ export default function FormatConverterPage() {
         {/* Simple Converter Section - Moved Up */}
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center mb-8">
-            <h1 className="text-2xl md:text-4xl font-bold md:font-semibold text-gray-900 mb-4" data-testid="page-title">
-              Free Image Format Converter Online
+            <h1 className="text-xl sm:text-2xl md:text-4xl font-bold md:font-semibold text-gray-900 mb-4" data-testid="page-title">
+              <span className="block sm:inline">Free Image Format</span> <span className="block sm:inline">Converter Online</span>
             </h1>
             <p className="text-gray-600 mb-6 text-sm md:text-base" data-testid="hero-description">
               Convert images between 9+ popular formats instantly. High-quality conversion with adjustable settings.
