@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import { Link } from 'wouter';
 import { SiFacebook, SiX, SiLinkedin, SiYoutube, SiPinterest } from 'react-icons/si';
 import Header from '@/components/header';
@@ -11,12 +10,7 @@ export default function Privacy() {
 
       {/* Privacy Policy Content */}
       <main className="bg-background/50 backdrop-blur-sm container mx-auto px-4 sm:px-6 py-8 max-w-4xl relative z-10">
-        <motion.div 
-          className="bg-white rounded-2xl border border-gray-200 p-6 sm:p-8 md:p-10 lg:p-12 shadow-xl shadow-blue-500/10"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
+        <div className="bg-white rounded-2xl border border-gray-200 p-6 sm:p-8 md:p-10 lg:p-12 shadow-xl shadow-blue-500/10 animate-fade-in">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-6 sm:mb-8">
             Privacy Policy
           </h1>
@@ -179,7 +173,7 @@ export default function Privacy() {
               </button>
             </Link>
           </div>
-        </motion.div>
+        </div>
       </main>
 
       <Footer />

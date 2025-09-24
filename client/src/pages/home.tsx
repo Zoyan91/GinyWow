@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Copy, Clipboard, CheckCircle, Users, Zap, Shield, ArrowRight, MessageCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { motion } from "framer-motion";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { apiRequest } from "@/lib/queryClient";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
@@ -13,6 +13,9 @@ export default function Home() {
   const [generatedLink, setGeneratedLink] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
   const { toast } = useToast();
+  
+  // Enable scroll animations
+  useScrollAnimation();
 
   // Newsletter subscription functionality
   const NewsletterSection = () => {
@@ -296,12 +299,7 @@ export default function Home() {
       {/* Hero Section - Mobile First */}
       <section className="bg-gradient-to-br from-blue-50 via-white to-purple-50 py-8 sm:py-12 lg:py-20">
         <div className="container-mobile max-w-4xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center"
-          >
+          <div className="text-center animate-fade-in">
             <h1 className="text-xl sm:text-2xl lg:text-4xl font-bold lg:font-normal text-gray-900 mb-4 sm:mb-6 leading-tight">
               {/* Mobile Version */}
               <span className="block sm:hidden whitespace-pre-line">
@@ -397,12 +395,7 @@ export default function Home() {
 
             {/* Generated Link Result */}
             {generatedLink && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4 }}
-                className="max-w-2xl mx-auto px-4"
-              >
+              <div className="max-w-2xl mx-auto px-4 animate-mobile-slide-up">
                 <div className="card-mobile p-4 sm:p-6">
                   <div className="flex flex-col sm:flex-row items-center gap-3">
                     <Input
@@ -421,34 +414,24 @@ export default function Home() {
                     </Button>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             )}
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* Our More Tools Section */}
       <section className="py-12 sm:py-16 lg:py-20 bg-white border-t-2 border-dashed border-gray-300">
         <div className="container-mobile max-w-4xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-8 sm:mb-12"
-          >
+          <div className="text-center mb-8 sm:mb-12 animate-on-scroll">
             <div className="inline-block bg-orange-500 text-white px-6 py-2 rounded-full text-lg font-medium mb-8 sm:mb-12">
               Our More Tools : Try It
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
               {/* Thumbnail Downloader Section */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                viewport={{ once: true }}
-                className="card-mobile p-6 sm:p-8 hover:shadow-lg transition-all duration-300 cursor-pointer"
+              <div
+                className="card-mobile p-6 sm:p-8 hover:shadow-lg transition-all duration-300 cursor-pointer animate-on-scroll animate-stagger-1"
                 onClick={() => window.location.href = '/thumbnail-downloader'}
                 data-testid="thumbnail-downloader-card"
               >
@@ -465,15 +448,11 @@ export default function Home() {
                     Extract and download high-quality thumbnails
                   </p>
                 </div>
-              </motion.div>
+              </div>
 
               {/* Format Converter Section */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                viewport={{ once: true }}
-                className="card-mobile p-6 sm:p-8 hover:shadow-lg transition-all duration-300 cursor-pointer"
+              <div
+                className="card-mobile p-6 sm:p-8 hover:shadow-lg transition-all duration-300 cursor-pointer animate-on-scroll animate-stagger-2"
                 onClick={() => window.location.href = '/format-converter'}
                 data-testid="format-converter-card"
               >
@@ -490,21 +469,16 @@ export default function Home() {
                     Free online tool to convert images into any format instantly
                   </p>
                 </div>
-              </motion.div>
+              </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* What is Section - Mobile Optimized */}
       <section className="pt-8 sm:pt-12 lg:pt-16 pb-12 sm:pb-16 lg:pb-20 bg-white">
         <div className="container-mobile max-w-4xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
+          <div className="animate-on-scroll">
             <div className="text-center mb-8 sm:mb-12">
               <h2 className="text-responsive-xl font-bold text-gray-900 mb-4 sm:mb-6">
                 What is GinyWow App Opener?
@@ -520,19 +494,14 @@ export default function Home() {
                 The <strong>GinyWow App Opener link generator</strong> allows creators to generate custom links for social media profiles including <strong>YouTube, Instagram, TikTok, Facebook, Twitter, LinkedIn</strong>, and many others. Normally, when you share social media links across platforms, users end up browsing within in-app browsers which provide a poor user experience and low engagement rates.
               </p>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* Why Use Section - Mobile Grid */}
       <section className="py-12 sm:py-16 lg:py-20 bg-gray-50">
         <div className="container-mobile max-w-5xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
+          <div className="animate-on-scroll">
             <div className="text-center mb-8 sm:mb-12">
               <h2 className="text-responsive-xl font-bold text-gray-900 mb-4 sm:mb-8">
                 Why Use GinyWow App Opener?
@@ -566,13 +535,10 @@ export default function Home() {
                   color: "orange"
                 }
               ].map((benefit, index) => (
-                <motion.div
+                <div
                   key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="card-mobile p-4 sm:p-6"
+                  className="card-mobile p-4 sm:p-6 animate-on-scroll"
+                  style={{ animationDelay: `${index * 0.1}s` }}
                 >
                   <div className="flex items-start space-x-3 sm:space-x-4">
                     <div className={`w-8 h-8 sm:w-10 sm:h-10 bg-${benefit.color}-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1`}>
@@ -587,22 +553,17 @@ export default function Home() {
                       </p>
                     </div>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* How It Works Section - Mobile Steps */}
       <section className="py-12 sm:py-16 lg:py-20 bg-white">
         <div className="container-mobile max-w-4xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
+          <div className="animate-on-scroll">
             <div className="text-center mb-8 sm:mb-12">
               <h2 className="text-responsive-xl font-bold text-gray-900 mb-4 sm:mb-8">
                 How to Use GinyWow App Opener?
@@ -631,13 +592,10 @@ export default function Home() {
                   bgColor: "bg-purple-600"
                 }
               ].map((step, index) => (
-                <motion.div
+                <div
                   key={index}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="card-mobile p-4 sm:p-6"
+                  className="card-mobile p-4 sm:p-6 animate-on-scroll"
+                  style={{ animationDelay: `${index * 0.1}s` }}
                 >
                   <div className="flex items-start space-x-4">
                     <div className={`w-10 h-10 sm:w-12 sm:h-12 ${step.bgColor} text-white rounded-full flex items-center justify-center text-sm sm:text-base font-bold flex-shrink-0`}>
@@ -652,22 +610,17 @@ export default function Home() {
                       </p>
                     </div>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* FAQ Section */}
       <section className="py-12 sm:py-16 lg:py-20 bg-gray-50">
         <div className="container-mobile max-w-4xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
+          <div className="animate-on-scroll">
             <div className="text-center mb-8 sm:mb-12">
               <h2 className="text-responsive-xl font-bold text-gray-900 mb-4 sm:mb-8">
                 Frequently Asked Questions (FAQ)
@@ -697,13 +650,10 @@ export default function Home() {
                   answer: "Absolutely! Whether you're a **YouTuber, influencer, digital marketer, or business owner**, this tool helps you drive better conversions and improve customer experience."
                 }
               ].map((faq, index) => (
-                <motion.div
+                <div
                   key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="card-mobile p-4 sm:p-6"
+                  className="card-mobile p-4 sm:p-6 animate-on-scroll"
+                  style={{ animationDelay: `${index * 0.1}s` }}
                   data-testid={`faq-item-${index + 1}`}
                 >
                   <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-3">
@@ -714,10 +664,10 @@ export default function Home() {
                       i % 2 === 1 ? <strong key={i} className="font-semibold text-gray-800">{part}</strong> : part
                     )}
                   </p>
-                </motion.div>
+                </div>
               ))}
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 

@@ -6,7 +6,6 @@ import { Download, Link as LinkIcon, CheckCircle, Users, Zap, Shield, ArrowRight
 import { useToast } from "@/hooks/use-toast";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { motion } from "framer-motion";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { thumbnailDownloaderSchema, type ThumbnailDownloaderForm } from "@shared/schema";
@@ -147,10 +146,7 @@ export default function ThumbnailDownloader() {
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-blue-50 via-white to-purple-50 py-8 sm:py-12 lg:py-20">
         <div className="container-mobile max-w-4xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+          <div
             className="text-center"
           >
             <h1 className="text-xl sm:text-2xl lg:text-4xl font-bold lg:font-normal text-gray-900 mb-4 sm:mb-6 leading-tight">
@@ -266,10 +262,7 @@ export default function ThumbnailDownloader() {
 
             {/* Thumbnail Results */}
             {thumbnailData && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4 }}
+              <div
                 className="max-w-4xl mx-auto px-4"
               >
                 <div className="card-mobile p-4 sm:p-6 mb-8">
@@ -310,9 +303,9 @@ export default function ThumbnailDownloader() {
                     ))}
                   </div>
                 </div>
-              </motion.div>
+              </div>
             )}
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -322,11 +315,9 @@ export default function ThumbnailDownloader() {
           <div className="prose prose-lg max-w-none">
             
             {/* What is a YouTube Thumbnail Downloader */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
+            <div
+
+
               className="mb-12"
             >
               <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4">
@@ -335,16 +326,14 @@ export default function ThumbnailDownloader() {
               <p className="text-responsive-sm text-gray-600 leading-relaxed mb-4">
                 A <strong>YouTube Thumbnail Downloader</strong> is a free online tool that allows you to download any video's thumbnail in different resolutions like <strong>HD, HQ, and 4K</strong>. Many creators, marketers, and students need thumbnails for presentations, reference, or research. That's why we built the <strong>GinyWow YouTube Thumbnail Downloader</strong> — a simple and reliable tool to get thumbnails instantly.
               </p>
-            </motion.div>
+            </div>
 
             <hr className="border-gray-300 mb-12" />
 
             {/* Why Use GinyWow YouTube Thumbnail Downloader */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
+            <div
+
+
               className="mb-12"
             >
               <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6">
@@ -372,16 +361,14 @@ export default function ThumbnailDownloader() {
                   <span><strong>Safe & Secure</strong> – No logins, no hidden charges, just simple downloads.</span>
                 </li>
               </ul>
-            </motion.div>
+            </div>
 
             <hr className="border-gray-300 mb-12" />
 
             {/* How Does GinyWow Thumbnail Downloader Work */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
+            <div
+
+
               className="mb-12"
             >
               <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6">
@@ -408,16 +395,14 @@ export default function ThumbnailDownloader() {
               <p className="text-responsive-sm text-gray-600 mt-4 font-medium">
                 That's it! Simple, fast, and reliable.
               </p>
-            </motion.div>
+            </div>
 
             <hr className="border-gray-300 mb-12" />
 
             {/* Benefits of Using GinyWow Thumbnail Downloader */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
+            <div
+
+
               className="mb-12"
             >
               <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6">
@@ -437,16 +422,14 @@ export default function ThumbnailDownloader() {
                   <span>Works instantly without waiting or registrations.</span>
                 </li>
               </ul>
-            </motion.div>
+            </div>
 
             <hr className="border-gray-300 mb-12" />
 
             {/* FAQ Section */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
+            <div
+
+
               className="mb-12"
             >
               <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6">
@@ -489,7 +472,7 @@ export default function ThumbnailDownloader() {
                   </p>
                 </div>
               </div>
-            </motion.div>
+            </div>
 
           </div>
         </div>

@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import { Link } from 'wouter';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
@@ -10,11 +9,8 @@ export default function About() {
 
       {/* About Content */}
       <main className="bg-background/50 backdrop-blur-sm container-mobile py-8 max-w-4xl relative z-10">
-        <motion.div 
+        <div 
           className="card-mobile p-4 sm:p-6 md:p-8 lg:p-10 shadow-xl shadow-blue-500/10"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
         >
           <h1 className="text-responsive-xl font-bold text-gray-900 mb-6 sm:mb-8">
             About Us
@@ -42,7 +38,7 @@ export default function About() {
               </button>
             </Link>
           </div>
-        </motion.div>
+        </div>
       </main>
 
       <Footer />

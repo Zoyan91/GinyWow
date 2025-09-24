@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import { Link } from 'wouter';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -67,11 +66,8 @@ export default function Contact() {
 
       {/* Contact Content */}
       <main className="bg-background/50 backdrop-blur-sm container mx-auto px-4 sm:px-6 py-8 max-w-6xl relative z-10">
-        <motion.div 
+        <div 
           className="text-center mb-12"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
         >
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             Contact Us
@@ -79,15 +75,12 @@ export default function Contact() {
           <p className="text-gray-600 text-lg max-w-2xl mx-auto">
             Have a question or need support? We're here to help you succeed with your content creation journey.
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Contact Form */}
-          <motion.div 
+          <div 
             className="bg-white rounded-2xl border border-gray-200 p-6 sm:p-8 shadow-xl shadow-blue-500/10"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
           >
             <h2 className="text-2xl font-bold text-gray-900 mb-6">Send us a Message</h2>
             
@@ -184,14 +177,11 @@ export default function Contact() {
                 </Button>
               </form>
             </Form>
-          </motion.div>
+          </div>
 
           {/* Contact Information */}
-          <motion.div 
+          <div 
             className="space-y-8"
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
           >
             {/* Contact Details */}
             <div className="bg-white rounded-2xl border border-gray-200 p-6 sm:p-8 shadow-xl shadow-blue-500/10">
@@ -254,7 +244,7 @@ export default function Contact() {
                 </Link>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </main>
 
