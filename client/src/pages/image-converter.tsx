@@ -25,6 +25,7 @@ export default function ImageConverterPage() {
   const [originalImage, setOriginalImage] = useState<string | null>(null);
   const [processedImage, setProcessedImage] = useState<string | null>(null);
   const [fileName, setFileName] = useState<string>("");
+  const [originalFile, setOriginalFile] = useState<File | null>(null);
   const [targetFormat, setTargetFormat] = useState<string>("png");
   const [quality, setQuality] = useState<number[]>([85]);
   const { toast } = useToast();
@@ -81,6 +82,7 @@ export default function ImageConverterPage() {
     const file = acceptedFiles[0];
     if (file) {
       setFileName(file.name);
+      setOriginalFile(file);
       const reader = new FileReader();
       reader.onload = (e) => {
         setOriginalImage(e.target?.result as string);
@@ -100,18 +102,8 @@ export default function ImageConverterPage() {
   });
 
   const handleConvert = () => {
-    if (originalImage) {
-      // Convert base64 to File
-      const base64Data = originalImage.split(',')[1];
-      const byteCharacters = atob(base64Data);
-      const byteNumbers = new Array(byteCharacters.length);
-      for (let i = 0; i < byteCharacters.length; i++) {
-        byteNumbers[i] = byteCharacters.charCodeAt(i);
-      }
-      const byteArray = new Uint8Array(byteNumbers);
-      const file = new File([byteArray], fileName, { type: 'image/png' });
-      
-      convertImageMutation.mutate(file);
+    if (originalFile) {
+      convertImageMutation.mutate(originalFile);
     }
   };
 
@@ -130,24 +122,13 @@ export default function ImageConverterPage() {
     setOriginalImage(null);
     setProcessedImage(null);
     setFileName("");
+    setOriginalFile(null);
   };
 
   const selectedFormat = formatOptions.find(f => f.value === targetFormat);
   const showQualitySlider = ['jpeg', 'jpg', 'webp', 'avif'].includes(targetFormat);
 
   return (
-    <>
-      {/* SEO Meta Tags */}
-      <head>
-        <title>Free Image Format Converter Online - Convert PNG, JPG, WebP, GIF | GinyWow</title>
-        <meta name="description" content="Convert images between all popular formats for free. Support for PNG, JPG, WebP, GIF, BMP, TIFF, AVIF and more. High quality conversion with instant downloads." />
-        <meta name="keywords" content="image converter, format converter, PNG to JPG, JPG to PNG, WebP converter, GIF converter, image format" />
-        <meta property="og:title" content="Free Image Format Converter - Convert Any Image Format Online" />
-        <meta property="og:description" content="Professional image format converter supporting 9+ formats. Convert PNG, JPG, WebP, GIF, BMP, TIFF and more with high quality results." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://ginywow.com/image-converter" />
-        <link rel="canonical" href="https://ginywow.com/image-converter" />
-      </head>
 
       <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-blue-50">
         <Header currentPage="Image Converter" />
@@ -395,6 +376,5 @@ export default function ImageConverterPage() {
         
         <Footer />
       </div>
-    </>
-  );
+    );
 }

@@ -21,6 +21,7 @@ export default function RemoveBackgroundPage() {
   const [originalImage, setOriginalImage] = useState<string | null>(null);
   const [processedImage, setProcessedImage] = useState<string | null>(null);
   const [fileName, setFileName] = useState<string>("");
+  const [originalFile, setOriginalFile] = useState<File | null>(null);
   const { toast } = useToast();
 
   const removeBackgroundMutation = useMutation({
@@ -61,6 +62,7 @@ export default function RemoveBackgroundPage() {
     const file = acceptedFiles[0];
     if (file) {
       setFileName(file.name);
+      setOriginalFile(file);
       const reader = new FileReader();
       reader.onload = (e) => {
         setOriginalImage(e.target?.result as string);
@@ -80,18 +82,8 @@ export default function RemoveBackgroundPage() {
   });
 
   const handleRemoveBackground = () => {
-    if (originalImage) {
-      // Convert base64 to File
-      const base64Data = originalImage.split(',')[1];
-      const byteCharacters = atob(base64Data);
-      const byteNumbers = new Array(byteCharacters.length);
-      for (let i = 0; i < byteCharacters.length; i++) {
-        byteNumbers[i] = byteCharacters.charCodeAt(i);
-      }
-      const byteArray = new Uint8Array(byteNumbers);
-      const file = new File([byteArray], fileName, { type: 'image/png' });
-      
-      removeBackgroundMutation.mutate(file);
+    if (originalFile) {
+      removeBackgroundMutation.mutate(originalFile);
     }
   };
 
@@ -110,21 +102,10 @@ export default function RemoveBackgroundPage() {
     setOriginalImage(null);
     setProcessedImage(null);
     setFileName("");
+    setOriginalFile(null);
   };
 
   return (
-    <>
-      {/* SEO Meta Tags */}
-      <head>
-        <title>Remove Background from Images Free Online - AI Background Remover | GinyWow</title>
-        <meta name="description" content="Remove image backgrounds instantly with our free AI-powered background remover. Perfect for product photos, portraits, and graphics. Download transparent PNG files." />
-        <meta name="keywords" content="remove background, background remover, AI background removal, transparent PNG, photo editing, image editor" />
-        <meta property="og:title" content="Free AI Background Remover - Remove Image Backgrounds Instantly" />
-        <meta property="og:description" content="Professional AI-powered background removal tool. Upload your image and get instant results with transparent PNG output." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://ginywow.com/remove-background" />
-        <link rel="canonical" href="https://ginywow.com/remove-background" />
-      </head>
 
       <div className="min-h-screen bg-gradient-to-br from-red-50 via-white to-pink-50">
         <Header currentPage="Remove Background" />
@@ -306,6 +287,5 @@ export default function RemoveBackgroundPage() {
         
         <Footer />
       </div>
-    </>
-  );
+    );
 }
