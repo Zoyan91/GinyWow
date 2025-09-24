@@ -461,6 +461,9 @@ export default function Home() {
                   <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
                     Thumbnail Downloader
                   </h3>
+                  <p className="text-gray-600 text-sm mt-2">
+                    Extract and download high-quality thumbnails
+                  </p>
                 </div>
               </motion.div>
 
