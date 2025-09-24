@@ -10,12 +10,14 @@ import { Progress } from "@/components/ui/progress";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { 
   Upload, Download, Zap, FileImage, CheckCircle, 
-  RotateCcw, Image as ImageIcon
+  RotateCcw, Image as ImageIcon, Info, HardDrive, Clock, Shield,
+  Smartphone, Globe
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { SEOHead } from "@/components/seo-head";
+import { Separator } from "@/components/ui/separator";
 import { 
   formatConverterSEO, 
   generateWebApplicationSchema,
@@ -26,6 +28,7 @@ import {
   formatConverterFAQs,
   formatConverterHowToSteps
 } from "@/lib/seo";
+import { StatsSection } from "@/components/trust-badges";
 
 interface ConvertImageResponse {
   success: boolean;
@@ -246,10 +249,10 @@ export default function FormatConverterPage() {
 
         {/* Main Converter Section */}
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 gap-8">
             
             {/* Main Converter Interface */}
-            <div className="lg:col-span-2">
+            <div className="w-full">
               <Card className="h-full shadow-lg">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-3">
@@ -466,28 +469,150 @@ export default function FormatConverterPage() {
               </Card>
             </div>
 
-            {/* Simple Sidebar */}
-            <div className="space-y-6">
-              
-              {/* Format Support Card */}
-              <Card className="shadow-lg">
-                <CardHeader>
-                  <CardTitle className="text-lg flex items-center gap-2">
-                    <FileImage className="h-5 w-5 text-blue-600" />
-                    Supported Formats
-                  </CardTitle>
-                  <CardDescription>Convert between any of these formats</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-3 gap-2">
-                    {supportedFormats.map((format) => (
-                      <Badge key={format} variant="secondary" className="text-xs justify-center py-2">
-                        {format}
-                      </Badge>
-                    ))}
+          </div>
+        </div>
+
+        {/* Stats Section */}
+        <StatsSection />
+
+        {/* Content Sections */}
+        <div className="bg-white py-16 lg:py-20">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            {/* What is Section */}
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+                What is an Image Format Converter?
+              </h2>
+              <p className="text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
+                An <strong>Image Format Converter</strong> is a free online tool that allows you to quickly convert images from one format to another, such as <strong>JPG, PNG, WebP, GIF, SVG, HEIC, and PDF</strong>. Whether you're a content creator, student, designer, or business owner, this tool makes it simple to switch between different image file types without losing quality.
+              </p>
+            </div>
+
+            <Separator className="mb-16" />
+            
+            {/* Why Use Section */}
+            <div className="mb-16">
+              <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
+                Why Use GinyWow Image Format Converter?
+              </h2>
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="space-y-6">
+                  <div className="flex items-start gap-4">
+                    <div className="p-3 bg-blue-100 rounded-lg">
+                      <CheckCircle className="h-6 w-6 text-blue-600" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2">Supports Multiple Formats</h3>
+                      <p className="text-gray-600">Convert between popular formats like <strong>JPG ⇆ PNG ⇆ WebP ⇆ GIF ⇆ SVG ⇆ HEIC ⇆ PDF</strong>.</p>
+                    </div>
                   </div>
-                </CardContent>
-              </Card>
+                  
+                  <div className="flex items-start gap-4">
+                    <div className="p-3 bg-green-100 rounded-lg">
+                      <Zap className="h-6 w-6 text-green-600" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2">Fast & Free</h3>
+                      <p className="text-gray-600">No login required, just upload your file and convert instantly.</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-4">
+                    <div className="p-3 bg-purple-100 rounded-lg">
+                      <ImageIcon className="h-6 w-6 text-purple-600" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2">High-Quality Results</h3>
+                      <p className="text-gray-600">Professional image processing with customizable quality settings.</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="space-y-6">
+                  <div className="flex items-start gap-4">
+                    <div className="p-3 bg-orange-100 rounded-lg">
+                      <Smartphone className="h-6 w-6 text-orange-600" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2">Mobile-Friendly</h3>
+                      <p className="text-gray-600">Works perfectly on all devices - desktop, tablet, and mobile.</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-4">
+                    <div className="p-3 bg-emerald-100 rounded-lg">
+                      <Globe className="h-6 w-6 text-emerald-600" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2">Secure</h3>
+                      <p className="text-gray-600">Your images are processed securely and never stored on our servers.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <Separator className="mb-16" />
+
+            {/* How to Use Section */}
+            <div className="mb-16">
+              <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
+                How to Use the Converter?
+              </h2>
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {formatConverterHowToSteps.map((step, index) => (
+                  <div key={index} className="text-center space-y-4">
+                    <div className="mx-auto w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center text-2xl font-bold text-blue-600">
+                      {index + 1}
+                    </div>
+                    <h3 className="text-lg font-semibold text-gray-900">{step.name}</h3>
+                    <p className="text-gray-600 text-sm">{step.text}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <Separator className="mb-16" />
+
+            {/* Benefits Section */}
+            <div className="mb-16">
+              <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
+                Benefits of Using Our Image Format Converter
+              </h2>
+              <div className="space-y-4">
+                {[
+                  "Save storage space by converting images to WebP format (30% smaller than JPEG)",
+                  "Ensure platform compatibility by converting HEIC photos to JPG or PNG",
+                  "Convert multiple images to PDF format for easy document sharing",
+                  "Optimize images for web by converting to modern formats like AVIF and WebP",
+                  "Preserve image transparency by converting to PNG format",
+                  "Create icons and favicons by converting to ICO format",
+                  "Professional print quality with TIFF format conversion"
+                ].map((benefit, index) => (
+                  <div key={index} className="flex items-start gap-3">
+                    <CheckCircle className="h-5 w-5 text-green-600 mt-1 flex-shrink-0" />
+                    <p className="text-gray-700">{benefit}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <Separator className="mb-16" />
+
+            {/* FAQ Section */}
+            <div className="mb-16">
+              <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
+                Frequently Asked Questions
+              </h2>
+              <div className="space-y-6">
+                {formatConverterFAQs.map((faq, index) => (
+                  <div key={index} className="bg-gray-50 rounded-lg p-6">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-3">{faq.question}</h3>
+                    <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
