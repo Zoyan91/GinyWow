@@ -491,7 +491,7 @@ export default function Home() {
       </section>
 
       {/* What is Section - Mobile Optimized */}
-      <section className="pt-16 sm:pt-24 lg:pt-32 pb-12 sm:pb-16 lg:pb-20 bg-white">
+      <section className="pt-8 sm:pt-12 lg:pt-16 pb-12 sm:pb-16 lg:pb-20 bg-white">
         <div className="container-mobile max-w-4xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
