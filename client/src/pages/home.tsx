@@ -459,19 +459,6 @@ export default function Home() {
                   <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
                     Thumbnail Downloader
                   </h3>
-                  <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
-                    Download high-quality thumbnails from YouTube, Instagram, TikTok, and other social media platforms. Get the perfect image for your content.
-                  </p>
-                  <div className="pt-4">
-                    <Button
-                      onClick={() => window.location.href = '/thumbnail-downloader'}
-                      className="btn-mobile bg-green-600 hover:bg-green-700 text-white px-6 py-3"
-                      data-testid="thumbnail-downloader-button"
-                    >
-                      Try Thumbnail Downloader
-                      <ArrowRight className="w-4 h-4 ml-2" />
-                    </Button>
-                  </div>
                 </div>
               </motion.div>
 
