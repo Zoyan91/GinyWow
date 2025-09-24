@@ -6,7 +6,7 @@
 @tailwind utilities;
 
 :root {
-  --background: #f7faff;
+  --background: #f5f9ff;
   --foreground: hsl(0 0% 9%);
   --card: hsl(0 0% 100%);
   --card-foreground: hsl(0 0% 9%);

@@ -10,7 +10,7 @@ export default function Footer() {
   const [socialOpen, setSocialOpen] = useState(false);
 
   return (
-    <footer className="bg-white/95 backdrop-blur-sm border-t border-gray-100 py-8 sm:py-12 relative z-10 mt-16">
+    <footer className="bg-[#f5f9ff]/95 backdrop-blur-sm border-t border-gray-100 py-8 sm:py-12 relative z-10 mt-16">
       <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
         
         {/* Desktop Footer */}
