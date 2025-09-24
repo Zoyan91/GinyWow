@@ -4,6 +4,16 @@
 
 GinyWow is a web application with the tagline "Convert Social Media Visitors into Subscribers" that focuses on the App Opener tool as its primary feature. The App Opener converts social media links to custom short URLs with intelligent platform-specific redirects, helping content creators convert visitors into subscribers by enabling users to open links directly in native apps instead of in-app browsers.
 
+## Recent Changes
+
+### September 24, 2025
+- **Removed Image Tools section completely** per user request
+  - Deleted all image processing tools and components
+  - Removed API endpoints for image processing
+  - Updated navigation menus (desktop and mobile)
+  - Cleaned up server-side multer configuration for image tools
+  - Application now focuses solely on URL/App Opener and Thumbnail Downloader features
+
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
