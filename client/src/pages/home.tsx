@@ -437,9 +437,9 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-8 sm:mb-12"
           >
-            <h2 className="text-responsive-xl font-medium text-gray-900 mb-8 sm:mb-12">
+            <div className="inline-block bg-orange-500 text-white px-6 py-2 rounded-full text-lg font-medium mb-8 sm:mb-12">
               Our More Tools : Try It
-            </h2>
+            </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
               {/* Thumbnail Downloader Section */}
