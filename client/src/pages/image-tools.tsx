@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
@@ -26,9 +26,27 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import ResizeTool from "@/components/image-tools/ResizeTool";
+import CompressTool from "@/components/image-tools/CompressTool";
+import ConvertTool from "@/components/image-tools/ConvertTool";
 
 export default function ImageTools() {
   const [selectedTool, setSelectedTool] = useState<string | null>(null);
+  
+  useEffect(() => {
+    document.title = "Free Online Image Tools – GinyWow";
+    
+    // Set meta description
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', 'Use free image tools like background removal, format conversion, resizing, OCR, and more. Fast, secure, no login required.');
+    } else {
+      const meta = document.createElement('meta');
+      meta.name = 'description';
+      meta.content = 'Use free image tools like background removal, format conversion, resizing, OCR, and more. Fast, secure, no login required.';
+      document.head.appendChild(meta);
+    }
+  }, []);
 
   // Tool categories and their respective tools
   const toolCategories = [
@@ -161,17 +179,6 @@ export default function ImageTools() {
 
   return (
     <div className="min-h-screen bg-[#f5f9ff]">
-      {/* SEO Meta Tags */}
-      <head>
-        <title>Free Online Image Tools – GinyWow</title>
-        <meta name="description" content="Use free image tools like background removal, format conversion, resizing, OCR, and more. Fast, secure, no login required." />
-        <meta name="keywords" content="image tools, remove background, resize image, convert image format, OCR, image editor, online image tools" />
-        <meta property="og:title" content="Free Online Image Tools – GinyWow" />
-        <meta property="og:description" content="Use free image tools like background removal, format conversion, resizing, OCR, and more. Fast, secure, no login required." />
-        <meta property="og:type" content="website" />
-        <meta name="twitter:card" content="summary_large_image" />
-      </head>
-
       <Header currentPage="Image Tools" />
       
       <main className="container mx-auto px-4 py-8">
@@ -381,27 +388,50 @@ export default function ImageTools() {
           </motion.section>
         </div>
 
-        {/* Tool Editor Modal Placeholder */}
+        {/* Tool Editor Modal */}
         {selectedTool && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-            <div className="bg-white rounded-lg p-8 max-w-4xl w-full max-h-[90vh] overflow-auto">
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold">
+          <div 
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+            onClick={(e) => {
+              // Close modal when clicking on backdrop
+              if (e.target === e.currentTarget) {
+                setSelectedTool(null);
+              }
+            }}
+          >
+            <div className="bg-white rounded-lg max-w-6xl w-full max-h-[95vh] overflow-auto relative">
+              <div className="sticky top-0 bg-white border-b p-4 flex justify-between items-center">
+                <h2 className="text-xl font-bold">
                   {allTools.find(t => t.id === selectedTool)?.name}
                 </h2>
                 <Button 
                   variant="outline" 
-                  onClick={() => setSelectedTool(null)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('Close button clicked');
+                    setSelectedTool(null);
+                  }}
                   data-testid="close-tool-modal"
+                  type="button"
                 >
                   Close
                 </Button>
               </div>
-              <div className="text-center py-12">
-                <p className="text-gray-600 mb-4">Tool functionality will be implemented here</p>
-                <p className="text-sm text-gray-500">
-                  Selected tool: {selectedTool}
-                </p>
+              <div className="p-4">
+                {selectedTool === 'resize' && <ResizeTool />}
+                {selectedTool === 'compress' && <CompressTool />}
+                {selectedTool === 'convert' && <ConvertTool />}
+                {!['resize', 'compress', 'convert'].includes(selectedTool) && (
+                  <div className="text-center py-12">
+                    <p className="text-gray-600 mb-4">
+                      {allTools.find(t => t.id === selectedTool)?.name} tool is coming soon!
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      This tool is currently under development and will be available soon.
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
