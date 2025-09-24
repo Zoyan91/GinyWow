@@ -20,6 +20,21 @@ const upload = multer({
   },
 });
 
+// Configure multer for image tools with higher size limit
+const imageUpload = multer({
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 20 * 1024 * 1024, // 20MB limit for image tools
+  },
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype.startsWith('image/')) {
+      cb(null, true);
+    } else {
+      cb(new Error('Only image files are allowed'));
+    }
+  },
+});
+
 export async function registerRoutes(app: Express): Promise<Server> {
   
   // Upload and analyze thumbnail
@@ -648,6 +663,151 @@ export async function registerRoutes(app: Express): Promise<Server> {
         </body>
         </html>
       `);
+    }
+  });
+
+  // Remove Background API Endpoint
+  app.post('/api/remove-background', imageUpload.single('image'), async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ error: 'No image file provided' });
+      }
+
+      // For now, return a message that background removal requires API integration
+      // In production, this would integrate with remove.bg API or similar service
+      res.json({
+        success: false,
+        error: 'Background removal feature requires API integration. Please contact support for implementation.',
+        message: 'This feature requires external API setup for remove.bg or similar services.'
+      });
+      
+    } catch (error) {
+      console.error('Error removing background:', error);
+      res.status(500).json({ error: 'Failed to process background removal' });
+    }
+  });
+
+  // Convert Image Format API Endpoint
+  app.post('/api/convert-image', imageUpload.single('image'), async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ error: 'No image file provided' });
+      }
+
+      const { format, quality = 85 } = req.body;
+      const sharp = require('sharp');
+      
+      if (!format) {
+        return res.status(400).json({ error: 'Target format is required' });
+      }
+
+      let processedBuffer;
+      let mimeType;
+      let extension;
+
+      // Get original metadata for reference
+      const originalMetadata = await sharp(req.file.buffer).metadata();
+
+      const qualityValue = parseInt(quality);
+
+      switch (format.toLowerCase()) {
+        case 'png':
+          processedBuffer = await sharp(req.file.buffer)
+            .png({ 
+              quality: qualityValue,
+              compressionLevel: Math.min(9, Math.max(0, Math.floor((100 - qualityValue) / 10)))
+            })
+            .toBuffer();
+          mimeType = 'image/png';
+          extension = 'png';
+          break;
+
+        case 'jpeg':
+        case 'jpg':
+          processedBuffer = await sharp(req.file.buffer)
+            .jpeg({ quality: qualityValue })
+            .toBuffer();
+          mimeType = 'image/jpeg';
+          extension = 'jpg';
+          break;
+
+        case 'webp':
+          processedBuffer = await sharp(req.file.buffer)
+            .webp({ quality: qualityValue })
+            .toBuffer();
+          mimeType = 'image/webp';
+          extension = 'webp';
+          break;
+
+        case 'bmp':
+          processedBuffer = await sharp(req.file.buffer)
+            .bmp()
+            .toBuffer();
+          mimeType = 'image/bmp';
+          extension = 'bmp';
+          break;
+
+        case 'tiff':
+        case 'tif':
+          processedBuffer = await sharp(req.file.buffer)
+            .tiff({ quality: qualityValue })
+            .toBuffer();
+          mimeType = 'image/tiff';
+          extension = 'tiff';
+          break;
+
+        case 'gif':
+          processedBuffer = await sharp(req.file.buffer)
+            .gif()
+            .toBuffer();
+          mimeType = 'image/gif';
+          extension = 'gif';
+          break;
+
+        case 'avif':
+          processedBuffer = await sharp(req.file.buffer)
+            .avif({ quality: qualityValue })
+            .toBuffer();
+          mimeType = 'image/avif';
+          extension = 'avif';
+          break;
+
+        case 'ico':
+          // ICO format needs special handling - convert to PNG first then resize
+          processedBuffer = await sharp(req.file.buffer)
+            .resize(256, 256, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+            .png()
+            .toBuffer();
+          mimeType = 'image/png'; // ICO support is limited, return PNG
+          extension = 'png';
+          break;
+
+        default:
+          return res.status(400).json({ error: `Unsupported format: ${format}` });
+      }
+
+      const base64Result = processedBuffer.toString('base64');
+      const fileName = req.file.originalname.replace(/\.[^/.]+$/, `.${extension}`);
+
+      // Calculate file size reduction/increase
+      const originalSize = req.file.size;
+      const newSize = processedBuffer.length;
+      const sizeChange = ((newSize - originalSize) / originalSize * 100).toFixed(1);
+
+      res.json({
+        success: true,
+        originalFormat: req.file.mimetype,
+        newFormat: mimeType,
+        originalSize: originalSize,
+        newSize: newSize,
+        sizeChange: `${sizeChange}%`,
+        processedImage: `data:${mimeType};base64,${base64Result}`,
+        downloadName: fileName
+      });
+
+    } catch (error) {
+      console.error('Error converting image:', error);
+      res.status(500).json({ error: 'Failed to convert image format' });
     }
   });
 

@@ -9,6 +9,9 @@ import Contact from "@/pages/contact";
 import Blog from "@/pages/blog";
 import Privacy from "@/pages/privacy";
 import ThumbnailDownloader from "@/pages/thumbnail-downloader";
+import ImagePage from "@/pages/image";
+import RemoveBackgroundPage from "@/pages/remove-background";
+import ImageConverterPage from "@/pages/image-converter";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -20,6 +23,9 @@ function Router() {
       <Route path="/blog" component={Blog} />
       <Route path="/privacy" component={Privacy} />
       <Route path="/thumbnail-downloader" component={ThumbnailDownloader} />
+      <Route path="/image" component={ImagePage} />
+      <Route path="/remove-background" component={RemoveBackgroundPage} />
+      <Route path="/image-converter" component={ImageConverterPage} />
       <Route component={NotFound} />
     </Switch>
   );
