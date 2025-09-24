@@ -448,7 +448,9 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.1 }}
                 viewport={{ once: true }}
-                className="card-mobile p-6 sm:p-8 hover:shadow-lg transition-all duration-300"
+                className="card-mobile p-6 sm:p-8 hover:shadow-lg transition-all duration-300 cursor-pointer"
+                onClick={() => window.location.href = '/thumbnail-downloader'}
+                data-testid="thumbnail-downloader-card"
               >
                 <div className="text-center space-y-4">
                   <div className="w-16 h-16 mx-auto bg-green-100 rounded-full flex items-center justify-center">
@@ -468,7 +470,9 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
                 viewport={{ once: true }}
-                className="card-mobile p-6 sm:p-8 hover:shadow-lg transition-all duration-300"
+                className="card-mobile p-6 sm:p-8 hover:shadow-lg transition-all duration-300 cursor-pointer"
+                onClick={() => window.location.href = '/format-converter'}
+                data-testid="format-converter-card"
               >
                 <div className="text-center space-y-4">
                   <div className="w-16 h-16 mx-auto bg-blue-100 rounded-full flex items-center justify-center">
