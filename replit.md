@@ -2,17 +2,26 @@
 
 ## Overview
 
-GinyWow is a web application with the tagline "Convert Social Media Visitors into Subscribers" that focuses on the App Opener tool as its primary feature. The App Opener converts social media links to custom short URLs with intelligent platform-specific redirects, helping content creators convert visitors into subscribers by enabling users to open links directly in native apps instead of in-app browsers.
+GinyWow is a comprehensive tool website with the tagline "Convert Social Media Visitors into Subscribers" that includes three main features:
+
+1. **App Opener (Primary)** - Converts social media links to custom short URLs with intelligent platform-specific redirects, helping content creators convert visitors into subscribers by enabling users to open links directly in native apps instead of in-app browsers.
+
+2. **Thumbnail Downloader** - Downloads high-quality thumbnails from social media platforms and video sites.
+
+3. **Format Converter** - Professional image format conversion tool supporting 8+ popular formats (PNG, JPEG, WebP, GIF, BMP, TIFF, AVIF, ICO) with quality controls and comprehensive SEO content.
 
 ## Recent Changes
 
 ### September 24, 2025
-- **Removed Image Tools section completely** per user request
-  - Deleted all image processing tools and components
-  - Removed API endpoints for image processing
-  - Updated navigation menus (desktop and mobile)
-  - Cleaned up server-side multer configuration for image tools
-  - Application now focuses solely on URL/App Opener and Thumbnail Downloader features
+- **Replaced Image Tools with standalone Format Converter** per user request
+  - Removed "Image" category and "Remove Background" tool completely
+  - Created new standalone "Format Converter" page with comprehensive format support
+  - Updated navigation to show "Format Converter" instead of "Image" 
+  - Removed /image, /remove-background, /image-converter routes
+  - Added single /format-converter route with SEO-optimized content
+  - Backend API focuses solely on image format conversion with 8+ format support
+  - Mobile-responsive design with professional FAQ section
+  - Application now includes: URL Opener, Thumbnail Downloader, and Format Converter
 
 ## User Preferences
 
