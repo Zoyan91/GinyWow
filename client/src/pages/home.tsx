@@ -314,7 +314,7 @@ export default function Home() {
             </h1>
             
             <p className="text-responsive-sm text-gray-600 mb-6 sm:mb-8 leading-relaxed max-w-2xl mx-auto px-4">
-              Generate smart app opener links that redirect users directly to native apps, converting your social media visitors into loyal subscribers across all platforms.
+              We help you gain more followers on socials by enabling users to open a link directly in an app instead of an in-app browser.
             </p>
 
             {/* URL Input and Generate Button */}
