@@ -22,7 +22,7 @@ export default function Header({ currentPage }: HeaderProps) {
   const allNavItems = [
     { href: "/", label: "URL Opener", testId: "nav-url-opener" },
     { href: "/thumbnail-downloader", label: "Download Thumbnail", testId: "nav-thumbnail-downloader" },
-    { href: "/image", label: "Image", testId: "nav-image" },
+    { href: "/format-converter", label: "Format Converter", testId: "nav-format-converter" },
     { href: "/contact", label: "Contact Us", testId: "nav-contact" },
     { href: "/blog", label: "Blog", testId: "nav-blog" },
   ];
