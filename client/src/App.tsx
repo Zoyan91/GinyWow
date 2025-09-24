@@ -9,6 +9,7 @@ import Contact from "@/pages/contact";
 import Blog from "@/pages/blog";
 import Privacy from "@/pages/privacy";
 import ThumbnailDownloader from "@/pages/thumbnail-downloader";
+import ImageTools from "@/pages/image-tools";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -20,6 +21,7 @@ function Router() {
       <Route path="/blog" component={Blog} />
       <Route path="/privacy" component={Privacy} />
       <Route path="/thumbnail-downloader" component={ThumbnailDownloader} />
+      <Route path="/image-tools" component={ImageTools} />
       <Route component={NotFound} />
     </Switch>
   );

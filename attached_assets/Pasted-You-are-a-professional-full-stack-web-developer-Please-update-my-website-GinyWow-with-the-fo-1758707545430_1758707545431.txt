@@ -1,0 +1,64 @@
+You are a professional full-stack web developer.  
+Please update my website **GinyWow** with the following requirements:
+
+1. **New Page Creation**
+   - Add a new header menu item called **"Image Tools"**.
+   - When clicked, it should open a new dedicated page: `/image-tools`.
+
+2. **Tools to Include (same as TinyWow’s Image Category)**
+   Add all important and most-used image utility tools on the new page:
+   - Remove Background
+   - Upscale Image
+   - Compress Image
+   - Convert Formats (PNG ⇆ JPG ⇆ WebP ⇆ SVG ⇆ GIF ⇆ HEIC ⇆ PDF)
+   - Resize Image (change dimensions)
+   - Crop / Rotate / Flip
+   - Image to Text (OCR)
+   - Add Text to Image
+   - Make Round / Circular Image
+   - Blur Background / Unblur Image
+   - Collage Maker
+   - Remove Watermark
+   - Colorize / Change Background
+   - Pixelate / Sharpen Image
+
+3. **Functionality**
+   - Each tool must be **fully functional** (not dummy).
+   - Features:
+     - File upload + preview area
+     - Live processing result (before & after preview if possible)
+     - Download button for processed output
+   - Use **lightweight, fast libraries** or APIs (e.g., Sharp, Jimp, Tesseract.js for OCR, open-source remove-bg, etc.).
+   - All tools should process images securely without long-term storage.
+
+4. **Design & UI/UX**
+   - Modern, clean, and minimal design inspired by **TinyWow & Opener.one**.
+   - Mobile-first and **fully responsive** for all devices.
+   - Grid-based layout for listing tools (card style).
+   - Each tool card should have:
+     - Tool icon + name
+     - Short description
+     - “Open Tool” button
+
+5. **SEO Optimization**
+   Add SEO-optimized content for the Image Tools page:
+   - **Page Title:** Free Online Image Tools – GinyWow
+   - **Meta Description:** Use free image tools like background removal, format conversion, resizing, OCR, and more. Fast, secure, no login required.
+   - **Body Content:**  
+     - Intro about GinyWow Image Tools as an all-in-one free platform.  
+     - List of popular tools with short SEO descriptions (Remove Background, Compress, Convert Formats, Resize, OCR, etc.).  
+     - Section: “Why Use GinyWow Image Tools?” → points about free, fast, secure, mobile-friendly, no login.  
+     - Section: “How It Works” → simple 3-step usage guide.  
+     - Section: FAQ (e.g., Are tools free? Do I need login? Which formats supported? Are images stored?).
+
+6. **Performance & Security**
+   - Website should remain **fast & lightweight**.
+   - Limit max upload size (e.g., 20MB per file).
+   - Delete temporary files immediately after processing.
+   - Optimize scripts for performance.
+
+7. **Final Delivery**
+   - Fully working `/image-tools` page.
+   - Header navigation updated with “Image Tools”.
+   - All tools functional + tested.
+   - Clean, responsive, and production-ready code.
