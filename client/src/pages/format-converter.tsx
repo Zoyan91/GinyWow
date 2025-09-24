@@ -10,8 +10,7 @@ import { Progress } from "@/components/ui/progress";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { 
   Upload, Download, Zap, FileImage, CheckCircle, 
-  RotateCcw, Image as ImageIcon, Info, HardDrive, Clock, Shield,
-  Smartphone, Globe
+  RotateCcw, Image as ImageIcon
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import Header from "@/components/header";
@@ -219,261 +218,245 @@ export default function FormatConverterPage() {
         {/* Header */}
         <Header currentPage="/format-converter" />
         
-        {/* Gradient Hero Section */}
-        <div className="relative py-12 lg:py-20 bg-gradient-to-br from-blue-600 via-purple-600 to-blue-800 overflow-hidden">
-          {/* Background Animation */}
-          <div className="absolute inset-0">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/10 rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2"></div>
-          </div>
-          
-          <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-xl sm:text-2xl lg:text-4xl font-semibold text-white mb-4 sm:mb-6 leading-tight" data-testid="page-title">
+        {/* Simple Hero Section */}
+        <div className="bg-white py-12 lg:py-16 border-b">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 className="text-xl sm:text-2xl lg:text-4xl font-semibold text-gray-900 mb-4 sm:mb-6 leading-tight" data-testid="page-title">
               Free Image Format Converter Online
             </h1>
-            <p className="text-base sm:text-lg lg:text-xl text-blue-100 mb-8 max-w-3xl mx-auto leading-relaxed" data-testid="hero-description">
+            <p className="text-base sm:text-lg lg:text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed" data-testid="hero-description">
               Convert images between 12+ popular formats instantly. High-quality conversion with adjustable settings. No signup required, completely free forever.
             </p>
             <div className="flex flex-wrap justify-center gap-2">
               {supportedFormats.slice(0, 8).map((format) => (
-                <Badge key={format} variant="secondary" className="text-sm px-3 py-1 bg-white/20 text-white border-0 hover:bg-white/30">
+                <Badge key={format} variant="secondary" className="text-sm px-3 py-1">
                   {format}
                 </Badge>
               ))}
-              <Badge variant="outline" className="text-sm px-3 py-1 border-white/30 text-white hover:bg-white/10">
+              <Badge variant="outline" className="text-sm px-3 py-1">
                 +4 More
               </Badge>
             </div>
           </div>
         </div>
 
-        {/* Main Converter Section */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            
-            {/* Upload & Settings Column */}
-            <div className="lg:col-span-2 space-y-6">
+        {/* Simple Converter Section */}
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <Card className="shadow-lg">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-3">
+                <Upload className="h-6 w-6 text-blue-600" />
+                Convert Image Format
+              </CardTitle>
+              <CardDescription>
+                Upload your image and convert it to any format with custom quality settings
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
               
-              {/* Upload Section */}
-              <Card className="shadow-lg border-0">
-                <CardHeader className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-t-lg">
-                  <CardTitle className="flex items-center gap-3 text-xl">
-                    <Upload className="h-6 w-6 text-blue-600" />
-                    Upload Your Image
-                  </CardTitle>
-                  <CardDescription className="text-gray-600">
-                    Drag & drop your image or click to browse
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="p-6">
-                  
-                  {/* Upload Area or Preview */}
-                  {!originalImage ? (
-                    <div
-                      {...getRootProps()}
-                      className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors ${
-                        isDragActive 
-                          ? 'border-blue-400 bg-blue-50' 
-                          : 'border-gray-300 hover:border-blue-400 hover:bg-gray-50'
-                      }`}
-                      data-testid="upload-area"
-                    >
-                      <input {...getInputProps()} />
-                      <div className="flex flex-col items-center gap-4">
-                        <div className="p-4 bg-blue-100 rounded-full">
-                          <Upload className="h-8 w-8 text-blue-600" />
-                        </div>
-                        <div>
-                          <p className="text-lg font-medium text-gray-900 mb-2">
-                            {isDragActive ? "Drop your image here" : "Upload Image to Convert"}
-                          </p>
-                          <p className="text-gray-500 text-sm">
-                            Drag & drop your image file or click to browse
-                          </p>
-                          <p className="text-gray-400 text-xs mt-2">
-                            Supports PNG, JPEG, WebP, GIF and more • Max 20MB
-                          </p>
-                        </div>
-                      </div>
+              {/* Upload Area or Preview */}
+              {!originalImage ? (
+                <div
+                  {...getRootProps()}
+                  className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors ${
+                    isDragActive 
+                      ? 'border-blue-400 bg-blue-50' 
+                      : 'border-gray-300 hover:border-blue-400 hover:bg-gray-50'
+                  }`}
+                  data-testid="upload-area"
+                >
+                  <input {...getInputProps()} />
+                  <div className="flex flex-col items-center gap-4">
+                    <div className="p-4 bg-blue-100 rounded-full">
+                      <Upload className="h-8 w-8 text-blue-600" />
                     </div>
-                  ) : (
-                    <div className="space-y-6">
-                      {/* Image Preview */}
-                      <div className="grid md:grid-cols-2 gap-6">
-                        <div className="space-y-3">
-                          <h4 className="font-semibold text-gray-900 flex items-center gap-2">
-                            <ImageIcon className="h-5 w-5" />
-                            Original Image
-                          </h4>
-                          <div className="relative bg-gray-50 rounded-lg p-4 border">
-                            <img
-                              src={originalImage}
-                              alt="Original"
-                              className="max-w-full h-auto max-h-64 mx-auto rounded"
-                              data-testid="original-image"
-                            />
-                            <div className="mt-3 text-sm text-gray-600 text-center">
-                              <p className="font-medium">{fileName}</p>
-                              {conversionResults && (
-                                <p>Size: {(conversionResults.originalSize / 1024).toFixed(1)} KB</p>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                        
-                        {processedImage && (
-                          <div className="space-y-3">
-                            <h4 className="font-semibold text-gray-900 flex items-center gap-2">
-                              <CheckCircle className="h-5 w-5 text-green-600" />
-                              Converted Image
-                            </h4>
-                            <div className="relative bg-gray-50 rounded-lg p-4 border border-green-200">
-                              <img
-                                src={processedImage}
-                                alt="Converted"
-                                className="max-w-full h-auto max-h-64 mx-auto rounded"
-                                data-testid="converted-image"
-                              />
-                              <div className="mt-3 text-sm text-gray-600 text-center">
-                                <p className="font-medium text-green-700">
-                                  {conversionResults?.downloadName}
-                                </p>
-                                {conversionResults && (
-                                  <p>Size: {(conversionResults.newSize / 1024).toFixed(1)} KB</p>
-                                )}
-                              </div>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                      
-                      {/* Conversion Results */}
-                      {conversionResults && (
-                        <Alert className="bg-green-50 border-green-200">
-                          <CheckCircle className="h-5 w-5 text-green-600" />
-                          <AlertDescription className="text-green-800">
-                            <strong>Conversion Successful!</strong> {conversionResults.sizeChange} • 
-                            Format: {conversionResults.originalFormat.toUpperCase()} → {conversionResults.newFormat.toUpperCase()}
-                          </AlertDescription>
-                        </Alert>
-                      )}
-                    </div>
-                  )}
-
-                  {/* Format Selection & Settings */}
-                  {originalImage && (
-                    <div className="space-y-6 p-6 bg-gray-50 rounded-lg">
-                      <div className="grid md:grid-cols-2 gap-6">
-                        <div className="space-y-3">
-                          <label className="text-sm font-semibold text-gray-900">Output Format</label>
-                          <Select value={targetFormat} onValueChange={setTargetFormat} data-testid="format-select">
-                            <SelectTrigger className="bg-white">
-                              <SelectValue placeholder="Choose format" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {formatOptions.map((format) => (
-                                <SelectItem key={format.value} value={format.value}>
-                                  <div>
-                                    <div className="font-medium">{format.label}</div>
-                                    <div className="text-xs text-gray-500">{format.description}</div>
-                                  </div>
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </div>
-
-                        <div className="space-y-3">
-                          <label className="text-sm font-semibold text-gray-900">
-                            Quality: {quality[0]}%
-                          </label>
-                          <div className="px-3">
-                            <Slider
-                              value={quality}
-                              onValueChange={setQuality}
-                              max={100}
-                              min={10}
-                              step={5}
-                              className="py-4"
-                              data-testid="quality-slider"
-                            />
-                            <div className="flex justify-between text-xs text-gray-500 mt-1">
-                              <span>Smaller file</span>
-                              <span>Best quality</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Action Buttons */}
-                      <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                        {!processedImage ? (
-                          <Button
-                            onClick={handleConvert}
-                            disabled={convertImageMutation.isPending}
-                            size="lg"
-                            className="flex-1 bg-blue-600 hover:bg-blue-700 text-lg py-6"
-                            data-testid="button-convert"
-                          >
-                            {convertImageMutation.isPending ? (
-                              <>
-                                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-                                Converting...
-                              </>
-                            ) : (
-                              <>
-                                <Zap className="mr-2 h-5 w-5" />
-                                Convert Image
-                              </>
-                            )}
-                          </Button>
-                        ) : (
-                          <>
-                            <Button
-                              onClick={handleDownload}
-                              size="lg"
-                              className="flex-1 bg-green-600 hover:bg-green-700 text-lg py-6"
-                              data-testid="button-download"
-                            >
-                              <Download className="mr-2 h-5 w-5" />
-                              Download Converted Image
-                            </Button>
-                            <Button
-                              onClick={handleStartOver}
-                              variant="outline"
-                              size="lg"
-                              className="sm:w-auto text-lg py-6"
-                              data-testid="button-start-over"
-                            >
-                              <RotateCcw className="mr-2 h-5 w-5" />
-                              Start Over
-                            </Button>
-                          </>
-                        )}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Processing Indicator */}
-                  {convertImageMutation.isPending && (
-                    <div className="space-y-4 p-6 bg-blue-50 rounded-lg">
-                      <div className="flex items-center gap-3">
-                        <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
-                        <span className="font-semibold text-blue-900">Converting your image...</span>
-                      </div>
-                      <Progress value={66} className="h-2" />
-                      <p className="text-sm text-blue-700">
-                        Processing with high-quality algorithms. This usually takes a few seconds.
+                    <div>
+                      <p className="text-lg font-medium text-gray-900 mb-2">
+                        {isDragActive ? "Drop your image here" : "Upload Image to Convert"}
+                      </p>
+                      <p className="text-gray-500 text-sm">
+                        Drag & drop your image file or click to browse
+                      </p>
+                      <p className="text-gray-400 text-xs mt-2">
+                        Supports PNG, JPEG, WebP, GIF and more • Max 20MB
                       </p>
                     </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="space-y-6">
+                  {/* Image Preview */}
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div className="space-y-3">
+                      <h4 className="font-semibold text-gray-900 flex items-center gap-2">
+                        <ImageIcon className="h-5 w-5" />
+                        Original Image
+                      </h4>
+                      <div className="relative bg-gray-50 rounded-lg p-4 border">
+                        <img
+                          src={originalImage}
+                          alt="Original"
+                          className="max-w-full h-auto max-h-64 mx-auto rounded"
+                          data-testid="original-image"
+                        />
+                        <div className="mt-3 text-sm text-gray-600 text-center">
+                          <p className="font-medium">{fileName}</p>
+                          {conversionResults && (
+                            <p>Size: {(conversionResults.originalSize / 1024).toFixed(1)} KB</p>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {processedImage && (
+                      <div className="space-y-3">
+                        <h4 className="font-semibold text-gray-900 flex items-center gap-2">
+                          <CheckCircle className="h-5 w-5 text-green-600" />
+                          Converted Image
+                        </h4>
+                        <div className="relative bg-gray-50 rounded-lg p-4 border border-green-200">
+                          <img
+                            src={processedImage}
+                            alt="Converted"
+                            className="max-w-full h-auto max-h-64 mx-auto rounded"
+                            data-testid="converted-image"
+                          />
+                          <div className="mt-3 text-sm text-gray-600 text-center">
+                            <p className="font-medium text-green-700">
+                              {conversionResults?.downloadName}
+                            </p>
+                            {conversionResults && (
+                              <p>Size: {(conversionResults.newSize / 1024).toFixed(1)} KB</p>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  
+                  {/* Conversion Results */}
+                  {conversionResults && (
+                    <Alert className="bg-green-50 border-green-200">
+                      <CheckCircle className="h-5 w-5 text-green-600" />
+                      <AlertDescription className="text-green-800">
+                        <strong>Conversion Successful!</strong> {conversionResults.sizeChange} • 
+                        Format: {conversionResults.originalFormat.toUpperCase()} → {conversionResults.newFormat.toUpperCase()}
+                      </AlertDescription>
+                    </Alert>
                   )}
-                </CardContent>
-              </Card>
-            </div>
+                </div>
+              )}
 
-          </div>
+              {/* Format Selection & Settings */}
+              {originalImage && (
+                <div className="space-y-6 p-6 bg-gray-50 rounded-lg">
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div className="space-y-3">
+                      <label className="text-sm font-semibold text-gray-900">Output Format</label>
+                      <Select value={targetFormat} onValueChange={setTargetFormat} data-testid="format-select">
+                        <SelectTrigger className="bg-white">
+                          <SelectValue placeholder="Choose format" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {formatOptions.map((format) => (
+                            <SelectItem key={format.value} value={format.value}>
+                              <div>
+                                <div className="font-medium">{format.label}</div>
+                                <div className="text-xs text-gray-500">{format.description}</div>
+                              </div>
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-3">
+                      <label className="text-sm font-semibold text-gray-900">
+                        Quality: {quality[0]}%
+                      </label>
+                      <div className="px-3">
+                        <Slider
+                          value={quality}
+                          onValueChange={setQuality}
+                          max={100}
+                          min={10}
+                          step={5}
+                          className="py-4"
+                          data-testid="quality-slider"
+                        />
+                        <div className="flex justify-between text-xs text-gray-500 mt-1">
+                          <span>Smaller file</span>
+                          <span>Best quality</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                    {!processedImage ? (
+                      <Button
+                        onClick={handleConvert}
+                        disabled={convertImageMutation.isPending}
+                        size="lg"
+                        className="flex-1 bg-blue-600 hover:bg-blue-700 text-lg py-6"
+                        data-testid="button-convert"
+                      >
+                        {convertImageMutation.isPending ? (
+                          <>
+                            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                            Converting...
+                          </>
+                        ) : (
+                          <>
+                            <Zap className="mr-2 h-5 w-5" />
+                            Convert Image
+                          </>
+                        )}
+                      </Button>
+                    ) : (
+                      <>
+                        <Button
+                          onClick={handleDownload}
+                          size="lg"
+                          className="flex-1 bg-green-600 hover:bg-green-700 text-lg py-6"
+                          data-testid="button-download"
+                        >
+                          <Download className="mr-2 h-5 w-5" />
+                          Download Converted Image
+                        </Button>
+                        <Button
+                          onClick={handleStartOver}
+                          variant="outline"
+                          size="lg"
+                          className="sm:w-auto text-lg py-6"
+                          data-testid="button-start-over"
+                        >
+                          <RotateCcw className="mr-2 h-5 w-5" />
+                          Start Over
+                        </Button>
+                      </>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* Processing Indicator */}
+              {convertImageMutation.isPending && (
+                <div className="space-y-4 p-6 bg-blue-50 rounded-lg">
+                  <div className="flex items-center gap-3">
+                    <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
+                    <span className="font-semibold text-blue-900">Converting your image...</span>
+                  </div>
+                  <Progress value={66} className="h-2" />
+                  <p className="text-sm text-blue-700">
+                    Processing with high-quality algorithms. This usually takes a few seconds.
+                  </p>
+                </div>
+              )}
+            </CardContent>
+          </Card>
         </div>
-
 
         {/* Content Sections */}
         <div className="bg-white py-16 lg:py-20">
@@ -532,7 +515,7 @@ export default function FormatConverterPage() {
                 <div className="space-y-6">
                   <div className="flex items-start gap-4">
                     <div className="p-3 bg-orange-100 rounded-lg">
-                      <Smartphone className="h-6 w-6 text-orange-600" />
+                      <ImageIcon className="h-6 w-6 text-orange-600" />
                     </div>
                     <div>
                       <h3 className="text-lg font-semibold text-gray-900 mb-2">Mobile-Friendly</h3>
@@ -542,7 +525,7 @@ export default function FormatConverterPage() {
                   
                   <div className="flex items-start gap-4">
                     <div className="p-3 bg-emerald-100 rounded-lg">
-                      <Globe className="h-6 w-6 text-emerald-600" />
+                      <CheckCircle className="h-6 w-6 text-emerald-600" />
                     </div>
                     <div>
                       <h3 className="text-lg font-semibold text-gray-900 mb-2">Secure</h3>
