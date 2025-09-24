@@ -195,9 +195,9 @@
     @apply min-h-[40px] px-4 py-2 text-sm font-medium rounded-md transition-all duration-200;
   }
 
-  /* Card improvements for mobile */
+  /* Card improvements for mobile - Lightning fast */
   .card-mobile {
-    @apply rounded-xl border border-gray-200 bg-white shadow-sm hover:shadow-md transition-shadow duration-200;
+    @apply rounded-xl border border-gray-200 bg-white shadow-sm hover:shadow-md transition-shadow duration-100;
   }
 
   /* Form improvements for mobile */

@@ -5,6 +5,7 @@ import { Copy, Clipboard, CheckCircle, Users, Zap, Shield, ArrowRight, MessageCi
 import { useToast } from "@/hooks/use-toast";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { apiRequest } from "@/lib/queryClient";
+import { Link } from "wouter";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 
@@ -420,56 +421,58 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Our More Tools Section */}
+      {/* Our More Tools Section - Lightning Fast */}
       <section className="py-12 sm:py-16 lg:py-20 bg-white border-t-2 border-dashed border-gray-300">
         <div className="container-mobile max-w-4xl">
-          <div className="text-center mb-8 sm:mb-12 animate-on-scroll">
+          <div className="text-center mb-8 sm:mb-12">
             <div className="inline-block bg-orange-500 text-white px-6 py-2 rounded-full text-lg font-medium mb-8 sm:mb-12">
               Our More Tools : Try It
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
               {/* Thumbnail Downloader Section */}
-              <div
-                className="card-mobile p-6 sm:p-8 hover:shadow-lg transition-all duration-300 cursor-pointer animate-on-scroll animate-stagger-1"
-                onClick={() => window.location.href = '/thumbnail-downloader'}
-                data-testid="thumbnail-downloader-card"
-              >
-                <div className="text-center space-y-4">
-                  <div className="w-16 h-16 mx-auto bg-green-100 rounded-full flex items-center justify-center">
-                    <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
+              <Link href="/thumbnail-downloader">
+                <div
+                  className="card-mobile p-6 sm:p-8 hover:shadow-lg cursor-pointer"
+                  data-testid="thumbnail-downloader-card"
+                >
+                  <div className="text-center space-y-4">
+                    <div className="w-16 h-16 mx-auto bg-green-100 rounded-full flex items-center justify-center">
+                      <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                    </div>
+                    <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
+                      Thumbnail Downloader
+                    </h3>
+                    <p className="text-gray-600 text-sm mt-2">
+                      Extract and download high-quality thumbnails
+                    </p>
                   </div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
-                    Thumbnail Downloader
-                  </h3>
-                  <p className="text-gray-600 text-sm mt-2">
-                    Extract and download high-quality thumbnails
-                  </p>
                 </div>
-              </div>
+              </Link>
 
               {/* Format Converter Section */}
-              <div
-                className="card-mobile p-6 sm:p-8 hover:shadow-lg transition-all duration-300 cursor-pointer animate-on-scroll animate-stagger-2"
-                onClick={() => window.location.href = '/format-converter'}
-                data-testid="format-converter-card"
-              >
-                <div className="text-center space-y-4">
-                  <div className="w-16 h-16 mx-auto bg-blue-100 rounded-full flex items-center justify-center">
-                    <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                    </svg>
+              <Link href="/format-converter">
+                <div
+                  className="card-mobile p-6 sm:p-8 hover:shadow-lg cursor-pointer"
+                  data-testid="format-converter-card"
+                >
+                  <div className="text-center space-y-4">
+                    <div className="w-16 h-16 mx-auto bg-blue-100 rounded-full flex items-center justify-center">
+                      <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                      </svg>
+                    </div>
+                    <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
+                      Format Converter
+                    </h3>
+                    <p className="text-gray-600 text-sm mt-2">
+                      Free online tool to convert images into any format instantly
+                    </p>
                   </div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
-                    Format Converter
-                  </h3>
-                  <p className="text-gray-600 text-sm mt-2">
-                    Free online tool to convert images into any format instantly
-                  </p>
                 </div>
-              </div>
+              </Link>
             </div>
           </div>
         </div>
