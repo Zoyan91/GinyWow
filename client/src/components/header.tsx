@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { Input } from "@/components/ui/input";
-import { Menu, Search } from "lucide-react";
+import { Menu, Search, ChevronDown } from "lucide-react";
 import { Link, useLocation } from "wouter";
 
 // Preload pages on hover for instant navigation
@@ -24,6 +24,7 @@ interface HeaderProps {
 export default function Header({ currentPage }: HeaderProps) {
   const [location] = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isPdfDropdownOpen, setIsPdfDropdownOpen] = useState(false);
   const [, setLocation] = useLocation();
 
 
@@ -38,6 +39,20 @@ export default function Header({ currentPage }: HeaderProps) {
     { href: "/", label: "App Opener", testId: "nav-app-opener" },
     { href: "/thumbnail-downloader", label: "Thumbnail Downloader", testId: "nav-thumbnail-downloader" },
     { href: "/format-converter", label: "Format Converter", testId: "nav-converter" },
+  ];
+
+  // Top 10 worldwide searched PDF tools
+  const pdfTools = [
+    { name: "PDF to Word", href: "#", icon: "📄→📝", searches: "50M+" },
+    { name: "PDF to Excel", href: "#", icon: "📄→📊", searches: "25M+" },
+    { name: "PDF Merge", href: "#", icon: "📄+📄", searches: "30M+" },
+    { name: "PDF Split", href: "#", icon: "📄✂️", searches: "20M+" },
+    { name: "PDF Compress", href: "#", icon: "📄🗜️", searches: "35M+" },
+    { name: "PDF to Image", href: "#", icon: "📄→🖼️", searches: "18M+" },
+    { name: "Word to PDF", href: "#", icon: "📝→📄", searches: "40M+" },
+    { name: "PDF Editor", href: "#", icon: "📄✏️", searches: "22M+" },
+    { name: "PDF Unlock", href: "#", icon: "📄🔓", searches: "15M+" },
+    { name: "PDF Watermark", href: "#", icon: "📄💧", searches: "12M+" }
   ];
 
   const allNavItems = navItems;
@@ -97,6 +112,53 @@ export default function Header({ currentPage }: HeaderProps) {
                 </button>
               </Link>
             ))}
+            
+            {/* PDF Tools Dropdown */}
+            <div className="relative">
+              <button 
+                className="flex items-center px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors"
+                data-testid="nav-pdf-dropdown"
+                onClick={() => setIsPdfDropdownOpen(!isPdfDropdownOpen)}
+                onBlur={() => setTimeout(() => setIsPdfDropdownOpen(false), 200)}
+              >
+                PDF Tools
+                <ChevronDown className={`w-4 h-4 ml-1 transition-transform ${isPdfDropdownOpen ? 'rotate-180' : ''}`} />
+              </button>
+              
+              {isPdfDropdownOpen && (
+                <div className="absolute top-full left-0 mt-1 w-64 bg-white border border-gray-200 rounded-lg shadow-lg z-50 p-2">
+                  <div className="mb-2 pb-2 border-b">
+                    <p className="text-xs font-semibold text-gray-500 px-2">Most Popular PDF Tools</p>
+                  </div>
+                  <div className="max-h-64 overflow-y-auto">
+                    {pdfTools.map((tool, index) => (
+                      <a
+                        key={index}
+                        href={tool.href}
+                        className="flex items-center justify-between p-2 rounded-md hover:bg-gray-50 cursor-pointer group block"
+                        data-testid={`pdf-tool-${tool.name.toLowerCase().replace(/\s+/g, '-')}`}
+                        onClick={() => setIsPdfDropdownOpen(false)}
+                      >
+                        <div className="flex items-center space-x-3">
+                          <span className="text-lg">{tool.icon}</span>
+                          <div>
+                            <div className="text-sm font-medium text-gray-900 group-hover:text-blue-600">
+                              {tool.name}
+                            </div>
+                            <div className="text-xs text-gray-500">
+                              {tool.searches} searches
+                            </div>
+                          </div>
+                        </div>
+                        <span className="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                          Coming Soon
+                        </span>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           </nav>
           
           {/* Right Actions - TinyWow Style */}
@@ -152,6 +214,39 @@ export default function Header({ currentPage }: HeaderProps) {
                         </button>
                       </Link>
                     ))}
+                    
+                    {/* PDF Tools Section */}
+                    <div className="pt-4">
+                      <div className="text-sm font-semibold text-gray-500 px-2 mb-3 border-b pb-2">
+                        📄 PDF Tools (Most Popular)
+                      </div>
+                      <div className="space-y-1 max-h-48 overflow-y-auto">
+                        {pdfTools.map((tool, index) => (
+                          <a
+                            key={index}
+                            href={tool.href}
+                            className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            data-testid={`mobile-pdf-tool-${tool.name.toLowerCase().replace(/\s+/g, '-')}`}
+                          >
+                            <div className="flex items-center space-x-3">
+                              <span className="text-base">{tool.icon}</span>
+                              <div>
+                                <div className="text-sm font-medium text-gray-900">
+                                  {tool.name}
+                                </div>
+                                <div className="text-xs text-gray-500">
+                                  {tool.searches} searches
+                                </div>
+                              </div>
+                            </div>
+                            <span className="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full">
+                              Soon
+                            </span>
+                          </a>
+                        ))}
+                      </div>
+                    </div>
                   </nav>
                 </div>
               </SheetContent>
