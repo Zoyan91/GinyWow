@@ -52,7 +52,7 @@ export default function Header({ currentPage }: HeaderProps) {
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-2">
               {/* G Icon - TinyWow Style */}
-              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center" data-testid="logo-icon">
+              <div className="w-8 h-8 sm:w-9 sm:h-9 bg-blue-600 rounded-lg flex items-center justify-center" data-testid="logo-icon">
                 <span className="text-white font-bold text-lg">G</span>
               </div>
               {/* Text Logo */}
