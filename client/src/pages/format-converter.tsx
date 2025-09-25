@@ -61,43 +61,6 @@ export default function FormatConverterPage() {
     )
   ], []);
 
-  // Inject structured data directly into DOM (fallback for helmet issues)
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      console.log('Structured Data Generated:', structuredData);
-      
-      // Remove existing JSON-LD scripts to avoid duplicates
-      const existingScripts = document.querySelectorAll('script[data-seo-jsonld="true"]');
-      existingScripts.forEach(script => script.remove());
-      
-      // Inject each structured data as script tags
-      structuredData.forEach((schema, index) => {
-        const script = document.createElement('script');
-        script.type = 'application/ld+json';
-        script.setAttribute('data-seo-jsonld', 'true');
-        script.setAttribute('data-schema-index', index.toString());
-        script.textContent = JSON.stringify(schema);
-        document.head.appendChild(script);
-      });
-      
-      // Debug verification
-      setTimeout(() => {
-        const scripts = document.querySelectorAll('script[type="application/ld+json"]');
-        console.log('JSON-LD Scripts in DOM:', scripts.length);
-        scripts.forEach((script, index) => {
-          console.log(`Script ${index}:`, script.getAttribute('data-schema-index'), 'exists');
-        });
-      }, 500);
-    }
-    
-    // Cleanup function to remove scripts when component unmounts
-    return () => {
-      if (typeof window !== 'undefined') {
-        const scripts = document.querySelectorAll('script[data-seo-jsonld="true"]');
-        scripts.forEach(script => script.remove());
-      }
-    };
-  }, [structuredData]);
 
   const convertImageMutation = useMutation({
     mutationFn: async (file: File) => {
