@@ -1,8 +1,24 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Download, Upload, Zap, AlertCircle } from "lucide-react";
+import { Slider } from "@/components/ui/slider";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Download, Upload, CheckCircle, Users, Zap, Shield, Image, AlertCircle, Settings, RotateCcw } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
 import { Helmet } from "react-helmet-async";
+
+interface OptimizationSettings {
+  brightness: number;
+  contrast: number;
+  saturation: number;
+  sharpness: number;
+  quality: number;
+  cropRatio: string;
+  outputFormat: string;
+}
 
 interface OptimizationResult {
   success: boolean;
@@ -11,6 +27,8 @@ interface OptimizationResult {
   originalSize: number;
   optimizedSize: number;
   sizeReduction: number;
+  originalDimensions: { width: number; height: number };
+  optimizedDimensions: { width: number; height: number };
   downloadName: string;
 }
 
@@ -19,6 +37,16 @@ export default function ThumbnailOptimizer() {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [optimizationResult, setOptimizationResult] = useState<OptimizationResult | null>(null);
   const [isOptimizing, setIsOptimizing] = useState(false);
+  const [showAdvanced, setShowAdvanced] = useState(false);
+  const [optimizationSettings, setOptimizationSettings] = useState<OptimizationSettings>({
+    brightness: 15,     // 15% brighter (default)
+    contrast: 10,       // 10% more contrast
+    saturation: 25,     // 25% more vibrant
+    sharpness: 1.2,     // Sharpness multiplier
+    quality: 92,        // JPEG quality
+    cropRatio: '16:9',  // Default YouTube ratio
+    outputFormat: 'jpeg' // Output format
+  });
   const { toast } = useToast();
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,6 +94,7 @@ export default function ThumbnailOptimizer() {
     try {
       const formData = new FormData();
       formData.append('thumbnail', selectedFile);
+      formData.append('settings', JSON.stringify(optimizationSettings));
       
       const response = await fetch('/api/optimize', {
         method: 'POST',
@@ -82,7 +111,7 @@ export default function ThumbnailOptimizer() {
       
       toast({
         title: "Thumbnail optimized successfully!",
-        description: "Enhanced brightness, contrast, and sharpness applied.",
+        description: `Enhanced with custom settings. ${result.sizeReduction > 0 ? `Reduced size by ${result.sizeReduction}%` : 'Optimized for better CTR'}`,
       });
       
     } catch (error) {
@@ -95,6 +124,18 @@ export default function ThumbnailOptimizer() {
     } finally {
       setIsOptimizing(false);
     }
+  };
+
+  const resetSettings = () => {
+    setOptimizationSettings({
+      brightness: 15,
+      contrast: 10,
+      saturation: 25,
+      sharpness: 1.2,
+      quality: 92,
+      cropRatio: '16:9',
+      outputFormat: 'jpeg'
+    });
   };
 
   const downloadOptimized = () => {
@@ -117,171 +158,489 @@ export default function ThumbnailOptimizer() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background relative w-full overflow-x-hidden">
       <Helmet>
-        <title>GinyWow – Thumbnail Optimizer</title>
-        <meta name="description" content="Free online thumbnail optimizer. Enhance brightness, contrast, and sharpness for better CTR. Perfect for YouTube thumbnails." />
+        <title>GinyWow - Thumbnail Optimizer</title>
+        <meta name="description" content="Free online thumbnail optimizer. Enhance brightness, contrast, and vibrancy for better CTR. Perfect for YouTube thumbnails and social media." />
+        <meta name="keywords" content="thumbnail optimizer, image enhancement, YouTube thumbnails, CTR optimization" />
+        <meta property="og:title" content="GinyWow - Thumbnail Optimizer" />
+        <meta property="og:description" content="Free online thumbnail optimizer. Enhance brightness, contrast, and vibrancy for better CTR." />
+        <meta property="og:type" content="website" />
       </Helmet>
       
-      {/* Header */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="container mx-auto px-4 py-6">
-          <h1 className="text-3xl font-bold text-gray-900 text-center">
-            GinyWow – Thumbnail Optimizer
-          </h1>
-        </div>
-      </div>
+      <Header currentPage="thumbnail-optimizer" />
 
-      <div className="container mx-auto px-4 py-8 max-w-6xl">
-        {/* Upload Section */}
-        <div className="bg-white rounded-lg shadow-md p-8 mb-8">
-          <div className="text-center mb-6">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-2">
-              Upload Your Thumbnail
-            </h2>
-            <p className="text-gray-600">
-              Upload a thumbnail image to enhance brightness, contrast, and sharpness
+      {/* Hero Section */}
+      <section className="relative bg-gradient-to-br from-green-50 via-white to-blue-50 py-8 sm:py-12 lg:py-20">
+        <div className="container mx-auto max-w-6xl px-4">
+          <div className="text-center mb-8">
+            <h1 className="text-xl sm:text-2xl lg:text-4xl font-bold text-gray-900 mb-4 leading-tight">
+              {/* Mobile Version */}
+              <span className="block sm:hidden whitespace-pre-line">
+                {"Free YouTube Thumbnail Optimizer\nEnhance & Download Thumbnails Online"}
+              </span>
+              {/* Desktop/Tablet Version */}
+              <span className="hidden sm:block whitespace-pre-line">
+                {"Free YouTube Thumbnail Optimizer\nEnhance & Download Thumbnails Online"}
+              </span>
+            </h1>
+            
+            <p className="text-lg text-gray-600 mb-8 leading-relaxed max-w-2xl mx-auto">
+              Boost your video views with GinyWow Thumbnail Optimizer. Free online tool to enhance brightness, contrast, and sharpness of your YouTube thumbnails. Upload, preview before & after, and download optimized thumbnails instantly.
             </p>
-          </div>
 
-          <div className="max-w-md mx-auto">
-            <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 hover:border-gray-400 transition-colors">
-              {!previewImage ? (
-                <div className="text-center">
-                  <Upload className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-                  <label htmlFor="file-upload" className="cursor-pointer">
-                    <span className="inline-flex items-center px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-lg transition-colors">
-                      <Upload className="w-4 h-4 mr-2" />
-                      Choose File
-                    </span>
-                    <input
-                      id="file-upload"
-                      type="file"
-                      className="sr-only"
-                      accept="image/jpeg,image/jpg,image/png"
-                      onChange={handleFileSelect}
-                      data-testid="file-upload"
+            {/* File Upload Section */}
+            <div className="max-w-xl mx-auto mb-8">
+              <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 hover:border-gray-400 transition-colors bg-white">
+                {!previewImage ? (
+                  <div className="text-center">
+                    <Image className="mx-auto h-12 w-12 text-gray-400 mb-4" />
+                    <div className="space-y-2">
+                      <label htmlFor="file-upload" className="cursor-pointer">
+                        <span className="inline-flex items-center px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-medium rounded-lg transition-colors">
+                          <Upload className="w-4 h-4 mr-2" />
+                          Choose Thumbnail
+                        </span>
+                        <input
+                          id="file-upload"
+                          type="file"
+                          className="sr-only"
+                          accept="image/jpeg,image/jpg,image/png"
+                          onChange={handleFileSelect}
+                          data-testid="file-upload"
+                        />
+                      </label>
+                      <p className="text-sm text-gray-500">
+                        Support: JPG, PNG (Max: 5MB)
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="text-center">
+                    <img
+                      src={previewImage}
+                      alt="Preview"
+                      className="max-w-full max-h-64 mx-auto rounded-lg shadow-md mb-4"
                     />
-                  </label>
-                  <p className="text-sm text-gray-500 mt-2">
-                    JPG, PNG (Max: 5MB)
-                  </p>
-                </div>
-              ) : (
-                <div className="text-center">
-                  <img
-                    src={previewImage}
-                    alt="Preview"
-                    className="max-w-full max-h-48 mx-auto rounded-lg shadow-sm mb-4"
-                  />
-                  <p className="text-sm text-gray-600 mb-4">
-                    {selectedFile?.name} ({formatFileSize(selectedFile?.size || 0)})
-                  </p>
+                    <div className="space-y-4">
+                      <p className="text-sm text-gray-600 mb-4">
+                        <strong>File:</strong> {selectedFile?.name} ({formatFileSize(selectedFile?.size || 0)})
+                      </p>
+                      
+                      <div className="space-y-4">
+                        <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                          <Button
+                            onClick={optimizeThumbnail}
+                            disabled={isOptimizing}
+                            className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 font-medium"
+                            data-testid="optimize-button"
+                          >
+                            {isOptimizing ? (
+                              <>
+                                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                                Optimizing...
+                              </>
+                            ) : (
+                              <>
+                                <Zap className="w-4 h-4 mr-2" />
+                                Optimize Now
+                              </>
+                            )}
+                          </Button>
+                          
+                          <Button
+                            onClick={() => setShowAdvanced(!showAdvanced)}
+                            variant="outline"
+                            className="px-6 py-3"
+                            data-testid="advanced-toggle"
+                          >
+                            <Settings className="w-4 h-4 mr-2" />
+                            {showAdvanced ? 'Hide' : 'Show'} Advanced
+                          </Button>
+                          
+                          <label htmlFor="file-upload-replace" className="cursor-pointer">
+                            <span className="inline-flex items-center px-6 py-3 bg-gray-500 hover:bg-gray-600 text-white font-medium rounded-lg transition-colors">
+                              <Upload className="w-4 h-4 mr-2" />
+                              Choose Different
+                            </span>
+                            <input
+                              id="file-upload-replace"
+                              type="file"
+                              className="sr-only"
+                              accept="image/jpeg,image/jpg,image/png"
+                              onChange={handleFileSelect}
+                            />
+                          </label>
+                        </div>
+
+                        {/* Advanced Settings Panel */}
+                        {showAdvanced && (
+                          <Card className="mt-6 animate-fade-in">
+                            <CardHeader>
+                              <CardTitle className="flex items-center justify-between">
+                                <span>Advanced Optimization Settings</span>
+                                <Button
+                                  onClick={resetSettings}
+                                  variant="outline"
+                                  size="sm"
+                                  data-testid="reset-settings"
+                                >
+                                  <RotateCcw className="w-4 h-4 mr-2" />
+                                  Reset
+                                </Button>
+                              </CardTitle>
+                            </CardHeader>
+                            <CardContent className="space-y-6">
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                {/* Brightness Control */}
+                                <div className="space-y-2">
+                                  <Label>Brightness: {optimizationSettings.brightness}%</Label>
+                                  <Slider
+                                    value={[optimizationSettings.brightness]}
+                                    onValueChange={([value]) => setOptimizationSettings(prev => ({ ...prev, brightness: value }))}
+                                    min={-50}
+                                    max={100}
+                                    step={5}
+                                    className="w-full"
+                                    data-testid="brightness-slider"
+                                  />
+                                </div>
+
+                                {/* Contrast Control */}
+                                <div className="space-y-2">
+                                  <Label>Contrast: {optimizationSettings.contrast}%</Label>
+                                  <Slider
+                                    value={[optimizationSettings.contrast]}
+                                    onValueChange={([value]) => setOptimizationSettings(prev => ({ ...prev, contrast: value }))}
+                                    min={-50}
+                                    max={100}
+                                    step={5}
+                                    className="w-full"
+                                    data-testid="contrast-slider"
+                                  />
+                                </div>
+
+                                {/* Saturation Control */}
+                                <div className="space-y-2">
+                                  <Label>Saturation: {optimizationSettings.saturation}%</Label>
+                                  <Slider
+                                    value={[optimizationSettings.saturation]}
+                                    onValueChange={([value]) => setOptimizationSettings(prev => ({ ...prev, saturation: value }))}
+                                    min={-50}
+                                    max={100}
+                                    step={5}
+                                    className="w-full"
+                                    data-testid="saturation-slider"
+                                  />
+                                </div>
+
+                                {/* Quality Control */}
+                                <div className="space-y-2">
+                                  <Label>Quality: {optimizationSettings.quality}%</Label>
+                                  <Slider
+                                    value={[optimizationSettings.quality]}
+                                    onValueChange={([value]) => setOptimizationSettings(prev => ({ ...prev, quality: value }))}
+                                    min={50}
+                                    max={100}
+                                    step={5}
+                                    className="w-full"
+                                    data-testid="quality-slider"
+                                  />
+                                </div>
+
+                                {/* Crop Ratio */}
+                                <div className="space-y-2">
+                                  <Label>Crop Ratio</Label>
+                                  <Select
+                                    value={optimizationSettings.cropRatio}
+                                    onValueChange={(value) => setOptimizationSettings(prev => ({ ...prev, cropRatio: value }))}
+                                  >
+                                    <SelectTrigger data-testid="crop-ratio-select">
+                                      <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                      <SelectItem value="16:9">16:9 (YouTube/Widescreen)</SelectItem>
+                                      <SelectItem value="4:3">4:3 (Traditional)</SelectItem>
+                                      <SelectItem value="1:1">1:1 (Square)</SelectItem>
+                                      <SelectItem value="9:16">9:16 (Vertical/Shorts)</SelectItem>
+                                      <SelectItem value="original">Keep Original</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+
+                                {/* Output Format */}
+                                <div className="space-y-2">
+                                  <Label>Output Format</Label>
+                                  <Select
+                                    value={optimizationSettings.outputFormat}
+                                    onValueChange={(value) => setOptimizationSettings(prev => ({ ...prev, outputFormat: value }))}
+                                  >
+                                    <SelectTrigger data-testid="output-format-select">
+                                      <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                      <SelectItem value="jpeg">JPEG (Recommended)</SelectItem>
+                                      <SelectItem value="png">PNG (Lossless)</SelectItem>
+                                      <SelectItem value="webp">WebP (Modern)</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+                              </div>
+                            </CardContent>
+                          </Card>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Results Section - Before/After */}
+            {optimizationResult && (
+              <div className="max-w-5xl mx-auto animate-fade-in">
+                <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+                  <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Results</h2>
                   
-                  <div className="space-y-3">
-                    <Button
-                      onClick={optimizeThumbnail}
-                      disabled={isOptimizing}
-                      className="bg-green-500 hover:bg-green-600 text-white px-8 py-3 font-medium w-full"
-                      data-testid="optimize-button"
-                    >
-                      {isOptimizing ? (
-                        <>
-                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
-                          Optimizing...
-                        </>
-                      ) : (
-                        <>
-                          <Zap className="w-4 h-4 mr-2" />
-                          Optimize Now
-                        </>
-                      )}
-                    </Button>
+                  {/* Desktop: Side-by-side, Mobile: Stacked */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-6">
+                    {/* Original Thumbnail */}
+                    <div className="text-center">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-4">Original Thumbnail</h3>
+                      <div className="bg-gray-50 rounded-lg p-4">
+                        <img
+                          src={optimizationResult.originalImage}
+                          alt="Original thumbnail"
+                          className="w-full max-w-sm mx-auto rounded-lg shadow-md mb-4"
+                        />
+                        <div className="text-sm text-gray-600 space-y-1">
+                          <p><strong>Size:</strong> {formatFileSize(optimizationResult.originalSize)}</p>
+                          <p><strong>Dimensions:</strong> {optimizationResult.originalDimensions.width} × {optimizationResult.originalDimensions.height}</p>
+                        </div>
+                      </div>
+                    </div>
                     
-                    <label htmlFor="file-upload-replace" className="cursor-pointer block">
-                      <span className="inline-flex items-center justify-center px-6 py-2 bg-gray-500 hover:bg-gray-600 text-white font-medium rounded-lg transition-colors w-full">
-                        <Upload className="w-4 h-4 mr-2" />
-                        Choose Different
-                      </span>
-                      <input
-                        id="file-upload-replace"
-                        type="file"
-                        className="sr-only"
-                        accept="image/jpeg,image/jpg,image/png"
-                        onChange={handleFileSelect}
-                      />
-                    </label>
+                    {/* Optimized Thumbnail */}
+                    <div className="text-center">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-4">Optimized Thumbnail</h3>
+                      <div className="bg-green-50 rounded-lg p-4">
+                        <img
+                          src={optimizationResult.optimizedImage}
+                          alt="Optimized thumbnail"
+                          className="w-full max-w-sm mx-auto rounded-lg shadow-md mb-4"
+                        />
+                        <div className="text-sm text-gray-600 space-y-1">
+                          <p><strong>Size:</strong> {formatFileSize(optimizationResult.optimizedSize)}</p>
+                          <p><strong>Dimensions:</strong> {optimizationResult.optimizedDimensions.width} × {optimizationResult.optimizedDimensions.height}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Improvement Stats */}
+                  {optimizationResult.sizeReduction > 0 && (
+                    <div className="bg-green-100 border border-green-200 rounded-lg p-4 mb-6">
+                      <div className="flex items-center justify-center">
+                        <CheckCircle className="w-5 h-5 text-green-500 mr-2" />
+                        <span className="text-green-700 font-medium">
+                          File size reduced by {optimizationResult.sizeReduction}%
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Download Button */}
+                  <div className="text-center">
+                    <Button
+                      onClick={downloadOptimized}
+                      className="bg-green-500 hover:bg-green-600 text-white px-8 py-3 font-medium text-lg"
+                      data-testid="download-button"
+                    >
+                      <Download className="w-5 h-5 mr-2" />
+                      Download Optimized Thumbnail
+                    </Button>
+                  </div>
+                  
+                  {/* CTR Tips */}
+                  <div className="mt-6 p-4 bg-blue-50 rounded-lg">
+                    <p className="text-sm text-blue-700 text-center">
+                      <strong>Tips:</strong> Use bold text, bright colors, and centered subject for best CTR
+                    </p>
                   </div>
                 </div>
-              )}
-            </div>
+              </div>
+            )}
           </div>
         </div>
+      </section>
 
-        {/* Results Section - Side by Side */}
-        {optimizationResult && (
-          <div className="bg-white rounded-lg shadow-md p-8 animate-fade-in">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-6 text-center">
-              Before & After Comparison
+      {/* Benefits Section */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto max-w-5xl px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-6">
+              Why Optimize Your Thumbnails?
             </h2>
-            
-            {/* Desktop: Side-by-side, Mobile: Stacked */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-              {/* Original Thumbnail */}
-              <div className="text-center">
-                <h3 className="text-lg font-medium text-gray-900 mb-4">Original Thumbnail</h3>
-                <div className="bg-gray-50 rounded-lg p-4">
-                  <img
-                    src={optimizationResult.originalImage}
-                    alt="Original thumbnail"
-                    className="w-full max-w-sm mx-auto rounded-lg shadow-sm"
-                  />
-                </div>
-              </div>
-              
-              {/* Optimized Thumbnail */}
-              <div className="text-center">
-                <h3 className="text-lg font-medium text-gray-900 mb-4">Optimized Thumbnail</h3>
-                <div className="bg-green-50 rounded-lg p-4">
-                  <img
-                    src={optimizationResult.optimizedImage}
-                    alt="Optimized thumbnail"
-                    className="w-full max-w-sm mx-auto rounded-lg shadow-sm"
-                  />
-                </div>
-              </div>
-            </div>
-            
-            {/* Download Button */}
-            <div className="text-center mb-6">
-              <Button
-                onClick={downloadOptimized}
-                className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 font-medium text-lg"
-                data-testid="download-button"
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                icon: <Zap className="w-8 h-8 text-blue-600" />,
+                title: "Higher CTR",
+                description: "Enhanced brightness and contrast make thumbnails more eye-catching and clickable"
+              },
+              {
+                icon: <Shield className="w-8 h-8 text-green-600" />,
+                title: "Perfect Dimensions",
+                description: "Auto-center crop to optimal 16:9 ratio for YouTube and social media platforms"
+              },
+              {
+                icon: <Users className="w-8 h-8 text-purple-600" />,
+                title: "Professional Quality",
+                description: "Enhanced sharpness and vibrancy create professional-looking thumbnails"
+              }
+            ].map((benefit, index) => (
+              <div
+                key={index}
+                className="bg-white rounded-lg p-6 text-center hover:shadow-lg transition-shadow"
+                data-testid={`benefit-${index + 1}`}
               >
-                <Download className="w-5 h-5 mr-2" />
-                Download Optimized Thumbnail
-              </Button>
-            </div>
-            
-            {/* Tips */}
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-              <p className="text-blue-700 text-center text-sm">
-                <strong>Tips:</strong> Use bold text, bright colors, and centered subject for best CTR
+                <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
+                  {benefit.icon}
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                  {benefit.title}
+                </h3>
+                <p className="text-gray-600">
+                  {benefit.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SEO Content Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto max-w-4xl px-4">
+          
+          {/* What is a YouTube Thumbnail Optimizer */}
+          <div className="mb-12">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">What is a YouTube Thumbnail Optimizer?</h2>
+            <div className="prose prose-lg text-gray-700 leading-relaxed">
+              <p>
+                A <strong>YouTube Thumbnail Optimizer</strong> is a free online tool that improves the quality of your video thumbnails by enhancing brightness, contrast, sharpness, and colors. Creators and marketers know that thumbnails decide whether viewers click or scroll — that's why we built the <strong>GinyWow Thumbnail Optimizer</strong>, a simple and effective way to make your thumbnails stand out.
               </p>
             </div>
           </div>
-        )}
-      </div>
 
-      {/* Footer */}
-      <footer className="bg-white border-t mt-16">
-        <div className="container mx-auto px-4 py-6">
-          <p className="text-center text-gray-600">
-            Optimized by GinyWow
-          </p>
+          {/* Why Use GinyWow Thumbnail Optimizer */}
+          <div className="mb-12">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Why Use GinyWow Thumbnail Optimizer?</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {[
+                { title: "Free & Instant", description: "Upload your thumbnail and optimize it in seconds." },
+                { title: "Before & After Preview", description: "See the difference side by side." },
+                { title: "One-Click Download", description: "Save your optimized thumbnail instantly." },
+                { title: "Mobile Friendly", description: "Works smoothly on all devices." },
+                { title: "No Watermark", description: "100% clean, high-quality thumbnails." }
+              ].map((item, index) => (
+                <div key={index} className="flex items-start space-x-3">
+                  <div className="w-2 h-2 bg-green-500 rounded-full mt-3 flex-shrink-0"></div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900">{item.title}</h3>
+                    <p className="text-gray-600">{item.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* How Does GinyWow Thumbnail Optimizer Work */}
+          <div className="mb-12">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">How Does GinyWow Thumbnail Optimizer Work?</h2>
+            <div className="space-y-4">
+              {[
+                "Upload your thumbnail image (JPG/PNG).",
+                "Click on the Optimize Now button.",
+                "Instantly view the Before and After preview.",
+                "Download the enhanced thumbnail with one click."
+              ].map((step, index) => (
+                <div key={index} className="flex items-start space-x-4">
+                  <div className="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-semibold flex-shrink-0">
+                    {index + 1}
+                  </div>
+                  <p className="text-gray-700 mt-1">{step}</p>
+                </div>
+              ))}
+            </div>
+            <p className="text-center mt-6 text-lg font-medium text-gray-800">
+              That's it! Fast, free, and reliable.
+            </p>
+          </div>
+
+          {/* Benefits of Using GinyWow Thumbnail Optimizer */}
+          <div className="mb-12">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Benefits of Using GinyWow Thumbnail Optimizer</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {[
+                { title: "Boost CTR & Views", description: "Attractive thumbnails increase clicks." },
+                { title: "Professional Quality", description: "Stand out without expensive software." },
+                { title: "Easy for Everyone", description: "No design skills needed." },
+                { title: "Works Instantly", description: "Optimize thumbnails in just seconds." }
+              ].map((benefit, index) => (
+                <div key={index} className="bg-gray-50 rounded-lg p-4">
+                  <div className="flex items-start space-x-3">
+                    <CheckCircle className="w-5 h-5 text-green-500 mt-1 flex-shrink-0" />
+                    <div>
+                      <h3 className="font-semibold text-gray-900 mb-1">{benefit.title}</h3>
+                      <p className="text-gray-600">{benefit.description}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* FAQ Section */}
+          <div className="mb-12">
+            <h2 className="text-2xl font-bold text-gray-900 mb-8">Frequently Asked Questions (FAQ)</h2>
+            <div className="space-y-6">
+              {[
+                {
+                  question: "Is GinyWow Thumbnail Optimizer free?",
+                  answer: "Yes, it's 100% free and always will be."
+                },
+                {
+                  question: "Do I need to install any software?",
+                  answer: "No, it works online directly in your browser."
+                },
+                {
+                  question: "Can I see a preview before downloading?",
+                  answer: "Yes, you get a side-by-side preview of original and optimized thumbnails."
+                },
+                {
+                  question: "Does it work for YouTube Shorts thumbnails?",
+                  answer: "Absolutely! It works for any YouTube thumbnail size."
+                }
+              ].map((faq, index) => (
+                <div key={index} className="border-b border-gray-200 pb-6">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                    {index + 1}. {faq.question}
+                  </h3>
+                  <p className="text-gray-700 leading-relaxed">
+                    {faq.answer}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
         </div>
-      </footer>
+      </section>
+
+      <Footer />
     </div>
   );
 }
