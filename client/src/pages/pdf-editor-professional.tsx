@@ -262,6 +262,10 @@ export default function ProfessionalPDFEditor() {
       addAnnotationElement('underline', x, y);
     } else if (activeTool === 'strikethrough') {
       addAnnotationElement('strikethrough', x, y);
+    } else if (activeTool === 'line') {
+      addLineElement(x, y);
+    } else if (activeTool === 'arrow') {
+      addArrowElement(x, y);
     }
   };
 
@@ -342,6 +346,60 @@ export default function ProfessionalPDFEditor() {
       height: type === 'highlight' ? 20 : 3,
       page: currentPage,
       color: type === 'highlight' ? '#FFFF00' : '#FF0000'
+    };
+    
+    setElements(prev => [...prev, newElement]);
+    setSelectedElement(newElement.id);
+  };
+
+  // Add line element
+  const addLineElement = (x: number, y: number) => {
+    const newElement: PDFElement = {
+      id: `line-${Date.now()}`,
+      type: 'line',
+      x,
+      y,
+      endX: x + 100,
+      endY: y,
+      page: currentPage,
+      strokeColor: shapeSettings.strokeColor,
+      strokeWidth: shapeSettings.strokeWidth
+    };
+    
+    setElements(prev => [...prev, newElement]);
+    setSelectedElement(newElement.id);
+  };
+
+  // Add arrow element
+  const addArrowElement = (x: number, y: number) => {
+    const newElement: PDFElement = {
+      id: `arrow-${Date.now()}`,
+      type: 'arrow',
+      x,
+      y,
+      endX: x + 100,
+      endY: y,
+      page: currentPage,
+      strokeColor: shapeSettings.strokeColor,
+      strokeWidth: shapeSettings.strokeWidth
+    };
+    
+    setElements(prev => [...prev, newElement]);
+    setSelectedElement(newElement.id);
+  };
+
+  // Add image element
+  const addImageElement = async (imageFile: File) => {
+    const imageUrl = URL.createObjectURL(imageFile);
+    const newElement: PDFElement = {
+      id: `image-${Date.now()}`,
+      type: 'image',
+      x: 100,
+      y: 100,
+      width: 150,
+      height: 100,
+      page: currentPage,
+      src: imageUrl
     };
     
     setElements(prev => [...prev, newElement]);
@@ -440,11 +498,53 @@ export default function ProfessionalPDFEditor() {
                 y: page.getHeight() - element.y - (element.height || 0),
                 width: element.width || 100,
                 height: element.height || 80,
-                borderColor: rgb(0, 0, 0),
+                borderColor: rgb(
+                  parseInt(element.strokeColor?.slice(1, 3) || '00', 16) / 255,
+                  parseInt(element.strokeColor?.slice(3, 5) || '00', 16) / 255,
+                  parseInt(element.strokeColor?.slice(5, 7) || '00', 16) / 255
+                ),
                 borderWidth: element.strokeWidth || 2,
               });
               break;
-            // Add more element types as needed
+            case 'circle':
+              page.drawCircle({
+                x: element.x + (element.width || 50) / 2,
+                y: page.getHeight() - element.y - (element.height || 50) / 2,
+                size: (element.width || 50) / 2,
+                borderColor: rgb(
+                  parseInt(element.strokeColor?.slice(1, 3) || '00', 16) / 255,
+                  parseInt(element.strokeColor?.slice(3, 5) || '00', 16) / 255,
+                  parseInt(element.strokeColor?.slice(5, 7) || '00', 16) / 255
+                ),
+                borderWidth: element.strokeWidth || 2,
+              });
+              break;
+            case 'line':
+              page.drawLine({
+                start: { x: element.x, y: page.getHeight() - element.y },
+                end: { x: element.endX || element.x + 100, y: page.getHeight() - element.y },
+                thickness: element.strokeWidth || 2,
+                color: rgb(
+                  parseInt(element.strokeColor?.slice(1, 3) || '00', 16) / 255,
+                  parseInt(element.strokeColor?.slice(3, 5) || '00', 16) / 255,
+                  parseInt(element.strokeColor?.slice(5, 7) || '00', 16) / 255
+                ),
+              });
+              break;
+            case 'highlight':
+              page.drawRectangle({
+                x: element.x,
+                y: page.getHeight() - element.y - (element.height || 20),
+                width: element.width || 120,
+                height: element.height || 20,
+                color: rgb(
+                  parseInt(element.color?.slice(1, 3) || 'FF', 16) / 255,
+                  parseInt(element.color?.slice(3, 5) || 'FF', 16) / 255,
+                  parseInt(element.color?.slice(5, 7) || '00', 16) / 255
+                ),
+                opacity: 0.3,
+              });
+              break;
           }
         }
       }
@@ -653,6 +753,51 @@ export default function ProfessionalPDFEditor() {
                     >
                       <Circle className="h-4 w-4" />
                       Circle
+                    </Button>
+                    <Button
+                      variant={activeTool === 'line' ? 'default' : 'ghost'}
+                      size="sm"
+                      onClick={() => setActiveTool('line')}
+                      className="flex items-center gap-1"
+                    >
+                      <Minus className="h-4 w-4" />
+                      Line
+                    </Button>
+                    <Button
+                      variant={activeTool === 'arrow' ? 'default' : 'ghost'}
+                      size="sm"
+                      onClick={() => setActiveTool('arrow')}
+                      className="flex items-center gap-1"
+                    >
+                      <ArrowRight className="h-4 w-4" />
+                      Arrow
+                    </Button>
+                  </div>
+
+                  <Separator orientation="vertical" className="h-6" />
+
+                  {/* Image Tool */}
+                  <div className="flex items-center space-x-1">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) addImageElement(file);
+                      }}
+                      className="hidden"
+                      id="image-upload"
+                    />
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      asChild
+                      className="flex items-center gap-1"
+                    >
+                      <label htmlFor="image-upload" className="cursor-pointer">
+                        <ImageIcon className="h-4 w-4" />
+                        Image
+                      </label>
                     </Button>
                   </div>
                 </div>
