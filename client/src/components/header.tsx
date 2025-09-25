@@ -1,7 +1,13 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetDescription } from "@/components/ui/sheet";
-import { Menu } from "lucide-react";
+import { 
+  DropdownMenu, 
+  DropdownMenuContent, 
+  DropdownMenuItem, 
+  DropdownMenuTrigger 
+} from "@/components/ui/dropdown-menu";
+import { Menu, Search, ChevronDown } from "lucide-react";
 import { Link, useLocation } from "wouter";
 
 // Preload pages on hover for instant navigation
@@ -33,49 +39,98 @@ export default function Header({ currentPage }: HeaderProps) {
     return false;
   };
 
+  // TinyWow-style navigation categories
+  const toolCategories = [
+    {
+      label: "URL Tools",
+      items: [
+        { href: "/", label: "App Opener", description: "Convert social media links to app-opening URLs" }
+      ]
+    },
+    {
+      label: "Media Tools", 
+      items: [
+        { href: "/thumbnail-downloader", label: "Thumbnail Downloader", description: "Download high-quality thumbnails" },
+        { href: "/format-converter", label: "Format Converter", description: "Convert images between formats" }
+      ]
+    }
+  ];
+
   const allNavItems = [
     { href: "/", label: "URL Opener", testId: "nav-url-opener" },
     { href: "/thumbnail-downloader", label: "Download Thumbnail", testId: "nav-thumbnail-downloader" },
     { href: "/format-converter", label: "Format Converter", testId: "nav-format-converter" },
     { href: "/contact", label: "Contact Us", testId: "nav-contact" },
+    { href: "/blog", label: "Blog", testId: "nav-blog" },
   ];
 
   return (
-    <header className="sticky top-0 bg-white/95 backdrop-blur-sm border-b border-gray-200 relative z-50 shadow-sm">
+    <header className="sticky top-0 bg-white border-b border-gray-200 relative z-50">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 lg:h-18">
+        <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center">
             <Link href="/">
-              <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 cursor-pointer hover:opacity-80 transition-opacity" data-testid="logo">
+              <h1 className="text-xl sm:text-2xl font-bold text-gray-900 cursor-pointer hover:opacity-80 transition-opacity" data-testid="logo">
                 <span className="text-gray-900">Giny</span><span className="text-blue-600">Wow</span>
               </h1>
             </Link>
           </div>
           
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-6 xl:space-x-8">
-            {/* All Navigation Items */}
-            {allNavItems.map((item) => (
-              <Link href={item.href} key={item.href}>
-                <button 
-                  className={`flex items-center transition-colors font-medium text-sm xl:text-base px-3 py-2 rounded-md ${
-                    isActive(item.href)
-                      ? "text-blue-600 bg-blue-50"
-                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
-                  }`}
-                  data-testid={item.testId}
-                  onMouseEnter={() => preloadPage(item.href)}
-                  onFocus={() => preloadPage(item.href)}
-                >
-                  {item.label}
-                </button>
-              </Link>
+          {/* Desktop Navigation - TinyWow Style */}
+          <nav className="hidden lg:flex items-center space-x-8">
+            {/* Tool Categories with Dropdowns */}
+            {toolCategories.map((category) => (
+              <DropdownMenu key={category.label}>
+                <DropdownMenuTrigger className="flex items-center space-x-1 text-gray-700 hover:text-gray-900 font-medium px-3 py-2 transition-colors">
+                  <span>{category.label}</span>
+                  <ChevronDown className="h-4 w-4" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-64 p-2">
+                  {category.items.map((item) => (
+                    <Link href={item.href} key={item.href}>
+                      <DropdownMenuItem 
+                        className="cursor-pointer p-3 focus:bg-blue-50 focus:text-blue-700"
+                        onMouseEnter={() => preloadPage(item.href)}
+                      >
+                        <div className="flex flex-col">
+                          <span className="font-medium">{item.label}</span>
+                          <span className="text-sm text-gray-500">{item.description}</span>
+                        </div>
+                      </DropdownMenuItem>
+                    </Link>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
             ))}
+            
+            {/* Direct Links */}
+            <Link href="/contact">
+              <button 
+                className="text-gray-700 hover:text-gray-900 font-medium px-3 py-2 transition-colors"
+                data-testid="nav-contact"
+                onMouseEnter={() => preloadPage("/contact")}
+              >
+                Contact
+              </button>
+            </Link>
+            
+            <Link href="/blog">
+              <button 
+                className="text-gray-700 hover:text-gray-900 font-medium px-3 py-2 transition-colors"
+                data-testid="nav-blog"
+                onMouseEnter={() => preloadPage("/blog")}
+              >
+                Blog
+              </button>
+            </Link>
           </nav>
           
-          {/* Empty right section */}
-          <div className="hidden lg:flex items-center">
+          {/* Right Actions - TinyWow Style */}
+          <div className="hidden lg:flex items-center space-x-4">
+            <Button variant="ghost" size="sm" className="h-9 w-9 p-0" data-testid="search-button">
+              <Search className="h-4 w-4" />
+            </Button>
           </div>
 
           {/* Mobile Actions */}
