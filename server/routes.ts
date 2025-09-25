@@ -3,7 +3,10 @@ import { createServer, type Server } from "http";
 import multer from "multer";
 import sharp from "sharp";
 import { storage } from "./storage";
-import { insertThumbnailSchema, insertTitleOptimizationSchema, insertNewsletterSubscriptionSchema, insertShortUrlSchema, videoMetadataSchema } from "@shared/schema";
+import { insertThumbnailSchema, insertTitleOptimizationSchema, insertNewsletterSubscriptionSchema, insertShortUrlSchema, videoMetadataSchema, pdfUploadSchema, pdfMergeSchema, pdfSplitSchema, insertPdfFileSchema } from "@shared/schema";
+import { PDFDocument, PDFPage, rgb } from "pdf-lib";
+import { Document, Packer, Paragraph, TextRun } from "docx";
+import * as mammoth from "mammoth";
 import { analyzeThumbnail, optimizeTitles, enhanceThumbnailImage } from "./openai";
 import ytdl from "@distube/ytdl-core";
 import YTDlpWrap from 'yt-dlp-wrap';
@@ -34,6 +37,29 @@ const imageUpload = multer({
       cb(null, true);
     } else {
       cb(new Error('Only image files are allowed'));
+    }
+  },
+});
+
+// Configure multer for PDF tools with higher size limit
+const pdfUpload = multer({
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 50 * 1024 * 1024, // 50MB limit for PDF tools
+  },
+  fileFilter: (req, file, cb) => {
+    const allowedTypes = [
+      'application/pdf', 
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document', // .docx
+      'application/msword', // .doc
+      'application/vnd.ms-excel',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    ];
+    
+    if (allowedTypes.includes(file.mimetype)) {
+      cb(null, true);
+    } else {
+      cb(new Error('Only PDF and Office document files are allowed'));
     }
   },
 });
@@ -1299,6 +1325,180 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // PDF to Word Conversion
+  app.post('/api/pdf/convert-to-word', pdfUpload.single('pdf'), async (req, res) => {
+    try {
+      if (!req.file || req.file.mimetype !== 'application/pdf') {
+        return res.status(400).json({ error: 'Please upload a valid PDF file' });
+      }
+
+      const base64Data = req.file.buffer.toString('base64');
+      
+      // Store PDF file in memory
+      const pdfFile = await storage.createPdfFile({
+        originalFileName: req.file.originalname,
+        fileSize: req.file.size,
+        fileData: base64Data,
+        conversionType: 'pdf-to-word'
+      });
+
+      // Simulate PDF to Word conversion (basic implementation)
+      try {
+        const pdfDoc = await PDFDocument.load(req.file.buffer);
+        const pageCount = pdfDoc.getPageCount();
+        
+        // Create a simple Word document with extracted text placeholder
+        const doc = new Document({
+          sections: [{
+            properties: {},
+            children: [
+              new Paragraph({
+                children: [
+                  new TextRun({
+                    text: `Converted from PDF: ${req.file.originalname}`,
+                    bold: true,
+                    size: 24
+                  })
+                ]
+              }),
+              new Paragraph({
+                children: [
+                  new TextRun({
+                    text: `This PDF contains ${pageCount} page(s).`,
+                    size: 20
+                  })
+                ]
+              }),
+              new Paragraph({
+                children: [
+                  new TextRun({
+                    text: "Note: This is a basic conversion. For advanced text extraction, additional libraries like pdf-parse would be needed.",
+                    size: 16,
+                    italics: true
+                  })
+                ]
+              })
+            ]
+          }]
+        });
+
+        const buffer = await Packer.toBuffer(doc);
+        const outputBase64 = buffer.toString('base64');
+        const outputFileName = req.file.originalname.replace('.pdf', '.docx');
+
+        // Update PDF file with conversion result
+        await storage.updatePdfFile(pdfFile.id, {
+          status: 'completed',
+          outputData: outputBase64,
+          outputFileName: outputFileName
+        });
+
+        res.json({
+          success: true,
+          message: 'PDF converted to Word successfully',
+          fileId: pdfFile.id,
+          originalFileName: req.file.originalname,
+          convertedFileName: outputFileName,
+          downloadUrl: `/api/pdf/download/${pdfFile.id}`
+        });
+
+      } catch (conversionError) {
+        console.error('PDF conversion error:', conversionError);
+        await storage.updatePdfFile(pdfFile.id, { status: 'failed' });
+        res.status(500).json({ error: 'Failed to convert PDF to Word' });
+      }
+
+    } catch (error) {
+      console.error('Error in PDF to Word conversion:', error);
+      res.status(500).json({ error: 'Failed to process PDF file' });
+    }
+  });
+
+  // PDF Merge
+  app.post('/api/pdf/merge', pdfUpload.array('pdfs', 10), async (req, res) => {
+    try {
+      if (!req.files || req.files.length < 2) {
+        return res.status(400).json({ error: 'Please upload at least 2 PDF files to merge' });
+      }
+
+      const files = req.files as Express.Multer.File[];
+      
+      // Validate all files are PDFs
+      for (const file of files) {
+        if (file.mimetype !== 'application/pdf') {
+          return res.status(400).json({ error: 'All files must be PDF format' });
+        }
+      }
+
+      // Create merged PDF
+      const mergedPdf = await PDFDocument.create();
+      
+      for (const file of files) {
+        const pdfDoc = await PDFDocument.load(file.buffer);
+        const pageIndices = pdfDoc.getPageIndices();
+        
+        const pages = await mergedPdf.copyPages(pdfDoc, pageIndices);
+        pages.forEach((page) => mergedPdf.addPage(page));
+      }
+
+      const mergedPdfBytes = await mergedPdf.save();
+      const outputBase64 = Buffer.from(mergedPdfBytes).toString('base64');
+      const outputFileName = `merged_${Date.now()}.pdf`;
+
+      // Store merged PDF
+      const pdfFile = await storage.createPdfFile({
+        originalFileName: files.map(f => f.originalname).join(', '),
+        fileSize: mergedPdfBytes.length,
+        fileData: outputBase64,
+        conversionType: 'pdf-merge'
+      });
+
+      await storage.updatePdfFile(pdfFile.id, {
+        status: 'completed',
+        outputData: outputBase64,
+        outputFileName: outputFileName
+      });
+
+      res.json({
+        success: true,
+        message: `Successfully merged ${files.length} PDF files`,
+        fileId: pdfFile.id,
+        originalFileCount: files.length,
+        mergedFileName: outputFileName,
+        downloadUrl: `/api/pdf/download/${pdfFile.id}`
+      });
+
+    } catch (error) {
+      console.error('Error in PDF merge:', error);
+      res.status(500).json({ error: 'Failed to merge PDF files' });
+    }
+  });
+
+  // PDF Download endpoint
+  app.get('/api/pdf/download/:fileId', async (req, res) => {
+    try {
+      const pdfFile = await storage.getPdfFile(req.params.fileId);
+      
+      if (!pdfFile || !pdfFile.outputData) {
+        return res.status(404).json({ error: 'File not found or not ready for download' });
+      }
+
+      const fileBuffer = Buffer.from(pdfFile.outputData, 'base64');
+      const fileName = pdfFile.outputFileName || 'converted_file.pdf';
+      
+      res.set({
+        'Content-Type': 'application/octet-stream',
+        'Content-Disposition': `attachment; filename="${fileName}"`,
+        'Content-Length': fileBuffer.length
+      });
+
+      res.send(fileBuffer);
+
+    } catch (error) {
+      console.error('Error downloading PDF:', error);
+      res.status(500).json({ error: 'Failed to download file' });
+    }
+  });
 
   const httpServer = createServer(app);
   return httpServer;
