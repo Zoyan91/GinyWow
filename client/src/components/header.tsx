@@ -41,18 +41,18 @@ export default function Header({ currentPage }: HeaderProps) {
     { href: "/format-converter", label: "Format Converter", testId: "nav-converter" },
   ];
 
-  // Top 10 worldwide searched PDF tools
+  // Top 10 PDF tools
   const pdfTools = [
-    { name: "PDF to Word", href: "#", icon: "📄→📝", searches: "50M+" },
-    { name: "PDF to Excel", href: "#", icon: "📄→📊", searches: "25M+" },
-    { name: "PDF Merge", href: "#", icon: "📄+📄", searches: "30M+" },
-    { name: "PDF Split", href: "#", icon: "📄✂️", searches: "20M+" },
-    { name: "PDF Compress", href: "#", icon: "📄🗜️", searches: "35M+" },
-    { name: "PDF to Image", href: "#", icon: "📄→🖼️", searches: "18M+" },
-    { name: "Word to PDF", href: "#", icon: "📝→📄", searches: "40M+" },
-    { name: "PDF Editor", href: "#", icon: "📄✏️", searches: "22M+" },
-    { name: "PDF Unlock", href: "#", icon: "📄🔓", searches: "15M+" },
-    { name: "PDF Watermark", href: "#", icon: "📄💧", searches: "12M+" }
+    { name: "PDF to Word", href: "#" },
+    { name: "PDF to Excel", href: "#" },
+    { name: "PDF Merge", href: "#" },
+    { name: "PDF Split", href: "#" },
+    { name: "PDF Compress", href: "#" },
+    { name: "PDF to Image", href: "#" },
+    { name: "Word to PDF", href: "#" },
+    { name: "PDF Editor", href: "#" },
+    { name: "PDF Unlock", href: "#" },
+    { name: "PDF Watermark", href: "#" }
   ];
 
   const allNavItems = navItems;
@@ -128,7 +128,7 @@ export default function Header({ currentPage }: HeaderProps) {
               {isPdfDropdownOpen && (
                 <div className="absolute top-full left-0 mt-1 w-64 bg-white border border-gray-200 rounded-lg shadow-lg z-50 p-2">
                   <div className="mb-2 pb-2 border-b">
-                    <p className="text-xs font-semibold text-gray-500 px-2">Most Popular PDF Tools</p>
+                    <p className="text-xs font-semibold text-gray-500 px-2">PDF Tools</p>
                   </div>
                   <div className="max-h-64 overflow-y-auto">
                     {pdfTools.map((tool, index) => (
@@ -139,16 +139,8 @@ export default function Header({ currentPage }: HeaderProps) {
                         data-testid={`pdf-tool-${tool.name.toLowerCase().replace(/\s+/g, '-')}`}
                         onClick={() => setIsPdfDropdownOpen(false)}
                       >
-                        <div className="flex items-center space-x-3">
-                          <span className="text-lg">{tool.icon}</span>
-                          <div>
-                            <div className="text-sm font-medium text-gray-900 group-hover:text-blue-600">
-                              {tool.name}
-                            </div>
-                            <div className="text-xs text-gray-500">
-                              {tool.searches} searches
-                            </div>
-                          </div>
+                        <div className="text-sm font-medium text-gray-900 group-hover:text-blue-600">
+                          {tool.name}
                         </div>
                         <span className="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
                           Coming Soon
@@ -218,7 +210,7 @@ export default function Header({ currentPage }: HeaderProps) {
                     {/* PDF Tools Section */}
                     <div className="pt-4">
                       <div className="text-sm font-semibold text-gray-500 px-2 mb-3 border-b pb-2">
-                        📄 PDF Tools (Most Popular)
+                        PDF Tools
                       </div>
                       <div className="space-y-1 max-h-48 overflow-y-auto">
                         {pdfTools.map((tool, index) => (
@@ -229,16 +221,8 @@ export default function Header({ currentPage }: HeaderProps) {
                             onClick={() => setIsMobileMenuOpen(false)}
                             data-testid={`mobile-pdf-tool-${tool.name.toLowerCase().replace(/\s+/g, '-')}`}
                           >
-                            <div className="flex items-center space-x-3">
-                              <span className="text-base">{tool.icon}</span>
-                              <div>
-                                <div className="text-sm font-medium text-gray-900">
-                                  {tool.name}
-                                </div>
-                                <div className="text-xs text-gray-500">
-                                  {tool.searches} searches
-                                </div>
-                              </div>
+                            <div className="text-sm font-medium text-gray-900">
+                              {tool.name}
                             </div>
                             <span className="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full">
                               Soon
