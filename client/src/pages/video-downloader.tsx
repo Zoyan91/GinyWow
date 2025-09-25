@@ -350,7 +350,7 @@ export default function VideoDownloader() {
                       
                       {/* Video Title */}
                       <div className="mt-4">
-                        <h3 className="text-xl font-semibold text-gray-900 mb-2" data-testid="video-title">{videoData.title}</h3>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-2" data-testid="video-title">{videoData.title}</h3>
                       </div>
                     </div>
                     
