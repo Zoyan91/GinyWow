@@ -1,13 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetDescription } from "@/components/ui/sheet";
-import { 
-  DropdownMenu, 
-  DropdownMenuContent, 
-  DropdownMenuItem, 
-  DropdownMenuTrigger 
-} from "@/components/ui/dropdown-menu";
-import { Menu, Search, ChevronDown } from "lucide-react";
+import { Menu, Search } from "lucide-react";
 import { Link, useLocation } from "wouter";
 
 // Preload pages on hover for instant navigation
@@ -39,30 +33,16 @@ export default function Header({ currentPage }: HeaderProps) {
     return false;
   };
 
-  // TinyWow-style navigation categories
-  const toolCategories = [
-    {
-      label: "URL Tools",
-      items: [
-        { href: "/", label: "App Opener", description: "Convert social media links to app-opening URLs" }
-      ]
-    },
-    {
-      label: "Media Tools", 
-      items: [
-        { href: "/thumbnail-downloader", label: "Thumbnail Downloader", description: "Download high-quality thumbnails" },
-        { href: "/format-converter", label: "Format Converter", description: "Convert images between formats" }
-      ]
-    }
-  ];
-
-  const allNavItems = [
-    { href: "/", label: "URL Opener", testId: "nav-url-opener" },
-    { href: "/thumbnail-downloader", label: "Download Thumbnail", testId: "nav-thumbnail-downloader" },
-    { href: "/format-converter", label: "Format Converter", testId: "nav-format-converter" },
-    { href: "/contact", label: "Contact Us", testId: "nav-contact" },
+  // TinyWow-style navigation items
+  const navItems = [
+    { href: "/", label: "App Opener", testId: "nav-app-opener" },
+    { href: "/thumbnail-downloader", label: "Thumbnail", testId: "nav-thumbnail" },
+    { href: "/format-converter", label: "Converter", testId: "nav-converter" },
+    { href: "/contact", label: "Contact", testId: "nav-contact" },
     { href: "/blog", label: "Blog", testId: "nav-blog" },
   ];
+
+  const allNavItems = navItems;
 
   return (
     <header className="sticky top-0 bg-white border-b border-gray-200 relative z-50">
@@ -78,52 +58,23 @@ export default function Header({ currentPage }: HeaderProps) {
           </div>
           
           {/* Desktop Navigation - TinyWow Style */}
-          <nav className="hidden lg:flex items-center space-x-8">
-            {/* Tool Categories with Dropdowns */}
-            {toolCategories.map((category) => (
-              <DropdownMenu key={category.label}>
-                <DropdownMenuTrigger className="flex items-center space-x-1 text-gray-700 hover:text-gray-900 font-medium px-3 py-2 transition-colors">
-                  <span>{category.label}</span>
-                  <ChevronDown className="h-4 w-4" />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="start" className="w-64 p-2">
-                  {category.items.map((item) => (
-                    <Link href={item.href} key={item.href}>
-                      <DropdownMenuItem 
-                        className="cursor-pointer p-3 focus:bg-blue-50 focus:text-blue-700"
-                        onMouseEnter={() => preloadPage(item.href)}
-                      >
-                        <div className="flex flex-col">
-                          <span className="font-medium">{item.label}</span>
-                          <span className="text-sm text-gray-500">{item.description}</span>
-                        </div>
-                      </DropdownMenuItem>
-                    </Link>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
+          <nav className="hidden lg:flex items-center space-x-1">
+            {navItems.map((item) => (
+              <Link href={item.href} key={item.href}>
+                <button 
+                  className={`px-4 py-2 text-sm font-medium transition-colors rounded-lg ${
+                    isActive(item.href)
+                      ? "text-blue-600 bg-blue-50"
+                      : "text-gray-700 hover:text-gray-900 hover:bg-gray-50"
+                  }`}
+                  data-testid={item.testId}
+                  onMouseEnter={() => preloadPage(item.href)}
+                  onFocus={() => preloadPage(item.href)}
+                >
+                  {item.label}
+                </button>
+              </Link>
             ))}
-            
-            {/* Direct Links */}
-            <Link href="/contact">
-              <button 
-                className="text-gray-700 hover:text-gray-900 font-medium px-3 py-2 transition-colors"
-                data-testid="nav-contact"
-                onMouseEnter={() => preloadPage("/contact")}
-              >
-                Contact
-              </button>
-            </Link>
-            
-            <Link href="/blog">
-              <button 
-                className="text-gray-700 hover:text-gray-900 font-medium px-3 py-2 transition-colors"
-                data-testid="nav-blog"
-                onMouseEnter={() => preloadPage("/blog")}
-              >
-                Blog
-              </button>
-            </Link>
           </nav>
           
           {/* Right Actions - TinyWow Style */}
@@ -155,7 +106,7 @@ export default function Header({ currentPage }: HeaderProps) {
                   {/* Mobile Navigation Links */}
                   <nav className="flex-1 space-y-2 mt-6">
                     {/* All Navigation Items */}
-                    {allNavItems.map((item) => (
+                    {navItems.map((item) => (
                       <Link href={item.href} key={item.href}>
                         <button 
                           className={`w-full text-left p-4 rounded-lg font-medium text-base transition-colors ${
@@ -207,6 +158,7 @@ export default function Header({ currentPage }: HeaderProps) {
                         onClick={() => setIsMobileMenuOpen(false)}
                         onTouchStart={() => preloadPage(item.href)}
                         onFocus={() => preloadPage(item.href)}
+                        data-testid={`tablet-${item.testId}`}
                       >
                         {item.label}
                       </button>
