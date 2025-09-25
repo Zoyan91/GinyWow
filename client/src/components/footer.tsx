@@ -75,6 +75,13 @@ export default function Footer() {
                   </span>
                 </Link>
               </li>
+              <li>
+                <Link href="/thumbnail-optimizer">
+                  <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm">
+                    Thumbnail Optimizer
+                  </span>
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -179,6 +186,13 @@ export default function Footer() {
                   <Link href="/format-converter">
                     <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm block py-2">
                       Format Converter
+                    </span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/thumbnail-optimizer">
+                    <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm block py-2">
+                      Thumbnail Optimizer
                     </span>
                   </Link>
                 </li>

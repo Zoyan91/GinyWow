@@ -467,12 +467,7 @@ export default function ThumbnailOptimizer() {
         </div>
       </section>
 
-      {/* Footer with GinyWow branding */}
-      <footer className="bg-gray-900 text-white py-8">
-        <div className="container mx-auto max-w-6xl px-4 text-center">
-          <p className="text-lg font-medium">Optimized by GinyWow</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
