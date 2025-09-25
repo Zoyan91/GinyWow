@@ -20,7 +20,7 @@ const PDFSplit = lazy(() => import("@/pages/pdf-split"));
 const PDFCompress = lazy(() => import("@/pages/pdf-compress"));
 const PDFToImage = lazy(() => import("@/pages/pdf-to-image"));
 const WordToPDF = lazy(() => import("@/pages/word-to-pdf"));
-const PDFEditor = lazy(() => import("@/pages/pdf-editor"));
+const PDFEditor = lazy(() => import("@/pages/pdf-editor-new"));
 const PDFUnlock = lazy(() => import("@/pages/pdf-unlock"));
 const PDFWatermark = lazy(() => import("@/pages/pdf-watermark"));
 
