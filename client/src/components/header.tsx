@@ -121,7 +121,7 @@ export default function Header({ currentPage }: HeaderProps) {
                 onClick={() => setIsPdfDropdownOpen(!isPdfDropdownOpen)}
                 onBlur={() => setTimeout(() => setIsPdfDropdownOpen(false), 200)}
               >
-                PDF Tools
+                PDF
                 <ChevronDown className={`w-4 h-4 ml-1 transition-transform ${isPdfDropdownOpen ? 'rotate-180' : ''}`} />
               </button>
               
