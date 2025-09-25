@@ -138,7 +138,14 @@ export default function ThumbnailOptimizer() {
         <div className="container mx-auto max-w-6xl px-4">
           <div className="text-center mb-8">
             <h1 className="text-xl sm:text-2xl lg:text-4xl font-bold text-gray-900 mb-4 leading-tight">
-              Free YouTube Thumbnail Optimizer – Enhance & Download Thumbnails Online
+              {/* Mobile Version */}
+              <span className="block sm:hidden whitespace-pre-line">
+                {"Free YouTube Thumbnail Optimizer\nEnhance & Download Thumbnails Online"}
+              </span>
+              {/* Desktop/Tablet Version */}
+              <span className="hidden sm:block whitespace-pre-line">
+                {"Free YouTube Thumbnail Optimizer\nEnhance & Download Thumbnails Online"}
+              </span>
             </h1>
             
             <p className="text-lg text-gray-600 mb-8 leading-relaxed max-w-2xl mx-auto">
