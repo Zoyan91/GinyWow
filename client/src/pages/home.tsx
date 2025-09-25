@@ -299,8 +299,10 @@ export default function Home() {
     <div className="min-h-screen bg-background relative w-full overflow-x-hidden">
       <Header currentPage="home" />
 
-      {/* Floating Shapes - TinyWow Style Extended - Global */}
-      <div className="fixed inset-0 z-0 pointer-events-none" style={{ height: '200vh' }}>
+      {/* Hero Section - Mobile First */}
+      <section className="relative bg-gradient-to-br from-blue-50 via-white to-purple-50 py-8 sm:py-12 lg:py-20 overflow-hidden">
+        {/* Floating Shapes - TinyWow Style - Hero Section Only */}
+        <div className="absolute inset-0 z-0 pointer-events-none">
           {/* Triangle Top Left - Pink */}
           <div 
             className="absolute top-16 left-12 w-6 h-6 animate-float-1"
@@ -467,61 +469,8 @@ export default function Home() {
           <div className="absolute top-56 left-1/4 w-2 h-2 rounded-full animate-float-3" style={{ background: '#fbbf24', opacity: 0.4 }}></div>
           <div className="absolute bottom-44 right-1/4 w-2 h-2 rounded-full animate-float-4" style={{ background: '#c084fc', opacity: 0.45 }}></div>
 
-          {/* Extended shapes for Tools section */}
-          {/* Tools Section Triangle Left - Red */}
-          <div 
-            className="absolute left-8 w-5 h-5 animate-float-5"
-            style={{
-              background: '#ef4444',
-              clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
-              transform: 'rotate(25deg)',
-              opacity: 0.4,
-              top: '30rem'
-            }}
-          ></div>
+        </div>
 
-          {/* Tools Section Circle Right - Blue */}
-          <div 
-            className="absolute right-12 w-4 h-4 rounded-full animate-float-6"
-            style={{
-              background: '#3b82f6',
-              opacity: 0.45,
-              top: '32rem'
-            }}
-          ></div>
-
-          {/* Tools Section Square Center - Green */}
-          <div 
-            className="absolute left-1/2 w-4 h-4 animate-float-1"
-            style={{
-              background: '#22c55e',
-              transform: 'rotate(45deg)',
-              opacity: 0.4,
-              top: '35rem'
-            }}
-          ></div>
-
-          {/* Tools Section Triangle Right - Orange */}
-          <div 
-            className="absolute right-20 w-4 h-4 animate-float-2"
-            style={{
-              background: '#f97316',
-              clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
-              transform: 'rotate(-45deg)',
-              opacity: 0.45,
-              top: '38rem'
-            }}
-          ></div>
-
-          {/* Tools Section Dots */}
-          <div className="absolute left-16 w-2 h-2 rounded-full animate-float-3" style={{ background: '#ec4899', opacity: 0.4, top: '33rem' }}></div>
-          <div className="absolute right-16 w-2 h-2 rounded-full animate-float-4" style={{ background: '#8b5cf6', opacity: 0.45, top: '36rem' }}></div>
-          <div className="absolute left-1/4 w-2 h-2 rounded-full animate-float-5" style={{ background: '#06b6d4', opacity: 0.4, top: '40rem' }}></div>
-          <div className="absolute right-1/3 w-2 h-2 rounded-full animate-float-6" style={{ background: '#84cc16', opacity: 0.45, top: '31rem' }}></div>
-      </div>
-
-      {/* Hero Section - Mobile First */}
-      <section className="relative bg-gradient-to-br from-blue-50 via-white to-purple-50 py-8 sm:py-12 lg:py-20 overflow-hidden">
         <div className="relative z-10 container-mobile max-w-4xl">
           <div className="text-center animate-fade-in">
             <h1 className="text-xl sm:text-2xl lg:text-4xl font-bold lg:font-normal text-gray-900 mb-4 sm:mb-6 leading-tight">
