@@ -153,7 +153,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Thumbnail Optimizer API Endpoint - Sharp-based processing only (GinyWow Thumbnail Optimizer)
+  // Enhanced Thumbnail Optimizer API Endpoint - Advanced Sharp-based processing
   app.post('/api/optimize', upload.single('thumbnail'), async (req, res) => {
     try {
       if (!req.file) {
@@ -165,46 +165,135 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: 'File size exceeds 5MB limit' });
       }
 
-      // Validate file type (jpg/png only)
-      if (!['image/jpeg', 'image/jpg', 'image/png'].includes(req.file.mimetype)) {
-        return res.status(400).json({ error: 'Only JPG and PNG files are supported' });
+      // Validate file type (jpg/png/webp)
+      if (!['image/jpeg', 'image/jpg', 'image/png', 'image/webp'].includes(req.file.mimetype)) {
+        return res.status(400).json({ error: 'Only JPG, PNG, and WebP files are supported' });
       }
 
-      console.log('Processing thumbnail optimization with Sharp...');
+      // Parse optimization settings from form data
+      const defaultSettings = {
+        brightness: 15,
+        contrast: 10,
+        saturation: 25,
+        sharpness: 1.2,
+        quality: 92,
+        cropRatio: '16:9',
+        outputFormat: 'jpeg'
+      };
+
+      let settings = defaultSettings;
+      if (req.body.settings) {
+        try {
+          const parsedSettings = JSON.parse(req.body.settings);
+          settings = { ...defaultSettings, ...parsedSettings };
+        } catch (error) {
+          console.log('Failed to parse settings, using defaults');
+        }
+      }
+
+      console.log('Processing thumbnail optimization with advanced settings:', settings);
 
       // Get original image metadata
       const originalMetadata = await sharp(req.file.buffer).metadata();
       console.log('Original image dimensions:', originalMetadata.width, 'x', originalMetadata.height);
       
-      // Create optimized image with Sharp - exact requirements implementation
-      const optimizedBuffer = await sharp(req.file.buffer)
-        // Auto-center crop to 16:9 ratio for thumbnails (1280x720)
-        .resize(1280, 720, { 
+      // Calculate target dimensions based on crop ratio
+      let targetWidth = 1280;
+      let targetHeight = 720;
+      
+      if (settings.cropRatio !== 'original') {
+        switch (settings.cropRatio) {
+          case '16:9':
+            targetWidth = 1280;
+            targetHeight = 720;
+            break;
+          case '4:3':
+            targetWidth = 1280;
+            targetHeight = 960;
+            break;
+          case '1:1':
+            targetWidth = 1080;
+            targetHeight = 1080;
+            break;
+          case '9:16':
+            targetWidth = 720;
+            targetHeight = 1280;
+            break;
+        }
+      }
+
+      // Start Sharp processing pipeline
+      let sharpInstance = sharp(req.file.buffer);
+
+      // Apply cropping/resizing only if not 'original'
+      if (settings.cropRatio !== 'original') {
+        sharpInstance = sharpInstance.resize(targetWidth, targetHeight, { 
           fit: 'cover', 
           position: 'center'
-        })
-        // Enhance brightness (+15%)
-        .modulate({
-          brightness: 1.15,     // 15% brighter
-          saturation: 1.25,     // 25% more vibrant colors
-          hue: 0                // No hue change
-        })
-        // Increase sharpness and contrast
-        .sharpen(1.2, 1, 2)                    // Enhance sharpness
-        .linear(1.1, -(128 * 0.1))             // Increase contrast
-        // Output as high-quality JPEG
-        .jpeg({ 
-          quality: 92,          // High quality
-          progressive: true,    // Progressive JPEG
-          mozjpeg: true         // Use mozjpeg encoder
-        })
-        .toBuffer();
+        });
+      }
+
+      // Apply brightness, saturation, and contrast adjustments
+      const brightnessMultiplier = 1 + (settings.brightness / 100);
+      const saturationMultiplier = 1 + (settings.saturation / 100);
+      
+      sharpInstance = sharpInstance.modulate({
+        brightness: brightnessMultiplier,
+        saturation: saturationMultiplier,
+        hue: 0
+      });
+
+      // Apply sharpness
+      if (settings.sharpness > 0) {
+        sharpInstance = sharpInstance.sharpen(settings.sharpness, 1, 2);
+      }
+
+      // Apply contrast adjustment
+      if (settings.contrast !== 0) {
+        const contrastMultiplier = 1 + (settings.contrast / 100);
+        sharpInstance = sharpInstance.linear(contrastMultiplier, -(128 * (settings.contrast / 100)));
+      }
+
+      // Apply output format and quality
+      let optimizedBuffer;
+      let outputFormat = settings.outputFormat.toLowerCase();
+      
+      switch (outputFormat) {
+        case 'png':
+          optimizedBuffer = await sharpInstance
+            .png({ 
+              quality: settings.quality,
+              progressive: true 
+            })
+            .toBuffer();
+          break;
+        case 'webp':
+          optimizedBuffer = await sharpInstance
+            .webp({ 
+              quality: settings.quality,
+              effort: 6 
+            })
+            .toBuffer();
+          break;
+        default: // jpeg
+          optimizedBuffer = await sharpInstance
+            .jpeg({ 
+              quality: settings.quality,
+              progressive: true,
+              mozjpeg: true
+            })
+            .toBuffer();
+          outputFormat = 'jpeg';
+          break;
+      }
 
       console.log('Optimization complete. Original size:', req.file.size, 'Optimized size:', optimizedBuffer.length);
 
       // Convert original and optimized images to base64 data URLs
       const originalBase64 = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
-      const optimizedBase64 = `data:image/jpeg;base64,${optimizedBuffer.toString('base64')}`;
+      const optimizedMimeType = outputFormat === 'png' ? 'image/png' : 
+                               outputFormat === 'webp' ? 'image/webp' : 'image/jpeg';
+      const optimizedBase64 = `data:${optimizedMimeType};base64,${optimizedBuffer.toString('base64')}`;
 
       // Calculate file size metrics
       const originalSize = req.file.size;
@@ -213,10 +302,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
         ? Math.round(((originalSize - optimizedSize) / originalSize) * 100)
         : 0;
 
+      // Get final dimensions
+      const optimizedMetadata = await sharp(optimizedBuffer).metadata();
+      const finalWidth = optimizedMetadata.width || targetWidth;
+      const finalHeight = optimizedMetadata.height || targetHeight;
+
       // Prepare download filename
       const originalName = req.file.originalname;
       const nameWithoutExt = originalName.replace(/\.[^/.]+$/, '');
-      const downloadName = `optimized_${nameWithoutExt}.jpg`;
+      const fileExtension = outputFormat === 'png' ? 'png' : 
+                           outputFormat === 'webp' ? 'webp' : 'jpg';
+      const downloadName = `optimized_${nameWithoutExt}.${fileExtension}`;
 
       // Return response matching frontend expectations
       const response = {
@@ -231,16 +327,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
           height: originalMetadata.height || 0
         },
         optimizedDimensions: {
-          width: 1280,
-          height: 720
+          width: finalWidth,
+          height: finalHeight
         },
-        downloadName: downloadName
+        downloadName: downloadName,
+        appliedSettings: settings
       };
 
       console.log('Sending optimization result:', {
         sizeReduction: response.sizeReduction,
         originalDimensions: response.originalDimensions,
-        optimizedDimensions: response.optimizedDimensions
+        optimizedDimensions: response.optimizedDimensions,
+        appliedSettings: settings
       });
 
       res.json(response);

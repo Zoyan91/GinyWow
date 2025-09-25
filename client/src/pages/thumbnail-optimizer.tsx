@@ -1,10 +1,24 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Download, Upload, CheckCircle, Users, Zap, Shield, Image, AlertCircle } from "lucide-react";
+import { Slider } from "@/components/ui/slider";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Download, Upload, CheckCircle, Users, Zap, Shield, Image, AlertCircle, Settings, RotateCcw } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { Helmet } from "react-helmet-async";
+
+interface OptimizationSettings {
+  brightness: number;
+  contrast: number;
+  saturation: number;
+  sharpness: number;
+  quality: number;
+  cropRatio: string;
+  outputFormat: string;
+}
 
 interface OptimizationResult {
   success: boolean;
@@ -23,6 +37,16 @@ export default function ThumbnailOptimizer() {
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [optimizationResult, setOptimizationResult] = useState<OptimizationResult | null>(null);
   const [isOptimizing, setIsOptimizing] = useState(false);
+  const [showAdvanced, setShowAdvanced] = useState(false);
+  const [optimizationSettings, setOptimizationSettings] = useState<OptimizationSettings>({
+    brightness: 15,     // 15% brighter (default)
+    contrast: 10,       // 10% more contrast
+    saturation: 25,     // 25% more vibrant
+    sharpness: 1.2,     // Sharpness multiplier
+    quality: 92,        // JPEG quality
+    cropRatio: '16:9',  // Default YouTube ratio
+    outputFormat: 'jpeg' // Output format
+  });
   const { toast } = useToast();
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,6 +94,7 @@ export default function ThumbnailOptimizer() {
     try {
       const formData = new FormData();
       formData.append('thumbnail', selectedFile);
+      formData.append('settings', JSON.stringify(optimizationSettings));
       
       const response = await fetch('/api/optimize', {
         method: 'POST',
@@ -86,7 +111,7 @@ export default function ThumbnailOptimizer() {
       
       toast({
         title: "Thumbnail optimized successfully!",
-        description: `Enhanced brightness, contrast, and vibrancy. ${result.sizeReduction > 0 ? `Reduced size by ${result.sizeReduction}%` : 'Optimized for better CTR'}`,
+        description: `Enhanced with custom settings. ${result.sizeReduction > 0 ? `Reduced size by ${result.sizeReduction}%` : 'Optimized for better CTR'}`,
       });
       
     } catch (error) {
@@ -99,6 +124,18 @@ export default function ThumbnailOptimizer() {
     } finally {
       setIsOptimizing(false);
     }
+  };
+
+  const resetSettings = () => {
+    setOptimizationSettings({
+      brightness: 15,
+      contrast: 10,
+      saturation: 25,
+      sharpness: 1.2,
+      quality: 92,
+      cropRatio: '16:9',
+      outputFormat: 'jpeg'
+    });
   };
 
   const downloadOptimized = () => {
@@ -190,39 +227,168 @@ export default function ThumbnailOptimizer() {
                         <strong>File:</strong> {selectedFile?.name} ({formatFileSize(selectedFile?.size || 0)})
                       </p>
                       
-                      <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                        <Button
-                          onClick={optimizeThumbnail}
-                          disabled={isOptimizing}
-                          className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 font-medium"
-                          data-testid="optimize-button"
-                        >
-                          {isOptimizing ? (
-                            <>
-                              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
-                              Optimizing...
-                            </>
-                          ) : (
-                            <>
-                              <Zap className="w-4 h-4 mr-2" />
-                              Optimize Now
-                            </>
-                          )}
-                        </Button>
-                        
-                        <label htmlFor="file-upload-replace" className="cursor-pointer">
-                          <span className="inline-flex items-center px-6 py-3 bg-gray-500 hover:bg-gray-600 text-white font-medium rounded-lg transition-colors">
-                            <Upload className="w-4 h-4 mr-2" />
-                            Choose Different
-                          </span>
-                          <input
-                            id="file-upload-replace"
-                            type="file"
-                            className="sr-only"
-                            accept="image/jpeg,image/jpg,image/png"
-                            onChange={handleFileSelect}
-                          />
-                        </label>
+                      <div className="space-y-4">
+                        <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                          <Button
+                            onClick={optimizeThumbnail}
+                            disabled={isOptimizing}
+                            className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 font-medium"
+                            data-testid="optimize-button"
+                          >
+                            {isOptimizing ? (
+                              <>
+                                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                                Optimizing...
+                              </>
+                            ) : (
+                              <>
+                                <Zap className="w-4 h-4 mr-2" />
+                                Optimize Now
+                              </>
+                            )}
+                          </Button>
+                          
+                          <Button
+                            onClick={() => setShowAdvanced(!showAdvanced)}
+                            variant="outline"
+                            className="px-6 py-3"
+                            data-testid="advanced-toggle"
+                          >
+                            <Settings className="w-4 h-4 mr-2" />
+                            {showAdvanced ? 'Hide' : 'Show'} Advanced
+                          </Button>
+                          
+                          <label htmlFor="file-upload-replace" className="cursor-pointer">
+                            <span className="inline-flex items-center px-6 py-3 bg-gray-500 hover:bg-gray-600 text-white font-medium rounded-lg transition-colors">
+                              <Upload className="w-4 h-4 mr-2" />
+                              Choose Different
+                            </span>
+                            <input
+                              id="file-upload-replace"
+                              type="file"
+                              className="sr-only"
+                              accept="image/jpeg,image/jpg,image/png"
+                              onChange={handleFileSelect}
+                            />
+                          </label>
+                        </div>
+
+                        {/* Advanced Settings Panel */}
+                        {showAdvanced && (
+                          <Card className="mt-6 animate-fade-in">
+                            <CardHeader>
+                              <CardTitle className="flex items-center justify-between">
+                                <span>Advanced Optimization Settings</span>
+                                <Button
+                                  onClick={resetSettings}
+                                  variant="outline"
+                                  size="sm"
+                                  data-testid="reset-settings"
+                                >
+                                  <RotateCcw className="w-4 h-4 mr-2" />
+                                  Reset
+                                </Button>
+                              </CardTitle>
+                            </CardHeader>
+                            <CardContent className="space-y-6">
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                {/* Brightness Control */}
+                                <div className="space-y-2">
+                                  <Label>Brightness: {optimizationSettings.brightness}%</Label>
+                                  <Slider
+                                    value={[optimizationSettings.brightness]}
+                                    onValueChange={([value]) => setOptimizationSettings(prev => ({ ...prev, brightness: value }))}
+                                    min={-50}
+                                    max={100}
+                                    step={5}
+                                    className="w-full"
+                                    data-testid="brightness-slider"
+                                  />
+                                </div>
+
+                                {/* Contrast Control */}
+                                <div className="space-y-2">
+                                  <Label>Contrast: {optimizationSettings.contrast}%</Label>
+                                  <Slider
+                                    value={[optimizationSettings.contrast]}
+                                    onValueChange={([value]) => setOptimizationSettings(prev => ({ ...prev, contrast: value }))}
+                                    min={-50}
+                                    max={100}
+                                    step={5}
+                                    className="w-full"
+                                    data-testid="contrast-slider"
+                                  />
+                                </div>
+
+                                {/* Saturation Control */}
+                                <div className="space-y-2">
+                                  <Label>Saturation: {optimizationSettings.saturation}%</Label>
+                                  <Slider
+                                    value={[optimizationSettings.saturation]}
+                                    onValueChange={([value]) => setOptimizationSettings(prev => ({ ...prev, saturation: value }))}
+                                    min={-50}
+                                    max={100}
+                                    step={5}
+                                    className="w-full"
+                                    data-testid="saturation-slider"
+                                  />
+                                </div>
+
+                                {/* Quality Control */}
+                                <div className="space-y-2">
+                                  <Label>Quality: {optimizationSettings.quality}%</Label>
+                                  <Slider
+                                    value={[optimizationSettings.quality]}
+                                    onValueChange={([value]) => setOptimizationSettings(prev => ({ ...prev, quality: value }))}
+                                    min={50}
+                                    max={100}
+                                    step={5}
+                                    className="w-full"
+                                    data-testid="quality-slider"
+                                  />
+                                </div>
+
+                                {/* Crop Ratio */}
+                                <div className="space-y-2">
+                                  <Label>Crop Ratio</Label>
+                                  <Select
+                                    value={optimizationSettings.cropRatio}
+                                    onValueChange={(value) => setOptimizationSettings(prev => ({ ...prev, cropRatio: value }))}
+                                  >
+                                    <SelectTrigger data-testid="crop-ratio-select">
+                                      <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                      <SelectItem value="16:9">16:9 (YouTube/Widescreen)</SelectItem>
+                                      <SelectItem value="4:3">4:3 (Traditional)</SelectItem>
+                                      <SelectItem value="1:1">1:1 (Square)</SelectItem>
+                                      <SelectItem value="9:16">9:16 (Vertical/Shorts)</SelectItem>
+                                      <SelectItem value="original">Keep Original</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+
+                                {/* Output Format */}
+                                <div className="space-y-2">
+                                  <Label>Output Format</Label>
+                                  <Select
+                                    value={optimizationSettings.outputFormat}
+                                    onValueChange={(value) => setOptimizationSettings(prev => ({ ...prev, outputFormat: value }))}
+                                  >
+                                    <SelectTrigger data-testid="output-format-select">
+                                      <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                      <SelectItem value="jpeg">JPEG (Recommended)</SelectItem>
+                                      <SelectItem value="png">PNG (Lossless)</SelectItem>
+                                      <SelectItem value="webp">WebP (Modern)</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+                              </div>
+                            </CardContent>
+                          </Card>
+                        )}
                       </div>
                     </div>
                   </div>
