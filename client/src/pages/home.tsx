@@ -301,79 +301,121 @@ export default function Home() {
 
       {/* Hero Section - Mobile First */}
       <section className="relative bg-gradient-to-br from-blue-50 via-white to-purple-50 py-8 sm:py-12 lg:py-20 overflow-hidden">
-        {/* Floating Gradient Shapes - TinyWow Style */}
+        {/* Floating Gradient Shapes - TinyWow Style Enhanced */}
         <div className="absolute inset-0 z-0">
-          {/* Triangle Shape 1 - Pink to Purple */}
+          {/* Large Triangle Top Left - Pink to Purple */}
           <div 
-            className="absolute top-20 left-10 w-16 h-16 opacity-30 animate-float-1"
+            className="absolute top-8 left-8 w-24 h-24 sm:w-32 sm:h-32 opacity-40 animate-float-1"
             style={{
-              background: 'linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%)',
+              background: 'linear-gradient(135deg, #ff6b9d 0%, #a855f7 100%)',
               clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
               transform: 'rotate(15deg)'
             }}
           ></div>
 
-          {/* Circle Shape 1 - Blue to Cyan */}
+          {/* Large Circle Top Right - Blue to Cyan */}
           <div 
-            className="absolute top-32 right-16 w-20 h-20 rounded-full opacity-25 animate-float-2"
+            className="absolute top-12 right-12 w-28 h-28 sm:w-36 sm:h-36 rounded-full opacity-35 animate-float-2"
             style={{
-              background: 'radial-gradient(circle, #3b82f6 0%, #06b6d4 100%)'
+              background: 'radial-gradient(circle, #60a5fa 0%, #22d3ee 100%)'
             }}
           ></div>
 
-          {/* Square/Cube Shape 1 - Orange to Yellow */}
+          {/* Medium Square Center Left - Orange to Yellow */}
           <div 
-            className="absolute top-60 left-1/4 w-12 h-12 opacity-30 animate-float-3"
+            className="absolute top-48 left-16 w-20 h-20 sm:w-24 sm:h-24 opacity-45 animate-float-3"
             style={{
-              background: 'linear-gradient(45deg, #f97316 0%, #eab308 100%)',
+              background: 'linear-gradient(45deg, #fb923c 0%, #fbbf24 100%)',
               transform: 'rotate(45deg)'
             }}
           ></div>
 
-          {/* Triangle Shape 2 - Purple to Pink */}
+          {/* Large Triangle Bottom Right - Purple to Pink */}
           <div 
-            className="absolute bottom-40 right-10 w-14 h-14 opacity-25 animate-float-4"
+            className="absolute bottom-24 right-16 w-26 h-26 sm:w-30 sm:h-30 opacity-40 animate-float-4"
             style={{
-              background: 'linear-gradient(225deg, #8b5cf6 0%, #ec4899 100%)',
+              background: 'linear-gradient(225deg, #a855f7 0%, #ff6b9d 100%)',
               clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
-              transform: 'rotate(-30deg)'
+              transform: 'rotate(-30deg)',
+              width: '6.5rem',
+              height: '6.5rem'
             }}
           ></div>
 
-          {/* Circle Shape 2 - Cyan to Blue */}
+          {/* Medium Circle Bottom Left - Cyan to Blue */}
           <div 
-            className="absolute bottom-60 left-20 w-18 h-18 rounded-full opacity-20 animate-float-5"
+            className="absolute bottom-32 left-20 w-22 h-22 sm:w-26 sm:h-26 rounded-full opacity-35 animate-float-5"
             style={{
-              background: 'radial-gradient(circle, #06b6d4 0%, #3b82f6 100%)',
-              width: '4.5rem',
-              height: '4.5rem'
+              background: 'radial-gradient(circle, #22d3ee 0%, #60a5fa 100%)',
+              width: '5.5rem',
+              height: '5.5rem'
             }}
           ></div>
 
-          {/* Square Shape 2 - Yellow to Orange */}
+          {/* Large Square Top Center - Yellow to Orange */}
           <div 
-            className="absolute top-40 right-1/3 w-10 h-10 opacity-35 animate-float-6"
+            className="absolute top-20 right-1/3 w-18 h-18 sm:w-22 sm:h-22 opacity-50 animate-float-6"
             style={{
-              background: 'linear-gradient(135deg, #eab308 0%, #f97316 100%)',
-              transform: 'rotate(30deg)'
+              background: 'linear-gradient(135deg, #fbbf24 0%, #fb923c 100%)',
+              transform: 'rotate(30deg)',
+              width: '5rem',
+              height: '5rem'
             }}
           ></div>
 
-          {/* Small Triangle - Green to Teal */}
+          {/* Medium Triangle Center Right - Green to Teal */}
           <div 
-            className="absolute bottom-32 left-1/3 w-8 h-8 opacity-25 animate-float-1"
+            className="absolute top-56 right-24 w-16 h-16 sm:w-20 sm:h-20 opacity-40 animate-float-1"
             style={{
-              background: 'linear-gradient(45deg, #10b981 0%, #14b8a6 100%)',
+              background: 'linear-gradient(45deg, #34d399 0%, #2dd4bf 100%)',
               clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
               transform: 'rotate(60deg)'
             }}
           ></div>
 
-          {/* Medium Circle - Purple to Indigo */}
+          {/* Large Circle Center Top - Purple to Indigo */}
           <div 
-            className="absolute top-16 left-1/2 w-16 h-16 rounded-full opacity-20 animate-float-2"
+            className="absolute top-16 left-1/2 w-24 h-24 sm:w-28 sm:h-28 rounded-full opacity-30 animate-float-2"
             style={{
-              background: 'radial-gradient(circle, #a855f7 0%, #6366f1 100%)'
+              background: 'radial-gradient(circle, #c084fc 0%, #818cf8 100%)'
+            }}
+          ></div>
+
+          {/* Small Triangle Bottom Center - Rose to Orange */}
+          <div 
+            className="absolute bottom-16 left-1/2 w-14 h-14 sm:w-18 sm:h-18 opacity-45 animate-float-4"
+            style={{
+              background: 'linear-gradient(135deg, #fb7185 0%, #fb923c 100%)',
+              clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
+              transform: 'rotate(-45deg)',
+              width: '4.5rem',
+              height: '4.5rem'
+            }}
+          ></div>
+
+          {/* Medium Square Left Center - Emerald to Cyan */}
+          <div 
+            className="absolute top-72 left-8 w-16 h-16 sm:w-20 sm:h-20 opacity-35 animate-float-5"
+            style={{
+              background: 'linear-gradient(45deg, #10b981 0%, #06b6d4 100%)',
+              transform: 'rotate(15deg)'
+            }}
+          ></div>
+
+          {/* Large Circle Right Center - Violet to Pink */}
+          <div 
+            className="absolute top-40 right-8 w-20 h-20 sm:w-24 sm:h-24 rounded-full opacity-40 animate-float-3"
+            style={{
+              background: 'radial-gradient(circle, #8b5cf6 0%, #ec4899 100%)'
+            }}
+          ></div>
+
+          {/* Small Square Top Right Edge - Blue to Purple */}
+          <div 
+            className="absolute top-32 right-4 w-12 h-12 sm:w-16 sm:h-16 opacity-30 animate-float-6"
+            style={{
+              background: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%)',
+              transform: 'rotate(60deg)'
             }}
           ></div>
         </div>
