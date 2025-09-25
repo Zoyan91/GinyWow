@@ -679,8 +679,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
                 `${sizeInMB.toFixed(1)} MB`;
             }
             
-            // Create format key for uniqueness
-            const formatKey = `${quality}-${container?.toUpperCase() || 'MP4'}`;
+            // Create format key for uniqueness  
+            const videoFormat = container?.toUpperCase() || 'MP4';
+            const formatKey = `${quality}-${videoFormat}`;
             
             if (!processedQualities.has(formatKey)) {
               processedQualities.add(formatKey);
@@ -688,40 +689,87 @@ export async function registerRoutes(app: Express): Promise<Server> {
               availableFormats.push({
                 quality: quality,
                 qualityGroup: qualityGroup,
-                format: container?.toUpperCase() || 'MP4',
+                format: videoFormat,
                 codec: format.videoCodec || format.codecs || 'H.264',
                 bitrate: format.bitrate ? `${Math.round(format.bitrate / 1000)}k` : undefined,
                 fps: format.fps || 30,
                 fileSize: fileSize,
-                downloadUrl: videoUrl,
+                downloadUrl: format.url || videoUrl,
                 type: 'video',
                 height: height,
-                hasAudio: format.hasAudio || false, // Track if format includes audio
+                hasAudio: format.hasAudio || false,
                 note: !format.hasAudio && height >= 1080 ? 'Video only (high quality)' : undefined
+              });
+              
+              // Only add real formats that have actual stream URLs
+              // Remove synthetic 3GP generation until proper transcoding is implemented
+            }
+          });
+          
+          // Audio Formats - Extract real audio formats from ytdl
+          const processedAudioFormats = new Set();
+          audioFormats.forEach(format => {
+            const abr = format.abr || format.audioBitrate || 128;
+            const container = format.container;
+            const audioCodec = format.audioCodec || format.codecs;
+            
+            // Determine format type and quality label
+            let formatType = 'M4A';
+            let codec = 'AAC';
+            let quality = `${abr}kbps Audio`;
+            
+            if (container === 'webm' || audioCodec?.includes('opus')) {
+              formatType = 'WEBM';
+              codec = 'Opus';
+            } else if (container === 'mp4' || audioCodec?.includes('aac')) {
+              formatType = 'M4A';
+              codec = 'AAC';
+            }
+            
+            // Calculate file size for audio
+            let fileSize = 'N/A';
+            if (format.contentLength) {
+              const sizeInMB = parseInt(format.contentLength) / (1024 * 1024);
+              fileSize = `${sizeInMB.toFixed(1)} MB`;
+            }
+            
+            const formatKey = `${abr}-${formatType}`;
+            if (!processedAudioFormats.has(formatKey)) {
+              processedAudioFormats.add(formatKey);
+              
+              availableFormats.push({
+                quality: `${formatType} Audio (${abr}kbps)`,
+                qualityGroup: 'Audio',
+                format: formatType,
+                codec: codec,
+                bitrate: `${abr}k`,
+                fileSize: fileSize,
+                downloadUrl: format.url || videoUrl,
+                type: 'audio'
               });
             }
           });
           
-          // Audio Formats - MP3, M4A, WEBM Audio
-          const audioQualities = [
-            { quality: 'High Quality Audio (320kbps)', format: 'MP3', bitrate: '320kbps' },
-            { quality: 'Standard Audio (128kbps)', format: 'MP3', bitrate: '128kbps' },
-            { quality: 'High Quality Audio', format: 'M4A', bitrate: '256kbps' },
-            { quality: 'Standard Audio', format: 'WEBM', bitrate: '128kbps' }
-          ];
-          
-          audioQualities.forEach(audioOption => {
-            availableFormats.push({
-              quality: audioOption.quality,
-              qualityGroup: 'Audio',
-              format: audioOption.format,
-              codec: audioOption.format === 'MP3' ? 'MP3' : (audioOption.format === 'M4A' ? 'AAC' : 'Opus'),
-              bitrate: audioOption.bitrate,
-              fileSize: 'N/A',
-              downloadUrl: videoUrl,
-              type: 'audio'
+          // Add fallback audio formats if none were extracted
+          if (processedAudioFormats.size === 0) {
+            const fallbackAudioFormats = [
+              { quality: 'M4A Audio (256kbps)', format: 'M4A', codec: 'AAC', bitrate: '256k' },
+              { quality: 'WEBM Audio (128kbps)', format: 'WEBM', codec: 'Opus', bitrate: '128k' }
+            ];
+            
+            fallbackAudioFormats.forEach(audioOption => {
+              availableFormats.push({
+                quality: audioOption.quality,
+                qualityGroup: 'Audio',
+                format: audioOption.format,
+                codec: audioOption.codec,
+                bitrate: audioOption.bitrate,
+                fileSize: 'N/A',
+                downloadUrl: format.url || videoUrl,
+                type: 'audio'
+              });
             });
-          });
+          }
           
           // Sort formats: Video first (highest quality first), then audio
           availableFormats.sort((a, b) => {
