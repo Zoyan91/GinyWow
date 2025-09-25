@@ -300,7 +300,7 @@ export default function Home() {
       <Header currentPage="home" />
 
       {/* Hero Section - Mobile First */}
-      <section className="relative bg-gradient-to-br from-blue-50 via-white to-purple-50 py-8 sm:py-12 lg:py-20 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-blue-50 via-white to-purple-50 py-8 sm:py-12 lg:py-20 overflow-x-hidden">
         {/* Floating Shapes - TinyWow Style - Enhanced */}
         <div className="absolute inset-0 z-0 pointer-events-none" style={{ height: '120vh' }}>
           {/* Triangle Top Left - Pink */}
