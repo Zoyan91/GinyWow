@@ -301,62 +301,122 @@ export default function Home() {
 
       {/* Hero Section - Mobile First */}
       <section className="relative bg-gradient-to-br from-blue-50 via-white to-purple-50 py-8 sm:py-12 lg:py-20 overflow-hidden">
-        {/* Floating Shapes - TinyWow Style - Minimal */}
-        <div className="absolute inset-0 z-0 pointer-events-none">
+        {/* Floating Shapes - TinyWow Style - Enhanced */}
+        <div className="absolute inset-0 z-0 pointer-events-none" style={{ height: '120vh' }}>
           {/* Triangle Top Left - Pink */}
           <div 
-            className="absolute top-20 left-16 w-5 h-5 animate-float-1"
+            className="absolute top-20 left-16 w-7 h-7 animate-float-1"
             style={{
               background: '#f472b6',
               clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
-              opacity: 0.3
+              opacity: 0.4
             }}
           ></div>
 
           {/* Circle Top Right - Blue */}
           <div 
-            className="absolute top-24 right-20 w-4 h-4 rounded-full animate-float-2"
+            className="absolute top-24 right-20 w-6 h-6 rounded-full animate-float-2"
             style={{
               background: '#60a5fa',
-              opacity: 0.35
+              opacity: 0.45
             }}
           ></div>
 
           {/* Square Center - Orange */}
           <div 
-            className="absolute top-40 left-1/2 w-4 h-4 animate-float-3"
+            className="absolute top-40 left-1/2 w-6 h-6 animate-float-3"
             style={{
               background: '#fb923c',
               transform: 'rotate(45deg)',
-              opacity: 0.3
+              opacity: 0.4
             }}
           ></div>
 
           {/* Dot Right - Purple */}
           <div 
-            className="absolute top-50 right-12 w-3 h-3 rounded-full animate-float-4"
+            className="absolute top-50 right-12 w-4 h-4 rounded-full animate-float-4"
             style={{
               background: '#c084fc',
-              opacity: 0.4
+              opacity: 0.5
             }}
           ></div>
 
           {/* Triangle Bottom Left - Green */}
           <div 
-            className="absolute bottom-32 left-12 w-5 h-5 animate-float-1"
+            className="absolute bottom-32 left-12 w-7 h-7 animate-float-1"
             style={{
               background: '#34d399',
               clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
-              opacity: 0.35
+              opacity: 0.45
             }}
           ></div>
 
           {/* Circle Bottom Right - Yellow */}
           <div 
-            className="absolute bottom-24 right-16 w-4 h-4 rounded-full animate-float-2"
+            className="absolute bottom-24 right-16 w-6 h-6 rounded-full animate-float-2"
             style={{
               background: '#fbbf24',
-              opacity: 0.3
+              opacity: 0.4
+            }}
+          ></div>
+
+          {/* Additional Shapes for Better Coverage */}
+          {/* Triangle Top Center - Cyan */}
+          <div 
+            className="absolute top-32 left-1/3 w-5 h-5 animate-float-3"
+            style={{
+              background: '#22d3ee',
+              clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
+              opacity: 0.35
+            }}
+          ></div>
+
+          {/* Circle Mid Left - Rose */}
+          <div 
+            className="absolute top-56 left-8 w-5 h-5 rounded-full animate-float-4"
+            style={{
+              background: '#fb7185',
+              opacity: 0.4
+            }}
+          ></div>
+
+          {/* Square Mid Right - Indigo */}
+          <div 
+            className="absolute top-64 right-8 w-5 h-5 animate-float-1"
+            style={{
+              background: '#818cf8',
+              transform: 'rotate(30deg)',
+              opacity: 0.35
+            }}
+          ></div>
+
+          {/* Dot Bottom Center - Emerald */}
+          <div 
+            className="absolute bottom-16 left-1/2 w-4 h-4 rounded-full animate-float-2"
+            style={{
+              background: '#10b981',
+              opacity: 0.45
+            }}
+          ></div>
+
+          {/* Triangle Extended Area - Amber */}
+          <div 
+            className="absolute left-1/4 w-6 h-6 animate-float-3"
+            style={{
+              background: '#f59e0b',
+              clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
+              opacity: 0.3,
+              bottom: '-2rem'
+            }}
+          ></div>
+
+          {/* Circle Extended Area - Violet */}
+          <div 
+            className="absolute right-1/4 w-5 h-5 rounded-full animate-float-4"
+            style={{
+              background: '#8b5cf6',
+              opacity: 0.4,
+              bottom: '-1rem'
             }}
           ></div>
 
