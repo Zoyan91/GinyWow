@@ -716,6 +716,44 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Video Download Proxy Endpoint
+  app.get('/api/video-download', async (req, res) => {
+    try {
+      const { url, title, quality } = req.query;
+      
+      if (!url || !title || !quality) {
+        return res.status(400).json({ error: 'Missing required parameters' });
+      }
+
+      // Set headers for file download
+      res.setHeader('Content-Disposition', `attachment; filename="${title}-${quality}.mp4"`);
+      res.setHeader('Content-Type', 'video/mp4');
+      
+      // Stream the video from the URL
+      const response = await fetch(url as string);
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch video');
+      }
+
+      // Pipe the response to our client
+      if (response.body) {
+        const reader = response.body.getReader();
+        
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          res.write(value);
+        }
+      }
+      
+      res.end();
+    } catch (error) {
+      console.error('Video download error:', error);
+      res.status(500).json({ error: 'Failed to download video' });
+    }
+  });
+
   // Convert Image Format API Endpoint
   app.post('/api/convert-image', imageUpload.single('image'), async (req, res) => {
     try {
