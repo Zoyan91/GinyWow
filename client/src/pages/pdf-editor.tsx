@@ -38,7 +38,11 @@ export default function PDFEditor() {
 
   // Set up PDF.js worker
   useEffect(() => {
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    // Use local pdfjs-dist worker for better reliability
+    pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
+      'pdfjs-dist/build/pdf.worker.min.js',
+      import.meta.url
+    ).toString();
   }, []);
 
   // Newsletter subscription functionality
@@ -255,7 +259,10 @@ export default function PDFEditor() {
     try {
       // Load PDF with PDF.js for actual rendering
       const arrayBuffer = await file.arrayBuffer();
-      const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
+      const loadingTask = pdfjsLib.getDocument({ 
+        data: arrayBuffer,
+        verbosity: 0 // Reduce console spam
+      });
       const pdfDocument = await loadingTask.promise;
       
       // Get the specific page
@@ -287,21 +294,33 @@ export default function PDFEditor() {
     } catch (error) {
       console.error('Error rendering PDF page:', error);
       
-      // Fallback rendering with better error display
-      canvas.width = 600;
-      canvas.height = 800;
-      canvas.style.width = '600px';
-      canvas.style.height = '800px';
+      // Enhanced fallback rendering
+      canvas.width = 800;
+      canvas.height = 1000;
+      canvas.style.width = '800px';
+      canvas.style.height = '1000px';
       
-      ctx.fillStyle = '#f9f9f9';
+      // Create clean white page background
+      ctx.fillStyle = '#ffffff';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       
-      ctx.fillStyle = '#333';
+      // Draw border
+      ctx.strokeStyle = '#ddd';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(0, 0, canvas.width, canvas.height);
+      
+      // Add page info
+      ctx.fillStyle = '#666';
+      ctx.font = 'bold 24px Arial';
+      ctx.textAlign = 'center';
+      ctx.fillText('PDF Page', canvas.width / 2, 100);
       ctx.font = '18px Arial';
-      ctx.fillText('PDF Rendering Error', 50, 50);
+      ctx.fillText(`Page ${pageIndex + 1} of ${doc.getPageCount()}`, canvas.width / 2, 140);
       ctx.font = '14px Arial';
-      ctx.fillText(`Page ${pageIndex + 1} of ${doc.getPageCount()}`, 50, 80);
-      ctx.fillText('Please try uploading the PDF again', 50, 110);
+      ctx.fillText('Click to add text or drag images to this page', canvas.width / 2, 180);
+      
+      // Reset text alignment
+      ctx.textAlign = 'left';
       
       // Still render overlays in fallback mode
       renderEditingOverlays();
