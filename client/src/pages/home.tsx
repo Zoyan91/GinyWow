@@ -300,9 +300,9 @@ export default function Home() {
       <Header currentPage="home" />
 
       {/* Hero Section - Mobile First */}
-      <section className="relative bg-gradient-to-br from-blue-50 via-white to-purple-50 py-8 sm:py-12 lg:py-20 overflow-x-hidden">
+      <section className="relative bg-gradient-to-br from-blue-50 via-white to-purple-50 py-8 sm:py-12 lg:py-20 overflow-hidden">
         {/* Floating Shapes - TinyWow Style - Enhanced */}
-        <div className="absolute inset-0 z-0 pointer-events-none" style={{ height: '120vh' }}>
+        <div className="absolute inset-0 z-0 pointer-events-none">
           {/* Triangle Top Left - Pink */}
           <div 
             className="absolute top-20 left-16 w-7 h-7 animate-float-1"
@@ -399,24 +399,22 @@ export default function Home() {
             }}
           ></div>
 
-          {/* Triangle Extended Area - Amber */}
+          {/* Triangle Mid Area - Amber */}
           <div 
-            className="absolute left-1/4 w-6 h-6 animate-float-3"
+            className="absolute top-72 left-1/4 w-6 h-6 animate-float-3"
             style={{
               background: '#f59e0b',
               clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
-              opacity: 0.3,
-              bottom: '-2rem'
+              opacity: 0.35
             }}
           ></div>
 
-          {/* Circle Extended Area - Violet */}
+          {/* Circle Bottom Area - Violet */}
           <div 
-            className="absolute right-1/4 w-5 h-5 rounded-full animate-float-4"
+            className="absolute bottom-8 right-1/4 w-5 h-5 rounded-full animate-float-4"
             style={{
               background: '#8b5cf6',
-              opacity: 0.4,
-              bottom: '-1rem'
+              opacity: 0.4
             }}
           ></div>
 
