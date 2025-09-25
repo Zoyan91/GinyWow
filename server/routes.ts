@@ -1368,12 +1368,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
         
         if (extractedText && extractedText.length > 0) {
           // Split text into paragraphs (by double newlines or single newlines if no double found)
-          const textParagraphs = extractedText.split(/\n\s*\n/).filter(p => p.trim().length > 0);
+          const textParagraphs = extractedText.split(/\n\s*\n/).filter((p: string) => p.trim().length > 0);
           
           if (textParagraphs.length === 0) {
             // If no double newlines found, split by single newlines
-            const singleLineParagraphs = extractedText.split('\n').filter(p => p.trim().length > 0);
-            singleLineParagraphs.forEach(textPara => {
+            const singleLineParagraphs = extractedText.split('\n').filter((p: string) => p.trim().length > 0);
+            singleLineParagraphs.forEach((textPara: string) => {
               paragraphs.push(new Paragraph({
                 children: [
                   new TextRun({
@@ -1384,7 +1384,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
               }));
             });
           } else {
-            textParagraphs.forEach(textPara => {
+            textParagraphs.forEach((textPara: string) => {
               // Clean up the paragraph text
               const cleanText = textPara.trim().replace(/\s+/g, ' ');
               paragraphs.push(new Paragraph({
@@ -1441,7 +1441,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
       } catch (conversionError) {
         console.error('PDF conversion error:', conversionError);
         await storage.updatePdfFile(pdfFile.id, { status: 'failed' });
-        res.status(500).json({ error: 'Failed to convert PDF to Word' });
+        
+        // Handle encrypted PDFs specifically
+        if (conversionError instanceof Error && conversionError.message.includes('encrypted')) {
+          res.status(400).json({ 
+            error: 'This PDF is password protected or encrypted. Please remove password protection and try again.' 
+          });
+        } else {
+          res.status(500).json({ error: 'Failed to convert PDF to Word' });
+        }
       }
 
     } catch (error) {
