@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { Facebook, Twitter, Linkedin, Youtube, Hash } from 'lucide-react';
+import { SiFacebook, SiX, SiLinkedin, SiYoutube, SiPinterest } from 'react-icons/si';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
@@ -82,31 +82,31 @@ export default function Footer() {
           <div>
             <h4 className="font-bold text-gray-900 mb-6 text-lg">Follow Us</h4>
             <div className="flex flex-wrap gap-4">
-              <Link href="/thumbnail-downloader">
+              <a href="https://facebook.com/ginywow" target="_blank" rel="noopener noreferrer">
                 <span className="text-gray-400 hover:text-blue-600 transition-colors p-2 rounded-lg hover:bg-blue-50 block" aria-label="Facebook">
-                  <Facebook className="w-5 h-5" />
+                  <SiFacebook className="w-5 h-5" />
                 </span>
-              </Link>
-              <Link href="/thumbnail-downloader">
-                <span className="text-gray-400 hover:text-gray-900 transition-colors p-2 rounded-lg hover:bg-gray-50 block" aria-label="Twitter">
-                  <Twitter className="w-5 h-5" />
+              </a>
+              <a href="https://x.com/ginywow" target="_blank" rel="noopener noreferrer">
+                <span className="text-gray-400 hover:text-gray-900 transition-colors p-2 rounded-lg hover:bg-gray-50 block" aria-label="X (Twitter)">
+                  <SiX className="w-5 h-5" />
                 </span>
-              </Link>
-              <Link href="/thumbnail-downloader">
+              </a>
+              <a href="https://linkedin.com/company/ginywow" target="_blank" rel="noopener noreferrer">
                 <span className="text-gray-400 hover:text-blue-700 transition-colors p-2 rounded-lg hover:bg-blue-50 block" aria-label="LinkedIn">
-                  <Linkedin className="w-5 h-5" />
+                  <SiLinkedin className="w-5 h-5" />
                 </span>
-              </Link>
-              <Link href="/thumbnail-downloader">
+              </a>
+              <a href="https://youtube.com/@ginywow" target="_blank" rel="noopener noreferrer">
                 <span className="text-gray-400 hover:text-red-600 transition-colors p-2 rounded-lg hover:bg-red-50 block" aria-label="YouTube">
-                  <Youtube className="w-5 h-5" />
+                  <SiYoutube className="w-5 h-5" />
                 </span>
-              </Link>
-              <Link href="/thumbnail-downloader">
+              </a>
+              <a href="https://pinterest.com/ginywow" target="_blank" rel="noopener noreferrer">
                 <span className="text-gray-400 hover:text-red-500 transition-colors p-2 rounded-lg hover:bg-red-50 block" aria-label="Pinterest">
-                  <Hash className="w-5 h-5" />
+                  <SiPinterest className="w-5 h-5" />
                 </span>
-              </Link>
+              </a>
             </div>
           </div>
         </div>
@@ -194,36 +194,36 @@ export default function Footer() {
             </CollapsibleTrigger>
             <CollapsibleContent className="mt-2">
               <div className="flex flex-wrap gap-4 p-4">
-                <Link href="/thumbnail-downloader">
+                <a href="https://facebook.com/ginywow" target="_blank" rel="noopener noreferrer">
                   <span className="text-gray-400 hover:text-blue-600 transition-colors p-3 rounded-lg hover:bg-blue-50 flex items-center space-x-2 cursor-pointer" aria-label="Facebook">
-                    <Facebook className="w-5 h-5" />
+                    <SiFacebook className="w-5 h-5" />
                     <span className="text-sm">Facebook</span>
                   </span>
-                </Link>
-                <Link href="/thumbnail-downloader">
-                  <span className="text-gray-400 hover:text-gray-900 transition-colors p-3 rounded-lg hover:bg-gray-50 flex items-center space-x-2 cursor-pointer" aria-label="Twitter">
-                    <Twitter className="w-5 h-5" />
-                    <span className="text-sm">Twitter</span>
+                </a>
+                <a href="https://x.com/ginywow" target="_blank" rel="noopener noreferrer">
+                  <span className="text-gray-400 hover:text-gray-900 transition-colors p-3 rounded-lg hover:bg-gray-50 flex items-center space-x-2 cursor-pointer" aria-label="X (Twitter)">
+                    <SiX className="w-5 h-5" />
+                    <span className="text-sm">X</span>
                   </span>
-                </Link>
-                <Link href="/thumbnail-downloader">
+                </a>
+                <a href="https://linkedin.com/company/ginywow" target="_blank" rel="noopener noreferrer">
                   <span className="text-gray-400 hover:text-blue-700 transition-colors p-3 rounded-lg hover:bg-blue-50 flex items-center space-x-2 cursor-pointer" aria-label="LinkedIn">
-                    <Linkedin className="w-5 h-5" />
+                    <SiLinkedin className="w-5 h-5" />
                     <span className="text-sm">LinkedIn</span>
                   </span>
-                </Link>
-                <Link href="/thumbnail-downloader">
+                </a>
+                <a href="https://youtube.com/@ginywow" target="_blank" rel="noopener noreferrer">
                   <span className="text-gray-400 hover:text-red-600 transition-colors p-3 rounded-lg hover:bg-red-50 flex items-center space-x-2 cursor-pointer" aria-label="YouTube">
-                    <Youtube className="w-5 h-5" />
+                    <SiYoutube className="w-5 h-5" />
                     <span className="text-sm">YouTube</span>
                   </span>
-                </Link>
-                <Link href="/thumbnail-downloader">
+                </a>
+                <a href="https://pinterest.com/ginywow" target="_blank" rel="noopener noreferrer">
                   <span className="text-gray-400 hover:text-red-500 transition-colors p-3 rounded-lg hover:bg-red-50 flex items-center space-x-2 cursor-pointer" aria-label="Pinterest">
-                    <Hash className="w-5 h-5" />
+                    <SiPinterest className="w-5 h-5" />
                     <span className="text-sm">Pinterest</span>
                   </span>
-                </Link>
+                </a>
               </div>
             </CollapsibleContent>
           </Collapsible>
