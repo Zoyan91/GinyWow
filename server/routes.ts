@@ -153,95 +153,103 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Combined optimize endpoint (thumbnail + title)
+  // Thumbnail Optimizer API Endpoint - Sharp-based processing only (GinyWow Thumbnail Optimizer)
   app.post('/api/optimize', upload.single('thumbnail'), async (req, res) => {
     try {
       if (!req.file) {
-        return res.status(400).json({ error: 'No thumbnail file provided' });
+        return res.status(400).json({ error: 'No image file provided' });
       }
 
-      const { title } = req.body;
-      if (!title || title.trim() === '') {
-        return res.status(400).json({ error: 'Title is required' });
+      // Validate file size (max 5MB as per requirements)
+      if (req.file.size > 5 * 1024 * 1024) {
+        return res.status(400).json({ error: 'File size exceeds 5MB limit' });
       }
 
-      const base64Image = req.file.buffer.toString('base64');
+      // Validate file type (jpg/png only)
+      if (!['image/jpeg', 'image/jpg', 'image/png'].includes(req.file.mimetype)) {
+        return res.status(400).json({ error: 'Only JPG and PNG files are supported' });
+      }
+
+      console.log('Processing thumbnail optimization with Sharp...');
+
+      // Get original image metadata
+      const originalMetadata = await sharp(req.file.buffer).metadata();
+      console.log('Original image dimensions:', originalMetadata.width, 'x', originalMetadata.height);
       
-      // Create thumbnail record
-      const thumbnailData = insertThumbnailSchema.parse({
-        originalImageData: base64Image,
-        fileName: req.file.originalname,
-        fileSize: req.file.size,
-      });
-      const thumbnail = await storage.createThumbnail(thumbnailData);
+      // Create optimized image with Sharp - exact requirements implementation
+      const optimizedBuffer = await sharp(req.file.buffer)
+        // Auto-center crop to 16:9 ratio for thumbnails (1280x720)
+        .resize(1280, 720, { 
+          fit: 'cover', 
+          position: 'center'
+        })
+        // Enhance brightness (+15%)
+        .modulate({
+          brightness: 1.15,     // 15% brighter
+          saturation: 1.25,     // 25% more vibrant colors
+          hue: 0                // No hue change
+        })
+        // Increase sharpness and contrast
+        .sharpen(1.2, 1, 2)                    // Enhance sharpness
+        .linear(1.1, -(128 * 0.1))             // Increase contrast
+        // Output as high-quality JPEG
+        .jpeg({ 
+          quality: 92,          // High quality
+          progressive: true,    // Progressive JPEG
+          mozjpeg: true         // Use mozjpeg encoder
+        })
+        .toBuffer();
 
-      // Analyze thumbnail with AI
-      const analysis = await analyzeThumbnail(base64Image);
+      console.log('Optimization complete. Original size:', req.file.size, 'Optimized size:', optimizedBuffer.length);
 
-      // Generate enhanced thumbnail image
-      const enhancementResult = await enhanceThumbnailImage(base64Image, analysis.enhancementSuggestions);
+      // Convert original and optimized images to base64 data URLs
+      const originalBase64 = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
+      const optimizedBase64 = `data:image/jpeg;base64,${optimizedBuffer.toString('base64')}`;
 
-      // Update thumbnail with enhanced version
-      await storage.updateThumbnail(thumbnail.id, {
-        enhancedImageData: enhancementResult.enhancedImage,
-        enhancementMetrics: {
-          contrast: analysis.enhancementSuggestions.contrast,
-          saturation: analysis.enhancementSuggestions.saturation,
-          clarity: analysis.enhancementSuggestions.clarity,
-          ctrImprovement: analysis.ctrImprovement,
+      // Calculate file size metrics
+      const originalSize = req.file.size;
+      const optimizedSize = optimizedBuffer.length;
+      const sizeReduction = originalSize > optimizedSize 
+        ? Math.round(((originalSize - optimizedSize) / originalSize) * 100)
+        : 0;
+
+      // Prepare download filename
+      const originalName = req.file.originalname;
+      const nameWithoutExt = originalName.replace(/\.[^/.]+$/, '');
+      const downloadName = `optimized_${nameWithoutExt}.jpg`;
+
+      // Return response matching frontend expectations
+      const response = {
+        success: true,
+        originalImage: originalBase64,
+        optimizedImage: optimizedBase64,
+        originalSize: originalSize,
+        optimizedSize: optimizedSize,
+        sizeReduction: sizeReduction,
+        originalDimensions: {
+          width: originalMetadata.width || 0,
+          height: originalMetadata.height || 0
         },
-      });
-
-      // Generate title suggestions
-      const titleSuggestions = await optimizeTitles(title.trim(), analysis.description);
-
-      // Create title optimization record
-      const optimization = await storage.createTitleOptimization({
-        originalTitle: title.trim(),
-        thumbnailId: thumbnail.id,
-      });
-
-      // Update with suggestions
-      await storage.updateTitleOptimization(optimization.id, {
-        optimizedTitles: titleSuggestions,
-      });
-
-      // Calculate a simple CTR score based on title length and thumbnail analysis
-      const ctrScore = Math.min(95, Math.max(15, 
-        (title.trim().length > 10 && title.trim().length < 60 ? 30 : 10) +
-        (analysis.ctrImprovement || 30) +
-        (titleSuggestions && titleSuggestions.length > 0 ? 15 : 0)
-      ));
-
-      res.json({
-        ctrScore: Math.round(ctrScore),
-        ctrFeedback: ctrScore > 70 ? 'Excellent! Your thumbnail and title have strong click potential.' :
-                     ctrScore > 50 ? 'Good combination! Consider implementing the suggested improvements.' :
-                     'This combination needs improvement. Follow our suggestions to boost performance.',
-        titleSuggestions: titleSuggestions || [],
-        thumbnailAnalysis: analysis.description,
-        recommendations: analysis.recommendations,
-        thumbnailId: thumbnail.id,
-        optimizationId: optimization.id,
-        // Add before/after thumbnail comparison
-        thumbnailComparison: {
-          before: `data:image/jpeg;base64,${base64Image}`,
-          after: `data:image/jpeg;base64,${enhancementResult.enhancedImage}`,
-          enhancementMetrics: {
-            contrast: analysis.enhancementSuggestions.contrast,
-            saturation: analysis.enhancementSuggestions.saturation,
-            clarity: analysis.enhancementSuggestions.clarity,
-          }
+        optimizedDimensions: {
+          width: 1280,
+          height: 720
         },
-        // Add enhancement status and message
-        enhancementStatus: {
-          success: enhancementResult.success,
-          message: enhancementResult.message
-        }
+        downloadName: downloadName
+      };
+
+      console.log('Sending optimization result:', {
+        sizeReduction: response.sizeReduction,
+        originalDimensions: response.originalDimensions,
+        optimizedDimensions: response.optimizedDimensions
       });
+
+      res.json(response);
+
     } catch (error) {
-      console.error('Error during optimization:', error);
-      res.status(500).json({ error: 'Failed to optimize thumbnail and title' });
+      console.error('Error optimizing thumbnail:', error);
+      res.status(500).json({ 
+        error: error instanceof Error ? error.message : 'Failed to optimize thumbnail' 
+      });
     }
   });
 
@@ -668,82 +676,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
 
-  // Thumbnail Optimizer API Endpoint
-  app.post('/api/optimize', upload.single('thumbnail'), async (req, res) => {
-    try {
-      if (!req.file) {
-        return res.status(400).json({ error: 'No image file provided' });
-      }
-
-      // Validate file size (max 5MB as per requirements)
-      if (req.file.size > 5 * 1024 * 1024) {
-        return res.status(400).json({ error: 'File size exceeds 5MB limit' });
-      }
-
-      // Validate file type (jpg/png only)
-      if (!['image/jpeg', 'image/jpg', 'image/png'].includes(req.file.mimetype)) {
-        return res.status(400).json({ error: 'Only JPG and PNG files are supported' });
-      }
-
-      // Get original image metadata
-      const originalMetadata = await sharp(req.file.buffer).metadata();
-      
-      // Create optimized image with Sharp
-      let optimizedBuffer = await sharp(req.file.buffer)
-        // Auto-center crop if image is too wide or tall (maintain 16:9 ratio for thumbnails)
-        .resize(1280, 720, { 
-          fit: 'cover', 
-          position: 'center'
-        })
-        // Enhance image quality
-        .modulate({
-          brightness: 1.15,     // 15% brighter
-          saturation: 1.25,     // 25% more vibrant colors
-          hue: 0
-        })
-        // Increase sharpness and contrast
-        .sharpen(1.2, 1, 2)
-        .linear(1.1, -(128 * 0.1))  // Increase contrast
-        // Output as high-quality JPEG
-        .jpeg({ 
-          quality: 92, 
-          progressive: true,
-          mozjpeg: true 
-        })
-        .toBuffer();
-
-      // Convert original and optimized images to base64
-      const originalBase64 = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
-      const optimizedBase64 = `data:image/jpeg;base64,${optimizedBuffer.toString('base64')}`;
-
-      // Calculate file size information
-      const originalSize = req.file.size;
-      const optimizedSize = optimizedBuffer.length;
-      const sizeReduction = Math.round(((originalSize - optimizedSize) / originalSize) * 100);
-
-      res.json({
-        success: true,
-        originalImage: originalBase64,
-        optimizedImage: optimizedBase64,
-        originalSize: originalSize,
-        optimizedSize: optimizedSize,
-        sizeReduction: sizeReduction > 0 ? sizeReduction : 0,
-        originalDimensions: {
-          width: originalMetadata.width,
-          height: originalMetadata.height
-        },
-        optimizedDimensions: {
-          width: 1280,
-          height: 720
-        },
-        downloadName: `optimized_${req.file.originalname.replace(/\.[^/.]+$/, '.jpg')}`
-      });
-
-    } catch (error) {
-      console.error('Error optimizing thumbnail:', error);
-      res.status(500).json({ error: 'Failed to optimize thumbnail' });
-    }
-  });
 
   // Convert Image Format API Endpoint
   app.post('/api/convert-image', imageUpload.single('image'), async (req, res) => {
