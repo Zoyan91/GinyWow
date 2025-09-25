@@ -1417,7 +1417,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // PDF Merge
   app.post('/api/pdf/merge', pdfUpload.array('pdfs', 10), async (req, res) => {
     try {
-      if (!req.files || req.files.length < 2) {
+      if (!req.files || !Array.isArray(req.files) || req.files.length < 2) {
         return res.status(400).json({ error: 'Please upload at least 2 PDF files to merge' });
       }
 

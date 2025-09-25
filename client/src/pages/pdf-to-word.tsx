@@ -62,21 +62,59 @@ export default function PDFToWord() {
     
     setIsConverting(true);
     
-    // Simulate conversion process
     try {
-      await new Promise(resolve => setTimeout(resolve, 3000));
+      // Create FormData for file upload
+      const formData = new FormData();
+      formData.append('pdf', file);
       
-      toast({
-        title: "Conversion Complete!",
-        description: "Your PDF has been converted to Word format.",
+      // Make API call to convert PDF to Word
+      const response = await fetch('/api/pdf/convert-to-word', {
+        method: 'POST',
+        body: formData,
       });
       
-      // Reset form
-      setFile(null);
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Conversion failed');
+      }
+      
+      const result = await response.json();
+      
+      if (result.success) {
+        // Download the converted file
+        const downloadResponse = await fetch(result.downloadUrl);
+        if (downloadResponse.ok) {
+          const blob = await downloadResponse.blob();
+          const downloadUrl = window.URL.createObjectURL(blob);
+          
+          const link = document.createElement('a');
+          link.href = downloadUrl;
+          link.download = result.convertedFileName;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          
+          // Clean up the blob URL
+          window.URL.revokeObjectURL(downloadUrl);
+          
+          toast({
+            title: "Conversion Complete!",
+            description: `Your PDF has been converted to Word format (${result.convertedFileName}) and downloaded.`,
+          });
+          
+          // Reset form
+          setFile(null);
+        } else {
+          throw new Error('Failed to download converted file');
+        }
+      } else {
+        throw new Error(result.message || 'Conversion failed');
+      }
     } catch (error) {
+      console.error('PDF conversion error:', error);
       toast({
         title: "Conversion Failed",
-        description: "Please try again or contact support.",
+        description: error instanceof Error ? error.message : "Please try again or contact support.",
         variant: "destructive",
       });
     } finally {
