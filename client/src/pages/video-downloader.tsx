@@ -346,7 +346,91 @@ export default function VideoDownloader() {
                     </div>
                     
                     {/* Quality Format Options */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                      {/* 8K MP4 */}
+                      <div className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                        <div className="text-center">
+                          <div className="mb-3 flex items-center justify-center">
+                            <div className="w-12 h-12 bg-rose-50 rounded-lg flex items-center justify-center">
+                              <Video className="w-6 h-6 text-rose-600" />
+                            </div>
+                          </div>
+                          <p className="text-lg font-semibold text-gray-900 mb-1" data-testid="format-quality-8k">8K</p>
+                          <p className="text-sm text-gray-600 mb-3" data-testid="format-details-8k">MP4 • 4320p</p>
+                          <Button
+                            onClick={() => handleDownload('8K', 'MP4')}
+                            className="w-full bg-rose-500 hover:bg-rose-600 text-white"
+                            data-testid="download-btn-8k"
+                          >
+                            <Download className="w-4 h-4 mr-2" />
+                            Download
+                          </Button>
+                        </div>
+                      </div>
+
+                      {/* 4K MP4 */}
+                      <div className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                        <div className="text-center">
+                          <div className="mb-3 flex items-center justify-center">
+                            <div className="w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center">
+                              <Video className="w-6 h-6 text-red-600" />
+                            </div>
+                          </div>
+                          <p className="text-lg font-semibold text-gray-900 mb-1" data-testid="format-quality-4k">4K</p>
+                          <p className="text-sm text-gray-600 mb-3" data-testid="format-details-4k">MP4 • 2160p</p>
+                          <Button
+                            onClick={() => handleDownload('4K', 'MP4')}
+                            className="w-full bg-red-500 hover:bg-red-600 text-white"
+                            data-testid="download-btn-4k"
+                          >
+                            <Download className="w-4 h-4 mr-2" />
+                            Download
+                          </Button>
+                        </div>
+                      </div>
+
+                      {/* 4K 60fps MP4 */}
+                      <div className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                        <div className="text-center">
+                          <div className="mb-3 flex items-center justify-center">
+                            <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
+                              <Video className="w-6 h-6 text-red-700" />
+                            </div>
+                          </div>
+                          <p className="text-lg font-semibold text-gray-900 mb-1" data-testid="format-quality-4k60">4K 60fps</p>
+                          <p className="text-sm text-gray-600 mb-3" data-testid="format-details-4k60">MP4 • 2160p60</p>
+                          <Button
+                            onClick={() => handleDownload('4K 60fps', 'MP4')}
+                            className="w-full bg-red-600 hover:bg-red-700 text-white"
+                            data-testid="download-btn-4k60"
+                          >
+                            <Download className="w-4 h-4 mr-2" />
+                            Download
+                          </Button>
+                        </div>
+                      </div>
+
+                      {/* 1440p MP4 */}
+                      <div className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                        <div className="text-center">
+                          <div className="mb-3 flex items-center justify-center">
+                            <div className="w-12 h-12 bg-indigo-50 rounded-lg flex items-center justify-center">
+                              <Video className="w-6 h-6 text-indigo-600" />
+                            </div>
+                          </div>
+                          <p className="text-lg font-semibold text-gray-900 mb-1" data-testid="format-quality-1440p">1440p</p>
+                          <p className="text-sm text-gray-600 mb-3" data-testid="format-details-1440p">MP4 • 2K</p>
+                          <Button
+                            onClick={() => handleDownload('1440p', 'MP4')}
+                            className="w-full bg-indigo-500 hover:bg-indigo-600 text-white"
+                            data-testid="download-btn-1440p"
+                          >
+                            <Download className="w-4 h-4 mr-2" />
+                            Download
+                          </Button>
+                        </div>
+                      </div>
+
                       {/* 1080p MP4 */}
                       <div className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
                         <div className="text-center">
@@ -361,6 +445,48 @@ export default function VideoDownloader() {
                             onClick={() => handleDownload('1080p', 'MP4')}
                             className="w-full bg-blue-500 hover:bg-blue-600 text-white"
                             data-testid="download-btn-1080p"
+                          >
+                            <Download className="w-4 h-4 mr-2" />
+                            Download
+                          </Button>
+                        </div>
+                      </div>
+
+                      {/* 1080p 60fps MP4 */}
+                      <div className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                        <div className="text-center">
+                          <div className="mb-3 flex items-center justify-center">
+                            <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                              <Video className="w-6 h-6 text-blue-700" />
+                            </div>
+                          </div>
+                          <p className="text-lg font-semibold text-gray-900 mb-1" data-testid="format-quality-1080p60">1080p 60fps</p>
+                          <p className="text-sm text-gray-600 mb-3" data-testid="format-details-1080p60">MP4 • Full HD 60fps</p>
+                          <Button
+                            onClick={() => handleDownload('1080p 60fps', 'MP4')}
+                            className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                            data-testid="download-btn-1080p60"
+                          >
+                            <Download className="w-4 h-4 mr-2" />
+                            Download
+                          </Button>
+                        </div>
+                      </div>
+
+                      {/* 1080p WebM */}
+                      <div className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                        <div className="text-center">
+                          <div className="mb-3 flex items-center justify-center">
+                            <div className="w-12 h-12 bg-cyan-50 rounded-lg flex items-center justify-center">
+                              <Video className="w-6 h-6 text-cyan-600" />
+                            </div>
+                          </div>
+                          <p className="text-lg font-semibold text-gray-900 mb-1" data-testid="format-quality-1080p-webm">1080p WebM</p>
+                          <p className="text-sm text-gray-600 mb-3" data-testid="format-details-1080p-webm">WebM • Full HD</p>
+                          <Button
+                            onClick={() => handleDownload('1080p WebM', 'WebM')}
+                            className="w-full bg-cyan-500 hover:bg-cyan-600 text-white"
+                            data-testid="download-btn-1080p-webm"
                           >
                             <Download className="w-4 h-4 mr-2" />
                             Download
@@ -410,7 +536,91 @@ export default function VideoDownloader() {
                         </div>
                       </div>
 
-                      {/* Audio MP3 */}
+                      {/* 360p MP4 */}
+                      <div className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                        <div className="text-center">
+                          <div className="mb-3 flex items-center justify-center">
+                            <div className="w-12 h-12 bg-orange-50 rounded-lg flex items-center justify-center">
+                              <Video className="w-6 h-6 text-orange-600" />
+                            </div>
+                          </div>
+                          <p className="text-lg font-semibold text-gray-900 mb-1" data-testid="format-quality-360p">360p</p>
+                          <p className="text-sm text-gray-600 mb-3" data-testid="format-details-360p">MP4 • Low</p>
+                          <Button
+                            onClick={() => handleDownload('360p', 'MP4')}
+                            className="w-full bg-orange-500 hover:bg-orange-600 text-white"
+                            data-testid="download-btn-360p"
+                          >
+                            <Download className="w-4 h-4 mr-2" />
+                            Download
+                          </Button>
+                        </div>
+                      </div>
+
+                      {/* 288p MP4 */}
+                      <div className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                        <div className="text-center">
+                          <div className="mb-3 flex items-center justify-center">
+                            <div className="w-12 h-12 bg-amber-50 rounded-lg flex items-center justify-center">
+                              <Video className="w-6 h-6 text-amber-600" />
+                            </div>
+                          </div>
+                          <p className="text-lg font-semibold text-gray-900 mb-1" data-testid="format-quality-288p">288p</p>
+                          <p className="text-sm text-gray-600 mb-3" data-testid="format-details-288p">MP4 • Legacy</p>
+                          <Button
+                            onClick={() => handleDownload('288p', 'MP4')}
+                            className="w-full bg-amber-500 hover:bg-amber-600 text-white"
+                            data-testid="download-btn-288p"
+                          >
+                            <Download className="w-4 h-4 mr-2" />
+                            Download
+                          </Button>
+                        </div>
+                      </div>
+
+                      {/* 240p MP4 */}
+                      <div className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                        <div className="text-center">
+                          <div className="mb-3 flex items-center justify-center">
+                            <div className="w-12 h-12 bg-pink-50 rounded-lg flex items-center justify-center">
+                              <Video className="w-6 h-6 text-pink-600" />
+                            </div>
+                          </div>
+                          <p className="text-lg font-semibold text-gray-900 mb-1" data-testid="format-quality-240p">240p</p>
+                          <p className="text-sm text-gray-600 mb-3" data-testid="format-details-240p">MP4 • Mobile</p>
+                          <Button
+                            onClick={() => handleDownload('240p', 'MP4')}
+                            className="w-full bg-pink-500 hover:bg-pink-600 text-white"
+                            data-testid="download-btn-240p"
+                          >
+                            <Download className="w-4 h-4 mr-2" />
+                            Download
+                          </Button>
+                        </div>
+                      </div>
+
+                      {/* 144p MP4 */}
+                      <div className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                        <div className="text-center">
+                          <div className="mb-3 flex items-center justify-center">
+                            <div className="w-12 h-12 bg-gray-50 rounded-lg flex items-center justify-center">
+                              <Video className="w-6 h-6 text-gray-600" />
+                            </div>
+                          </div>
+                          <p className="text-lg font-semibold text-gray-900 mb-1" data-testid="format-quality-144p">144p</p>
+                          <p className="text-sm text-gray-600 mb-3" data-testid="format-details-144p">MP4 • Basic</p>
+                          <Button
+                            onClick={() => handleDownload('144p', 'MP4')}
+                            className="w-full bg-gray-500 hover:bg-gray-600 text-white"
+                            data-testid="download-btn-144p"
+                          >
+                            <Download className="w-4 h-4 mr-2" />
+                            Download
+                          </Button>
+                        </div>
+                      </div>
+
+                      {/* Audio High Quality */}
                       <div className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
                         <div className="text-center">
                           <div className="mb-3 flex items-center justify-center">
@@ -418,12 +628,75 @@ export default function VideoDownloader() {
                               <Volume2 className="w-6 h-6 text-purple-600" />
                             </div>
                           </div>
+                          <p className="text-lg font-semibold text-gray-900 mb-1" data-testid="format-quality-audio-hq">Audio HQ</p>
+                          <p className="text-sm text-gray-600 mb-3" data-testid="format-details-audio-hq">MP3 • 320kbps</p>
+                          <Button
+                            onClick={() => handleDownload('Audio HQ', 'MP3')}
+                            className="w-full bg-purple-500 hover:bg-purple-600 text-white"
+                            data-testid="download-btn-audio-hq"
+                          >
+                            <Download className="w-4 h-4 mr-2" />
+                            Download
+                          </Button>
+                        </div>
+                      </div>
+
+                      {/* Audio Standard */}
+                      <div className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                        <div className="text-center">
+                          <div className="mb-3 flex items-center justify-center">
+                            <div className="w-12 h-12 bg-violet-50 rounded-lg flex items-center justify-center">
+                              <Volume2 className="w-6 h-6 text-violet-600" />
+                            </div>
+                          </div>
                           <p className="text-lg font-semibold text-gray-900 mb-1" data-testid="format-quality-audio">Audio</p>
-                          <p className="text-sm text-gray-600 mb-3" data-testid="format-details-audio">MP3 • 320kbps</p>
+                          <p className="text-sm text-gray-600 mb-3" data-testid="format-details-audio">MP3 • 128kbps</p>
                           <Button
                             onClick={() => handleDownload('Audio', 'MP3')}
-                            className="w-full bg-purple-500 hover:bg-purple-600 text-white"
+                            className="w-full bg-violet-500 hover:bg-violet-600 text-white"
                             data-testid="download-btn-audio"
+                          >
+                            <Download className="w-4 h-4 mr-2" />
+                            Download
+                          </Button>
+                        </div>
+                      </div>
+
+                      {/* Audio M4A */}
+                      <div className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                        <div className="text-center">
+                          <div className="mb-3 flex items-center justify-center">
+                            <div className="w-12 h-12 bg-emerald-50 rounded-lg flex items-center justify-center">
+                              <Volume2 className="w-6 h-6 text-emerald-600" />
+                            </div>
+                          </div>
+                          <p className="text-lg font-semibold text-gray-900 mb-1" data-testid="format-quality-audio-m4a">Audio M4A</p>
+                          <p className="text-sm text-gray-600 mb-3" data-testid="format-details-audio-m4a">M4A • 256kbps</p>
+                          <Button
+                            onClick={() => handleDownload('Audio M4A', 'M4A')}
+                            className="w-full bg-emerald-500 hover:bg-emerald-600 text-white"
+                            data-testid="download-btn-audio-m4a"
+                          >
+                            <Download className="w-4 h-4 mr-2" />
+                            Download
+                          </Button>
+                        </div>
+                      </div>
+
+                      {/* Audio OPUS */}
+                      <div className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                        <div className="text-center">
+                          <div className="mb-3 flex items-center justify-center">
+                            <div className="w-12 h-12 bg-teal-50 rounded-lg flex items-center justify-center">
+                              <Volume2 className="w-6 h-6 text-teal-600" />
+                            </div>
+                          </div>
+                          <p className="text-lg font-semibold text-gray-900 mb-1" data-testid="format-quality-audio-opus">Audio OPUS</p>
+                          <p className="text-sm text-gray-600 mb-3" data-testid="format-details-audio-opus">OPUS • 160kbps</p>
+                          <Button
+                            onClick={() => handleDownload('Audio OPUS', 'OPUS')}
+                            className="w-full bg-teal-500 hover:bg-teal-600 text-white"
+                            data-testid="download-btn-audio-opus"
                           >
                             <Download className="w-4 h-4 mr-2" />
                             Download
