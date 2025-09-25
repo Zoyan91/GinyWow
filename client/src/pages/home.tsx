@@ -1,22 +1,171 @@
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Card } from '@/components/ui/card';
-import { Clipboard, Copy, ExternalLink } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
-import Header from '@/components/header';
+import { useState, lazy, Suspense } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Copy, Clipboard, CheckCircle } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { apiRequest } from "@/lib/queryClient";
+import { Link } from "wouter";
+import Header from "@/components/header";
+
+// Lazy load footer for better initial performance
+const Footer = lazy(() => import("@/components/footer"));
 
 export default function Home() {
-  const [youtubeUrl, setYoutubeUrl] = useState('');
-  const [generatedLink, setGeneratedLink] = useState('');
+  const [youtubeUrl, setYoutubeUrl] = useState("");
+  const [generatedLink, setGeneratedLink] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
   const { toast } = useToast();
+  
+  // Enable scroll animations
+  useScrollAnimation();
+
+  // Newsletter subscription functionality
+  const NewsletterSection = () => {
+    const [email, setEmail] = useState("");
+    const [isSubscribing, setIsSubscribing] = useState(false);
+    const [subscriptionStatus, setSubscriptionStatus] = useState<{
+      type: 'idle' | 'success' | 'error';
+      message: string;
+    }>({ type: 'idle', message: '' });
+
+    const handleNewsletterSubmit = async (e: React.FormEvent) => {
+      e.preventDefault();
+      if (!email || !email.includes('@')) {
+        setSubscriptionStatus({
+          type: 'error',
+          message: 'Please enter a valid email address'
+        });
+        return;
+      }
+
+      setIsSubscribing(true);
+      setSubscriptionStatus({ type: 'idle', message: '' });
+
+      try {
+        const response = await fetch('/api/newsletter/subscribe', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          setSubscriptionStatus({
+            type: 'success',
+            message: data.message || 'Successfully subscribed to newsletter!'
+          });
+          setEmail('');
+        } else {
+          setSubscriptionStatus({
+            type: 'error',
+            message: data.error || 'Failed to subscribe. Please try again.'
+          });
+        }
+      } catch (error) {
+        setSubscriptionStatus({
+          type: 'error',
+          message: 'Network error. Please check your connection and try again.'
+        });
+      } finally {
+        setIsSubscribing(false);
+      }
+    };
+
+    return (
+      <section className="relative py-8 sm:py-12 lg:py-16 mt-12 bg-gradient-to-br from-blue-50 to-indigo-100 overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-0 right-0 w-32 h-32 sm:w-64 sm:h-64 bg-blue-200 rounded-full opacity-10 blur-2xl sm:blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
+          <div className="absolute bottom-0 left-0 w-32 h-32 sm:w-64 sm:h-64 bg-indigo-200 rounded-full opacity-10 blur-2xl sm:blur-3xl transform -translate-x-1/2 translate-y-1/2"></div>
+        </div>
+        
+        <div className="relative container-mobile max-w-4xl">
+          <div className="text-center mb-6 sm:mb-8">
+            <div className="inline-flex items-center px-3 py-2 sm:px-4 bg-blue-600 text-white text-xs sm:text-sm font-semibold rounded-full mb-3 sm:mb-4">
+              <span className="mr-2">📧</span>
+              Newsletter
+            </div>
+            <h2 className="text-responsive-lg font-bold text-gray-900 mb-3 sm:mb-4">
+              Subscribe for Our Latest Updates
+            </h2>
+            <p className="hidden sm:block text-sm sm:text-base text-gray-600 max-w-xl mx-auto leading-relaxed px-4">
+              Get the latest tools, tips, and tutorials delivered to your inbox. Join thousands of creators who trust us.
+            </p>
+          </div>
+
+          <div className="max-w-md mx-auto px-4">
+            <form onSubmit={handleNewsletterSubmit} className="space-y-3">
+              <div className="flex flex-col gap-3">
+                <div className="relative">
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter your email address"
+                    className="input-mobile w-full bg-white shadow-sm placeholder-gray-500"
+                    disabled={isSubscribing}
+                    data-testid="newsletter-email-input"
+                  />
+                  {subscriptionStatus.type === 'success' && (
+                    <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                      <CheckCircle className="w-5 h-5 text-green-500" />
+                    </div>
+                  )}
+                </div>
+                <Button
+                  type="submit"
+                  disabled={isSubscribing || !email}
+                  className={`btn-mobile w-full shadow-md hover:shadow-lg ${
+                    isSubscribing 
+                      ? 'bg-gray-400 cursor-not-allowed' 
+                      : 'bg-blue-600 hover:bg-blue-700 text-white'
+                  }`}
+                  data-testid="subscribe-now-btn"
+                >
+                  {isSubscribing ? (
+                    <div className="flex items-center justify-center">
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                      Subscribing...
+                    </div>
+                  ) : (
+                    'Subscribe Now'
+                  )}
+                </Button>
+              </div>
+              
+              {subscriptionStatus.message && (
+                <div className={`text-center text-sm mt-3 font-medium ${
+                  subscriptionStatus.type === 'success' ? 'text-green-600' : 'text-red-600'
+                }`}>
+                  {subscriptionStatus.message}
+                </div>
+              )}
+            </form>
+          </div>
+        </div>
+      </section>
+    );
+  };
 
   const handleGenerate = async () => {
     if (!youtubeUrl.trim()) {
       toast({
-        title: "URL Required",
-        description: "Please enter a URL to generate a link",
+        title: "Error",
+        description: "Please enter a valid URL",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    try {
+      new URL(youtubeUrl);
+    } catch {
+      toast({
+        title: "Invalid URL",
+        description: "Please enter a valid URL",
         variant: "destructive"
       });
       return;
@@ -25,25 +174,22 @@ export default function Home() {
     setIsGenerating(true);
     
     try {
-      // Show success toast
+      const response = await apiRequest('POST', '/api/short-url', { url: youtubeUrl });
+      const result = await response.json();
+
+      if (result.success) {
+        setGeneratedLink(result.shortUrl);
+        toast({
+          title: "Success!",
+          description: `Your ${result.platform || 'app opener'} link has been generated successfully!`,
+        });
+      } else {
+        throw new Error(result.error || 'Failed to generate link');
+      }
+    } catch (error: any) {
       toast({
-        title: "Link Generated!",
-        description: "Your app opener link has been created successfully"
-      });
-      
-      // Create the generated link with ginywow.com domain
-      const baseUrl = window.location.origin;
-      const encodedUrl = encodeURIComponent(youtubeUrl);
-      const newGeneratedLink = `${baseUrl}/open?url=${encodedUrl}`;
-      
-      // Simulate processing time
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      setGeneratedLink(newGeneratedLink);
-    } catch (error) {
-      toast({
-        title: "Generation Failed",
-        description: "There was an error generating your link. Please try again.",
+        title: "Error",
+        description: error.message || "Failed to generate link. Please try again.",
         variant: "destructive"
       });
     } finally {
@@ -52,38 +198,74 @@ export default function Home() {
   };
 
   const pasteFromClipboard = async () => {
+    console.log("Paste button clicked!");
     try {
+      // Check if clipboard API is available
+      if (!navigator.clipboard) {
+        console.log("Clipboard API not available");
+        toast({
+          title: "Paste not supported",
+          description: "Clipboard API not available in this browser",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      // Check secure context
+      if (!window.isSecureContext) {
+        console.log("Not in secure context");
+        toast({
+          title: "Paste not supported", 
+          description: "Clipboard access requires HTTPS",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      console.log("Attempting to read clipboard...");
       const text = await navigator.clipboard.readText();
-      setYoutubeUrl(text);
+      console.log("Clipboard content:", text);
       
-      toast({
-        title: "Pasted!",
-        description: "URL pasted from clipboard"
-      });
+      if (text && text.trim()) {
+        console.log("Setting URL:", text.trim());
+        setYoutubeUrl(text.trim());
+        toast({
+          title: "Pasted!",
+          description: "Link pasted from clipboard",
+        });
+      } else {
+        console.log("Clipboard empty");
+        toast({
+          title: "Clipboard empty",
+          description: "No content found in clipboard",
+          variant: "destructive"
+        });
+      }
     } catch (error) {
+      console.error("Paste error:", error);
+      const errorMessage = error instanceof Error ? error.message : "Please paste the link manually";
       toast({
         title: "Paste failed",
-        description: "Please paste the URL manually",
+        description: `Error: ${errorMessage}`,
         variant: "destructive"
       });
     }
   };
 
-  const copyToClipboard = async () => {
+  const copyToClipboard = () => {
     try {
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        await navigator.clipboard.writeText(generatedLink);
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(generatedLink);
         toast({
           title: "Copied!",
-          description: "Link copied to clipboard"
+          description: "Link copied to clipboard",
         });
       } else {
-        // Fallback for older browsers
+        // Fallback for non-secure contexts
         const textArea = document.createElement('textarea');
         textArea.value = generatedLink;
         textArea.style.position = 'fixed';
-        textArea.style.left = '-999999px';
-        textArea.style.top = '-999999px';
+        textArea.style.opacity = '0';
         document.body.appendChild(textArea);
         textArea.focus();
         textArea.select();
@@ -92,7 +274,7 @@ export default function Home() {
           document.execCommand('copy');
           toast({
             title: "Copied!",
-            description: "Link copied to clipboard"
+            description: "Link copied to clipboard",
           });
         } catch (err) {
           toast({
@@ -117,73 +299,252 @@ export default function Home() {
     <div className="min-h-screen bg-background relative w-full overflow-x-hidden">
       <Header currentPage="home" />
 
-      {/* Floating Shapes - Exact TinyWow Style from Image */}
+      {/* Floating Shapes - TinyWow Style - Extended */}
       <div className="absolute inset-0 z-0 pointer-events-none" style={{ height: '140vh' }}>
-        
-        {/* TinyWow Style Shapes - Exact Color Match */}
-        
-        {/* Very Small Dots - Top Area - Orange & Pink Theme */}
-        <div className="absolute top-4 left-12 w-2 h-2 rounded-full animate-float-1" style={{ background: '#fb923c', opacity: 0.4 }}></div>
-        <div className="absolute top-8 right-24 w-2 h-2 rounded-full animate-float-2" style={{ background: '#ec4899', opacity: 0.3 }}></div>
-        <div className="absolute top-16 left-1/4 w-2 h-2 rounded-full animate-float-3" style={{ background: '#3b82f6', opacity: 0.4 }}></div>
-        <div className="absolute top-24 right-1/3 w-2 h-2 rounded-full animate-float-4" style={{ background: '#8b5cf6', opacity: 0.3 }}></div>
-        
-        {/* Small Triangles - TinyWow Orange Style */}
-        <div className="absolute top-6 left-20 w-3 h-3 animate-float-1" style={{ background: '#fb923c', clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)', opacity: 0.4 }}></div>
-        <div className="absolute top-32 right-16 w-4 h-4 animate-float-2" style={{ background: '#f97316', clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)', opacity: 0.35 }}></div>
-        <div className="absolute top-48 left-8 w-3 h-3 animate-float-3" style={{ background: '#fb923c', clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)', opacity: 0.4 }}></div>
-        
-        {/* Small Circles - TinyWow Colors Only */}
-        <div className="absolute top-12 right-12 w-3 h-3 rounded-full animate-float-4" style={{ background: '#ec4899', opacity: 0.4 }}></div>
-        <div className="absolute top-28 left-16 w-4 h-4 rounded-full animate-float-1" style={{ background: '#3b82f6', opacity: 0.35 }}></div>
-        <div className="absolute top-44 right-20 w-3 h-3 rounded-full animate-float-2" style={{ background: '#8b5cf6', opacity: 0.4 }}></div>
-        <div className="absolute top-60 left-1/3 w-4 h-4 rounded-full animate-float-3" style={{ background: '#9333ea', opacity: 0.35 }}></div>
-        
-        {/* Small Squares/Diamonds - Purple & Pink */}
-        <div className="absolute top-20 left-1/2 w-3 h-3 animate-float-4" style={{ background: '#8b5cf6', transform: 'rotate(45deg)', opacity: 0.4 }}></div>
-        <div className="absolute top-36 right-8 w-4 h-4 animate-float-1" style={{ background: '#f472b6', transform: 'rotate(45deg)', opacity: 0.35 }}></div>
-        <div className="absolute top-52 left-12 w-3 h-3 animate-float-2" style={{ background: '#f472b6', transform: 'rotate(45deg)', opacity: 0.4 }}></div>
-        
-        {/* Mid Section Shapes - Exact TinyWow Palette */}
-        <div className="absolute left-4 w-2 h-2 rounded-full animate-float-3" style={{ background: '#fb923c', opacity: 0.4, top: '20rem' }}></div>
-        <div className="absolute right-6 w-3 h-3 animate-float-4" style={{ background: '#fb923c', clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)', opacity: 0.35, top: '22rem' }}></div>
-        <div className="absolute left-1/4 w-4 h-4 rounded-full animate-float-1" style={{ background: '#3b82f6', opacity: 0.4, top: '24rem' }}></div>
-        <div className="absolute right-1/4 w-3 h-3 animate-float-2" style={{ background: '#ec4899', transform: 'rotate(45deg)', opacity: 0.4, top: '26rem' }}></div>
-        <div className="absolute left-1/2 w-2 h-2 rounded-full animate-float-3" style={{ background: '#8b5cf6', opacity: 0.35, top: '28rem' }}></div>
-        
-        {/* Lower Section - Tools Area - TinyWow Colors */}
-        <div className="absolute left-8 w-3 h-3 rounded-full animate-float-4" style={{ background: '#9333ea', opacity: 0.4, top: '30rem' }}></div>
-        <div className="absolute right-12 w-2 h-2 rounded-full animate-float-1" style={{ background: '#fb923c', opacity: 0.35, top: '32rem' }}></div>
-        <div className="absolute left-1/3 w-4 h-4 animate-float-2" style={{ background: '#fb923c', clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)', opacity: 0.4, top: '34rem' }}></div>
-        <div className="absolute right-1/3 w-3 h-3 animate-float-3" style={{ background: '#8b5cf6', transform: 'rotate(45deg)', opacity: 0.35, top: '36rem' }}></div>
-        <div className="absolute left-16 w-2 h-2 rounded-full animate-float-4" style={{ background: '#ec4899', opacity: 0.4, top: '38rem' }}></div>
-        
-        {/* What Is Section - Orange/Blue/Purple/Pink Only */}
-        <div className="absolute right-8 w-3 h-3 rounded-full animate-float-1" style={{ background: '#3b82f6', opacity: 0.4, top: '40rem' }}></div>
-        <div className="absolute left-20 w-4 h-4 animate-float-2" style={{ background: '#3b82f6', clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)', opacity: 0.35, top: '42rem' }}></div>
-        <div className="absolute right-16 w-2 h-2 rounded-full animate-float-3" style={{ background: '#f472b6', opacity: 0.4, top: '44rem' }}></div>
-        <div className="absolute left-1/4 w-3 h-3 animate-float-4" style={{ background: '#fb923c', transform: 'rotate(45deg)', opacity: 0.35, top: '46rem' }}></div>
-        <div className="absolute right-1/4 w-4 h-4 rounded-full animate-float-1" style={{ background: '#8b5cf6', opacity: 0.4, top: '48rem' }}></div>
-        
-        {/* Additional Tiny Dots - TinyWow Theme Only */}
-        <div className="absolute top-64 left-4 w-2 h-2 rounded-full animate-float-2" style={{ background: '#9333ea', opacity: 0.3 }}></div>
-        <div className="absolute top-68 right-4 w-2 h-2 rounded-full animate-float-3" style={{ background: '#fb923c', opacity: 0.4 }}></div>
-        <div className="absolute bottom-32 left-8 w-2 h-2 rounded-full animate-float-4" style={{ background: '#ec4899', opacity: 0.35 }}></div>
-        <div className="absolute bottom-24 right-12 w-2 h-2 rounded-full animate-float-1" style={{ background: '#8b5cf6', opacity: 0.4 }}></div>
-        <div className="absolute bottom-16 left-1/3 w-2 h-2 rounded-full animate-float-2" style={{ background: '#3b82f6', opacity: 0.35 }}></div>
-        <div className="absolute bottom-8 right-1/3 w-2 h-2 rounded-full animate-float-3" style={{ background: '#f472b6', opacity: 0.4 }}></div>
-        
-        {/* Corner Scattered Shapes - Orange & Blue */}
-        <div className="absolute top-72 left-1/2 w-3 h-3 animate-float-4" style={{ background: '#fb923c', clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)', opacity: 0.35 }}></div>
-        <div className="absolute top-76 right-1/2 w-2 h-2 rounded-full animate-float-1" style={{ background: '#3b82f6', opacity: 0.4 }}></div>
-        
-        {/* Very Subtle Background Dots - TinyWow Palette */}
-        <div className="absolute top-84 left-12 w-1.5 h-1.5 rounded-full animate-float-2" style={{ background: '#fb923c', opacity: 0.25 }}></div>
-        <div className="absolute top-88 right-20 w-1.5 h-1.5 rounded-full animate-float-3" style={{ background: '#ec4899', opacity: 0.25 }}></div>
-        <div className="absolute top-92 left-1/4 w-1.5 h-1.5 rounded-full animate-float-4" style={{ background: '#8b5cf6', opacity: 0.25 }}></div>
-        <div className="absolute top-96 right-1/4 w-1.5 h-1.5 rounded-full animate-float-1" style={{ background: '#9333ea', opacity: 0.25 }}></div>
+        {/* Hero Section Shapes - Starting from very top */}
+          {/* Very Top Front Shapes */}
+          {/* Circle Very Top Right - Blue */}
+          <div 
+            className="absolute top-4 right-20 w-5 h-5 rounded-full animate-float-1"
+            style={{
+              background: '#3b82f6',
+              opacity: 0.3
+            }}
+          ></div>
 
-      </div>
+          {/* Triangle Very Top Left - Green */}
+          <div 
+            className="absolute top-6 left-12 w-6 h-6 animate-float-2"
+            style={{
+              background: '#22c55e',
+              clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
+              opacity: 0.35
+            }}
+          ></div>
+
+          {/* Square Top Center - Orange */}
+          <div 
+            className="absolute top-8 left-1/2 w-4 h-4 animate-float-3"
+            style={{
+              background: '#f97316',
+              transform: 'rotate(45deg)',
+              opacity: 0.3
+            }}
+          ></div>
+
+          {/* Circle Top Left Area - Purple */}
+          <div 
+            className="absolute top-12 left-1/4 w-4 h-4 rounded-full animate-float-4"
+            style={{
+              background: '#9333ea',
+              opacity: 0.4
+            }}
+          ></div>
+
+          {/* Triangle Top Right Area - Cyan */}
+          <div 
+            className="absolute top-14 right-1/3 w-5 h-5 animate-float-1"
+            style={{
+              background: '#06b6d4',
+              clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
+              opacity: 0.3
+            }}
+          ></div>
+
+          {/* Triangle Top Left - Pink */}
+          <div 
+            className="absolute top-20 left-16 w-7 h-7 animate-float-1"
+            style={{
+              background: '#f472b6',
+              clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
+              opacity: 0.4
+            }}
+          ></div>
+
+          {/* Circle Top Right - Blue */}
+          <div 
+            className="absolute top-24 right-20 w-6 h-6 rounded-full animate-float-2"
+            style={{
+              background: '#60a5fa',
+              opacity: 0.45
+            }}
+          ></div>
+
+          {/* Square Center - Orange */}
+          <div 
+            className="absolute top-40 left-1/2 w-6 h-6 animate-float-3"
+            style={{
+              background: '#fb923c',
+              transform: 'rotate(45deg)',
+              opacity: 0.4
+            }}
+          ></div>
+
+          {/* Dot Right - Purple */}
+          <div 
+            className="absolute top-50 right-12 w-4 h-4 rounded-full animate-float-4"
+            style={{
+              background: '#c084fc',
+              opacity: 0.5
+            }}
+          ></div>
+
+
+          {/* Circle Bottom Right - Yellow */}
+          <div 
+            className="absolute bottom-24 right-16 w-6 h-6 rounded-full animate-float-2"
+            style={{
+              background: '#fbbf24',
+              opacity: 0.4
+            }}
+          ></div>
+
+          {/* Additional Shapes for Better Coverage */}
+          {/* Triangle Top Center - Cyan */}
+          <div 
+            className="absolute top-32 left-1/3 w-5 h-5 animate-float-3"
+            style={{
+              background: '#22d3ee',
+              clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
+              opacity: 0.35
+            }}
+          ></div>
+
+          {/* Circle Mid Left - Rose */}
+          <div 
+            className="absolute top-56 left-8 w-5 h-5 rounded-full animate-float-4"
+            style={{
+              background: '#fb7185',
+              opacity: 0.4
+            }}
+          ></div>
+
+
+          {/* Dot Bottom Center - Emerald */}
+          <div 
+            className="absolute bottom-16 left-1/2 w-4 h-4 rounded-full animate-float-2"
+            style={{
+              background: '#10b981',
+              opacity: 0.45
+            }}
+          ></div>
+
+
+          {/* Circle Bottom Area - Violet */}
+          <div 
+            className="absolute bottom-8 right-1/4 w-5 h-5 rounded-full animate-float-4"
+            style={{
+              background: '#8b5cf6',
+              opacity: 0.4
+            }}
+          ></div>
+
+          {/* Extended Section Shapes - Tools Area */}
+
+          {/* Circle Tools Right - Blue */}
+          <div 
+            className="absolute right-14 w-5 h-5 rounded-full animate-float-2"
+            style={{
+              background: '#3b82f6',
+              opacity: 0.35,
+              top: '28rem'
+            }}
+          ></div>
+
+
+          {/* Extended Section Shapes - What Is Area */}
+
+          {/* Circle What Is Right - Purple */}
+          <div 
+            className="absolute right-12 w-6 h-6 rounded-full animate-float-1"
+            style={{
+              background: '#9333ea',
+              opacity: 0.4,
+              top: '38rem'
+            }}
+          ></div>
+
+
+          {/* Dot What Is Left - Pink */}
+          <div 
+            className="absolute left-8 w-4 h-4 rounded-full animate-float-3"
+            style={{
+              background: '#ec4899',
+              opacity: 0.4,
+              top: '40rem'
+            }}
+          ></div>
+
+
+          {/* Circle What Is Bottom - Lime */}
+          <div 
+            className="absolute left-1/4 w-5 h-5 rounded-full animate-float-1"
+            style={{
+              background: '#84cc16',
+              opacity: 0.35,
+              top: '48rem'
+            }}
+          ></div>
+
+          {/* Additional scattered dots */}
+          <div className="absolute left-20 w-3 h-3 rounded-full animate-float-2" style={{ background: '#f59e0b', opacity: 0.3, top: '32rem' }}></div>
+          <div className="absolute right-20 w-3 h-3 rounded-full animate-float-3" style={{ background: '#8b5cf6', opacity: 0.35, top: '34rem' }}></div>
+          <div className="absolute left-2/3 w-3 h-3 rounded-full animate-float-4" style={{ background: '#f472b6', opacity: 0.3, top: '37rem' }}></div>
+          <div className="absolute right-1/4 w-3 h-3 rounded-full animate-float-1" style={{ background: '#10b981', opacity: 0.4, top: '43rem' }}></div>
+          <div className="absolute left-1/2 w-3 h-3 rounded-full animate-float-2" style={{ background: '#6366f1', opacity: 0.35, top: '46rem' }}></div>
+
+          {/* 5 New Small Circle Shapes */}
+          {/* Small Circle 1 - Hero Area - Red */}
+          <div 
+            className="absolute left-1/4 w-3 h-3 rounded-full animate-float-3"
+            style={{
+              background: '#dc2626',
+              opacity: 0.35,
+              top: '8rem'
+            }}
+          ></div>
+
+          {/* Small Circle 2 - Early Section - Blue */}
+          <div 
+            className="absolute right-1/3 w-4 h-4 rounded-full animate-float-1"
+            style={{
+              background: '#2563eb',
+              opacity: 0.3,
+              top: '18rem'
+            }}
+          ></div>
+
+          {/* Small Circle 3 - Mid Section - Green */}
+          <div 
+            className="absolute left-12 w-3 h-3 rounded-full animate-float-4"
+            style={{
+              background: '#16a34a',
+              opacity: 0.4,
+              top: '26rem'
+            }}
+          ></div>
+
+          {/* Small Circle 4 - Tools Area - Purple */}
+          <div 
+            className="absolute right-16 w-4 h-4 rounded-full animate-float-2"
+            style={{
+              background: '#7c3aed',
+              opacity: 0.35,
+              top: '33rem'
+            }}
+          ></div>
+
+          {/* Small Circle 5 - What Is Area - Orange */}
+          <div 
+            className="absolute left-1/3 w-3 h-3 rounded-full animate-float-3"
+            style={{
+              background: '#ea580c',
+              opacity: 0.3,
+              top: '41rem'
+            }}
+          ></div>
+
+        </div>
 
       {/* Hero Section - Mobile First */}
       <section className="relative bg-gradient-to-br from-blue-50 via-white to-purple-50 py-8 sm:py-12 lg:py-20 overflow-hidden">
@@ -203,6 +564,73 @@ export default function Home() {
             <p className="text-responsive-sm text-gray-600 mb-6 sm:mb-8 leading-relaxed max-w-2xl mx-auto px-4">
               We help you gain more followers on socials by enabling users to open a link directly in an app instead of an in-app browser.
             </p>
+
+            {/* Triangle and Rectangle Shapes Above App Opener Tool */}
+            <div className="absolute inset-0 pointer-events-none">
+              {/* Triangle Left - Red */}
+              <div 
+                className="absolute top-16 left-10 w-6 h-6 animate-float-1"
+                style={{
+                  background: '#ef4444',
+                  clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
+                  opacity: 0.3
+                }}
+              ></div>
+
+              {/* Square Center - Green */}
+              <div 
+                className="absolute left-1/2 w-5 h-5 animate-float-3"
+                style={{
+                  background: '#22c55e',
+                  transform: 'rotate(45deg)',
+                  opacity: 0.3,
+                  top: '4.5rem'
+                }}
+              ></div>
+
+              {/* Triangle Right - Orange */}
+              <div 
+                className="absolute top-20 right-16 w-7 h-7 animate-float-4"
+                style={{
+                  background: '#f97316',
+                  clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
+                  opacity: 0.35
+                }}
+              ></div>
+
+              {/* Square Right - Teal */}
+              <div 
+                className="absolute right-1/3 w-6 h-6 animate-float-2"
+                style={{
+                  background: '#14b8a6',
+                  transform: 'rotate(30deg)',
+                  opacity: 0.35,
+                  top: '5.5rem'
+                }}
+              ></div>
+
+              {/* Triangle Center Left - Amber */}
+              <div 
+                className="absolute left-1/4 w-6 h-6 animate-float-3"
+                style={{
+                  background: '#f59e0b',
+                  clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
+                  opacity: 0.35,
+                  top: '6rem'
+                }}
+              ></div>
+
+              {/* Square Far Right - Indigo */}
+              <div 
+                className="absolute right-8 w-5 h-5 animate-float-1"
+                style={{
+                  background: '#818cf8',
+                  transform: 'rotate(30deg)',
+                  opacity: 0.35,
+                  top: '6.5rem'
+                }}
+              ></div>
+            </div>
 
             {/* URL Input and Generate Button */}
             <div className="max-w-2xl mx-auto mb-8 px-4">
@@ -311,88 +739,62 @@ export default function Home() {
 
       {/* Our More Tools Section - Lightning Fast */}
       <section className="py-12 sm:py-16 lg:py-20 bg-white border-t-2 border-dashed border-gray-300">
-        <div className="container-mobile max-w-6xl">
+        <div className="container-mobile max-w-4xl">
           <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-responsive-xl font-bold text-gray-900 mb-2">
+            <div className="inline-block bg-orange-500 text-white px-6 py-2 rounded-full text-lg font-medium mb-8 sm:mb-12">
               Our More Tools : Try It
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
-            {/* Thumbnail Downloader Card */}
-            <div>
-              <Card className="group h-full overflow-hidden border border-green-200 hover:border-green-300 transition-all duration-300 hover:shadow-lg">
-                <div className="p-6 sm:p-8 h-full flex flex-col">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-green-400 to-green-600 rounded-lg flex items-center justify-center">
-                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+              {/* Thumbnail Downloader Section */}
+              <Link href="/thumbnail-downloader">
+                <div
+                  className="card-mobile p-6 sm:p-8 hover:shadow-lg cursor-pointer"
+                  data-testid="thumbnail-downloader-card"
+                >
+                  <div className="text-center space-y-4">
+                    <div className="w-16 h-16 mx-auto bg-green-100 rounded-full flex items-center justify-center">
+                      <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                       </svg>
                     </div>
-                    <span className="text-xs font-semibold text-green-600 bg-green-100 px-2 py-1 rounded-full">
-                      Free Tool
-                    </span>
+                    <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
+                      Thumbnail Downloader
+                    </h3>
+                    <p className="text-gray-600 text-sm mt-2">
+                      Extract and download high-quality thumbnails
+                    </p>
                   </div>
-                  
-                  <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-green-700 transition-colors">
-                    Thumbnail Downloader
-                  </h3>
-                  
-                  <p className="text-sm text-gray-600 mb-6 flex-grow">
-                    Download high-quality thumbnails from YouTube, Instagram, TikTok, and other social media platforms instantly.
-                  </p>
-                  
-                  <a 
-                    href="/thumbnail-downloader"
-                    className="inline-flex items-center justify-center w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 hover:shadow-lg group-hover:scale-105"
-                    data-testid="link-thumbnail-downloader"
-                  >
-                    <span>Try Thumbnail Downloader</span>
-                    <ExternalLink className="w-4 h-4 ml-2" />
-                  </a>
                 </div>
-              </Card>
-            </div>
+              </Link>
 
-            {/* Format Converter Card */}
-            <div>
-              <Card className="group h-full overflow-hidden border border-blue-200 hover:border-blue-300 transition-all duration-300 hover:shadow-lg">
-                <div className="p-6 sm:p-8 h-full flex flex-col">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg flex items-center justify-center">
-                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+              {/* Format Converter Section */}
+              <Link href="/format-converter">
+                <div
+                  className="card-mobile p-6 sm:p-8 hover:shadow-lg cursor-pointer"
+                  data-testid="format-converter-card"
+                >
+                  <div className="text-center space-y-4">
+                    <div className="w-16 h-16 mx-auto bg-blue-100 rounded-full flex items-center justify-center">
+                      <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                       </svg>
                     </div>
-                    <span className="text-xs font-semibold text-blue-600 bg-blue-100 px-2 py-1 rounded-full">
-                      Free Tool
-                    </span>
+                    <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
+                      Format Converter
+                    </h3>
+                    <p className="text-gray-600 text-sm mt-2">
+                      Convert images to any format instantly, free online.
+                    </p>
                   </div>
-                  
-                  <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-700 transition-colors">
-                    Format Converter
-                  </h3>
-                  
-                  <p className="text-sm text-gray-600 mb-6 flex-grow">
-                    Convert images between 8+ popular formats including PNG, JPEG, WebP, GIF, BMP, TIFF, AVIF, and ICO with quality controls.
-                  </p>
-                  
-                  <a 
-                    href="/format-converter"
-                    className="inline-flex items-center justify-center w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-300 hover:shadow-lg group-hover:scale-105"
-                    data-testid="link-format-converter"
-                  >
-                    <span>Try Format Converter</span>
-                    <ExternalLink className="w-4 h-4 ml-2" />
-                  </a>
                 </div>
-              </Card>
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* What is GinyWow App Opener Section */}
+      {/* What is Section - Mobile Optimized */}
       <section className="pt-8 sm:pt-12 lg:pt-16 pb-12 sm:pb-16 lg:pb-20 bg-white">
         <div className="container-mobile max-w-4xl">
           <div className="animate-on-scroll">
@@ -414,6 +816,186 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Why Use Section - Mobile Grid */}
+      <section className="py-12 sm:py-16 lg:py-20 bg-gray-50">
+        <div className="container-mobile max-w-5xl">
+          <div className="animate-on-scroll">
+            <div className="text-center mb-8 sm:mb-12">
+              <h2 className="text-responsive-xl font-bold text-gray-900 mb-4 sm:mb-8">
+                Why Use GinyWow App Opener?
+              </h2>
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
+              {[
+                {
+                  icon: <svg className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" /></svg>,
+                  title: "Better User Experience",
+                  description: "Open links directly in native apps for smoother navigation",
+                  color: "blue"
+                },
+                {
+                  icon: <svg className="w-4 h-4 sm:w-5 sm:h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>,
+                  title: "Higher Engagement",
+                  description: "Native app experience leads to better user retention",
+                  color: "green"
+                },
+                {
+                  icon: <svg className="w-4 h-4 sm:w-5 sm:h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>,
+                  title: "Universal Compatibility",
+                  description: "Works with all major social media platforms and websites",
+                  color: "purple"
+                },
+                {
+                  icon: <svg className="w-4 h-4 sm:w-5 sm:h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>,
+                  title: "Increased Followers",
+                  description: "Better experience converts more visitors to followers",
+                  color: "orange"
+                }
+              ].map((benefit, index) => (
+                <div
+                  key={index}
+                  className="card-mobile p-4 sm:p-6 animate-on-scroll"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <div className="flex items-start space-x-3 sm:space-x-4">
+                    <div className={`w-8 h-8 sm:w-10 sm:h-10 bg-${benefit.color}-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1`}>
+                      {benefit.icon}
+                    </div>
+                    <div>
+                      <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-2">
+                        {benefit.title}
+                      </h3>
+                      <p className="text-sm sm:text-base text-gray-600">
+                        {benefit.description}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works Section - Mobile Steps */}
+      <section className="py-12 sm:py-16 lg:py-20 bg-white">
+        <div className="container-mobile max-w-4xl">
+          <div className="animate-on-scroll">
+            <div className="text-center mb-8 sm:mb-12">
+              <h2 className="text-responsive-xl font-bold text-gray-900 mb-4 sm:mb-8">
+                How to Use GinyWow App Opener?
+              </h2>
+              <p className="text-responsive-sm text-gray-600">Simple 3-step process:</p>
+            </div>
+            
+            <div className="space-y-6 sm:space-y-8">
+              {[
+                {
+                  number: 1,
+                  title: "Paste Your URL",
+                  description: "Copy and paste any social media or website URL into the input field",
+                  bgColor: "bg-blue-600"
+                },
+                {
+                  number: 2,
+                  title: "Generate Link",
+                  description: "Click 'Generate' to create your smart app-opening link",
+                  bgColor: "bg-green-600"
+                },
+                {
+                  number: 3,
+                  title: "Share & Engage",
+                  description: "Share your new link and watch users open it directly in apps",
+                  bgColor: "bg-purple-600"
+                }
+              ].map((step, index) => (
+                <div
+                  key={index}
+                  className="card-mobile p-4 sm:p-6 animate-on-scroll"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <div className="flex items-start space-x-4">
+                    <div className={`w-10 h-10 sm:w-12 sm:h-12 ${step.bgColor} text-white rounded-full flex items-center justify-center text-sm sm:text-base font-bold flex-shrink-0`}>
+                      {step.number}
+                    </div>
+                    <div>
+                      <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-2">
+                        {step.title}
+                      </h3>
+                      <p className="text-sm sm:text-base text-gray-600">
+                        {step.description}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-12 sm:py-16 lg:py-20 bg-gray-50">
+        <div className="container-mobile max-w-4xl">
+          <div className="animate-on-scroll">
+            <div className="text-center mb-8 sm:mb-12">
+              <h2 className="text-responsive-xl font-bold text-gray-900 mb-4 sm:mb-8">
+                Frequently Asked Questions (FAQ)
+              </h2>
+            </div>
+            
+            <div className="space-y-6 sm:space-y-8">
+              {[
+                {
+                  question: "Is the App Opener tool free to use?",
+                  answer: "Yes! Our App Opener tool is completely free. You can generate unlimited app opener links without any hidden charges."
+                },
+                {
+                  question: "Which apps are supported by the App Opener?",
+                  answer: "Currently, our tool supports popular apps like **YouTube, Instagram, Facebook, and Twitter**. We are working to add support for even more apps very soon."
+                },
+                {
+                  question: "Why should I use App Opener instead of a normal link?",
+                  answer: "A normal link usually opens in a browser, which lowers engagement. With App Opener, your audience will directly land inside the app, making it easier for them to **subscribe, follow, or engage** with your content."
+                },
+                {
+                  question: "Do I need to sign up to use this tool?",
+                  answer: "No sign-up is required. Just paste your link, generate the App Opener link, and share it anywhere. Simple and fast!"
+                },
+                {
+                  question: "Can businesses also use the App Opener?",
+                  answer: "Absolutely! Whether you're a **YouTuber, influencer, digital marketer, or business owner**, this tool helps you drive better conversions and improve customer experience."
+                }
+              ].map((faq, index) => (
+                <div
+                  key={index}
+                  className="card-mobile p-4 sm:p-6 animate-on-scroll"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                  data-testid={`faq-item-${index + 1}`}
+                >
+                  <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-3">
+                    {faq.question}
+                  </h3>
+                  <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
+                    {faq.answer.split('**').map((part, i) => 
+                      i % 2 === 1 ? <strong key={i} className="font-semibold text-gray-800">{part}</strong> : part
+                    )}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Newsletter Section */}
+      <NewsletterSection />
+
+      <Suspense fallback={<div className="h-16 bg-gray-50 animate-pulse" />}>
+        <Footer />
+      </Suspense>
     </div>
   );
 }
