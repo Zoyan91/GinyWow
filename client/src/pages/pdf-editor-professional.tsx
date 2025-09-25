@@ -545,6 +545,91 @@ export default function ProfessionalPDFEditor() {
                 opacity: 0.3,
               });
               break;
+            case 'underline':
+              page.drawLine({
+                start: { x: element.x, y: page.getHeight() - element.y - (element.height || 0) + 2 },
+                end: { x: element.x + (element.width || 120), y: page.getHeight() - element.y - (element.height || 0) + 2 },
+                thickness: 2,
+                color: rgb(
+                  parseInt(element.color?.slice(1, 3) || 'FF', 16) / 255,
+                  parseInt(element.color?.slice(3, 5) || '00', 16) / 255,
+                  parseInt(element.color?.slice(5, 7) || '00', 16) / 255
+                ),
+              });
+              break;
+            case 'strikethrough':
+              page.drawLine({
+                start: { x: element.x, y: page.getHeight() - element.y - (element.height || 0) / 2 },
+                end: { x: element.x + (element.width || 120), y: page.getHeight() - element.y - (element.height || 0) / 2 },
+                thickness: 2,
+                color: rgb(
+                  parseInt(element.color?.slice(1, 3) || 'FF', 16) / 255,
+                  parseInt(element.color?.slice(3, 5) || '00', 16) / 255,
+                  parseInt(element.color?.slice(5, 7) || '00', 16) / 255
+                ),
+              });
+              break;
+            case 'arrow':
+              // Draw arrow line
+              page.drawLine({
+                start: { x: element.x, y: page.getHeight() - element.y },
+                end: { x: element.endX || element.x + 100, y: page.getHeight() - element.y },
+                thickness: element.strokeWidth || 2,
+                color: rgb(
+                  parseInt(element.strokeColor?.slice(1, 3) || '00', 16) / 255,
+                  parseInt(element.strokeColor?.slice(3, 5) || '00', 16) / 255,
+                  parseInt(element.strokeColor?.slice(5, 7) || '00', 16) / 255
+                ),
+              });
+              // Draw arrow head
+              const arrowSize = 8;
+              const endX = element.endX || element.x + 100;
+              page.drawLine({
+                start: { x: endX, y: page.getHeight() - element.y },
+                end: { x: endX - arrowSize, y: page.getHeight() - element.y - arrowSize/2 },
+                thickness: element.strokeWidth || 2,
+                color: rgb(
+                  parseInt(element.strokeColor?.slice(1, 3) || '00', 16) / 255,
+                  parseInt(element.strokeColor?.slice(3, 5) || '00', 16) / 255,
+                  parseInt(element.strokeColor?.slice(5, 7) || '00', 16) / 255
+                ),
+              });
+              page.drawLine({
+                start: { x: endX, y: page.getHeight() - element.y },
+                end: { x: endX - arrowSize, y: page.getHeight() - element.y + arrowSize/2 },
+                thickness: element.strokeWidth || 2,
+                color: rgb(
+                  parseInt(element.strokeColor?.slice(1, 3) || '00', 16) / 255,
+                  parseInt(element.strokeColor?.slice(3, 5) || '00', 16) / 255,
+                  parseInt(element.strokeColor?.slice(5, 7) || '00', 16) / 255
+                ),
+              });
+              break;
+            case 'image':
+              if (element.src) {
+                try {
+                  // Note: For full image support, you'd need to fetch and embed the image
+                  // This is a placeholder - in production you'd use embedPng/embedJpg
+                  page.drawRectangle({
+                    x: element.x,
+                    y: page.getHeight() - element.y - (element.height || 100),
+                    width: element.width || 150,
+                    height: element.height || 100,
+                    borderColor: rgb(0.5, 0.5, 0.5),
+                    borderWidth: 1,
+                  });
+                  // Add placeholder text
+                  page.drawText('Image', {
+                    x: element.x + 10,
+                    y: page.getHeight() - element.y - 50,
+                    size: 12,
+                    color: rgb(0.5, 0.5, 0.5),
+                  });
+                } catch (error) {
+                  console.error('Error rendering image:', error);
+                }
+              }
+              break;
           }
         }
       }
