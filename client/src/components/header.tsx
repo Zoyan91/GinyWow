@@ -13,8 +13,6 @@ const preloadPage = (path: string) => {
     import("@/pages/thumbnail-optimizer");
   } else if (path === "/format-converter") {
     import("@/pages/format-converter");
-  } else if (path === "/contact") {
-    import("@/pages/contact");
   } else if (path === "/about") {
     import("@/pages/about");
   }
@@ -40,8 +38,6 @@ export default function Header({ currentPage }: HeaderProps) {
   const navItems = [
     { href: "/", label: "App Opener", testId: "nav-app-opener" },
     { href: "/format-converter", label: "Format Converter", testId: "nav-converter" },
-    { href: "/contact", label: "Contact", testId: "nav-contact" },
-    { href: "/blog", label: "Blog", testId: "nav-blog" },
   ];
 
   // Thumbnail dropdown items
