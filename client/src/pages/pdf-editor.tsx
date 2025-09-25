@@ -25,8 +25,8 @@ export default function PDFEditor() {
   const [textInput, setTextInput] = useState('');
   const [textPosition, setTextPosition] = useState({ x: 0, y: 0 });
   const [isTextInputVisible, setIsTextInputVisible] = useState(false);
-  const [textElements, setTextElements] = useState<Array<{id: string, text: string, x: number, y: number, size: number}>>([]);
-  const [imageElements, setImageElements] = useState<Array<{id: string, src: string, x: number, y: number, width: number, height: number}>>([]);
+  const [textElements, setTextElements] = useState<Record<number, Array<{id: string, text: string, x: number, y: number, size: number}>>>({});
+  const [imageElements, setImageElements] = useState<Record<number, Array<{id: string, src: string, x: number, y: number, width: number, height: number}>>>({});
   const [selectedElement, setSelectedElement] = useState<string | null>(null);
   const [pdfPages, setPdfPages] = useState<any[]>([]);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -308,15 +308,19 @@ export default function PDFEditor() {
     }
   };
 
-  // Render editing overlays (text and images) on canvas
+  // Render editing overlays (text and images) for current page only
   const renderEditingOverlays = () => {
     if (!canvasRef.current) return;
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Render text elements
-    textElements.forEach(element => {
+    // Get elements for current page only
+    const pageTextElements = textElements[currentPage] || [];
+    const pageImageElements = imageElements[currentPage] || [];
+
+    // Render text elements for current page
+    pageTextElements.forEach(element => {
       ctx.fillStyle = selectedElement === element.id ? 'rgba(0, 0, 255, 0.8)' : 'black';
       ctx.font = `${element.size}px Arial`;
       ctx.fillText(element.text, element.x, element.y);
@@ -330,8 +334,8 @@ export default function PDFEditor() {
       }
     });
 
-    // Render image elements
-    imageElements.forEach(element => {
+    // Render image elements for current page
+    pageImageElements.forEach(element => {
       const img = new Image();
       img.onload = () => {
         ctx.drawImage(img, element.x, element.y, element.width, element.height);
@@ -360,7 +364,10 @@ export default function PDFEditor() {
         size: 16
       };
       
-      setTextElements([...textElements, newTextElement]);
+      setTextElements(prev => ({
+        ...prev,
+        [currentPage]: [...(prev[currentPage] || []), newTextElement]
+      }));
       setTextInput('');
       setIsTextInputVisible(false);
       setEditMode(null);
@@ -389,9 +396,15 @@ export default function PDFEditor() {
     if (!selectedElement) return;
     
     if (selectedElement.startsWith('text-')) {
-      setTextElements(textElements.filter(el => el.id !== selectedElement));
+      setTextElements(prev => ({
+        ...prev,
+        [currentPage]: (prev[currentPage] || []).filter(el => el.id !== selectedElement)
+      }));
     } else if (selectedElement.startsWith('image-')) {
-      setImageElements(imageElements.filter(el => el.id !== selectedElement));
+      setImageElements(prev => ({
+        ...prev,
+        [currentPage]: (prev[currentPage] || []).filter(el => el.id !== selectedElement)
+      }));
     }
     
     setSelectedElement(null);
@@ -415,16 +428,18 @@ export default function PDFEditor() {
     // Check if clicking on existing elements
     let clickedElement = null;
     
-    // Check text elements
-    textElements.forEach(element => {
+    // Check text elements for current page
+    const pageTextElements = textElements[currentPage] || [];
+    pageTextElements.forEach(element => {
       if (x >= element.x - 10 && x <= element.x + 100 && 
           y >= element.y - element.size && y <= element.y + 10) {
         clickedElement = element.id;
       }
     });
     
-    // Check image elements
-    imageElements.forEach(element => {
+    // Check image elements for current page
+    const pageImageElements = imageElements[currentPage] || [];
+    pageImageElements.forEach(element => {
       if (x >= element.x && x <= element.x + element.width &&
           y >= element.y && y <= element.y + element.height) {
         clickedElement = element.id;
@@ -460,7 +475,10 @@ export default function PDFEditor() {
         height: 100
       };
       
-      setImageElements([...imageElements, newImageElement]);
+      setImageElements(prev => ({
+        ...prev,
+        [currentPage]: [...(prev[currentPage] || []), newImageElement]
+      }));
       setSelectedElement(newImageElement.id);
       setEditMode(null);
       
@@ -491,43 +509,49 @@ export default function PDFEditor() {
       const originalArrayBuffer = await file.arrayBuffer();
       const workingDoc = await PDFDocument.load(originalArrayBuffer);
       const pages = workingDoc.getPages();
-      const page = pages[currentPage];
       
-      // Apply text elements to PDF
-      textElements.forEach(element => {
-        page.drawText(element.text, {
-          x: element.x,
-          y: page.getHeight() - element.y, // PDF coordinates are from bottom-left
-          size: element.size,
-          color: rgb(0, 0, 0),
+      // Apply elements to ALL pages, not just current page
+      for (let pageIndex = 0; pageIndex < pages.length; pageIndex++) {
+        const page = pages[pageIndex];
+        const pageTextElements = textElements[pageIndex] || [];
+        const pageImageElements = imageElements[pageIndex] || [];
+        
+        // Apply text elements for this page
+        pageTextElements.forEach(element => {
+          page.drawText(element.text, {
+            x: element.x,
+            y: page.getHeight() - element.y, // PDF coordinates are from bottom-left
+            size: element.size,
+            color: rgb(0, 0, 0),
+          });
         });
-      });
-      
-      // Apply image elements to PDF
-      for (const element of imageElements) {
-        try {
-          // Convert image URL back to blob
-          const response = await fetch(element.src);
-          const blob = await response.blob();
-          const arrayBuffer = await blob.arrayBuffer();
-          
-          let image;
-          if (blob.type === 'image/png') {
-            image = await workingDoc.embedPng(arrayBuffer);
-          } else if (blob.type === 'image/jpeg') {
-            image = await workingDoc.embedJpg(arrayBuffer);
+        
+        // Apply image elements for this page
+        for (const element of pageImageElements) {
+          try {
+            // Convert image URL back to blob
+            const response = await fetch(element.src);
+            const blob = await response.blob();
+            const arrayBuffer = await blob.arrayBuffer();
+            
+            let image;
+            if (blob.type === 'image/png') {
+              image = await workingDoc.embedPng(arrayBuffer);
+            } else if (blob.type === 'image/jpeg') {
+              image = await workingDoc.embedJpg(arrayBuffer);
+            }
+            
+            if (image) {
+              page.drawImage(image, {
+                x: element.x,
+                y: page.getHeight() - element.y - element.height,
+                width: element.width,
+                height: element.height,
+              });
+            }
+          } catch (imgError) {
+            console.error('Error processing image:', imgError);
           }
-          
-          if (image) {
-            page.drawImage(image, {
-              x: element.x,
-              y: page.getHeight() - element.y - element.height,
-              width: element.width,
-              height: element.height,
-            });
-          }
-        } catch (imgError) {
-          console.error('Error processing image:', imgError);
         }
       }
       
