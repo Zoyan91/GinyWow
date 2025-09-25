@@ -12,6 +12,9 @@ import Footer from "@/components/footer";
 export default function PDFMerge() {
   const [files, setFiles] = useState<File[]>([]);
   const [isMerging, setIsMerging] = useState(false);
+  const [downloadReady, setDownloadReady] = useState(false);
+  const [downloadUrl, setDownloadUrl] = useState<string>('');
+  const [mergedFileName, setMergedFileName] = useState<string>('');
   const { toast } = useToast();
   
   useScrollAnimation();
@@ -86,31 +89,15 @@ export default function PDFMerge() {
       const result = await response.json();
       
       if (result.success) {
-        // Download the merged file
-        const downloadResponse = await fetch(result.downloadUrl);
-        if (downloadResponse.ok) {
-          const blob = await downloadResponse.blob();
-          const downloadUrl = window.URL.createObjectURL(blob);
-          
-          const link = document.createElement('a');
-          link.href = downloadUrl;
-          link.download = result.mergedFileName;
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-          
-          // Clean up the blob URL
-          window.URL.revokeObjectURL(downloadUrl);
-          
-          toast({
-            title: "Merge Complete!",
-            description: `Successfully merged ${result.originalFileCount} PDF files into ${result.mergedFileName} and downloaded.`,
-          });
-          
-          setFiles([]);
-        } else {
-          throw new Error('Failed to download merged file');
-        }
+        // Prepare download without auto-downloading
+        setDownloadUrl(result.downloadUrl);
+        setMergedFileName(result.mergedFileName);
+        setDownloadReady(true);
+        
+        toast({
+          title: "Merge Complete!",
+          description: `Successfully merged ${result.originalFileCount} PDF files into ${result.mergedFileName}. Click download button to save file.`,
+        });
       } else {
         throw new Error(result.message || 'Merge failed');
       }
@@ -124,6 +111,49 @@ export default function PDFMerge() {
     } finally {
       setIsMerging(false);
     }
+  };
+
+  const handleDownload = async () => {
+    if (!downloadUrl || !mergedFileName) return;
+    
+    try {
+      const response = await fetch(downloadUrl);
+      if (response.ok) {
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = mergedFileName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        // Clean up the blob URL
+        window.URL.revokeObjectURL(url);
+        
+        toast({
+          title: "Downloaded!",
+          description: `${mergedFileName} has been downloaded successfully.`,
+        });
+      } else {
+        throw new Error('Failed to download file');
+      }
+    } catch (error) {
+      console.error('Download error:', error);
+      toast({
+        title: "Download Failed",
+        description: "Failed to download the merged file. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const resetForm = () => {
+    setFiles([]);
+    setDownloadReady(false);
+    setDownloadUrl('');
+    setMergedFileName('');
   };
 
   return (
@@ -265,23 +295,47 @@ export default function PDFMerge() {
                       ))}
                     </div>
                     
-                    <Button 
-                      onClick={handleMerge}
-                      disabled={isMerging || files.length < 2}
-                      className="bg-orange-600 hover:bg-orange-700 w-full"
-                    >
-                      {isMerging ? (
-                        <div className="flex items-center">
-                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
-                          Merging PDFs...
-                        </div>
-                      ) : (
-                        <div className="flex items-center">
-                          <Plus className="w-4 h-4 mr-2" />
-                          Merge {files.length} PDF Files
-                        </div>
-                      )}
-                    </Button>
+                    {!downloadReady ? (
+                      <Button 
+                        onClick={handleMerge}
+                        disabled={isMerging || files.length < 2}
+                        className="bg-orange-600 hover:bg-orange-700 w-full"
+                        data-testid="button-merge"
+                      >
+                        {isMerging ? (
+                          <div className="flex items-center">
+                            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                            Merging PDFs...
+                          </div>
+                        ) : (
+                          <div className="flex items-center">
+                            <Plus className="w-4 h-4 mr-2" />
+                            Merge {files.length} PDF Files
+                          </div>
+                        )}
+                      </Button>
+                    ) : (
+                      <div className="space-y-3">
+                        <Button 
+                          onClick={handleDownload}
+                          className="bg-green-600 hover:bg-green-700 w-full"
+                          data-testid="button-download"
+                        >
+                          <div className="flex items-center justify-center">
+                            <Download className="w-4 h-4 mr-2" />
+                            Download {mergedFileName}
+                          </div>
+                        </Button>
+                        <Button 
+                          onClick={resetForm}
+                          variant="outline"
+                          className="w-full"
+                          data-testid="button-reset"
+                        >
+                          Merge Different Files
+                        </Button>
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
