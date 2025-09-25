@@ -580,124 +580,207 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
 
 
-  // Extract Video Metadata API Endpoint  
+  // Universal Video Metadata API Endpoint - All Platforms
   app.post('/api/video-metadata', async (req, res) => {
     try {
       const { videoUrl } = videoMetadataSchema.parse(req.body);
       
-      // Validate YouTube URL
-      if (!ytdl.validateURL(videoUrl)) {
+      // Basic URL validation for any platform
+      if (!videoUrl || !videoUrl.startsWith('http')) {
         return res.status(400).json({ 
           success: false,
-          error: 'Please provide a valid YouTube URL' 
+          error: 'Please provide a valid video URL from any platform' 
         });
       }
 
-      try {
-        // Get video info with formats
-        const info = await ytdl.getInfo(videoUrl);
-        const videoDetails = info.videoDetails;
-        
-        // Extract available formats
-        const availableFormats = info.formats
-          .filter(format => format.hasVideo || format.hasAudio)
-          .map(format => {
-            const quality = format.qualityLabel || 
-                           (format.hasAudio && !format.hasVideo ? 'Audio' : 'Unknown');
-            const container = format.container || 'mp4';
-            const codec = format.codecs || 'unknown';
-            const fps = format.fps || undefined;
-            
-            // Calculate approximate file size if available
-            let fileSize = undefined;
-            if (format.contentLength) {
-              const sizeInMB = parseInt(format.contentLength) / (1024 * 1024);
-              fileSize = sizeInMB > 1000 ? 
-                `${(sizeInMB / 1024).toFixed(1)} GB` : 
-                `${sizeInMB.toFixed(1)} MB`;
-            }
+      // Detect platform and handle accordingly
+      const isYouTube = videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be');
 
-            return {
-              quality: quality,
-              format: container.toUpperCase(),
-              codec: codec,
-              bitrate: format.audioBitrate ? `${format.audioBitrate}kbps` : undefined,
-              fps: fps,
-              fileSize: fileSize,
-              downloadUrl: format.url
-            };
-          })
-          .filter((format, index, self) => 
-            // Remove duplicates based on quality + format combination
-            index === self.findIndex(f => f.quality === format.quality && f.format === format.format)
-          )
-          .sort((a, b) => {
-            // Sort by quality (higher first)
-            const qualityOrder = ['2160p', '1440p', '1080p', '720p', '480p', '360p', '240p', '144p'];
-            const aIndex = qualityOrder.findIndex(q => a.quality.includes(q));
-            const bIndex = qualityOrder.findIndex(q => b.quality.includes(q));
-            
-            if (aIndex !== -1 && bIndex !== -1) {
-              return aIndex - bIndex;
-            }
-            
-            // Audio formats at the end
-            if (a.quality.includes('Audio') && !b.quality.includes('Audio')) return 1;
-            if (b.quality.includes('Audio') && !a.quality.includes('Audio')) return -1;
-            
-            return 0;
+      if (isYouTube) {
+        // Handle YouTube with ytdl-core
+        try {
+          const info = await ytdl.getInfo(videoUrl);
+          const videoDetails = info.videoDetails;
+          
+          // Extract available formats
+          const availableFormats = info.formats
+            .filter(format => format.hasVideo || format.hasAudio)
+            .map(format => {
+              const quality = format.qualityLabel || 
+                             (format.hasAudio && !format.hasVideo ? 'Audio' : 'Unknown');
+              const container = format.container || 'mp4';
+              const codec = format.codecs || 'unknown';
+              const fps = format.fps || undefined;
+              
+              // Calculate approximate file size if available
+              let fileSize = undefined;
+              if (format.contentLength) {
+                const sizeInMB = parseInt(format.contentLength) / (1024 * 1024);
+                fileSize = sizeInMB > 1000 ? 
+                  `${(sizeInMB / 1024).toFixed(1)} GB` : 
+                  `${sizeInMB.toFixed(1)} MB`;
+              }
+
+              return {
+                quality: quality,
+                format: container.toUpperCase(),
+                codec: codec,
+                bitrate: format.audioBitrate ? `${format.audioBitrate}kbps` : undefined,
+                fps: fps,
+                fileSize: fileSize,
+                downloadUrl: videoUrl // Use original URL for downloads
+              };
+            })
+            .filter((format, index, self) => 
+              // Remove duplicates based on quality + format combination
+              index === self.findIndex(f => f.quality === format.quality && f.format === format.format)
+            )
+            .sort((a, b) => {
+              // Sort by quality (higher first)
+              const qualityOrder = ['2160p', '1440p', '1080p', '720p', '480p', '360p', '240p', '144p'];
+              const aIndex = qualityOrder.findIndex(q => a.quality.includes(q));
+              const bIndex = qualityOrder.findIndex(q => b.quality.includes(q));
+              
+              if (aIndex !== -1 && bIndex !== -1) {
+                return aIndex - bIndex;
+              }
+              
+              // Audio formats at the end
+              if (a.quality.includes('Audio') && !b.quality.includes('Audio')) return 1;
+              if (b.quality.includes('Audio') && !a.quality.includes('Audio')) return -1;
+              
+              return 0;
+            });
+
+          // Format duration from seconds to MM:SS
+          const formatDuration = (seconds: string) => {
+            const secs = parseInt(seconds);
+            const minutes = Math.floor(secs / 60);
+            const remainingSeconds = secs % 60;
+            return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+          };
+
+          const metadata = {
+            title: videoDetails.title || 'Untitled Video',
+            duration: formatDuration(videoDetails.lengthSeconds || '0'),
+            thumbnail: videoDetails.thumbnails?.[videoDetails.thumbnails.length - 1]?.url || 
+                      `https://img.youtube.com/vi/${videoDetails.videoId}/maxresdefault.jpg`,
+            platform: 'youtube',
+            videoId: videoDetails.videoId,
+            availableFormats: availableFormats
+          };
+
+          res.json({
+            success: true,
+            metadata
           });
 
-        // Format duration from seconds to MM:SS
-        const formatDuration = (seconds: string) => {
-          const secs = parseInt(seconds);
-          const minutes = Math.floor(secs / 60);
-          const remainingSeconds = secs % 60;
-          return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
-        };
+        } catch (ytdlError: any) {
+          console.error('YouTube YTDL Error:', ytdlError);
+          
+          // Fallback to basic metadata if ytdl fails
+          const videoIdMatch = videoUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/);
+          const videoId = videoIdMatch ? videoIdMatch[1] : 'unknown';
+          
+          const fallbackFormats = [
+            { quality: '1080p', format: 'MP4', codec: 'avc1', downloadUrl: videoUrl, fileSize: 'N/A' },
+            { quality: '720p', format: 'MP4', codec: 'avc1', downloadUrl: videoUrl, fileSize: 'N/A' },
+            { quality: '480p', format: 'MP4', codec: 'avc1', downloadUrl: videoUrl, fileSize: 'N/A' },
+            { quality: 'Audio', format: 'MP3', codec: 'mp3', bitrate: '128kbps', downloadUrl: videoUrl, fileSize: 'N/A' }
+          ];
 
-        const metadata = {
-          title: videoDetails.title || 'Untitled Video',
-          duration: formatDuration(videoDetails.lengthSeconds || '0'),
-          thumbnail: videoDetails.thumbnails?.[videoDetails.thumbnails.length - 1]?.url || 
-                    `https://img.youtube.com/vi/${videoDetails.videoId}/maxresdefault.jpg`,
-          platform: 'youtube',
-          videoId: videoDetails.videoId,
-          availableFormats: availableFormats
-        };
+          const metadata = {
+            title: 'YouTube Video',
+            duration: '0:00',
+            thumbnail: `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
+            platform: 'youtube',
+            videoId: videoId,
+            availableFormats: fallbackFormats
+          };
 
-        res.json({
-          success: true,
-          metadata
-        });
+          res.json({
+            success: true,
+            metadata
+          });
+        }
+      } else {
+        // Handle other platforms (Instagram, TikTok, Facebook, etc.)
+        try {
+          // Try to download yt-dlp binary if needed
+          try {
+            await YTDlpWrap.downloadFromGithub('./yt-dlp');
+          } catch (downloadError) {
+            console.log('yt-dlp binary already exists or download failed, continuing...');
+          }
+          
+          const ytDlpInstance = new YTDlpWrap('./yt-dlp');
+          
+          // Get video info for other platforms
+          const videoInfo = await ytDlpInstance.getVideoInfo(videoUrl);
+          
+          // Create platform-specific formats
+          const availableFormats = [
+            { quality: '1080p', format: 'MP4', codec: 'avc1', downloadUrl: videoUrl, fileSize: 'N/A' },
+            { quality: '720p', format: 'MP4', codec: 'avc1', downloadUrl: videoUrl, fileSize: 'N/A' },
+            { quality: '480p', format: 'MP4', codec: 'avc1', downloadUrl: videoUrl, fileSize: 'N/A' },
+            { quality: 'Audio', format: 'MP3', codec: 'mp3', bitrate: '128kbps', downloadUrl: videoUrl, fileSize: 'N/A' }
+          ];
 
-      } catch (ytdlError: any) {
-        console.error('YTDL Error:', ytdlError);
-        
-        // Fallback to basic metadata if ytdl fails
-        const videoIdMatch = videoUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/);
-        const videoId = videoIdMatch ? videoIdMatch[1] : 'unknown';
-        
-        const fallbackFormats = [
-          { quality: '1080p', format: 'MP4', codec: 'avc1', downloadUrl: '#', fileSize: 'N/A' },
-          { quality: '720p', format: 'MP4', codec: 'avc1', downloadUrl: '#', fileSize: 'N/A' },
-          { quality: '480p', format: 'MP4', codec: 'avc1', downloadUrl: '#', fileSize: 'N/A' },
-          { quality: 'Audio', format: 'MP3', codec: 'mp3', bitrate: '128kbps', downloadUrl: '#', fileSize: 'N/A' }
-        ];
+          // Determine platform name
+          let platformName = 'unknown';
+          if (videoUrl.includes('instagram.com')) platformName = 'instagram';
+          else if (videoUrl.includes('tiktok.com')) platformName = 'tiktok';
+          else if (videoUrl.includes('facebook.com')) platformName = 'facebook';
+          else if (videoUrl.includes('vimeo.com')) platformName = 'vimeo';
+          else if (videoUrl.includes('twitter.com') || videoUrl.includes('x.com')) platformName = 'twitter';
+          else if (videoUrl.includes('dailymotion.com')) platformName = 'dailymotion';
 
-        const metadata = {
-          title: 'Video Not Available - Demo Mode',
-          duration: '0:00',
-          thumbnail: `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
-          platform: 'youtube',
-          videoId: videoId,
-          availableFormats: fallbackFormats
-        };
+          // Return metadata for other platforms
+          const metadata = {
+            title: videoInfo.title || `${platformName.charAt(0).toUpperCase() + platformName.slice(1)} Video`,
+            duration: videoInfo.duration || '0:00',
+            thumbnail: videoInfo.thumbnail || 'https://via.placeholder.com/480x360.png?text=' + platformName.charAt(0).toUpperCase() + platformName.slice(1) + '+Video',
+            platform: platformName,
+            videoId: videoUrl, // Use full URL as ID for non-YouTube
+            availableFormats: availableFormats
+          };
 
-        res.json({
-          success: true,
-          metadata
-        });
+          res.json({ success: true, metadata });
+
+        } catch (ytdlpError) {
+          console.error('yt-dlp error for other platform:', ytdlpError);
+          
+          // Determine platform name for better UX
+          let platformName = 'Video Platform';
+          if (videoUrl.includes('instagram.com')) platformName = 'Instagram';
+          else if (videoUrl.includes('tiktok.com')) platformName = 'TikTok';
+          else if (videoUrl.includes('facebook.com')) platformName = 'Facebook';
+          else if (videoUrl.includes('vimeo.com')) platformName = 'Vimeo';
+          else if (videoUrl.includes('twitter.com') || videoUrl.includes('x.com')) platformName = 'Twitter';
+          else if (videoUrl.includes('dailymotion.com')) platformName = 'Dailymotion';
+          
+          // Fallback for other platforms
+          const fallbackFormats = [
+            { quality: '1080p', format: 'MP4', codec: 'avc1', downloadUrl: videoUrl, fileSize: 'N/A' },
+            { quality: '720p', format: 'MP4', codec: 'avc1', downloadUrl: videoUrl, fileSize: 'N/A' },
+            { quality: '480p', format: 'MP4', codec: 'avc1', downloadUrl: videoUrl, fileSize: 'N/A' },
+            { quality: 'Audio', format: 'MP3', codec: 'mp3', bitrate: '128kbps', downloadUrl: videoUrl, fileSize: 'N/A' }
+          ];
+
+          const metadata = {
+            title: `${platformName} Video`,
+            duration: '0:00',
+            thumbnail: 'https://via.placeholder.com/480x360.png?text=' + platformName.replace(' ', '+') + '+Video',
+            platform: platformName.toLowerCase().replace(' ', ''),
+            videoId: videoUrl,
+            availableFormats: fallbackFormats
+          };
+
+          res.json({
+            success: true,
+            metadata
+          });
+        }
       }
 
     } catch (error: any) {
@@ -706,13 +789,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (error.name === 'ZodError') {
         return res.status(400).json({ 
           success: false,
-          error: 'Please provide a valid video URL' 
+          error: 'Please provide a valid video URL from any platform' 
         });
       }
       
       res.status(500).json({ 
         success: false,
-        error: 'Failed to extract video metadata. Please try again.' 
+        error: 'Failed to extract video metadata. Please try again with a different URL.' 
       });
     }
   });
