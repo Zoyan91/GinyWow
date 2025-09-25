@@ -20,12 +20,9 @@ export default function Blog() {
         {/* Hero Section */}
         <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-blue-50 to-indigo-50">
           <div className="container-mobile max-w-4xl text-center">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6" data-testid="blog-title">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-8 sm:mb-12" data-testid="blog-title">
               GinyWow Blog
             </h1>
-            <p className="text-lg sm:text-xl text-gray-600 mb-8 sm:mb-12 leading-relaxed" data-testid="blog-description">
-              Latest tips, tutorials, and insights about online tools and digital productivity
-            </p>
           </div>
         </section>
 
