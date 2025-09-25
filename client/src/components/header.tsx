@@ -50,8 +50,13 @@ export default function Header({ currentPage }: HeaderProps) {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center">
-            <Link href="/">
-              <h1 className="text-2xl font-semibold text-gray-900 cursor-pointer hover:text-gray-700 transition-colors" data-testid="logo">
+            <Link href="/" className="flex items-center space-x-2">
+              {/* G Icon - TinyWow Style */}
+              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center" data-testid="logo-icon">
+                <span className="text-white font-bold text-lg">G</span>
+              </div>
+              {/* Text Logo */}
+              <h1 className="text-2xl font-semibold text-gray-900 cursor-pointer hover:text-gray-700 transition-colors" data-testid="logo-text">
                 giny<span className="text-blue-600">wow</span>
               </h1>
             </Link>
