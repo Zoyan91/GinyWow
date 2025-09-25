@@ -10,6 +10,8 @@ const preloadPage = (path: string) => {
   if (path === "/") return;
   if (path === "/thumbnail-downloader") {
     import("@/pages/thumbnail-downloader");
+  } else if (path === "/video-downloader") {
+    import("@/pages/video-downloader");
   } else if (path === "/format-converter") {
     import("@/pages/format-converter");
   } else if (path === "/about") {
@@ -37,6 +39,7 @@ export default function Header({ currentPage }: HeaderProps) {
   const navItems = [
     { href: "/", label: "App Opener", testId: "nav-app-opener" },
     { href: "/thumbnail-downloader", label: "Thumbnail Downloader", testId: "nav-thumbnail-downloader" },
+    { href: "/video-downloader", label: "Video Downloader", testId: "nav-video-downloader" },
     { href: "/format-converter", label: "Format Converter", testId: "nav-converter" },
   ];
 
@@ -50,8 +53,10 @@ export default function Header({ currentPage }: HeaderProps) {
       // Simple search logic - redirect to matching pages
       if (searchTerm.includes('app') || searchTerm.includes('opener')) {
         setLocation('/');
-      } else if (searchTerm.includes('thumbnail') || searchTerm.includes('download')) {
+      } else if (searchTerm.includes('thumbnail')) {
         setLocation('/thumbnail-downloader');
+      } else if (searchTerm.includes('video') || searchTerm.includes('download')) {
+        setLocation('/video-downloader');
       } else if (searchTerm.includes('format') || searchTerm.includes('convert')) {
         setLocation('/format-converter');
       }
