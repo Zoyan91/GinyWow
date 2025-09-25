@@ -75,13 +75,6 @@ export default function Footer() {
                   </span>
                 </Link>
               </li>
-              <li>
-                <Link href="/video-downloader">
-                  <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm">
-                    Video Downloader
-                  </span>
-                </Link>
-              </li>
             </ul>
           </div>
 
@@ -186,13 +179,6 @@ export default function Footer() {
                   <Link href="/format-converter">
                     <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm block py-2">
                       Format Converter
-                    </span>
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/video-downloader">
-                    <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm block py-2">
-                      Video Downloader
                     </span>
                   </Link>
                 </li>
