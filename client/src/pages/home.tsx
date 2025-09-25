@@ -7,6 +7,7 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { apiRequest } from "@/lib/queryClient";
 import { Link } from "wouter";
 import Header from "@/components/header";
+import FloatingShapes from "@/components/FloatingShapes";
 
 // Lazy load footer for better initial performance
 const Footer = lazy(() => import("@/components/footer"));
@@ -299,255 +300,11 @@ export default function Home() {
     <div className="min-h-screen bg-background relative w-full overflow-x-hidden">
       <Header currentPage="home" />
 
-      {/* Floating Shapes - TinyWow Style - Extended */}
-      <div className="absolute inset-0 z-0 pointer-events-none" style={{ height: '140vh' }}>
-        {/* Hero Section Shapes - Starting from very top */}
-          {/* Very Top Front Shapes */}
-          {/* Circle Very Top Right - Blue */}
-          <div 
-            className="absolute top-4 right-20 w-5 h-5 rounded-full animate-float-1"
-            style={{
-              background: '#3b82f6',
-              opacity: 0.3
-            }}
-          ></div>
-
-          {/* Triangle Very Top Left - Green */}
-          <div 
-            className="absolute top-6 left-12 w-6 h-6 animate-float-2"
-            style={{
-              background: '#22c55e',
-              clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
-              opacity: 0.35
-            }}
-          ></div>
-
-          {/* Square Top Center - Orange */}
-          <div 
-            className="absolute top-8 left-1/2 w-4 h-4 animate-float-3"
-            style={{
-              background: '#f97316',
-              transform: 'rotate(45deg)',
-              opacity: 0.3
-            }}
-          ></div>
-
-          {/* Circle Top Left Area - Purple */}
-          <div 
-            className="absolute top-12 left-1/4 w-4 h-4 rounded-full animate-float-4"
-            style={{
-              background: '#9333ea',
-              opacity: 0.4
-            }}
-          ></div>
-
-          {/* Triangle Top Right Area - Cyan */}
-          <div 
-            className="absolute top-14 right-1/3 w-5 h-5 animate-float-1"
-            style={{
-              background: '#06b6d4',
-              clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
-              opacity: 0.3
-            }}
-          ></div>
-
-          {/* Triangle Top Left - Pink */}
-          <div 
-            className="absolute top-20 left-16 w-7 h-7 animate-float-1"
-            style={{
-              background: '#f472b6',
-              clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
-              opacity: 0.4
-            }}
-          ></div>
-
-          {/* Circle Top Right - Blue */}
-          <div 
-            className="absolute top-24 right-20 w-6 h-6 rounded-full animate-float-2"
-            style={{
-              background: '#60a5fa',
-              opacity: 0.45
-            }}
-          ></div>
-
-          {/* Square Center - Orange */}
-          <div 
-            className="absolute top-40 left-1/2 w-6 h-6 animate-float-3"
-            style={{
-              background: '#fb923c',
-              transform: 'rotate(45deg)',
-              opacity: 0.4
-            }}
-          ></div>
-
-          {/* Dot Right - Purple */}
-          <div 
-            className="absolute top-50 right-12 w-4 h-4 rounded-full animate-float-4"
-            style={{
-              background: '#c084fc',
-              opacity: 0.5
-            }}
-          ></div>
-
-
-          {/* Circle Bottom Right - Yellow */}
-          <div 
-            className="absolute bottom-24 right-16 w-6 h-6 rounded-full animate-float-2"
-            style={{
-              background: '#fbbf24',
-              opacity: 0.4
-            }}
-          ></div>
-
-          {/* Additional Shapes for Better Coverage */}
-          {/* Triangle Top Center - Cyan */}
-          <div 
-            className="absolute top-32 left-1/3 w-5 h-5 animate-float-3"
-            style={{
-              background: '#22d3ee',
-              clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
-              opacity: 0.35
-            }}
-          ></div>
-
-          {/* Circle Mid Left - Rose */}
-          <div 
-            className="absolute top-56 left-8 w-5 h-5 rounded-full animate-float-4"
-            style={{
-              background: '#fb7185',
-              opacity: 0.4
-            }}
-          ></div>
-
-
-          {/* Dot Bottom Center - Emerald */}
-          <div 
-            className="absolute bottom-16 left-1/2 w-4 h-4 rounded-full animate-float-2"
-            style={{
-              background: '#10b981',
-              opacity: 0.45
-            }}
-          ></div>
-
-
-          {/* Circle Bottom Area - Violet */}
-          <div 
-            className="absolute bottom-8 right-1/4 w-5 h-5 rounded-full animate-float-4"
-            style={{
-              background: '#8b5cf6',
-              opacity: 0.4
-            }}
-          ></div>
-
-          {/* Extended Section Shapes - Tools Area */}
-
-          {/* Circle Tools Right - Blue */}
-          <div 
-            className="absolute right-14 w-5 h-5 rounded-full animate-float-2"
-            style={{
-              background: '#3b82f6',
-              opacity: 0.35,
-              top: '28rem'
-            }}
-          ></div>
-
-
-          {/* Extended Section Shapes - What Is Area */}
-
-          {/* Circle What Is Right - Purple */}
-          <div 
-            className="absolute right-12 w-6 h-6 rounded-full animate-float-1"
-            style={{
-              background: '#9333ea',
-              opacity: 0.4,
-              top: '38rem'
-            }}
-          ></div>
-
-
-          {/* Dot What Is Left - Pink */}
-          <div 
-            className="absolute left-8 w-4 h-4 rounded-full animate-float-3"
-            style={{
-              background: '#ec4899',
-              opacity: 0.4,
-              top: '40rem'
-            }}
-          ></div>
-
-
-          {/* Circle What Is Bottom - Lime */}
-          <div 
-            className="absolute left-1/4 w-5 h-5 rounded-full animate-float-1"
-            style={{
-              background: '#84cc16',
-              opacity: 0.35,
-              top: '48rem'
-            }}
-          ></div>
-
-          {/* Additional scattered dots */}
-          <div className="absolute left-20 w-3 h-3 rounded-full animate-float-2" style={{ background: '#f59e0b', opacity: 0.3, top: '32rem' }}></div>
-          <div className="absolute right-20 w-3 h-3 rounded-full animate-float-3" style={{ background: '#8b5cf6', opacity: 0.35, top: '34rem' }}></div>
-          <div className="absolute left-2/3 w-3 h-3 rounded-full animate-float-4" style={{ background: '#f472b6', opacity: 0.3, top: '37rem' }}></div>
-          <div className="absolute right-1/4 w-3 h-3 rounded-full animate-float-1" style={{ background: '#10b981', opacity: 0.4, top: '43rem' }}></div>
-          <div className="absolute left-1/2 w-3 h-3 rounded-full animate-float-2" style={{ background: '#6366f1', opacity: 0.35, top: '46rem' }}></div>
-
-          {/* 5 New Small Circle Shapes */}
-          {/* Small Circle 1 - Hero Area - Red */}
-          <div 
-            className="absolute left-1/4 w-3 h-3 rounded-full animate-float-3"
-            style={{
-              background: '#dc2626',
-              opacity: 0.35,
-              top: '8rem'
-            }}
-          ></div>
-
-          {/* Small Circle 2 - Early Section - Blue */}
-          <div 
-            className="absolute right-1/3 w-4 h-4 rounded-full animate-float-1"
-            style={{
-              background: '#2563eb',
-              opacity: 0.3,
-              top: '18rem'
-            }}
-          ></div>
-
-          {/* Small Circle 3 - Mid Section - Green */}
-          <div 
-            className="absolute left-12 w-3 h-3 rounded-full animate-float-4"
-            style={{
-              background: '#16a34a',
-              opacity: 0.4,
-              top: '26rem'
-            }}
-          ></div>
-
-          {/* Small Circle 4 - Tools Area - Purple */}
-          <div 
-            className="absolute right-16 w-4 h-4 rounded-full animate-float-2"
-            style={{
-              background: '#7c3aed',
-              opacity: 0.35,
-              top: '33rem'
-            }}
-          ></div>
-
-          {/* Small Circle 5 - What Is Area - Orange */}
-          <div 
-            className="absolute left-1/3 w-3 h-3 rounded-full animate-float-3"
-            style={{
-              background: '#ea580c',
-              opacity: 0.3,
-              top: '41rem'
-            }}
-          ></div>
-
-        </div>
-
       {/* Hero Section - Mobile First */}
       <section className="relative bg-gradient-to-br from-blue-50 via-white to-purple-50 py-8 sm:py-12 lg:py-20 overflow-hidden">
+        {/* Floating Background Shapes - Only in Hero */}
+        <FloatingShapes count={15} />
+        
         <div className="relative z-10 container-mobile max-w-4xl">
           <div className="text-center animate-fade-in">
             <h1 className="text-xl sm:text-2xl lg:text-4xl font-bold lg:font-normal text-gray-900 mb-4 sm:mb-6 leading-tight">
@@ -564,73 +321,6 @@ export default function Home() {
             <p className="text-responsive-sm text-gray-600 mb-6 sm:mb-8 leading-relaxed max-w-2xl mx-auto px-4">
               We help you gain more followers on socials by enabling users to open a link directly in an app instead of an in-app browser.
             </p>
-
-            {/* Triangle and Rectangle Shapes Above App Opener Tool */}
-            <div className="absolute inset-0 pointer-events-none">
-              {/* Triangle Left - Red */}
-              <div 
-                className="absolute top-16 left-10 w-6 h-6 animate-float-1"
-                style={{
-                  background: '#ef4444',
-                  clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
-                  opacity: 0.3
-                }}
-              ></div>
-
-              {/* Square Center - Green */}
-              <div 
-                className="absolute left-1/2 w-5 h-5 animate-float-3"
-                style={{
-                  background: '#22c55e',
-                  transform: 'rotate(45deg)',
-                  opacity: 0.3,
-                  top: '4.5rem'
-                }}
-              ></div>
-
-              {/* Triangle Right - Orange */}
-              <div 
-                className="absolute top-20 right-16 w-7 h-7 animate-float-4"
-                style={{
-                  background: '#f97316',
-                  clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
-                  opacity: 0.35
-                }}
-              ></div>
-
-              {/* Square Right - Teal */}
-              <div 
-                className="absolute right-1/3 w-6 h-6 animate-float-2"
-                style={{
-                  background: '#14b8a6',
-                  transform: 'rotate(30deg)',
-                  opacity: 0.35,
-                  top: '5.5rem'
-                }}
-              ></div>
-
-              {/* Triangle Center Left - Amber */}
-              <div 
-                className="absolute left-1/4 w-6 h-6 animate-float-3"
-                style={{
-                  background: '#f59e0b',
-                  clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
-                  opacity: 0.35,
-                  top: '6rem'
-                }}
-              ></div>
-
-              {/* Square Far Right - Indigo */}
-              <div 
-                className="absolute right-8 w-5 h-5 animate-float-1"
-                style={{
-                  background: '#818cf8',
-                  transform: 'rotate(30deg)',
-                  opacity: 0.35,
-                  top: '6.5rem'
-                }}
-              ></div>
-            </div>
 
             {/* URL Input and Generate Button */}
             <div className="max-w-2xl mx-auto mb-8 px-4">
@@ -804,14 +494,63 @@ export default function Home() {
               </h2>
             </div>
             
-            <div className="prose prose-lg mx-auto text-gray-600">
-              <p className="text-responsive-sm leading-relaxed mb-4 sm:mb-6">
-                <strong>GinyWow App Opener</strong>, also known as Link Opener, Social Media Opener, and Universal Link Opener, is a direct-to-app redirection tool that helps social media influencers, affiliate marketers, and businesses convert their visitors into <strong>app users</strong> and loyal followers across all platforms.
-              </p>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-center">
+              <div className="space-y-4 sm:space-y-6">
+                <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
+                  GinyWow App Opener is a <strong className="text-gray-800">free online tool</strong> that converts regular web links into special app-opening links. When someone clicks your link, it will open directly in their mobile app (like YouTube, Instagram, etc.) instead of opening in a browser.
+                </p>
+                
+                <div className="bg-blue-50 p-4 sm:p-6 rounded-lg border-l-4 border-blue-500">
+                  <p className="text-sm sm:text-base text-blue-800 font-medium">
+                    <strong>Why does this matter?</strong> When users stay within the app, they're more likely to subscribe, follow, or engage with your content rather than just viewing it in a browser.
+                  </p>
+                </div>
+                
+                <div className="space-y-3">
+                  <div className="flex items-start gap-3">
+                    <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <p className="text-sm sm:text-base text-gray-700">Higher engagement and conversion rates</p>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <p className="text-sm sm:text-base text-gray-700">Better user experience with seamless app navigation</p>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <p className="text-sm sm:text-base text-gray-700">More followers across all platforms</p>
+                  </div>
+                </div>
+              </div>
               
-              <p className="text-responsive-sm leading-relaxed">
-                The <strong>GinyWow App Opener link generator</strong> allows creators to generate custom links for social media profiles including <strong>YouTube, Instagram, TikTok, Facebook, Twitter, LinkedIn</strong>, and many others. Normally, when you share social media links across platforms, users end up browsing within in-app browsers which provide a poor user experience and low engagement rates.
-              </p>
+              <div className="order-first lg:order-last">
+                <div className="bg-gradient-to-br from-blue-50 to-purple-50 p-6 sm:p-8 rounded-2xl">
+                  <div className="text-center space-y-4 sm:space-y-6">
+                    <div className="w-20 h-20 mx-auto bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                      <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                      </svg>
+                    </div>
+                    <h3 className="text-lg sm:text-xl font-bold text-gray-900">
+                      Transform Any Link
+                    </h3>
+                    <p className="text-sm sm:text-base text-gray-600">
+                      Paste any social media link and instantly generate an app opener version that drives higher engagement.
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -819,62 +558,54 @@ export default function Home() {
 
       {/* Why Use Section - Mobile Grid */}
       <section className="py-12 sm:py-16 lg:py-20 bg-gray-50">
-        <div className="container-mobile max-w-5xl">
-          <div className="animate-on-scroll">
-            <div className="text-center mb-8 sm:mb-12">
-              <h2 className="text-responsive-xl font-bold text-gray-900 mb-4 sm:mb-8">
-                Why Use GinyWow App Opener?
-              </h2>
-            </div>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
-              {[
-                {
-                  icon: <svg className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" /></svg>,
-                  title: "Better User Experience",
-                  description: "Open links directly in native apps for smoother navigation",
-                  color: "blue"
-                },
-                {
-                  icon: <svg className="w-4 h-4 sm:w-5 sm:h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>,
-                  title: "Higher Engagement",
-                  description: "Native app experience leads to better user retention",
-                  color: "green"
-                },
-                {
-                  icon: <svg className="w-4 h-4 sm:w-5 sm:h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>,
-                  title: "Universal Compatibility",
-                  description: "Works with all major social media platforms and websites",
-                  color: "purple"
-                },
-                {
-                  icon: <svg className="w-4 h-4 sm:w-5 sm:h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>,
-                  title: "Increased Followers",
-                  description: "Better experience converts more visitors to followers",
-                  color: "orange"
-                }
-              ].map((benefit, index) => (
-                <div
-                  key={index}
-                  className="card-mobile p-4 sm:p-6 animate-on-scroll"
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  <div className="flex items-start space-x-3 sm:space-x-4">
-                    <div className={`w-8 h-8 sm:w-10 sm:h-10 bg-${benefit.color}-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1`}>
-                      {benefit.icon}
-                    </div>
-                    <div>
-                      <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-2">
-                        {benefit.title}
-                      </h3>
-                      <p className="text-sm sm:text-base text-gray-600">
-                        {benefit.description}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+        <div className="container-mobile max-w-4xl">
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-responsive-xl font-bold text-gray-900 mb-4 sm:mb-6">
+              Why Use App Opener Links?
+            </h2>
+            <p className="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto">
+              App opener links provide a superior user experience that leads to better results for content creators and businesses.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
+            {[
+              {
+                icon: "📱",
+                title: "Native App Experience",
+                description: "Users stay within their favorite apps instead of being redirected to browsers, creating a smoother experience."
+              },
+              {
+                icon: "📈",
+                title: "Higher Engagement",
+                description: "App users are more likely to subscribe, follow, like, and share your content compared to browser visitors."
+              },
+              {
+                icon: "⚡",
+                title: "Faster Loading",
+                description: "Apps load content faster than browsers, reducing bounce rates and keeping users engaged longer."
+              },
+              {
+                icon: "🎯",
+                title: "Better Conversions",
+                description: "Whether it's gaining followers or driving sales, app opener links consistently outperform regular links."
+              }
+            ].map((item, index) => (
+              <div
+                key={index}
+                className="card-mobile p-6 sm:p-8 text-center animate-on-scroll"
+                style={{ animationDelay: `${index * 0.1}s` }}
+                data-testid={`why-use-card-${index + 1}`}
+              >
+                <div className="text-3xl sm:text-4xl mb-4">{item.icon}</div>
+                <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3">
+                  {item.title}
+                </h3>
+                <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
+                  {item.description}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -882,56 +613,58 @@ export default function Home() {
       {/* How It Works Section - Mobile Steps */}
       <section className="py-12 sm:py-16 lg:py-20 bg-white">
         <div className="container-mobile max-w-4xl">
-          <div className="animate-on-scroll">
-            <div className="text-center mb-8 sm:mb-12">
-              <h2 className="text-responsive-xl font-bold text-gray-900 mb-4 sm:mb-8">
-                How to Use GinyWow App Opener?
-              </h2>
-              <p className="text-responsive-sm text-gray-600">Simple 3-step process:</p>
-            </div>
-            
-            <div className="space-y-6 sm:space-y-8">
-              {[
-                {
-                  number: 1,
-                  title: "Paste Your URL",
-                  description: "Copy and paste any social media or website URL into the input field",
-                  bgColor: "bg-blue-600"
-                },
-                {
-                  number: 2,
-                  title: "Generate Link",
-                  description: "Click 'Generate' to create your smart app-opening link",
-                  bgColor: "bg-green-600"
-                },
-                {
-                  number: 3,
-                  title: "Share & Engage",
-                  description: "Share your new link and watch users open it directly in apps",
-                  bgColor: "bg-purple-600"
-                }
-              ].map((step, index) => (
-                <div
-                  key={index}
-                  className="card-mobile p-4 sm:p-6 animate-on-scroll"
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  <div className="flex items-start space-x-4">
-                    <div className={`w-10 h-10 sm:w-12 sm:h-12 ${step.bgColor} text-white rounded-full flex items-center justify-center text-sm sm:text-base font-bold flex-shrink-0`}>
-                      {step.number}
-                    </div>
-                    <div>
-                      <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-2">
-                        {step.title}
-                      </h3>
-                      <p className="text-sm sm:text-base text-gray-600">
-                        {step.description}
-                      </p>
-                    </div>
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-responsive-xl font-bold text-gray-900 mb-4 sm:mb-6">
+              How It Works
+            </h2>
+            <p className="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto">
+              Generate app opener links in just 3 simple steps. No sign-up required!
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+            {[
+              {
+                step: "01",
+                title: "Paste Your Link",
+                description: "Copy any YouTube, Instagram, Facebook, or other social media link and paste it into our tool.",
+                icon: "📋"
+              },
+              {
+                step: "02", 
+                title: "Generate App Link",
+                description: "Click the Generate button and our tool instantly creates an optimized app opener version of your link.",
+                icon: "⚙️"
+              },
+              {
+                step: "03",
+                title: "Share & Get Results",
+                description: "Use your new app opener link anywhere to drive higher engagement and get more followers.",
+                icon: "🚀"
+              }
+            ].map((item, index) => (
+              <div
+                key={index}
+                className="text-center animate-on-scroll"
+                style={{ animationDelay: `${index * 0.2}s` }}
+                data-testid={`how-it-works-step-${index + 1}`}
+              >
+                <div className="relative mb-6">
+                  <div className="w-16 h-16 mx-auto bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                    {item.step}
+                  </div>
+                  <div className="absolute -top-2 -right-2 text-2xl">
+                    {item.icon}
                   </div>
                 </div>
-              ))}
-            </div>
+                <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3">
+                  {item.title}
+                </h3>
+                <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
+                  {item.description}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -939,53 +672,54 @@ export default function Home() {
       {/* FAQ Section */}
       <section className="py-12 sm:py-16 lg:py-20 bg-gray-50">
         <div className="container-mobile max-w-4xl">
-          <div className="animate-on-scroll">
-            <div className="text-center mb-8 sm:mb-12">
-              <h2 className="text-responsive-xl font-bold text-gray-900 mb-4 sm:mb-8">
-                Frequently Asked Questions (FAQ)
-              </h2>
-            </div>
-            
-            <div className="space-y-6 sm:space-y-8">
-              {[
-                {
-                  question: "Is the App Opener tool free to use?",
-                  answer: "Yes! Our App Opener tool is completely free. You can generate unlimited app opener links without any hidden charges."
-                },
-                {
-                  question: "Which apps are supported by the App Opener?",
-                  answer: "Currently, our tool supports popular apps like **YouTube, Instagram, Facebook, and Twitter**. We are working to add support for even more apps very soon."
-                },
-                {
-                  question: "Why should I use App Opener instead of a normal link?",
-                  answer: "A normal link usually opens in a browser, which lowers engagement. With App Opener, your audience will directly land inside the app, making it easier for them to **subscribe, follow, or engage** with your content."
-                },
-                {
-                  question: "Do I need to sign up to use this tool?",
-                  answer: "No sign-up is required. Just paste your link, generate the App Opener link, and share it anywhere. Simple and fast!"
-                },
-                {
-                  question: "Can businesses also use the App Opener?",
-                  answer: "Absolutely! Whether you're a **YouTuber, influencer, digital marketer, or business owner**, this tool helps you drive better conversions and improve customer experience."
-                }
-              ].map((faq, index) => (
-                <div
-                  key={index}
-                  className="card-mobile p-4 sm:p-6 animate-on-scroll"
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                  data-testid={`faq-item-${index + 1}`}
-                >
-                  <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-3">
-                    {faq.question}
-                  </h3>
-                  <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
-                    {faq.answer.split('**').map((part, i) => 
-                      i % 2 === 1 ? <strong key={i} className="font-semibold text-gray-800">{part}</strong> : part
-                    )}
-                  </p>
-                </div>
-              ))}
-            </div>
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-responsive-xl font-bold text-gray-900 mb-4 sm:mb-6">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto">
+              Got questions? We've got answers. Here are the most common questions about our App Opener tool.
+            </p>
+          </div>
+          
+          <div className="space-y-4 sm:space-y-6">
+            {[
+              {
+                question: "What is an App Opener link?",
+                answer: "An App Opener link is a special type of link that **opens directly in a mobile app** instead of a web browser. When someone clicks your App Opener link, it launches the respective app (like YouTube, Instagram, etc.) and takes them directly to your content."
+              },
+              {
+                question: "Which apps are supported by the App Opener?",
+                answer: "Currently, our tool supports popular apps like **YouTube, Instagram, Facebook, and Twitter**. We are working to add support for even more apps very soon."
+              },
+              {
+                question: "Why should I use App Opener instead of a normal link?",
+                answer: "A normal link usually opens in a browser, which lowers engagement. With App Opener, your audience will directly land inside the app, making it easier for them to **subscribe, follow, or engage** with your content."
+              },
+              {
+                question: "Do I need to sign up to use this tool?",
+                answer: "No sign-up is required. Just paste your link, generate the App Opener link, and share it anywhere. Simple and fast!"
+              },
+              {
+                question: "Can businesses also use the App Opener?",
+                answer: "Absolutely! Whether you're a **YouTuber, influencer, digital marketer, or business owner**, this tool helps you drive better conversions and improve customer experience."
+              }
+            ].map((faq, index) => (
+              <div
+                key={index}
+                className="card-mobile p-4 sm:p-6 animate-on-scroll"
+                style={{ animationDelay: `${index * 0.1}s` }}
+                data-testid={`faq-item-${index + 1}`}
+              >
+                <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-3">
+                  {faq.question}
+                </h3>
+                <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
+                  {faq.answer.split('**').map((part, i) => 
+                    i % 2 === 1 ? <strong key={i} className="font-semibold text-gray-800">{part}</strong> : part
+                  )}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
