@@ -38,7 +38,7 @@ export default function PDFEditor() {
 
   // Set up PDF.js worker
   useEffect(() => {
-    pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
   }, []);
 
   // Newsletter subscription functionality
@@ -246,34 +246,105 @@ export default function PDFEditor() {
 
   // Render PDF page to canvas
   const renderPage = async (doc: PDFDocument, pageIndex: number) => {
-    if (!canvasRef.current || !doc) return;
+    if (!canvasRef.current || !file) return;
     
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
     try {
-      const pages = doc.getPages();
-      const page = pages[pageIndex];
-      const { width, height } = page.getSize();
+      // Load PDF with PDF.js for actual rendering
+      const arrayBuffer = await file.arrayBuffer();
+      const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
+      const pdfDocument = await loadingTask.promise;
       
-      // Set canvas size
-      canvas.width = width;
-      canvas.height = height;
+      // Get the specific page
+      const page = await pdfDocument.getPage(pageIndex + 1);
+      const viewport = page.getViewport({ scale: 1.2 });
+      
+      // Set canvas size to match PDF page
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+      canvas.style.width = viewport.width + 'px';
+      canvas.style.height = viewport.height + 'px';
       
       // Clear canvas
-      ctx.fillStyle = 'white';
-      ctx.fillRect(0, 0, width, height);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
       
-      // Draw page content (this is simplified - in real implementation you'd use PDF.js for rendering)
-      ctx.fillStyle = 'black';
-      ctx.font = '16px Arial';
-      ctx.fillText('PDF Page Content (Real rendering would show actual PDF)', 50, 50);
-      ctx.fillText(`Page ${pageIndex + 1} of ${doc.getPageCount()}`, 50, 80);
+      // Render the PDF page
+      const renderContext = {
+        canvasContext: ctx,
+        viewport: viewport,
+        canvas: canvas
+      };
+      
+      // Render PDF content first
+      await page.render(renderContext).promise;
+      
+      // Then render editing overlays on top
+      setTimeout(() => renderEditingOverlays(), 100);
       
     } catch (error) {
-      console.error('Error rendering page:', error);
+      console.error('Error rendering PDF page:', error);
+      
+      // Fallback rendering with better error display
+      canvas.width = 600;
+      canvas.height = 800;
+      canvas.style.width = '600px';
+      canvas.style.height = '800px';
+      
+      ctx.fillStyle = '#f9f9f9';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      ctx.fillStyle = '#333';
+      ctx.font = '18px Arial';
+      ctx.fillText('PDF Rendering Error', 50, 50);
+      ctx.font = '14px Arial';
+      ctx.fillText(`Page ${pageIndex + 1} of ${doc.getPageCount()}`, 50, 80);
+      ctx.fillText('Please try uploading the PDF again', 50, 110);
+      
+      // Still render overlays in fallback mode
+      renderEditingOverlays();
     }
+  };
+
+  // Render editing overlays (text and images) on canvas
+  const renderEditingOverlays = () => {
+    if (!canvasRef.current) return;
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // Render text elements
+    textElements.forEach(element => {
+      ctx.fillStyle = selectedElement === element.id ? 'rgba(0, 0, 255, 0.8)' : 'black';
+      ctx.font = `${element.size}px Arial`;
+      ctx.fillText(element.text, element.x, element.y);
+      
+      // Draw selection box if selected
+      if (selectedElement === element.id) {
+        const textMetrics = ctx.measureText(element.text);
+        ctx.strokeStyle = 'blue';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(element.x - 2, element.y - element.size - 2, textMetrics.width + 4, element.size + 4);
+      }
+    });
+
+    // Render image elements
+    imageElements.forEach(element => {
+      const img = new Image();
+      img.onload = () => {
+        ctx.drawImage(img, element.x, element.y, element.width, element.height);
+        
+        // Draw selection box if selected
+        if (selectedElement === element.id) {
+          ctx.strokeStyle = 'blue';
+          ctx.lineWidth = 2;
+          ctx.strokeRect(element.x - 2, element.y - 2, element.width + 4, element.height + 4);
+        }
+      };
+      img.src = element.src;
+    });
   };
 
   // Add text element to current page
