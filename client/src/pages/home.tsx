@@ -389,15 +389,6 @@ export default function Home() {
             }}
           ></div>
 
-          {/* Triangle Bottom Left - Green */}
-          <div 
-            className="absolute bottom-32 left-12 w-7 h-7 animate-float-1"
-            style={{
-              background: '#34d399',
-              clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
-              opacity: 0.45
-            }}
-          ></div>
 
           {/* Circle Bottom Right - Yellow */}
           <div 
@@ -428,15 +419,6 @@ export default function Home() {
             }}
           ></div>
 
-          {/* Square Mid Right - Indigo */}
-          <div 
-            className="absolute top-64 right-8 w-5 h-5 animate-float-1"
-            style={{
-              background: '#818cf8',
-              transform: 'rotate(30deg)',
-              opacity: 0.35
-            }}
-          ></div>
 
           {/* Dot Bottom Center - Emerald */}
           <div 
@@ -447,15 +429,6 @@ export default function Home() {
             }}
           ></div>
 
-          {/* Triangle Mid Area - Amber */}
-          <div 
-            className="absolute top-72 left-1/4 w-6 h-6 animate-float-3"
-            style={{
-              background: '#f59e0b',
-              clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
-              opacity: 0.35
-            }}
-          ></div>
 
           {/* Circle Bottom Area - Violet */}
           <div 
@@ -467,16 +440,6 @@ export default function Home() {
           ></div>
 
           {/* Extended Section Shapes - Tools Area */}
-          {/* Triangle Tools Left - Red */}
-          <div 
-            className="absolute left-10 w-6 h-6 animate-float-1"
-            style={{
-              background: '#ef4444',
-              clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
-              opacity: 0.3,
-              top: '25rem'
-            }}
-          ></div>
 
           {/* Circle Tools Right - Blue */}
           <div 
@@ -488,28 +451,8 @@ export default function Home() {
             }}
           ></div>
 
-          {/* Square Tools Center - Green */}
-          <div 
-            className="absolute left-1/2 w-5 h-5 animate-float-3"
-            style={{
-              background: '#22c55e',
-              transform: 'rotate(45deg)',
-              opacity: 0.3,
-              top: '30rem'
-            }}
-          ></div>
 
           {/* Extended Section Shapes - What Is Area */}
-          {/* Triangle What Is Left - Orange */}
-          <div 
-            className="absolute left-16 w-7 h-7 animate-float-4"
-            style={{
-              background: '#f97316',
-              clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
-              opacity: 0.35,
-              top: '35rem'
-            }}
-          ></div>
 
           {/* Circle What Is Right - Purple */}
           <div 
@@ -521,16 +464,6 @@ export default function Home() {
             }}
           ></div>
 
-          {/* Square What Is Center - Teal */}
-          <div 
-            className="absolute left-1/3 w-6 h-6 animate-float-2"
-            style={{
-              background: '#14b8a6',
-              transform: 'rotate(30deg)',
-              opacity: 0.35,
-              top: '42rem'
-            }}
-          ></div>
 
           {/* Dot What Is Left - Pink */}
           <div 
@@ -542,16 +475,6 @@ export default function Home() {
             }}
           ></div>
 
-          {/* Triangle What Is Mid - Cyan */}
-          <div 
-            className="absolute right-1/3 w-5 h-5 animate-float-4"
-            style={{
-              background: '#06b6d4',
-              clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
-              opacity: 0.3,
-              top: '45rem'
-            }}
-          ></div>
 
           {/* Circle What Is Bottom - Lime */}
           <div 
@@ -641,6 +564,73 @@ export default function Home() {
             <p className="text-responsive-sm text-gray-600 mb-6 sm:mb-8 leading-relaxed max-w-2xl mx-auto px-4">
               We help you gain more followers on socials by enabling users to open a link directly in an app instead of an in-app browser.
             </p>
+
+            {/* Triangle and Rectangle Shapes Above App Opener Tool */}
+            <div className="absolute inset-0 pointer-events-none">
+              {/* Triangle Left - Red */}
+              <div 
+                className="absolute top-16 left-10 w-6 h-6 animate-float-1"
+                style={{
+                  background: '#ef4444',
+                  clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
+                  opacity: 0.3
+                }}
+              ></div>
+
+              {/* Square Center - Green */}
+              <div 
+                className="absolute left-1/2 w-5 h-5 animate-float-3"
+                style={{
+                  background: '#22c55e',
+                  transform: 'rotate(45deg)',
+                  opacity: 0.3,
+                  top: '4.5rem'
+                }}
+              ></div>
+
+              {/* Triangle Right - Orange */}
+              <div 
+                className="absolute top-20 right-16 w-7 h-7 animate-float-4"
+                style={{
+                  background: '#f97316',
+                  clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
+                  opacity: 0.35
+                }}
+              ></div>
+
+              {/* Square Right - Teal */}
+              <div 
+                className="absolute right-1/3 w-6 h-6 animate-float-2"
+                style={{
+                  background: '#14b8a6',
+                  transform: 'rotate(30deg)',
+                  opacity: 0.35,
+                  top: '5.5rem'
+                }}
+              ></div>
+
+              {/* Triangle Center Left - Amber */}
+              <div 
+                className="absolute left-1/4 w-6 h-6 animate-float-3"
+                style={{
+                  background: '#f59e0b',
+                  clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
+                  opacity: 0.35,
+                  top: '6rem'
+                }}
+              ></div>
+
+              {/* Square Far Right - Indigo */}
+              <div 
+                className="absolute right-8 w-5 h-5 animate-float-1"
+                style={{
+                  background: '#818cf8',
+                  transform: 'rotate(30deg)',
+                  opacity: 0.35,
+                  top: '6.5rem'
+                }}
+              ></div>
+            </div>
 
             {/* URL Input and Generate Button */}
             <div className="max-w-2xl mx-auto mb-8 px-4">
