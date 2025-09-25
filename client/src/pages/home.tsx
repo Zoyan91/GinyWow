@@ -521,6 +521,57 @@ export default function Home() {
           <div className="absolute right-1/4 w-3 h-3 rounded-full animate-float-1" style={{ background: '#10b981', opacity: 0.4, top: '43rem' }}></div>
           <div className="absolute left-1/2 w-3 h-3 rounded-full animate-float-2" style={{ background: '#6366f1', opacity: 0.35, top: '46rem' }}></div>
 
+          {/* 5 New Small Circle Shapes */}
+          {/* Small Circle 1 - Hero Area - Red */}
+          <div 
+            className="absolute left-1/4 w-3 h-3 rounded-full animate-float-3"
+            style={{
+              background: '#dc2626',
+              opacity: 0.35,
+              top: '8rem'
+            }}
+          ></div>
+
+          {/* Small Circle 2 - Early Section - Blue */}
+          <div 
+            className="absolute right-1/3 w-4 h-4 rounded-full animate-float-1"
+            style={{
+              background: '#2563eb',
+              opacity: 0.3,
+              top: '18rem'
+            }}
+          ></div>
+
+          {/* Small Circle 3 - Mid Section - Green */}
+          <div 
+            className="absolute left-12 w-3 h-3 rounded-full animate-float-4"
+            style={{
+              background: '#16a34a',
+              opacity: 0.4,
+              top: '26rem'
+            }}
+          ></div>
+
+          {/* Small Circle 4 - Tools Area - Purple */}
+          <div 
+            className="absolute right-16 w-4 h-4 rounded-full animate-float-2"
+            style={{
+              background: '#7c3aed',
+              opacity: 0.35,
+              top: '33rem'
+            }}
+          ></div>
+
+          {/* Small Circle 5 - What Is Area - Orange */}
+          <div 
+            className="absolute left-1/3 w-3 h-3 rounded-full animate-float-3"
+            style={{
+              background: '#ea580c',
+              opacity: 0.3,
+              top: '41rem'
+            }}
+          ></div>
+
         </div>
 
       {/* Hero Section - Mobile First */}
