@@ -725,15 +725,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: 'Missing required parameters' });
       }
 
+      // Sanitize filename by removing special characters
+      const sanitizeFilename = (name: string) => {
+        return name
+          .replace(/[^\w\s-]/g, '') // Remove special characters except spaces and hyphens
+          .replace(/\s+/g, '_') // Replace spaces with underscores
+          .substring(0, 50); // Limit length
+      };
+
+      const safeTitle = sanitizeFilename(title as string);
+      const safeQuality = sanitizeFilename(quality as string);
+      const filename = `${safeTitle}-${safeQuality}.mp4`;
+
       // Set headers for file download
-      res.setHeader('Content-Disposition', `attachment; filename="${title}-${quality}.mp4"`);
+      res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
       res.setHeader('Content-Type', 'video/mp4');
+      res.setHeader('Content-Length', '0'); // Will be updated by streaming
       
       // Stream the video from the URL
       const response = await fetch(url as string);
       
       if (!response.ok) {
-        throw new Error('Failed to fetch video');
+        throw new Error(`Failed to fetch video: ${response.status}`);
+      }
+
+      // Get content length if available
+      const contentLength = response.headers.get('content-length');
+      if (contentLength) {
+        res.setHeader('Content-Length', contentLength);
       }
 
       // Pipe the response to our client
