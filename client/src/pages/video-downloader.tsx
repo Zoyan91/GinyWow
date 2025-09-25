@@ -10,31 +10,18 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { z } from "zod";
 import { Helmet } from "react-helmet-async";
+import { videoMetadataSchema, type VideoMetadata } from "@shared/schema";
+import { apiRequest } from "../lib/queryClient";
 
-// Video downloader schema
-const videoDownloaderSchema = z.object({
-  videoUrl: z.string().min(1, "Video URL is required").url("Please enter a valid URL"),
-});
-
-type VideoDownloaderForm = z.infer<typeof videoDownloaderSchema>;
+type VideoDownloaderForm = z.infer<typeof videoMetadataSchema>;
 
 export default function VideoDownloader() {
-  const [videoData, setVideoData] = useState<{
-    title: string;
-    duration: string;
-    thumbnail: string;
-    formats: Array<{
-      quality: string;
-      format: string;
-      size: string;
-      downloadUrl: string;
-    }>;
-  } | null>(null);
+  const [videoData, setVideoData] = useState<VideoMetadata | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
   const form = useForm<VideoDownloaderForm>({
-    resolver: zodResolver(videoDownloaderSchema),
+    resolver: zodResolver(videoMetadataSchema),
     defaultValues: {
       videoUrl: "",
     },
@@ -44,50 +31,23 @@ export default function VideoDownloader() {
     setIsLoading(true);
     
     try {
-      // Demo implementation - in real app this would call a backend service
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // Mock video data
-      setVideoData({
-        title: "Sample Video Title",
-        duration: "5:32",
-        thumbnail: "https://via.placeholder.com/320x180/2563eb/ffffff?text=Video",
-        formats: [
-          {
-            quality: "1080p",
-            format: "MP4",
-            size: "125 MB",
-            downloadUrl: "#"
-          },
-          {
-            quality: "720p", 
-            format: "MP4",
-            size: "78 MB",
-            downloadUrl: "#"
-          },
-          {
-            quality: "480p",
-            format: "MP4", 
-            size: "45 MB",
-            downloadUrl: "#"
-          },
-          {
-            quality: "Audio Only",
-            format: "MP3",
-            size: "8 MB",
-            downloadUrl: "#"
-          }
-        ]
-      });
+      const response = await apiRequest('POST', '/api/video-metadata', data);
+      const jsonResponse = await response.json();
+
+      if (!jsonResponse.success) {
+        throw new Error(jsonResponse.error || 'Failed to extract video metadata');
+      }
+
+      setVideoData(jsonResponse.metadata);
 
       toast({
         title: "Video processed successfully!",
-        description: "Choose your preferred format and quality to download.",
+        description: "Video preview is now available.",
       });
-    } catch (error) {
+    } catch (error: any) {
       toast({
         title: "Error processing video",
-        description: "Please check the URL and try again.",
+        description: error.message || "Please check the URL and try again.",
         variant: "destructive",
       });
     } finally {
@@ -95,10 +55,10 @@ export default function VideoDownloader() {
     }
   };
 
-  const handleDownload = (format: any) => {
+  const handleDownload = (videoData: VideoMetadata) => {
     toast({
-      title: "Download started",
-      description: `Downloading ${format.quality} ${format.format}...`,
+      title: "Download feature coming soon",
+      description: "Video download functionality will be available soon.",
     });
   };
 
@@ -390,36 +350,16 @@ export default function VideoDownloader() {
                       </div>
                     </div>
                     
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-                      {videoData.formats.map((format, index) => (
-                        <div 
-                          key={index}
-                          className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
-                          data-testid={`format-option-${index}`}
-                        >
-                          <div className="text-center">
-                            <div className="mb-3 flex items-center justify-center">
-                              <div className="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center">
-                                {format.format === 'MP3' ? (
-                                  <Video className="w-6 h-6 text-blue-600" />
-                                ) : (
-                                  <Video className="w-6 h-6 text-blue-600" />
-                                )}
-                              </div>
-                            </div>
-                            <p className="text-lg font-semibold text-gray-900 mb-1" data-testid={`format-quality-${index}`}>{format.quality}</p>
-                            <p className="text-sm text-gray-600 mb-3" data-testid={`format-details-${index}`}>{format.format} • {format.size}</p>
-                            <Button
-                              onClick={() => handleDownload(format)}
-                              className="w-full bg-blue-500 hover:bg-blue-600 text-white"
-                              data-testid={`download-btn-${index}`}
-                            >
-                              <Download className="w-4 h-4 mr-2" />
-                              Download {format.quality}
-                            </Button>
-                          </div>
-                        </div>
-                      ))}
+                    <div className="text-center">
+                      <Button
+                        onClick={() => handleDownload(videoData)}
+                        className="bg-gradient-to-r from-purple-500 to-blue-400 hover:from-purple-600 hover:to-blue-500 text-white px-6 py-3"
+                        data-testid="download-video-btn"
+                      >
+                        <Download className="w-4 h-4 mr-2" />
+                        Download Video
+                      </Button>
+                      <p className="text-sm text-gray-500 mt-2">Video download feature coming soon</p>
                     </div>
                   </div>
                 </div>

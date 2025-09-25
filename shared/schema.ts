@@ -87,6 +87,18 @@ export const thumbnailDownloaderSchema = z.object({
     ),
 });
 
+export const videoMetadataSchema = z.object({
+  videoUrl: z.string().min(1, "Video URL is required").url("Please enter a valid URL"),
+});
+
+export type VideoMetadata = {
+  title: string;
+  duration: string;
+  thumbnail: string;
+  platform: string;
+  videoId: string;
+};
+
 export type InsertThumbnail = z.infer<typeof insertThumbnailSchema>;
 export type Thumbnail = typeof thumbnails.$inferSelect;
 export type InsertTitleOptimization = z.infer<typeof insertTitleOptimizationSchema>;
@@ -96,3 +108,4 @@ export type NewsletterSubscription = typeof newsletterSubscriptions.$inferSelect
 export type InsertShortUrl = z.infer<typeof insertShortUrlSchema>;
 export type ShortUrl = typeof shortUrls.$inferSelect;
 export type ThumbnailDownloaderForm = z.infer<typeof thumbnailDownloaderSchema>;
+export type VideoMetadataForm = z.infer<typeof videoMetadataSchema>;
