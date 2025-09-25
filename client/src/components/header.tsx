@@ -43,16 +43,16 @@ export default function Header({ currentPage }: HeaderProps) {
 
   // Top 10 PDF tools
   const pdfTools = [
-    { name: "PDF to Word", href: "#" },
-    { name: "PDF to Excel", href: "#" },
-    { name: "PDF Merge", href: "#" },
-    { name: "PDF Split", href: "#" },
-    { name: "PDF Compress", href: "#" },
-    { name: "PDF to Image", href: "#" },
-    { name: "Word to PDF", href: "#" },
-    { name: "PDF Editor", href: "#" },
-    { name: "PDF Unlock", href: "#" },
-    { name: "PDF Watermark", href: "#" }
+    { name: "PDF to Word", href: "/pdf-to-word" },
+    { name: "PDF to Excel", href: "/pdf-to-excel" },
+    { name: "PDF Merge", href: "/pdf-merge" },
+    { name: "PDF Split", href: "/pdf-split" },
+    { name: "PDF Compress", href: "/pdf-compress" },
+    { name: "PDF to Image", href: "/pdf-to-image" },
+    { name: "Word to PDF", href: "/word-to-pdf" },
+    { name: "PDF Editor", href: "/pdf-editor" },
+    { name: "PDF Unlock", href: "/pdf-unlock" },
+    { name: "PDF Watermark", href: "/pdf-watermark" }
   ];
 
   const allNavItems = navItems;
@@ -69,6 +69,26 @@ export default function Header({ currentPage }: HeaderProps) {
         setLocation('/thumbnail-downloader');
       } else if (searchTerm.includes('format') || searchTerm.includes('convert')) {
         setLocation('/format-converter');
+      } else if (searchTerm.includes('pdf to word') || searchTerm.includes('pdf word')) {
+        setLocation('/pdf-to-word');
+      } else if (searchTerm.includes('pdf to excel') || searchTerm.includes('pdf excel')) {
+        setLocation('/pdf-to-excel');
+      } else if (searchTerm.includes('pdf merge') || searchTerm.includes('merge pdf')) {
+        setLocation('/pdf-merge');
+      } else if (searchTerm.includes('pdf split') || searchTerm.includes('split pdf')) {
+        setLocation('/pdf-split');
+      } else if (searchTerm.includes('pdf compress') || searchTerm.includes('compress pdf')) {
+        setLocation('/pdf-compress');
+      } else if (searchTerm.includes('pdf to image') || searchTerm.includes('pdf image')) {
+        setLocation('/pdf-to-image');
+      } else if (searchTerm.includes('word to pdf') || searchTerm.includes('word pdf')) {
+        setLocation('/word-to-pdf');
+      } else if (searchTerm.includes('pdf editor') || searchTerm.includes('edit pdf')) {
+        setLocation('/pdf-editor');
+      } else if (searchTerm.includes('pdf unlock') || searchTerm.includes('unlock pdf')) {
+        setLocation('/pdf-unlock');
+      } else if (searchTerm.includes('pdf watermark') || searchTerm.includes('watermark pdf')) {
+        setLocation('/pdf-watermark');
       }
       
       // Clear the input after search
@@ -132,20 +152,17 @@ export default function Header({ currentPage }: HeaderProps) {
                   </div>
                   <div className="max-h-64 overflow-y-auto">
                     {pdfTools.map((tool, index) => (
-                      <a
-                        key={index}
-                        href={tool.href}
-                        className="flex items-center justify-between p-2 rounded-md hover:bg-gray-50 cursor-pointer group block"
-                        data-testid={`pdf-tool-${tool.name.toLowerCase().replace(/\s+/g, '-')}`}
-                        onClick={() => setIsPdfDropdownOpen(false)}
-                      >
-                        <div className="text-sm font-medium text-gray-900 group-hover:text-blue-600">
-                          {tool.name}
-                        </div>
-                        <span className="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
-                          Coming Soon
-                        </span>
-                      </a>
+                      <Link href={tool.href} key={index}>
+                        <button
+                          className="w-full text-left p-2 rounded-md hover:bg-gray-50 cursor-pointer group"
+                          data-testid={`pdf-tool-${tool.name.toLowerCase().replace(/\s+/g, '-')}`}
+                          onClick={() => setIsPdfDropdownOpen(false)}
+                        >
+                          <div className="text-sm font-medium text-gray-900 group-hover:text-blue-600">
+                            {tool.name}
+                          </div>
+                        </button>
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -214,20 +231,17 @@ export default function Header({ currentPage }: HeaderProps) {
                       </div>
                       <div className="space-y-1 max-h-48 overflow-y-auto">
                         {pdfTools.map((tool, index) => (
-                          <a
-                            key={index}
-                            href={tool.href}
-                            className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors"
-                            onClick={() => setIsMobileMenuOpen(false)}
-                            data-testid={`mobile-pdf-tool-${tool.name.toLowerCase().replace(/\s+/g, '-')}`}
-                          >
-                            <div className="text-sm font-medium text-gray-900">
-                              {tool.name}
-                            </div>
-                            <span className="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full">
-                              Soon
-                            </span>
-                          </a>
+                          <Link href={tool.href} key={index}>
+                            <button
+                              className="w-full text-left p-3 rounded-lg hover:bg-gray-50 transition-colors"
+                              onClick={() => setIsMobileMenuOpen(false)}
+                              data-testid={`mobile-pdf-tool-${tool.name.toLowerCase().replace(/\s+/g, '-')}`}
+                            >
+                              <div className="text-sm font-medium text-gray-900">
+                                {tool.name}
+                              </div>
+                            </button>
+                          </Link>
                         ))}
                       </div>
                     </div>
