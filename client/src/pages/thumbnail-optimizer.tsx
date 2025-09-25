@@ -348,6 +348,125 @@ export default function ThumbnailOptimizer() {
         </div>
       </section>
 
+      {/* SEO Content Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto max-w-4xl px-4">
+          
+          {/* What is a YouTube Thumbnail Optimizer */}
+          <div className="mb-12">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">What is a YouTube Thumbnail Optimizer?</h2>
+            <div className="prose prose-lg text-gray-700 leading-relaxed">
+              <p>
+                A <strong>YouTube Thumbnail Optimizer</strong> is a free online tool that improves the quality of your video thumbnails by enhancing brightness, contrast, sharpness, and colors. Creators and marketers know that thumbnails decide whether viewers click or scroll — that's why we built the <strong>GinyWow Thumbnail Optimizer</strong>, a simple and effective way to make your thumbnails stand out.
+              </p>
+            </div>
+          </div>
+
+          {/* Why Use GinyWow Thumbnail Optimizer */}
+          <div className="mb-12">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Why Use GinyWow Thumbnail Optimizer?</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {[
+                { title: "Free & Instant", description: "Upload your thumbnail and optimize it in seconds." },
+                { title: "Before & After Preview", description: "See the difference side by side." },
+                { title: "One-Click Download", description: "Save your optimized thumbnail instantly." },
+                { title: "Mobile Friendly", description: "Works smoothly on all devices." },
+                { title: "No Watermark", description: "100% clean, high-quality thumbnails." }
+              ].map((item, index) => (
+                <div key={index} className="flex items-start space-x-3">
+                  <div className="w-2 h-2 bg-green-500 rounded-full mt-3 flex-shrink-0"></div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900">{item.title}</h3>
+                    <p className="text-gray-600">{item.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* How Does GinyWow Thumbnail Optimizer Work */}
+          <div className="mb-12">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">How Does GinyWow Thumbnail Optimizer Work?</h2>
+            <div className="space-y-4">
+              {[
+                "Upload your thumbnail image (JPG/PNG).",
+                "Click on the Optimize Now button.",
+                "Instantly view the Before and After preview.",
+                "Download the enhanced thumbnail with one click."
+              ].map((step, index) => (
+                <div key={index} className="flex items-start space-x-4">
+                  <div className="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-semibold flex-shrink-0">
+                    {index + 1}
+                  </div>
+                  <p className="text-gray-700 mt-1">{step}</p>
+                </div>
+              ))}
+            </div>
+            <p className="text-center mt-6 text-lg font-medium text-gray-800">
+              That's it! Fast, free, and reliable.
+            </p>
+          </div>
+
+          {/* Benefits of Using GinyWow Thumbnail Optimizer */}
+          <div className="mb-12">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Benefits of Using GinyWow Thumbnail Optimizer</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {[
+                { title: "Boost CTR & Views", description: "Attractive thumbnails increase clicks." },
+                { title: "Professional Quality", description: "Stand out without expensive software." },
+                { title: "Easy for Everyone", description: "No design skills needed." },
+                { title: "Works Instantly", description: "Optimize thumbnails in just seconds." }
+              ].map((benefit, index) => (
+                <div key={index} className="bg-gray-50 rounded-lg p-4">
+                  <div className="flex items-start space-x-3">
+                    <CheckCircle className="w-5 h-5 text-green-500 mt-1 flex-shrink-0" />
+                    <div>
+                      <h3 className="font-semibold text-gray-900 mb-1">{benefit.title}</h3>
+                      <p className="text-gray-600">{benefit.description}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* FAQ Section */}
+          <div className="mb-12">
+            <h2 className="text-2xl font-bold text-gray-900 mb-8">Frequently Asked Questions (FAQ)</h2>
+            <div className="space-y-6">
+              {[
+                {
+                  question: "Is GinyWow Thumbnail Optimizer free?",
+                  answer: "Yes, it's 100% free and always will be."
+                },
+                {
+                  question: "Do I need to install any software?",
+                  answer: "No, it works online directly in your browser."
+                },
+                {
+                  question: "Can I see a preview before downloading?",
+                  answer: "Yes, you get a side-by-side preview of original and optimized thumbnails."
+                },
+                {
+                  question: "Does it work for YouTube Shorts thumbnails?",
+                  answer: "Absolutely! It works for any YouTube thumbnail size."
+                }
+              ].map((faq, index) => (
+                <div key={index} className="border-b border-gray-200 pb-6">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                    {index + 1}. {faq.question}
+                  </h3>
+                  <p className="text-gray-700 leading-relaxed">
+                    {faq.answer}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+        </div>
+      </section>
+
       {/* Footer with GinyWow branding */}
       <footer className="bg-gray-900 text-white py-8">
         <div className="container mx-auto max-w-6xl px-4 text-center">
