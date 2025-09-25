@@ -2,12 +2,13 @@ import { useState, lazy, Suspense, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
-import { Edit3, Upload, CheckCircle, Download, ArrowRight, Type, Image as ImageIcon, Save, Undo, Redo, Trash2 } from "lucide-react";
+import { Edit3, Upload, CheckCircle, Download, ArrowRight, Type, Image as ImageIcon, Save, Undo, Redo, Trash2, Move } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { Helmet } from "react-helmet-async";
 import Header from "@/components/header";
 import { PDFDocument, rgb } from 'pdf-lib';
+import * as pdfjsLib from 'pdfjs-dist';
 
 // Lazy load footer for better initial performance
 const Footer = lazy(() => import("@/components/footer"));
@@ -24,11 +25,21 @@ export default function PDFEditor() {
   const [textInput, setTextInput] = useState('');
   const [textPosition, setTextPosition] = useState({ x: 0, y: 0 });
   const [isTextInputVisible, setIsTextInputVisible] = useState(false);
+  const [textElements, setTextElements] = useState<Array<{id: string, text: string, x: number, y: number, size: number}>>([]);
+  const [imageElements, setImageElements] = useState<Array<{id: string, src: string, x: number, y: number, width: number, height: number}>>([]);
+  const [selectedElement, setSelectedElement] = useState<string | null>(null);
+  const [pdfPages, setPdfPages] = useState<any[]>([]);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const overlayCanvasRef = useRef<HTMLCanvasElement>(null);
   const { toast } = useToast();
   
   // Enable scroll animations
   useScrollAnimation();
+
+  // Set up PDF.js worker
+  useEffect(() => {
+    pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
+  }, []);
 
   // Newsletter subscription functionality
   const NewsletterSection = () => {
@@ -265,31 +276,31 @@ export default function PDFEditor() {
     }
   };
 
-  // Add text to PDF
+  // Add text element to current page
   const addTextToPDF = async () => {
-    if (!pdfDoc || !textInput.trim()) return;
+    if (!textInput.trim()) return;
     
     try {
-      const pages = pdfDoc.getPages();
-      const page = pages[currentPage];
-      
-      page.drawText(textInput, {
+      const newTextElement = {
+        id: `text-${Date.now()}`,
+        text: textInput,
         x: textPosition.x,
-        y: page.getHeight() - textPosition.y, // PDF coordinates are from bottom-left
-        size: 14,
-        color: rgb(0, 0, 0),
-      });
+        y: textPosition.y,
+        size: 16
+      };
       
+      setTextElements([...textElements, newTextElement]);
       setTextInput('');
       setIsTextInputVisible(false);
       setEditMode(null);
+      setSelectedElement(newTextElement.id);
       
-      // Re-render page
-      renderPage(pdfDoc, currentPage);
+      // Re-render page with new text
+      if (pdfDoc) renderPage(pdfDoc, currentPage);
       
       toast({
         title: "Text Added!",
-        description: "Text has been added to the PDF.",
+        description: "Text has been added to the PDF. Click to select and edit.",
       });
       
     } catch (error) {
@@ -302,10 +313,27 @@ export default function PDFEditor() {
     }
   };
 
-  // Handle canvas click for text editing
-  const handleCanvasClick = (e: React.MouseEvent<HTMLCanvasElement>) => {
-    if (editMode !== 'text') return;
+  // Delete selected element
+  const deleteSelectedElement = () => {
+    if (!selectedElement) return;
     
+    if (selectedElement.startsWith('text-')) {
+      setTextElements(textElements.filter(el => el.id !== selectedElement));
+    } else if (selectedElement.startsWith('image-')) {
+      setImageElements(imageElements.filter(el => el.id !== selectedElement));
+    }
+    
+    setSelectedElement(null);
+    if (pdfDoc) renderPage(pdfDoc, currentPage);
+    
+    toast({
+      title: "Element Deleted!",
+      description: "Selected element has been removed.",
+    });
+  };
+
+  // Handle canvas click for text editing and element selection
+  const handleCanvasClick = (e: React.MouseEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     
@@ -313,42 +341,64 @@ export default function PDFEditor() {
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     
-    setTextPosition({ x, y });
-    setIsTextInputVisible(true);
+    // Check if clicking on existing elements
+    let clickedElement = null;
+    
+    // Check text elements
+    textElements.forEach(element => {
+      if (x >= element.x - 10 && x <= element.x + 100 && 
+          y >= element.y - element.size && y <= element.y + 10) {
+        clickedElement = element.id;
+      }
+    });
+    
+    // Check image elements
+    imageElements.forEach(element => {
+      if (x >= element.x && x <= element.x + element.width &&
+          y >= element.y && y <= element.y + element.height) {
+        clickedElement = element.id;
+      }
+    });
+    
+    if (clickedElement) {
+      setSelectedElement(clickedElement);
+      setEditMode(null);
+      if (pdfDoc) renderPage(pdfDoc, currentPage);
+    } else if (editMode === 'text') {
+      setTextPosition({ x, y });
+      setIsTextInputVisible(true);
+      setSelectedElement(null);
+    } else {
+      setSelectedElement(null);
+      if (pdfDoc) renderPage(pdfDoc, currentPage);
+    }
   };
 
-  // Add image to PDF
+  // Add image element to current page
   const addImageToPDF = async (imageFile: File) => {
-    if (!pdfDoc) return;
-    
     try {
-      const arrayBuffer = await imageFile.arrayBuffer();
-      const pages = pdfDoc.getPages();
-      const page = pages[currentPage];
+      // Create image URL for preview
+      const imageUrl = URL.createObjectURL(imageFile);
       
-      let image;
-      if (imageFile.type === 'image/png') {
-        image = await pdfDoc.embedPng(arrayBuffer);
-      } else if (imageFile.type === 'image/jpeg') {
-        image = await pdfDoc.embedJpg(arrayBuffer);
-      } else {
-        throw new Error('Unsupported image format');
-      }
-      
-      const imageDims = image.scale(0.5);
-      page.drawImage(image, {
+      const newImageElement = {
+        id: `image-${Date.now()}`,
+        src: imageUrl,
         x: 100,
-        y: page.getHeight() - 200,
-        width: imageDims.width,
-        height: imageDims.height,
-      });
+        y: 100,
+        width: 150,
+        height: 100
+      };
       
-      // Re-render page
-      renderPage(pdfDoc, currentPage);
+      setImageElements([...imageElements, newImageElement]);
+      setSelectedElement(newImageElement.id);
+      setEditMode(null);
+      
+      // Re-render page with new image
+      if (pdfDoc) renderPage(pdfDoc, currentPage);
       
       toast({
         title: "Image Added!",
-        description: "Image has been added to the PDF.",
+        description: "Image has been added to the PDF. Click to select and move.",
       });
       
     } catch (error) {
@@ -361,12 +411,57 @@ export default function PDFEditor() {
     }
   };
 
-  // Save PDF
+  // Save PDF with all editing changes applied
   const savePDF = async () => {
-    if (!pdfDoc) return;
+    if (!pdfDoc || !file) return;
     
     try {
-      const pdfBytes = await pdfDoc.save();
+      // Create a fresh copy of the PDF to apply changes
+      const originalArrayBuffer = await file.arrayBuffer();
+      const workingDoc = await PDFDocument.load(originalArrayBuffer);
+      const pages = workingDoc.getPages();
+      const page = pages[currentPage];
+      
+      // Apply text elements to PDF
+      textElements.forEach(element => {
+        page.drawText(element.text, {
+          x: element.x,
+          y: page.getHeight() - element.y, // PDF coordinates are from bottom-left
+          size: element.size,
+          color: rgb(0, 0, 0),
+        });
+      });
+      
+      // Apply image elements to PDF
+      for (const element of imageElements) {
+        try {
+          // Convert image URL back to blob
+          const response = await fetch(element.src);
+          const blob = await response.blob();
+          const arrayBuffer = await blob.arrayBuffer();
+          
+          let image;
+          if (blob.type === 'image/png') {
+            image = await workingDoc.embedPng(arrayBuffer);
+          } else if (blob.type === 'image/jpeg') {
+            image = await workingDoc.embedJpg(arrayBuffer);
+          }
+          
+          if (image) {
+            page.drawImage(image, {
+              x: element.x,
+              y: page.getHeight() - element.y - element.height,
+              width: element.width,
+              height: element.height,
+            });
+          }
+        } catch (imgError) {
+          console.error('Error processing image:', imgError);
+        }
+      }
+      
+      // Save the modified PDF
+      const pdfBytes = await workingDoc.save();
       const blob = new Blob([pdfBytes], { type: 'application/pdf' });
       const url = URL.createObjectURL(blob);
       
@@ -379,14 +474,14 @@ export default function PDFEditor() {
       
       toast({
         title: "PDF Saved!",
-        description: "Your edited PDF has been downloaded.",
+        description: "Your edited PDF has been downloaded with all changes applied.",
       });
       
     } catch (error) {
       console.error('Error saving PDF:', error);
       toast({
         title: "Error",
-        description: "Failed to save PDF.",
+        description: "Failed to save PDF. Please try again.",
         variant: "destructive",
       });
     }
