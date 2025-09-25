@@ -301,8 +301,8 @@ export default function Home() {
 
       {/* Hero Section - Mobile First */}
       <section className="relative bg-gradient-to-br from-blue-50 via-white to-purple-50 py-8 sm:py-12 lg:py-20 overflow-hidden">
-        {/* Floating Shapes - TinyWow Style - Hero Section Only */}
-        <div className="absolute inset-0 z-0 pointer-events-none">
+        {/* Floating Shapes - TinyWow Style - Hero Section Only - Hidden on Mobile */}
+        <div className="absolute inset-0 z-0 pointer-events-none hidden sm:block">
           {/* Triangle Top Left - Pink */}
           <div 
             className="absolute top-16 left-12 w-6 h-6 animate-float-1"
