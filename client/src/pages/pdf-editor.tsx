@@ -38,11 +38,18 @@ export default function PDFEditor() {
 
   // Set up PDF.js worker
   useEffect(() => {
-    // Use local pdfjs-dist worker for better reliability
-    pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
-      'pdfjs-dist/build/pdf.worker.min.js',
-      import.meta.url
-    ).toString();
+    // Configure PDF.js worker with multiple fallback options
+    try {
+      // Try to use local pdfjs-dist worker first
+      pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
+        'pdfjs-dist/build/pdf.worker.min.js',
+        import.meta.url
+      ).toString();
+    } catch (error) {
+      // Fallback to CDN if local worker fails
+      console.warn('Using CDN worker as fallback:', error);
+      pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    }
   }, []);
 
   // Newsletter subscription functionality
@@ -221,6 +228,16 @@ export default function PDFEditor() {
     setIsProcessing(true);
     
     try {
+      // Validate file size and type again
+      if (file.type !== 'application/pdf') {
+        throw new Error('Invalid file type. Please select a PDF file.');
+      }
+      
+      if (file.size > 100 * 1024 * 1024) {
+        throw new Error('File too large. Please select a file smaller than 100MB.');
+      }
+      
+      // Load PDF for editing with PDF-lib
       const arrayBuffer = await file.arrayBuffer();
       const pdfDocument = await PDFDocument.load(arrayBuffer);
       
@@ -229,18 +246,28 @@ export default function PDFEditor() {
       setCurrentPage(0);
       setShowEditor(true);
       
-      // Render first page
-      setTimeout(() => renderPage(pdfDocument, 0), 100);
+      // Clear any existing elements
+      setTextElements({});
+      setImageElements({});
+      setSelectedElement(null);
+      
+      // Render first page with delay to ensure canvas is ready
+      setTimeout(() => {
+        if (pdfDocument) {
+          renderPage(pdfDocument, 0);
+        }
+      }, 200);
       
       toast({
-        title: "PDF Editor Loaded!",
-        description: "Your PDF is ready for editing. Click to add text or images.",
+        title: "PDF Editor Ready!",
+        description: `Your PDF with ${pdfDocument.getPageCount()} page(s) is now editable. Click anywhere to add text or drag images.`,
       });
     } catch (error) {
       console.error('Error loading PDF:', error);
+      const errorMessage = error instanceof Error ? error.message : "Please try again with a valid PDF file.";
       toast({
         title: "Loading Failed",
-        description: "Please try again with a valid PDF file.",
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {
