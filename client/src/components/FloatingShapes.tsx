@@ -104,7 +104,7 @@ const FloatingShapes = memo(({
   };
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 1 }}>
+    <div className="absolute inset-0 overflow-hidden pointer-events-none hidden sm:block" style={{ zIndex: 1 }}>
       {generateShapes()}
     </div>
   );
