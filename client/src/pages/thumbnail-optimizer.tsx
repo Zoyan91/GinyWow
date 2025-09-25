@@ -142,7 +142,7 @@ export default function ThumbnailOptimizer() {
             </h1>
             
             <p className="text-lg text-gray-600 mb-8 leading-relaxed max-w-2xl mx-auto">
-              Enhance brightness, contrast, and vibrancy to improve your thumbnail's visual appeal and CTR.
+              Boost your video views with GinyWow Thumbnail Optimizer. Free online tool to enhance brightness, contrast, and sharpness of your YouTube thumbnails. Upload, preview before & after, and download optimized thumbnails instantly.
             </p>
 
             {/* File Upload Section */}
