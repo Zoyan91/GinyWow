@@ -716,7 +716,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Video Download Endpoint - New Working Approach
+  // Video Download Endpoint - Server Proxy Approach
   app.post('/api/video-download', async (req, res) => {
     try {
       const { videoUrl, quality } = req.body;
@@ -725,16 +725,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: 'Missing video URL or quality' });
       }
 
-      // Use ytdl-core to get fresh download URL
+      // Use ytdl-core to get video info and stream
       const info = await ytdl.getInfo(videoUrl);
       
-      // Find matching format more intelligently
+      // Find matching format intelligently
       let selectedFormat = null;
       
       // First try to find exact match
       selectedFormat = info.formats.find(f => f.qualityLabel === quality);
       
-      // If not found, try partial match (e.g., "1080p" from "1080p60")
+      // If not found, try partial match
       if (!selectedFormat) {
         const qualityNumber = quality.match(/\d+/)?.[0];
         if (qualityNumber) {
@@ -752,13 +752,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       }
       
-      // If still not found, use ytdl chooseFormat as fallback
+      // If still not found, use highest quality available
       if (!selectedFormat) {
-        try {
-          selectedFormat = ytdl.chooseFormat(info.formats, { quality: 'highest' });
-        } catch (e) {
-          selectedFormat = info.formats.find(f => f.hasVideo && f.hasAudio) || info.formats[0];
-        }
+        selectedFormat = info.formats
+          .filter(f => f.hasVideo && f.hasAudio)
+          .sort((a, b) => (b.height || 0) - (a.height || 0))[0];
       }
       
       if (!selectedFormat) {
@@ -776,13 +774,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const title = sanitizeFilename(info.videoDetails.title);
       const filename = `${title}-${quality}.${selectedFormat.container || 'mp4'}`;
 
-      // Return download info instead of streaming
-      res.json({
-        success: true,
-        downloadUrl: selectedFormat.url,
-        filename: filename,
-        fileSize: selectedFormat.contentLength,
-        title: info.videoDetails.title
+      // Set proper headers for download
+      res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+      res.setHeader('Content-Type', selectedFormat.mimeType || 'video/mp4');
+      
+      // Stream directly from ytdl-core to avoid 403 errors
+      const videoStream = ytdl(videoUrl, { format: selectedFormat });
+      
+      videoStream.pipe(res);
+      
+      videoStream.on('error', (error) => {
+        console.error('Video stream error:', error);
+        if (!res.headersSent) {
+          res.status(500).json({ error: 'Download failed' });
+        }
       });
 
     } catch (error) {

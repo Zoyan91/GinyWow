@@ -66,42 +66,68 @@ export default function VideoDownloader() {
 
     try {
       toast({
-        title: "Preparing download...", 
-        description: "Getting fresh download link, please wait.",
+        title: "Starting download...", 
+        description: "Downloading video through secure server proxy.",
       });
 
-      // Get fresh download URL from our backend
-      const response = await apiRequest('POST', '/api/video-download', {
-        videoUrl: `https://www.youtube.com/watch?v=${videoData?.videoId}`,
-        quality: format.quality
+      // Create form data for POST request
+      const formData = new FormData();
+      formData.append('videoUrl', `https://www.youtube.com/watch?v=${videoData?.videoId}`);
+      formData.append('quality', format.quality);
+
+      // Make request to server proxy endpoint
+      const response = await fetch('/api/video-download', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          videoUrl: `https://www.youtube.com/watch?v=${videoData?.videoId}`,
+          quality: format.quality
+        })
       });
 
-      const result = await response.json();
-
-      if (result.success) {
-        // Create download link with fresh URL
-        const link = document.createElement('a');
-        link.href = result.downloadUrl;
-        link.download = result.filename;
-        link.style.display = 'none';
-        
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-
-        toast({
-          title: "Download started!", 
-          description: `${format.quality} ${format.format} download has started successfully.`,
-          duration: 5000,
-        });
-      } else {
-        throw new Error(result.error || 'Download failed');
+      if (!response.ok) {
+        throw new Error(`Download failed: ${response.statusText}`);
       }
+
+      // Get filename from Content-Disposition header or create one
+      const contentDisposition = response.headers.get('Content-Disposition');
+      let filename = `video-${format.quality}.mp4`;
+      if (contentDisposition) {
+        const filenameMatch = contentDisposition.match(/filename="?([^"]+)"?/);
+        if (filenameMatch) {
+          filename = filenameMatch[1];
+        }
+      }
+
+      // Create blob from response and download
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      link.style.display = 'none';
+      
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      // Clean up blob URL
+      window.URL.revokeObjectURL(url);
+
+      toast({
+        title: "Download completed!", 
+        description: `${format.quality} ${format.format} video downloaded successfully.`,
+        duration: 5000,
+      });
+
     } catch (error: any) {
       console.error('Download error:', error);
       toast({
         title: "Download failed", 
-        description: error.message || "Could not start download. Please try again.",
+        description: error.message || "Could not download video. Please try again.",
         variant: "destructive",
       });
     }
