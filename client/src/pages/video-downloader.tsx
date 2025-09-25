@@ -348,8 +348,8 @@ export default function VideoDownloader() {
                         />
                       </div>
                       
-                      {/* Video Title */}
-                      <div className="mt-4">
+                      {/* Video Title - Only show on desktop */}
+                      <div className="mt-4 hidden md:block">
                         <h3 className="text-lg font-semibold text-gray-900 mb-2" data-testid="video-title">{videoData.title}</h3>
                       </div>
                     </div>
