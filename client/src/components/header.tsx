@@ -36,7 +36,7 @@ export default function Header({ currentPage }: HeaderProps) {
   // TinyWow-style navigation items
   const navItems = [
     { href: "/", label: "App Opener", testId: "nav-app-opener" },
-    { href: "/thumbnail-downloader", label: "Thumbnail Downloader", testId: "nav-thumbnail" },
+    { href: "/thumbnail-downloader", label: "Thumbnail", testId: "nav-thumbnail" },
     { href: "/format-converter", label: "Format Converter", testId: "nav-converter" },
     { href: "/contact", label: "Contact", testId: "nav-contact" },
     { href: "/blog", label: "Blog", testId: "nav-blog" },
