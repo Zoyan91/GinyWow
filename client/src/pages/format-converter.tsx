@@ -221,7 +221,7 @@ export default function FormatConverterPage() {
         {/* Simple Converter Section - Moved Up */}
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center mb-8">
-            <h1 className="text-xl sm:text-2xl md:text-4xl font-bold md:font-semibold text-gray-900 mb-4" data-testid="page-title">
+            <h1 className="text-xl sm:text-2xl lg:text-4xl font-bold lg:font-normal text-gray-900 mb-4 sm:mb-6 leading-tight" data-testid="page-title">
               <span className="block sm:inline">Free Online Image Format Converter</span> <span className="block sm:inline">– JPG, PNG, GIF, WebP & More</span>
             </h1>
             <p className="text-gray-600 mb-6 text-sm md:text-base" data-testid="hero-description">
