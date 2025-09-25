@@ -1,82 +1,112 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
-import { Download, Upload, CheckCircle, Users, Zap, Shield, ArrowRight, MessageCircle, AlertCircle, Image } from "lucide-react";
+import { Download, Upload, CheckCircle, Users, Zap, Shield, Image, AlertCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import { z } from "zod";
 import { Helmet } from "react-helmet-async";
 
-const thumbnailOptimizerSchema = z.object({
-  file: z.any().optional(),
-});
-
-type ThumbnailOptimizerForm = z.infer<typeof thumbnailOptimizerSchema>;
+interface OptimizationResult {
+  success: boolean;
+  originalImage: string;
+  optimizedImage: string;
+  originalSize: number;
+  optimizedSize: number;
+  sizeReduction: number;
+  originalDimensions: { width: number; height: number };
+  optimizedDimensions: { width: number; height: number };
+  downloadName: string;
+}
 
 export default function ThumbnailOptimizer() {
-  const [optimizedImage, setOptimizedImage] = useState<string | null>(null);
-  const [originalSize, setOriginalSize] = useState<number>(0);
-  const [optimizedSize, setOptimizedSize] = useState<number>(0);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [optimizationResult, setOptimizationResult] = useState<OptimizationResult | null>(null);
   const [isOptimizing, setIsOptimizing] = useState(false);
   const { toast } = useToast();
 
-  const form = useForm<ThumbnailOptimizerForm>({
-    resolver: zodResolver(thumbnailOptimizerSchema),
-    defaultValues: {},
-  });
-
-  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
 
-    if (!file.type.startsWith('image/')) {
+    // Validate file type (jpg/png only)
+    if (!['image/jpeg', 'image/jpg', 'image/png'].includes(file.type)) {
       toast({
         title: "Invalid file type",
-        description: "Please select an image file.",
+        description: "Only JPG and PNG files are supported.",
         variant: "destructive",
       });
       return;
     }
 
-    setIsOptimizing(true);
-    setOriginalSize(file.size);
-
-    try {
-      // Simulate optimization process
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setOptimizedImage(e.target?.result as string);
-        setOptimizedSize(Math.floor(file.size * 0.7)); // Simulate 30% compression
-        setIsOptimizing(false);
-        
-        toast({
-          title: "Image optimized successfully!",
-          description: `Reduced file size by ${Math.round((1 - 0.7) * 100)}%`,
-        });
-      };
-      reader.readAsDataURL(file);
-    } catch (error) {
-      setIsOptimizing(false);
+    // Validate file size (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
       toast({
-        title: "Optimization failed",
-        description: "Please try again.",
+        title: "File too large",
+        description: "Maximum file size is 5MB.",
         variant: "destructive",
       });
+      return;
+    }
+
+    setSelectedFile(file);
+    
+    // Create preview
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      setPreviewImage(e.target?.result as string);
+    };
+    reader.readAsDataURL(file);
+    
+    // Clear previous results
+    setOptimizationResult(null);
+  };
+
+  const optimizeThumbnail = async () => {
+    if (!selectedFile) return;
+    
+    setIsOptimizing(true);
+    
+    try {
+      const formData = new FormData();
+      formData.append('thumbnail', selectedFile);
+      
+      const response = await fetch('/api/optimize', {
+        method: 'POST',
+        body: formData,
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Optimization failed');
+      }
+      
+      const result: OptimizationResult = await response.json();
+      setOptimizationResult(result);
+      
+      toast({
+        title: "Thumbnail optimized successfully!",
+        description: `Enhanced brightness, contrast, and vibrancy. ${result.sizeReduction > 0 ? `Reduced size by ${result.sizeReduction}%` : 'Optimized for better CTR'}`,
+      });
+      
+    } catch (error) {
+      console.error('Optimization error:', error);
+      toast({
+        title: "Optimization failed",
+        description: error instanceof Error ? error.message : "Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsOptimizing(false);
     }
   };
 
   const downloadOptimized = () => {
-    if (!optimizedImage) return;
+    if (!optimizationResult) return;
     
     const link = document.createElement('a');
-    link.href = optimizedImage;
-    link.download = 'optimized-thumbnail.jpg';
+    link.href = optimizationResult.optimizedImage;
+    link.download = optimizationResult.downloadName;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -93,11 +123,11 @@ export default function ThumbnailOptimizer() {
   return (
     <div className="min-h-screen bg-background relative w-full overflow-x-hidden">
       <Helmet>
-        <title>Thumbnail Optimizer - Compress & Optimize Images | GinyWow</title>
-        <meta name="description" content="Free online thumbnail optimizer. Compress and optimize images for web, social media, and YouTube. Reduce file size while maintaining quality." />
-        <meta name="keywords" content="thumbnail optimizer, image compression, optimize images, reduce file size, image compressor" />
-        <meta property="og:title" content="Thumbnail Optimizer - Compress & Optimize Images | GinyWow" />
-        <meta property="og:description" content="Free online thumbnail optimizer. Compress and optimize images for web, social media, and YouTube." />
+        <title>GinyWow - Thumbnail Optimizer</title>
+        <meta name="description" content="Free online thumbnail optimizer. Enhance brightness, contrast, and vibrancy for better CTR. Perfect for YouTube thumbnails and social media." />
+        <meta name="keywords" content="thumbnail optimizer, image enhancement, YouTube thumbnails, CTR optimization" />
+        <meta property="og:title" content="GinyWow - Thumbnail Optimizer" />
+        <meta property="og:description" content="Free online thumbnail optimizer. Enhance brightness, contrast, and vibrancy for better CTR." />
         <meta property="og:type" content="website" />
       </Helmet>
       
@@ -105,94 +135,165 @@ export default function ThumbnailOptimizer() {
 
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-green-50 via-white to-blue-50 py-8 sm:py-12 lg:py-20">
-        <div className="container-mobile max-w-4xl">
-          <div className="text-center animate-fade-in">
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight">
-              Thumbnail Optimizer
+        <div className="container mx-auto max-w-6xl px-4">
+          <div className="text-center mb-8">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 leading-tight">
+              GinyWow – Thumbnail Optimizer
             </h1>
             
-            <p className="text-responsive-sm text-gray-600 mb-6 sm:mb-8 leading-relaxed max-w-2xl mx-auto px-4">
-              Compress and optimize your images while maintaining quality. Perfect for web, social media, and YouTube thumbnails.
+            <p className="text-lg text-gray-600 mb-8 leading-relaxed max-w-2xl mx-auto">
+              Enhance brightness, contrast, and vibrancy to improve your thumbnail's visual appeal and CTR.
             </p>
 
-            {/* File Upload Area */}
-            <div className="max-w-2xl mx-auto mb-8 px-4">
-              <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 hover:border-gray-400 transition-colors">
-                <div className="text-center">
-                  <Image className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-                  <div className="space-y-2">
-                    <label htmlFor="file-upload" className="cursor-pointer">
-                      <span className="btn-mobile bg-green-500 hover:bg-green-600 text-white inline-flex items-center">
-                        <Upload className="w-4 h-4 mr-2" />
-                        Choose Image
-                      </span>
-                      <input
-                        id="file-upload"
-                        type="file"
-                        className="sr-only"
-                        accept="image/*"
-                        onChange={handleFileUpload}
-                        data-testid="file-upload"
-                      />
-                    </label>
-                    <p className="text-sm text-gray-500">
-                      Support: JPG, PNG, WebP (Max: 10MB)
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Loading State */}
-            {isOptimizing && (
-              <div className="max-w-2xl mx-auto px-4 animate-mobile-slide-up">
-                <div className="card-mobile p-6 text-center">
-                  <div className="w-8 h-8 border-2 border-green-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-                  <p className="text-gray-600">Optimizing your image...</p>
-                </div>
-              </div>
-            )}
-
-            {/* Optimized Result */}
-            {optimizedImage && (
-              <div className="max-w-2xl mx-auto px-4 animate-mobile-slide-up">
-                <div className="card-mobile p-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <div>
-                      <h3 className="font-semibold text-gray-900 mb-2">Original Size</h3>
-                      <p className="text-2xl font-bold text-red-500">{formatFileSize(originalSize)}</p>
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-gray-900 mb-2">Optimized Size</h3>
-                      <p className="text-2xl font-bold text-green-500">{formatFileSize(optimizedSize)}</p>
-                    </div>
-                  </div>
-                  
-                  <div className="mb-6">
-                    <div className="bg-green-100 border border-green-200 rounded-lg p-4">
-                      <div className="flex items-center">
-                        <CheckCircle className="w-5 h-5 text-green-500 mr-2" />
-                        <span className="text-green-700 font-medium">
-                          Saved {formatFileSize(originalSize - optimizedSize)} ({Math.round(((originalSize - optimizedSize) / originalSize) * 100)}% reduction)
+            {/* File Upload Section */}
+            <div className="max-w-xl mx-auto mb-8">
+              <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 hover:border-gray-400 transition-colors bg-white">
+                {!previewImage ? (
+                  <div className="text-center">
+                    <Image className="mx-auto h-12 w-12 text-gray-400 mb-4" />
+                    <div className="space-y-2">
+                      <label htmlFor="file-upload" className="cursor-pointer">
+                        <span className="inline-flex items-center px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-medium rounded-lg transition-colors">
+                          <Upload className="w-4 h-4 mr-2" />
+                          Choose Thumbnail
                         </span>
+                        <input
+                          id="file-upload"
+                          type="file"
+                          className="sr-only"
+                          accept="image/jpeg,image/jpg,image/png"
+                          onChange={handleFileSelect}
+                          data-testid="file-upload"
+                        />
+                      </label>
+                      <p className="text-sm text-gray-500">
+                        Support: JPG, PNG (Max: 5MB)
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="text-center">
+                    <img
+                      src={previewImage}
+                      alt="Preview"
+                      className="max-w-full max-h-64 mx-auto rounded-lg shadow-md mb-4"
+                    />
+                    <div className="space-y-4">
+                      <p className="text-sm text-gray-600 mb-4">
+                        <strong>File:</strong> {selectedFile?.name} ({formatFileSize(selectedFile?.size || 0)})
+                      </p>
+                      
+                      <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                        <Button
+                          onClick={optimizeThumbnail}
+                          disabled={isOptimizing}
+                          className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 font-medium"
+                          data-testid="optimize-button"
+                        >
+                          {isOptimizing ? (
+                            <>
+                              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                              Optimizing...
+                            </>
+                          ) : (
+                            <>
+                              <Zap className="w-4 h-4 mr-2" />
+                              Optimize Now
+                            </>
+                          )}
+                        </Button>
+                        
+                        <label htmlFor="file-upload-replace" className="cursor-pointer">
+                          <span className="inline-flex items-center px-6 py-3 bg-gray-500 hover:bg-gray-600 text-white font-medium rounded-lg transition-colors">
+                            <Upload className="w-4 h-4 mr-2" />
+                            Choose Different
+                          </span>
+                          <input
+                            id="file-upload-replace"
+                            type="file"
+                            className="sr-only"
+                            accept="image/jpeg,image/jpg,image/png"
+                            onChange={handleFileSelect}
+                          />
+                        </label>
                       </div>
                     </div>
                   </div>
+                )}
+              </div>
+            </div>
 
-                  <img
-                    src={optimizedImage}
-                    alt="Optimized thumbnail"
-                    className="w-full max-w-md mx-auto rounded-lg shadow-md mb-6"
-                  />
-
-                  <Button
-                    onClick={downloadOptimized}
-                    className="btn-mobile bg-green-500 hover:bg-green-600 text-white w-full sm:w-auto"
-                    data-testid="download-button"
-                  >
-                    <Download className="w-4 h-4 mr-2" />
-                    Download Optimized Image
-                  </Button>
+            {/* Results Section - Before/After */}
+            {optimizationResult && (
+              <div className="max-w-5xl mx-auto animate-fade-in">
+                <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+                  <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Results</h2>
+                  
+                  {/* Desktop: Side-by-side, Mobile: Stacked */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-6">
+                    {/* Original Thumbnail */}
+                    <div className="text-center">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-4">Original Thumbnail</h3>
+                      <div className="bg-gray-50 rounded-lg p-4">
+                        <img
+                          src={optimizationResult.originalImage}
+                          alt="Original thumbnail"
+                          className="w-full max-w-sm mx-auto rounded-lg shadow-md mb-4"
+                        />
+                        <div className="text-sm text-gray-600 space-y-1">
+                          <p><strong>Size:</strong> {formatFileSize(optimizationResult.originalSize)}</p>
+                          <p><strong>Dimensions:</strong> {optimizationResult.originalDimensions.width} × {optimizationResult.originalDimensions.height}</p>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Optimized Thumbnail */}
+                    <div className="text-center">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-4">Optimized Thumbnail</h3>
+                      <div className="bg-green-50 rounded-lg p-4">
+                        <img
+                          src={optimizationResult.optimizedImage}
+                          alt="Optimized thumbnail"
+                          className="w-full max-w-sm mx-auto rounded-lg shadow-md mb-4"
+                        />
+                        <div className="text-sm text-gray-600 space-y-1">
+                          <p><strong>Size:</strong> {formatFileSize(optimizationResult.optimizedSize)}</p>
+                          <p><strong>Dimensions:</strong> {optimizationResult.optimizedDimensions.width} × {optimizationResult.optimizedDimensions.height}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Improvement Stats */}
+                  {optimizationResult.sizeReduction > 0 && (
+                    <div className="bg-green-100 border border-green-200 rounded-lg p-4 mb-6">
+                      <div className="flex items-center justify-center">
+                        <CheckCircle className="w-5 h-5 text-green-500 mr-2" />
+                        <span className="text-green-700 font-medium">
+                          File size reduced by {optimizationResult.sizeReduction}%
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Download Button */}
+                  <div className="text-center">
+                    <Button
+                      onClick={downloadOptimized}
+                      className="bg-green-500 hover:bg-green-600 text-white px-8 py-3 font-medium text-lg"
+                      data-testid="download-button"
+                    >
+                      <Download className="w-5 h-5 mr-2" />
+                      Download Optimized Thumbnail
+                    </Button>
+                  </div>
+                  
+                  {/* CTR Tips */}
+                  <div className="mt-6 p-4 bg-blue-50 rounded-lg">
+                    <p className="text-sm text-blue-700 text-center">
+                      <strong>Tips:</strong> Use bold text, bright colors, and centered subject for best CTR
+                    </p>
+                  </div>
                 </div>
               </div>
             )}
@@ -201,44 +302,44 @@ export default function ThumbnailOptimizer() {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-gray-50">
-        <div className="container-mobile max-w-5xl">
-          <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-responsive-xl font-bold text-gray-900 mb-4 sm:mb-6">
-              Why Optimize Your Images?
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto max-w-5xl px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-6">
+              Why Optimize Your Thumbnails?
             </h2>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                icon: <Zap className="w-6 h-6 text-blue-600" />,
-                title: "Faster Loading",
-                description: "Reduce file sizes for faster website and social media loading times"
+                icon: <Zap className="w-8 h-8 text-blue-600" />,
+                title: "Higher CTR",
+                description: "Enhanced brightness and contrast make thumbnails more eye-catching and clickable"
               },
               {
-                icon: <Shield className="w-6 h-6 text-green-600" />,
-                title: "Quality Preserved",
-                description: "Advanced compression maintains visual quality while reducing size"
+                icon: <Shield className="w-8 h-8 text-green-600" />,
+                title: "Perfect Dimensions",
+                description: "Auto-center crop to optimal 16:9 ratio for YouTube and social media platforms"
               },
               {
-                icon: <Users className="w-6 h-6 text-purple-600" />,
-                title: "Better Engagement",
-                description: "Faster loading images lead to better user experience and engagement"
+                icon: <Users className="w-8 h-8 text-purple-600" />,
+                title: "Professional Quality",
+                description: "Enhanced sharpness and vibrancy create professional-looking thumbnails"
               }
             ].map((benefit, index) => (
               <div
                 key={index}
-                className="card-mobile p-6 text-center hover:shadow-lg transition-shadow"
+                className="bg-white rounded-lg p-6 text-center hover:shadow-lg transition-shadow"
                 data-testid={`benefit-${index + 1}`}
               >
-                <div className="w-12 h-12 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
+                <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
                   {benefit.icon}
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">
                   {benefit.title}
                 </h3>
-                <p className="text-gray-600 text-sm">
+                <p className="text-gray-600">
                   {benefit.description}
                 </p>
               </div>
@@ -247,50 +348,12 @@ export default function ThumbnailOptimizer() {
         </div>
       </section>
 
-      {/* FAQ Section */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-white">
-        <div className="container-mobile max-w-4xl">
-          <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-responsive-xl font-bold text-gray-900 mb-4 sm:mb-6">
-              Frequently Asked Questions
-            </h2>
-          </div>
-          
-          <div className="space-y-4 sm:space-y-6">
-            {[
-              {
-                question: "What image formats are supported?",
-                answer: "We support **JPG, PNG, WebP, and most common image formats**. Maximum file size is 10MB per image."
-              },
-              {
-                question: "Will image quality be affected?",
-                answer: "Our optimizer uses **advanced compression algorithms** to reduce file size while maintaining visual quality. Most users see 30-70% size reduction with minimal quality loss."
-              },
-              {
-                question: "Is it free to use?",
-                answer: "Yes! Our thumbnail optimizer is **completely free** with no limits on the number of images you can optimize."
-              }
-            ].map((faq, index) => (
-              <div
-                key={index}
-                className="card-mobile p-4 sm:p-6"
-                data-testid={`faq-item-${index + 1}`}
-              >
-                <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-3">
-                  {faq.question}
-                </h3>
-                <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
-                  {faq.answer.split('**').map((part, i) => 
-                    i % 2 === 1 ? <strong key={i} className="font-semibold text-gray-800">{part}</strong> : part
-                  )}
-                </p>
-              </div>
-            ))}
-          </div>
+      {/* Footer with GinyWow branding */}
+      <footer className="bg-gray-900 text-white py-8">
+        <div className="container mx-auto max-w-6xl px-4 text-center">
+          <p className="text-lg font-medium">Optimized by GinyWow</p>
         </div>
-      </section>
-
-      <Footer />
+      </footer>
     </div>
   );
 }

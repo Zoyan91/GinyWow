@@ -702,7 +702,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           hue: 0
         })
         // Increase sharpness and contrast
-        .sharpen({ sigma: 1.2, flat: 1, jagged: 2 })
+        .sharpen(1.2, 1, 2)
         .linear(1.1, -(128 * 0.1))  // Increase contrast
         // Output as high-quality JPEG
         .jpeg({ 
