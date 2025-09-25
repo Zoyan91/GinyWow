@@ -342,12 +342,6 @@ export default function VideoDownloader() {
                       {/* Video Title */}
                       <div className="mt-4">
                         <h3 className="text-xl font-semibold text-gray-900 mb-2" data-testid="video-title">{videoData.title}</h3>
-                        <div className="flex items-center justify-center space-x-4 text-sm text-gray-600">
-                          <span className="flex items-center" data-testid="video-duration">
-                            <Play className="w-4 h-4 mr-1" />
-                            {videoData.duration}
-                          </span>
-                        </div>
                       </div>
                     </div>
                     
