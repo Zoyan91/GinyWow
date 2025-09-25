@@ -137,7 +137,7 @@ export default function ThumbnailOptimizer() {
       <section className="relative bg-gradient-to-br from-green-50 via-white to-blue-50 py-8 sm:py-12 lg:py-20">
         <div className="container mx-auto max-w-6xl px-4">
           <div className="text-center mb-8">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 leading-tight">
+            <h1 className="text-xl sm:text-2xl lg:text-4xl font-bold text-gray-900 mb-4 leading-tight">
               Free YouTube Thumbnail Optimizer – Enhance & Download Thumbnails Online
             </h1>
             
