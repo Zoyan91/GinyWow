@@ -727,10 +727,42 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Use ytdl-core to get fresh download URL
       const info = await ytdl.getInfo(videoUrl);
-      const format = ytdl.chooseFormat(info.formats, { quality: quality });
       
-      if (!format) {
-        return res.status(404).json({ error: 'Quality not available' });
+      // Find matching format more intelligently
+      let selectedFormat = null;
+      
+      // First try to find exact match
+      selectedFormat = info.formats.find(f => f.qualityLabel === quality);
+      
+      // If not found, try partial match (e.g., "1080p" from "1080p60")
+      if (!selectedFormat) {
+        const qualityNumber = quality.match(/\d+/)?.[0];
+        if (qualityNumber) {
+          selectedFormat = info.formats.find(f => 
+            f.qualityLabel && f.qualityLabel.includes(qualityNumber + 'p')
+          );
+        }
+      }
+      
+      // If still not found, try by height
+      if (!selectedFormat) {
+        const qualityNumber = parseInt(quality.match(/\d+/)?.[0] || '0');
+        if (qualityNumber > 0) {
+          selectedFormat = info.formats.find(f => f.height === qualityNumber);
+        }
+      }
+      
+      // If still not found, use ytdl chooseFormat as fallback
+      if (!selectedFormat) {
+        try {
+          selectedFormat = ytdl.chooseFormat(info.formats, { quality: 'highest' });
+        } catch (e) {
+          selectedFormat = info.formats.find(f => f.hasVideo && f.hasAudio) || info.formats[0];
+        }
+      }
+      
+      if (!selectedFormat) {
+        return res.status(404).json({ error: 'No suitable format found' });
       }
 
       // Sanitize filename
@@ -742,14 +774,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
       };
 
       const title = sanitizeFilename(info.videoDetails.title);
-      const filename = `${title}-${quality}.${format.container || 'mp4'}`;
+      const filename = `${title}-${quality}.${selectedFormat.container || 'mp4'}`;
 
       // Return download info instead of streaming
       res.json({
         success: true,
-        downloadUrl: format.url,
+        downloadUrl: selectedFormat.url,
         filename: filename,
-        fileSize: format.contentLength,
+        fileSize: selectedFormat.contentLength,
         title: info.videoDetails.title
       });
 
