@@ -301,173 +301,225 @@ export default function Home() {
 
       {/* Hero Section - Mobile First */}
       <section className="relative bg-gradient-to-br from-blue-50 via-white to-purple-50 py-8 sm:py-12 lg:py-20 overflow-hidden">
-        {/* Floating Shapes - TinyWow Style Subtle */}
-        <div className="absolute inset-0 z-0">
-          {/* Triangle Top Left - Light Pink */}
+        {/* Floating Shapes - TinyWow Style Extended */}
+        <div className="absolute inset-0 z-0" style={{ height: '200vh' }}>
+          {/* Triangle Top Left - Pink */}
           <div 
             className="absolute top-16 left-12 w-6 h-6 animate-float-1"
             style={{
-              background: '#fecaca',
+              background: '#f472b6',
               clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
               transform: 'rotate(15deg)',
-              opacity: 0.3
+              opacity: 0.4
             }}
           ></div>
 
-          {/* Circle Top Right - Light Blue */}
+          {/* Circle Top Right - Blue */}
           <div 
             className="absolute top-20 right-20 w-5 h-5 rounded-full animate-float-2"
             style={{
-              background: '#bfdbfe',
-              opacity: 0.35
+              background: '#60a5fa',
+              opacity: 0.45
             }}
           ></div>
 
-          {/* Square Top Center - Light Orange */}
+          {/* Square Top Center - Orange */}
           <div 
             className="absolute top-24 left-1/3 w-4 h-4 animate-float-3"
             style={{
-              background: '#fed7aa',
+              background: '#fb923c',
               transform: 'rotate(45deg)',
-              opacity: 0.3
+              opacity: 0.4
             }}
           ></div>
 
-          {/* Dot Top Right Corner - Light Purple */}
+          {/* Dot Top Right Corner - Purple */}
           <div 
             className="absolute top-8 right-8 w-3 h-3 rounded-full animate-float-4"
             style={{
-              background: '#e9d5ff',
-              opacity: 0.4
+              background: '#c084fc',
+              opacity: 0.5
             }}
           ></div>
 
-          {/* Triangle Center Left - Light Green */}
+          {/* Triangle Center Left - Green */}
           <div 
             className="absolute top-40 left-8 w-5 h-5 animate-float-5"
             style={{
-              background: '#bbf7d0',
+              background: '#34d399',
               clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
               transform: 'rotate(-30deg)',
-              opacity: 0.35
+              opacity: 0.45
             }}
           ></div>
 
-          {/* Circle Center Right - Light Yellow */}
+          {/* Circle Center Right - Yellow */}
           <div 
             className="absolute top-36 right-16 w-4 h-4 rounded-full animate-float-6"
             style={{
-              background: '#fef3c7',
-              opacity: 0.3
+              background: '#fbbf24',
+              opacity: 0.4
             }}
           ></div>
 
-          {/* Square Center - Light Cyan */}
+          {/* Square Center - Cyan */}
           <div 
             className="absolute top-48 left-1/2 w-5 h-5 animate-float-1"
             style={{
-              background: '#a7f3d0',
+              background: '#22d3ee',
               transform: 'rotate(30deg)',
-              opacity: 0.35
+              opacity: 0.45
             }}
           ></div>
 
-          {/* Dot Center Left - Light Rose */}
+          {/* Dot Center Left - Rose */}
           <div 
             className="absolute top-52 left-16 w-3 h-3 rounded-full animate-float-2"
             style={{
-              background: '#fda4af',
-              opacity: 0.4
+              background: '#fb7185',
+              opacity: 0.5
             }}
           ></div>
 
-          {/* Triangle Bottom Left - Light Indigo */}
+          {/* Triangle Bottom Left - Indigo */}
           <div 
             className="absolute bottom-32 left-10 w-6 h-6 animate-float-3"
             style={{
-              background: '#c7d2fe',
+              background: '#818cf8',
               clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
               transform: 'rotate(60deg)',
-              opacity: 0.3
+              opacity: 0.4
             }}
           ></div>
 
-          {/* Circle Bottom Right - Light Emerald */}
+          {/* Circle Bottom Right - Emerald */}
           <div 
             className="absolute bottom-28 right-12 w-4 h-4 rounded-full animate-float-4"
             style={{
-              background: '#a7f3d0',
-              opacity: 0.35
+              background: '#10b981',
+              opacity: 0.45
             }}
           ></div>
 
-          {/* Square Bottom Center - Light Amber */}
+          {/* Square Bottom Center - Amber */}
           <div 
             className="absolute bottom-24 left-1/3 w-5 h-5 animate-float-5"
             style={{
-              background: '#fde68a',
+              background: '#f59e0b',
               transform: 'rotate(15deg)',
-              opacity: 0.3
+              opacity: 0.4
             }}
           ></div>
 
-          {/* Dot Bottom Right - Light Violet */}
+          {/* Dot Bottom Right - Violet */}
           <div 
             className="absolute bottom-20 right-8 w-3 h-3 rounded-full animate-float-6"
             style={{
-              background: '#ddd6fe',
-              opacity: 0.4
+              background: '#8b5cf6',
+              opacity: 0.5
             }}
           ></div>
 
           {/* Additional Shapes for More Coverage */}
-          {/* Triangle Mid Left - Light Teal */}
+          {/* Triangle Mid Left - Teal */}
           <div 
             className="absolute top-60 left-6 w-4 h-4 animate-float-1"
             style={{
-              background: '#99f6e4',
+              background: '#14b8a6',
               clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
               transform: 'rotate(45deg)',
-              opacity: 0.3
+              opacity: 0.4
             }}
           ></div>
 
-          {/* Circle Mid Right - Light Lime */}
+          {/* Circle Mid Right - Lime */}
           <div 
             className="absolute top-64 right-6 w-4 h-4 rounded-full animate-float-2"
             style={{
-              background: '#d9f99d',
-              opacity: 0.35
+              background: '#84cc16',
+              opacity: 0.45
             }}
           ></div>
 
-          {/* Dot Top Center - Light Sky */}
+          {/* Dot Top Center - Sky */}
           <div 
             className="absolute top-12 left-1/2 w-3 h-3 rounded-full animate-float-3"
             style={{
-              background: '#bae6fd',
-              opacity: 0.35
+              background: '#0ea5e9',
+              opacity: 0.45
             }}
           ></div>
 
-          {/* Square Mid Center - Light Fuchsia */}
+          {/* Square Mid Center - Fuchsia */}
           <div 
             className="absolute left-1/2 w-4 h-4 animate-float-4"
             style={{
-              background: '#f5d0fe',
+              background: '#d946ef',
               transform: 'rotate(60deg)',
-              opacity: 0.3,
+              opacity: 0.4,
               top: '17rem'
             }}
           ></div>
 
           {/* Additional dots scattered */}
-          <div className="absolute top-28 left-20 w-2 h-2 rounded-full animate-float-5" style={{ background: '#fecaca', opacity: 0.35 }}></div>
-          <div className="absolute top-44 right-24 w-2 h-2 rounded-full animate-float-6" style={{ background: '#bfdbfe', opacity: 0.3 }}></div>
-          <div className="absolute bottom-40 left-24 w-2 h-2 rounded-full animate-float-1" style={{ background: '#fed7aa', opacity: 0.4 }}></div>
-          <div className="absolute bottom-36 right-20 w-2 h-2 rounded-full animate-float-2" style={{ background: '#bbf7d0', opacity: 0.35 }}></div>
-          <div className="absolute top-56 left-1/4 w-2 h-2 rounded-full animate-float-3" style={{ background: '#fef3c7', opacity: 0.3 }}></div>
-          <div className="absolute bottom-44 right-1/4 w-2 h-2 rounded-full animate-float-4" style={{ background: '#e9d5ff', opacity: 0.35 }}></div>
+          <div className="absolute top-28 left-20 w-2 h-2 rounded-full animate-float-5" style={{ background: '#f472b6', opacity: 0.45 }}></div>
+          <div className="absolute top-44 right-24 w-2 h-2 rounded-full animate-float-6" style={{ background: '#60a5fa', opacity: 0.4 }}></div>
+          <div className="absolute bottom-40 left-24 w-2 h-2 rounded-full animate-float-1" style={{ background: '#fb923c', opacity: 0.5 }}></div>
+          <div className="absolute bottom-36 right-20 w-2 h-2 rounded-full animate-float-2" style={{ background: '#34d399', opacity: 0.45 }}></div>
+          <div className="absolute top-56 left-1/4 w-2 h-2 rounded-full animate-float-3" style={{ background: '#fbbf24', opacity: 0.4 }}></div>
+          <div className="absolute bottom-44 right-1/4 w-2 h-2 rounded-full animate-float-4" style={{ background: '#c084fc', opacity: 0.45 }}></div>
+
+          {/* Extended shapes for Tools section */}
+          {/* Tools Section Triangle Left - Red */}
+          <div 
+            className="absolute left-8 w-5 h-5 animate-float-5"
+            style={{
+              background: '#ef4444',
+              clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
+              transform: 'rotate(25deg)',
+              opacity: 0.4,
+              top: '30rem'
+            }}
+          ></div>
+
+          {/* Tools Section Circle Right - Blue */}
+          <div 
+            className="absolute right-12 w-4 h-4 rounded-full animate-float-6"
+            style={{
+              background: '#3b82f6',
+              opacity: 0.45,
+              top: '32rem'
+            }}
+          ></div>
+
+          {/* Tools Section Square Center - Green */}
+          <div 
+            className="absolute left-1/2 w-4 h-4 animate-float-1"
+            style={{
+              background: '#22c55e',
+              transform: 'rotate(45deg)',
+              opacity: 0.4,
+              top: '35rem'
+            }}
+          ></div>
+
+          {/* Tools Section Triangle Right - Orange */}
+          <div 
+            className="absolute right-20 w-4 h-4 animate-float-2"
+            style={{
+              background: '#f97316',
+              clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
+              transform: 'rotate(-45deg)',
+              opacity: 0.45,
+              top: '38rem'
+            }}
+          ></div>
+
+          {/* Tools Section Dots */}
+          <div className="absolute left-16 w-2 h-2 rounded-full animate-float-3" style={{ background: '#ec4899', opacity: 0.4, top: '33rem' }}></div>
+          <div className="absolute right-16 w-2 h-2 rounded-full animate-float-4" style={{ background: '#8b5cf6', opacity: 0.45, top: '36rem' }}></div>
+          <div className="absolute left-1/4 w-2 h-2 rounded-full animate-float-5" style={{ background: '#06b6d4', opacity: 0.4, top: '40rem' }}></div>
+          <div className="absolute right-1/3 w-2 h-2 rounded-full animate-float-6" style={{ background: '#84cc16', opacity: 0.45, top: '31rem' }}></div>
         </div>
 
         <div className="relative z-10 container-mobile max-w-4xl">
