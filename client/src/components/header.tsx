@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetDescription } from "@/components/ui/sheet";
-import { Menu, Search, ChevronDown } from "lucide-react";
+import { Menu, Search } from "lucide-react";
 import { Link, useLocation } from "wouter";
 
 // Preload pages on hover for instant navigation
@@ -23,7 +23,6 @@ interface HeaderProps {
 export default function Header({ currentPage }: HeaderProps) {
   const [location] = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isThumbnailDropdownOpen, setIsThumbnailDropdownOpen] = useState(false);
 
 
   const isActive = (path: string) => {
@@ -35,12 +34,8 @@ export default function Header({ currentPage }: HeaderProps) {
   // TinyWow-style navigation items
   const navItems = [
     { href: "/", label: "App Opener", testId: "nav-app-opener" },
-    { href: "/format-converter", label: "Format Converter", testId: "nav-converter" },
-  ];
-
-  // Thumbnail dropdown items
-  const thumbnailDropdownItems = [
     { href: "/thumbnail-downloader", label: "Thumbnail Downloader", testId: "nav-thumbnail-downloader" },
+    { href: "/format-converter", label: "Format Converter", testId: "nav-converter" },
   ];
 
   const allNavItems = navItems;
@@ -81,47 +76,6 @@ export default function Header({ currentPage }: HeaderProps) {
                 </button>
               </Link>
             ))}
-            
-            {/* Thumbnail Dropdown */}
-            <div 
-              className="relative"
-              onMouseEnter={() => setIsThumbnailDropdownOpen(true)}
-              onMouseLeave={() => setIsThumbnailDropdownOpen(false)}
-            >
-              <button 
-                className={`px-4 py-2 text-sm font-medium transition-colors rounded-lg flex items-center space-x-1 ${
-                  thumbnailDropdownItems.some(item => isActive(item.href))
-                    ? "text-blue-600 bg-blue-50"
-                    : "text-gray-700 hover:text-gray-900 hover:bg-gray-50"
-                }`}
-                data-testid="nav-thumbnail-dropdown"
-              >
-                <span>Thumbnail</span>
-                <ChevronDown className={`h-4 w-4 transition-transform ${isThumbnailDropdownOpen ? 'rotate-180' : ''}`} />
-              </button>
-              
-              {/* Dropdown Menu */}
-              {isThumbnailDropdownOpen && (
-                <div className="absolute top-full left-0 mt-1 w-56 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
-                  {thumbnailDropdownItems.map((item) => (
-                    <Link href={item.href} key={item.href}>
-                      <button 
-                        className={`w-full text-left px-4 py-3 text-sm font-medium transition-colors hover:bg-gray-50 first:rounded-t-lg last:rounded-b-lg ${
-                          isActive(item.href)
-                            ? "text-blue-600 bg-blue-50"
-                            : "text-gray-700"
-                        }`}
-                        data-testid={item.testId}
-                        onMouseEnter={() => preloadPage(item.href)}
-                        onFocus={() => preloadPage(item.href)}
-                      >
-                        {item.label}
-                      </button>
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
           </nav>
           
           {/* Right Actions - TinyWow Style */}
@@ -152,7 +106,7 @@ export default function Header({ currentPage }: HeaderProps) {
 
                   {/* Mobile Navigation Links */}
                   <nav className="flex-1 space-y-2 mt-6">
-                    {/* Regular Navigation Items */}
+                    {/* Navigation Items */}
                     {navItems.map((item) => (
                       <Link href={item.href} key={item.href}>
                         <button 
@@ -170,30 +124,6 @@ export default function Header({ currentPage }: HeaderProps) {
                         </button>
                       </Link>
                     ))}
-                    
-                    {/* Thumbnail Category */}
-                    <div className="space-y-1">
-                      <div className="text-sm font-semibold text-gray-500 px-4 py-2">
-                        Thumbnail
-                      </div>
-                      {thumbnailDropdownItems.map((item) => (
-                        <Link href={item.href} key={item.href}>
-                          <button 
-                            className={`w-full text-left p-4 pl-8 rounded-lg font-medium text-base transition-colors ${
-                              isActive(item.href)
-                                ? "text-blue-600 bg-blue-50 border border-blue-200"
-                                : "text-gray-700 hover:bg-gray-50 border border-transparent"
-                            }`}
-                            onClick={() => setIsMobileMenuOpen(false)}
-                            onTouchStart={() => preloadPage(item.href)}
-                            onFocus={() => preloadPage(item.href)}
-                            data-testid={`mobile-${item.testId}`}
-                          >
-                            {item.label}
-                          </button>
-                        </Link>
-                      ))}
-                    </div>
                   </nav>
                 </div>
               </SheetContent>
@@ -217,7 +147,7 @@ export default function Header({ currentPage }: HeaderProps) {
                 <SheetTitle className="sr-only">Tablet Navigation Menu</SheetTitle>
                 <SheetDescription className="sr-only">Navigate between different sections of the website</SheetDescription>
                 <nav className="space-y-3 mt-6">
-                  {/* Regular Navigation Items */}
+                  {/* Navigation Items */}
                   {navItems.map((item) => (
                     <Link href={item.href} key={item.href}>
                       <button 
@@ -235,30 +165,6 @@ export default function Header({ currentPage }: HeaderProps) {
                       </button>
                     </Link>
                   ))}
-                  
-                  {/* Thumbnail Category */}
-                  <div className="space-y-2">
-                    <div className="text-sm font-semibold text-gray-500 px-3 py-1">
-                      Thumbnail
-                    </div>
-                    {thumbnailDropdownItems.map((item) => (
-                      <Link href={item.href} key={item.href}>
-                        <button 
-                          className={`w-full text-left p-3 pl-6 rounded-lg font-medium transition-colors ${
-                            isActive(item.href)
-                              ? "text-blue-600 bg-blue-50"
-                              : "text-gray-700 hover:bg-gray-50"
-                          }`}
-                          onClick={() => setIsMobileMenuOpen(false)}
-                          onTouchStart={() => preloadPage(item.href)}
-                          onFocus={() => preloadPage(item.href)}
-                          data-testid={`tablet-${item.testId}`}
-                        >
-                          {item.label}
-                        </button>
-                      </Link>
-                    ))}
-                  </div>
                 </nav>
               </SheetContent>
             </Sheet>
