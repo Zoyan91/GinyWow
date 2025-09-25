@@ -57,7 +57,7 @@ export default function Header({ currentPage }: HeaderProps) {
               </div>
               {/* Text Logo */}
               <h1 className="text-2xl font-semibold text-gray-900 cursor-pointer hover:text-gray-700 transition-colors" data-testid="logo-text">
-                giny<span className="text-blue-600">wow</span>
+                Giny<span className="text-blue-600">Wow</span>
               </h1>
             </Link>
           </div>
