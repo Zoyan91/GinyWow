@@ -10,9 +10,12 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 
 export default function PDFToWord() {
+  const [file, setFile] = useState<File | null>(null);
   const [isDragOver, setIsDragOver] = useState(false);
   const [isConverting, setIsConverting] = useState(false);
-  const [file, setFile] = useState<File | null>(null);
+  const [downloadReady, setDownloadReady] = useState(false);
+  const [downloadUrl, setDownloadUrl] = useState<string>('');
+  const [convertedFileName, setConvertedFileName] = useState<string>('');
   const { toast } = useToast();
   
   // Enable scroll animations
@@ -81,32 +84,15 @@ export default function PDFToWord() {
       const result = await response.json();
       
       if (result.success) {
-        // Download the converted file
-        const downloadResponse = await fetch(result.downloadUrl);
-        if (downloadResponse.ok) {
-          const blob = await downloadResponse.blob();
-          const downloadUrl = window.URL.createObjectURL(blob);
-          
-          const link = document.createElement('a');
-          link.href = downloadUrl;
-          link.download = result.convertedFileName;
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-          
-          // Clean up the blob URL
-          window.URL.revokeObjectURL(downloadUrl);
-          
-          toast({
-            title: "Conversion Complete!",
-            description: `Your PDF has been converted to Word format (${result.convertedFileName}) and downloaded.`,
-          });
-          
-          // Reset form
-          setFile(null);
-        } else {
-          throw new Error('Failed to download converted file');
-        }
+        // Prepare download without auto-downloading
+        setDownloadUrl(result.downloadUrl);
+        setConvertedFileName(result.convertedFileName);
+        setDownloadReady(true);
+        
+        toast({
+          title: "Conversion Complete!",
+          description: `Your PDF has been converted to Word format (${result.convertedFileName}). Click download button to save file.`,
+        });
       } else {
         throw new Error(result.message || 'Conversion failed');
       }
@@ -120,6 +106,49 @@ export default function PDFToWord() {
     } finally {
       setIsConverting(false);
     }
+  };
+
+  const handleDownload = async () => {
+    if (!downloadUrl || !convertedFileName) return;
+    
+    try {
+      const response = await fetch(downloadUrl);
+      if (response.ok) {
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = convertedFileName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        // Clean up the blob URL
+        window.URL.revokeObjectURL(url);
+        
+        toast({
+          title: "Downloaded!",
+          description: `${convertedFileName} has been downloaded successfully.`,
+        });
+      } else {
+        throw new Error('Failed to download file');
+      }
+    } catch (error) {
+      console.error('Download error:', error);
+      toast({
+        title: "Download Failed",
+        description: "Failed to download the converted file. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const resetForm = () => {
+    setFile(null);
+    setDownloadReady(false);
+    setDownloadUrl('');
+    setConvertedFileName('');
   };
 
   return (
@@ -263,27 +292,42 @@ export default function PDFToWord() {
                             Size: {(file.size / 1024 / 1024).toFixed(2)} MB
                           </p>
                           <div className="flex justify-center space-x-4">
-                            <Button 
-                              onClick={handleConvert}
-                              disabled={isConverting}
-                              className="bg-blue-600 hover:bg-blue-700"
-                            >
-                              {isConverting ? (
-                                <div className="flex items-center">
-                                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
-                                  Converting...
-                                </div>
-                              ) : (
+                            {!downloadReady ? (
+                              <Button 
+                                onClick={handleConvert}
+                                disabled={isConverting}
+                                className="bg-blue-600 hover:bg-blue-700"
+                                data-testid="button-convert"
+                              >
+                                {isConverting ? (
+                                  <div className="flex items-center">
+                                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                                    Converting...
+                                  </div>
+                                ) : (
+                                  <div className="flex items-center">
+                                    <FileText className="w-4 h-4 mr-2" />
+                                    Convert to Word
+                                  </div>
+                                )}
+                              </Button>
+                            ) : (
+                              <Button 
+                                onClick={handleDownload}
+                                className="bg-green-600 hover:bg-green-700"
+                                data-testid="button-download"
+                              >
                                 <div className="flex items-center">
                                   <Download className="w-4 h-4 mr-2" />
-                                  Convert to Word
+                                  Download {convertedFileName}
                                 </div>
-                              )}
-                            </Button>
+                              </Button>
+                            )}
                             <Button 
                               variant="outline" 
-                              onClick={() => setFile(null)}
+                              onClick={resetForm}
                               disabled={isConverting}
+                              data-testid="button-reset"
                             >
                               Choose Different File
                             </Button>
