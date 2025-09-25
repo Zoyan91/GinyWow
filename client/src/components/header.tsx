@@ -9,8 +9,6 @@ const preloadPage = (path: string) => {
   if (path === "/") return;
   if (path === "/thumbnail-downloader") {
     import("@/pages/thumbnail-downloader");
-  } else if (path === "/thumbnail-optimizer") {
-    import("@/pages/thumbnail-optimizer");
   } else if (path === "/format-converter") {
     import("@/pages/format-converter");
   } else if (path === "/about") {
@@ -43,7 +41,6 @@ export default function Header({ currentPage }: HeaderProps) {
   // Thumbnail dropdown items
   const thumbnailDropdownItems = [
     { href: "/thumbnail-downloader", label: "Thumbnail Downloader", testId: "nav-thumbnail-downloader" },
-    { href: "/thumbnail-optimizer", label: "Thumbnail Optimizer", testId: "nav-thumbnail-optimizer" },
   ];
 
   const allNavItems = navItems;
