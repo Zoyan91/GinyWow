@@ -91,20 +91,6 @@ export const videoMetadataSchema = z.object({
   videoUrl: z.string().min(1, "Video URL is required").url("Please enter a valid URL"),
 });
 
-export const pdfConverterSchema = z.object({
-  conversionType: z.enum([
-    'pdf-to-word', 'pdf-to-excel', 'pdf-to-image', 
-    'word-to-pdf', 'excel-to-pdf', 'image-to-pdf',
-    'pdf-merge', 'pdf-split', 'pdf-compress'
-  ], {
-    required_error: "Please select a conversion type",
-  }),
-  outputFormat: z.enum(['docx', 'xlsx', 'png', 'jpg', 'pdf'], {
-    required_error: "Please select an output format",
-  }).optional(),
-  imageQuality: z.number().min(10).max(100).optional(),
-  compressionLevel: z.enum(['low', 'medium', 'high']).optional(),
-});
 
 export type VideoFormat = {
   quality: string;
@@ -140,13 +126,3 @@ export type InsertShortUrl = z.infer<typeof insertShortUrlSchema>;
 export type ShortUrl = typeof shortUrls.$inferSelect;
 export type ThumbnailDownloaderForm = z.infer<typeof thumbnailDownloaderSchema>;
 export type VideoMetadataForm = z.infer<typeof videoMetadataSchema>;
-export type PDFConverterForm = z.infer<typeof pdfConverterSchema>;
-
-export type PDFConversionResult = {
-  success: boolean;
-  fileName: string;
-  fileSize: string;
-  downloadUrl: string;
-  conversionType: string;
-  processingTime?: string;
-};
