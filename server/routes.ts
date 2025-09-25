@@ -742,8 +742,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.setHeader('Content-Type', 'video/mp4');
       res.setHeader('Content-Length', '0'); // Will be updated by streaming
       
-      // Stream the video from the URL
-      const response = await fetch(url as string);
+      // Stream the video from the URL with proper headers
+      const response = await fetch(url as string, {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+          'Accept': '*/*',
+          'Accept-Language': 'en-US,en;q=0.9',
+          'Accept-Encoding': 'identity',
+          'Range': 'bytes=0-',
+          'Referer': 'https://www.youtube.com/',
+          'Origin': 'https://www.youtube.com'
+        }
+      });
       
       if (!response.ok) {
         throw new Error(`Failed to fetch video: ${response.status}`);
@@ -755,14 +765,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
         res.setHeader('Content-Length', contentLength);
       }
 
-      // Pipe the response to our client
-      if (response.body) {
-        const reader = response.body.getReader();
-        
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-          res.write(value);
+      // Stream the video data
+      const reader = response.body?.getReader();
+      if (reader) {
+        try {
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            res.write(value);
+          }
+        } finally {
+          reader.releaseLock();
         }
       }
       

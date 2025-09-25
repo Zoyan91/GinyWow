@@ -62,21 +62,21 @@ export default function VideoDownloader() {
         description: `${format.quality} ${format.format} download functionality will be available soon.`,
       });
     } else {
-      // Create download URL through our proxy
-      const downloadUrl = `/api/video-download?url=${encodeURIComponent(format.downloadUrl)}&title=${encodeURIComponent(videoData?.title || 'video')}&quality=${encodeURIComponent(format.quality)}`;
-      
-      // Create download link element
+      // Direct download using the browser
       const link = document.createElement('a');
-      link.href = downloadUrl;
-      link.download = `${videoData?.title || 'video'}-${format.quality}.${format.format.toLowerCase()}`;
+      link.href = format.downloadUrl;
       link.target = '_blank';
+      link.download = `${videoData?.title || 'video'}-${format.quality}.${format.format.toLowerCase()}`;
+      
+      // Add the link to body, click it, then remove it
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
       
       toast({
-        title: "Download started", 
-        description: `${format.quality} ${format.format} download has started.`,
+        title: "Download initiated", 
+        description: `Opening ${format.quality} ${format.format} download link. If download doesn't start automatically, right-click the link and select "Save as".`,
+        duration: 5000,
       });
     }
   };
