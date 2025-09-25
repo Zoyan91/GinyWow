@@ -716,73 +716,46 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Video Download Proxy Endpoint
-  app.get('/api/video-download', async (req, res) => {
+  // Video Download Endpoint - New Working Approach
+  app.post('/api/video-download', async (req, res) => {
     try {
-      const { url, title, quality } = req.query;
+      const { videoUrl, quality } = req.body;
       
-      if (!url || !title || !quality) {
-        return res.status(400).json({ error: 'Missing required parameters' });
+      if (!videoUrl || !quality) {
+        return res.status(400).json({ error: 'Missing video URL or quality' });
       }
 
-      // Sanitize filename by removing special characters
+      // Use ytdl-core to get fresh download URL
+      const info = await ytdl.getInfo(videoUrl);
+      const format = ytdl.chooseFormat(info.formats, { quality: quality });
+      
+      if (!format) {
+        return res.status(404).json({ error: 'Quality not available' });
+      }
+
+      // Sanitize filename
       const sanitizeFilename = (name: string) => {
         return name
-          .replace(/[^\w\s-]/g, '') // Remove special characters except spaces and hyphens
-          .replace(/\s+/g, '_') // Replace spaces with underscores
-          .substring(0, 50); // Limit length
+          .replace(/[^\w\s-]/g, '')
+          .replace(/\s+/g, '_')
+          .substring(0, 50);
       };
 
-      const safeTitle = sanitizeFilename(title as string);
-      const safeQuality = sanitizeFilename(quality as string);
-      const filename = `${safeTitle}-${safeQuality}.mp4`;
+      const title = sanitizeFilename(info.videoDetails.title);
+      const filename = `${title}-${quality}.${format.container || 'mp4'}`;
 
-      // Set headers for file download
-      res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
-      res.setHeader('Content-Type', 'video/mp4');
-      res.setHeader('Content-Length', '0'); // Will be updated by streaming
-      
-      // Stream the video from the URL with proper headers
-      const response = await fetch(url as string, {
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-          'Accept': '*/*',
-          'Accept-Language': 'en-US,en;q=0.9',
-          'Accept-Encoding': 'identity',
-          'Range': 'bytes=0-',
-          'Referer': 'https://www.youtube.com/',
-          'Origin': 'https://www.youtube.com'
-        }
+      // Return download info instead of streaming
+      res.json({
+        success: true,
+        downloadUrl: format.url,
+        filename: filename,
+        fileSize: format.contentLength,
+        title: info.videoDetails.title
       });
-      
-      if (!response.ok) {
-        throw new Error(`Failed to fetch video: ${response.status}`);
-      }
 
-      // Get content length if available
-      const contentLength = response.headers.get('content-length');
-      if (contentLength) {
-        res.setHeader('Content-Length', contentLength);
-      }
-
-      // Stream the video data
-      const reader = response.body?.getReader();
-      if (reader) {
-        try {
-          while (true) {
-            const { done, value } = await reader.read();
-            if (done) break;
-            res.write(value);
-          }
-        } finally {
-          reader.releaseLock();
-        }
-      }
-      
-      res.end();
     } catch (error) {
       console.error('Video download error:', error);
-      res.status(500).json({ error: 'Failed to download video' });
+      res.status(500).json({ error: 'Failed to get download link' });
     }
   });
 

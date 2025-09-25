@@ -55,33 +55,54 @@ export default function VideoDownloader() {
     }
   };
 
-  const handleDownload = (format: any) => {
+  const handleDownload = async (format: any) => {
     if (format.downloadUrl === '#') {
       toast({
         title: "Download feature coming soon", 
         description: `${format.quality} ${format.format} download functionality will be available soon.`,
       });
-    } else {
-      // Copy download instructions to clipboard
-      const instructions = `To download this video:
-1. Install a YouTube downloader like yt-dlp or 4K Video Downloader
-2. Use this video URL: ${videoData?.videoId ? `https://www.youtube.com/watch?v=${videoData.videoId}` : 'YouTube URL'}
-3. Select ${format.quality} ${format.format} quality`;
+      return;
+    }
 
-      navigator.clipboard.writeText(instructions).then(() => {
+    try {
+      toast({
+        title: "Preparing download...", 
+        description: "Getting fresh download link, please wait.",
+      });
+
+      // Get fresh download URL from our backend
+      const response = await apiRequest('POST', '/api/video-download', {
+        videoUrl: `https://www.youtube.com/watch?v=${videoData?.videoId}`,
+        quality: format.quality
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        // Create download link with fresh URL
+        const link = document.createElement('a');
+        link.href = result.downloadUrl;
+        link.download = result.filename;
+        link.style.display = 'none';
+        
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
         toast({
-          title: "Download instructions copied!", 
-          description: "Instructions have been copied to your clipboard. Use a YouTube downloader app to download the video.",
-          duration: 6000,
+          title: "Download started!", 
+          description: `${format.quality} ${format.format} download has started successfully.`,
+          duration: 5000,
         });
-      }).catch(() => {
-        // Show instructions in a modal or alert if clipboard fails
-        alert(instructions);
-        toast({
-          title: "Download instructions", 
-          description: "Check the popup for download instructions.",
-          duration: 6000,
-        });
+      } else {
+        throw new Error(result.error || 'Download failed');
+      }
+    } catch (error: any) {
+      console.error('Download error:', error);
+      toast({
+        title: "Download failed", 
+        description: error.message || "Could not start download. Please try again.",
+        variant: "destructive",
       });
     }
   };
