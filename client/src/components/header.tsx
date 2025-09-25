@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetDescription } from "@/components/ui/sheet";
-import { Menu, Search } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Menu, Search, ExternalLink } from "lucide-react";
 import { Link, useLocation } from "wouter";
 
 // Preload pages on hover for instant navigation
@@ -23,6 +25,8 @@ interface HeaderProps {
 export default function Header({ currentPage }: HeaderProps) {
   const [location] = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
 
   const isActive = (path: string) => {
@@ -39,6 +43,38 @@ export default function Header({ currentPage }: HeaderProps) {
   ];
 
   const allNavItems = navItems;
+
+  // Search data - tools and pages
+  const searchItems = [
+    {
+      title: "App Opener",
+      description: "Convert social media links to app opener links", 
+      href: "/",
+      category: "Tools"
+    },
+    {
+      title: "Thumbnail Downloader", 
+      description: "Download YouTube video thumbnails in HD quality",
+      href: "/thumbnail-downloader",
+      category: "Tools"
+    },
+    {
+      title: "Format Converter",
+      description: "Convert images between different formats (PNG, JPEG, WebP, etc.)",
+      href: "/format-converter", 
+      category: "Tools"
+    }
+  ];
+
+  const filteredSearchItems = searchItems.filter(item =>
+    item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    item.description.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const handleSearchItemClick = (href: string) => {
+    setIsSearchOpen(false);
+    setSearchQuery("");
+  };
 
   return (
     <header className="sticky top-0 bg-white border-b border-gray-200 relative z-50">
@@ -80,7 +116,13 @@ export default function Header({ currentPage }: HeaderProps) {
           
           {/* Right Actions - TinyWow Style */}
           <div className="hidden lg:flex items-center space-x-4">
-            <Button variant="ghost" size="sm" className="h-9 w-9 p-0" data-testid="search-button">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="h-9 w-9 p-0" 
+              data-testid="search-button"
+              onClick={() => setIsSearchOpen(true)}
+            >
               <Search className="h-4 w-4" />
             </Button>
           </div>
@@ -171,6 +213,96 @@ export default function Header({ currentPage }: HeaderProps) {
           </div>
         </div>
       </div>
+
+      {/* Search Modal */}
+      <Dialog open={isSearchOpen} onOpenChange={setIsSearchOpen}>
+        <DialogContent className="sm:max-w-[500px] p-0">
+          <DialogHeader className="p-4 pb-2">
+            <DialogTitle className="text-lg font-semibold">Search</DialogTitle>
+          </DialogHeader>
+          
+          <div className="px-4 pb-4">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <Input
+                type="text"
+                placeholder="Search tools, features..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10 h-12"
+                data-testid="search-input"
+                autoFocus
+              />
+            </div>
+          </div>
+
+          <div className="max-h-80 overflow-y-auto pb-4">
+            {filteredSearchItems.length > 0 ? (
+              <div className="space-y-2 px-4">
+                {filteredSearchItems.map((item, index) => (
+                  <Link href={item.href} key={index}>
+                    <div
+                      className="flex items-center p-3 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors group"
+                      onClick={() => handleSearchItemClick(item.href)}
+                      data-testid={`search-result-${index}`}
+                    >
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2">
+                          <h4 className="font-medium text-gray-900 group-hover:text-blue-600">
+                            {item.title}
+                          </h4>
+                          <span className="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded-full">
+                            {item.category}
+                          </span>
+                        </div>
+                        <p className="text-sm text-gray-500 mt-1">
+                          {item.description}
+                        </p>
+                      </div>
+                      <ExternalLink className="h-4 w-4 text-gray-400 group-hover:text-blue-600" />
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            ) : searchQuery ? (
+              <div className="text-center py-6 px-4">
+                <p className="text-gray-500">No results found for "{searchQuery}"</p>
+                <p className="text-sm text-gray-400 mt-1">
+                  Try searching for "app opener", "thumbnail", or "converter"
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-2 px-4">
+                <p className="text-sm text-gray-500 mb-3">Popular searches:</p>
+                {searchItems.map((item, index) => (
+                  <Link href={item.href} key={index}>
+                    <div
+                      className="flex items-center p-3 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors group"
+                      onClick={() => handleSearchItemClick(item.href)}
+                      data-testid={`popular-search-${index}`}
+                    >
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2">
+                          <h4 className="font-medium text-gray-900 group-hover:text-blue-600">
+                            {item.title}
+                          </h4>
+                          <span className="text-xs px-2 py-1 bg-gray-100 text-gray-600 rounded-full">
+                            {item.category}
+                          </span>
+                        </div>
+                        <p className="text-sm text-gray-500 mt-1">
+                          {item.description}
+                        </p>
+                      </div>
+                      <ExternalLink className="h-4 w-4 text-gray-400 group-hover:text-blue-600" />
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
     </header>
   );
 }
