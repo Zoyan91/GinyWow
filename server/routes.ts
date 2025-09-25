@@ -5,7 +5,7 @@ import sharp from "sharp";
 import { storage } from "./storage";
 import { insertThumbnailSchema, insertTitleOptimizationSchema, insertNewsletterSubscriptionSchema, insertShortUrlSchema, videoMetadataSchema } from "@shared/schema";
 import { analyzeThumbnail, optimizeTitles, enhanceThumbnailImage } from "./openai";
-import ytdl from "ytdl-core";
+import ytdl from "@distube/ytdl-core";
 
 // Configure multer for file uploads
 const upload = multer({
