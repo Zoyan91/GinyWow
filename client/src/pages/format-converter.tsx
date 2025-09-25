@@ -225,7 +225,7 @@ export default function FormatConverterPage() {
               <span className="block sm:inline">Free Online Image Format Converter</span> <span className="block sm:inline">– JPG, PNG, GIF, WebP & More</span>
             </h1>
             <p className="text-gray-600 mb-6 text-sm md:text-base" data-testid="hero-description">
-              Convert images between 9+ popular formats instantly. High-quality conversion with adjustable settings.
+              Convert images instantly between 9+ formats including JPG, PNG, GIF, WebP and more. Fast, high-quality, and free online tool with adjustable settings for perfect image conversion.
             </p>
             <div className="hidden md:flex flex-wrap justify-center gap-2">
               {supportedFormats.slice(0, 8).map((format) => (
