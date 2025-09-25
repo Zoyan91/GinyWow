@@ -6,7 +6,7 @@ import { storage } from "./storage";
 import { insertThumbnailSchema, insertTitleOptimizationSchema, insertNewsletterSubscriptionSchema, insertShortUrlSchema, videoMetadataSchema, pdfUploadSchema, pdfMergeSchema, pdfSplitSchema, insertPdfFileSchema } from "@shared/schema";
 import { PDFDocument, PDFPage, rgb } from "pdf-lib";
 import { Document, Packer, Paragraph, TextRun } from "docx";
-import pdfParse from "pdf-parse";
+// Removed pdf-parse import due to startup issues
 import * as mammoth from "mammoth";
 import { analyzeThumbnail, optimizeTitles, enhanceThumbnailImage } from "./openai";
 import ytdl from "@distube/ytdl-core";
@@ -1345,7 +1345,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Extract actual text content from PDF
       try {
-        // Extract text from PDF using pdf-parse
+        // Dynamic import of pdf-parse to avoid startup issues
+        const pdfParse = (await import("pdf-parse")).default;
         const pdfData = await pdfParse(req.file.buffer);
         const extractedText = pdfData.text.trim();
         
