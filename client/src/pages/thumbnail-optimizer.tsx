@@ -4,7 +4,7 @@ import { Slider } from "@/components/ui/slider";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { Download, Upload, CheckCircle, Users, Zap, Shield, Image, AlertCircle, Settings, RotateCcw } from "lucide-react";
+import { Download, Upload, CheckCircle, Users, Zap, Shield, Image, AlertCircle, Settings, RotateCcw, RefreshCw } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
@@ -49,15 +49,15 @@ export default function ThumbnailOptimizer() {
   });
   const { toast } = useToast();
 
-  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileSelect = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
 
-    // Validate file type (jpg/png only)
-    if (!['image/jpeg', 'image/jpg', 'image/png'].includes(file.type)) {
+    // Validate file type (jpg/png/webp)
+    if (!['image/jpeg', 'image/jpg', 'image/png', 'image/webp'].includes(file.type)) {
       toast({
         title: "Invalid file type",
-        description: "Only JPG and PNG files are supported.",
+        description: "Only JPG, PNG, and WebP files are supported.",
         variant: "destructive",
       });
       return;
@@ -84,8 +84,59 @@ export default function ThumbnailOptimizer() {
     
     // Clear previous results
     setOptimizationResult(null);
+
+    // Show processing toast
+    toast({
+      title: "Processing thumbnail...",
+      description: "Automatically optimizing your image with best settings.",
+    });
+
+    // Automatically start optimization after file is loaded
+    setTimeout(() => {
+      optimizeThumbnailAuto(file);
+    }, 500);
   };
 
+  // Automatic optimization with optimal default settings
+  const optimizeThumbnailAuto = async (file: File) => {
+    setIsOptimizing(true);
+    
+    try {
+      const formData = new FormData();
+      formData.append('thumbnail', file);
+      formData.append('settings', JSON.stringify(optimizationSettings));
+      
+      const response = await fetch('/api/optimize', {
+        method: 'POST',
+        body: formData,
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Optimization failed');
+      }
+      
+      const result: OptimizationResult = await response.json();
+      setOptimizationResult(result);
+      
+      toast({
+        title: "✨ Thumbnail automatically optimized!",
+        description: `Perfect for YouTube thumbnails! ${result.sizeReduction > 0 ? `Reduced size by ${result.sizeReduction}%` : 'Enhanced for maximum CTR'}`,
+      });
+      
+    } catch (error) {
+      console.error('Auto-optimization error:', error);
+      toast({
+        title: "Optimization failed",
+        description: error instanceof Error ? error.message : "Please try uploading again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsOptimizing(false);
+    }
+  };
+
+  // Manual optimization with custom settings
   const optimizeThumbnail = async () => {
     if (!selectedFile) return;
     
@@ -110,8 +161,8 @@ export default function ThumbnailOptimizer() {
       setOptimizationResult(result);
       
       toast({
-        title: "Thumbnail optimized successfully!",
-        description: `Enhanced with custom settings. ${result.sizeReduction > 0 ? `Reduced size by ${result.sizeReduction}%` : 'Optimized for better CTR'}`,
+        title: "Thumbnail re-optimized!",
+        description: `Applied your custom settings. ${result.sizeReduction > 0 ? `Reduced size by ${result.sizeReduction}%` : 'Enhanced with your preferences'}`,
       });
       
     } catch (error) {
@@ -205,7 +256,7 @@ export default function ThumbnailOptimizer() {
                           id="file-upload"
                           type="file"
                           className="sr-only"
-                          accept="image/jpeg,image/jpg,image/png"
+                          accept="image/jpeg,image/jpg,image/png,image/webp"
                           onChange={handleFileSelect}
                           data-testid="file-upload"
                         />
@@ -228,49 +279,78 @@ export default function ThumbnailOptimizer() {
                       </p>
                       
                       <div className="space-y-4">
-                        <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                          <Button
-                            onClick={optimizeThumbnail}
-                            disabled={isOptimizing}
-                            className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 font-medium"
-                            data-testid="optimize-button"
-                          >
-                            {isOptimizing ? (
-                              <>
-                                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
-                                Optimizing...
-                              </>
-                            ) : (
-                              <>
-                                <Zap className="w-4 h-4 mr-2" />
-                                Optimize Now
-                              </>
+                        <div className="text-center space-y-4">
+                          {/* Status Messages */}
+                          {!isOptimizing && optimizationResult && (
+                            <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-lg p-4">
+                              <div className="flex items-center justify-center text-green-700 dark:text-green-300">
+                                <CheckCircle className="w-5 h-5 mr-2" />
+                                <span className="font-medium">Automatically Optimized!</span>
+                              </div>
+                              <p className="text-sm text-green-600 dark:text-green-400 mt-1">
+                                Your thumbnail is ready with perfect YouTube settings
+                              </p>
+                            </div>
+                          )}
+
+                          {isOptimizing && (
+                            <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg p-4">
+                              <div className="flex items-center justify-center text-blue-700 dark:text-blue-300">
+                                <div className="w-5 h-5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin mr-2"></div>
+                                <span className="font-medium">Processing your thumbnail...</span>
+                              </div>
+                              <p className="text-sm text-blue-600 dark:text-blue-400 mt-1">
+                                Applying optimal brightness, contrast, and cropping
+                              </p>
+                            </div>
+                          )}
+                          
+                          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                            {optimizationResult && (
+                              <Button
+                                onClick={optimizeThumbnail}
+                                disabled={isOptimizing}
+                                className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 font-medium"
+                                data-testid="reoptimize-button"
+                              >
+                                {isOptimizing ? (
+                                  <>
+                                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                                    Re-optimizing...
+                                  </>
+                                ) : (
+                                  <>
+                                    <RotateCcw className="w-4 h-4 mr-2" />
+                                    Re-optimize
+                                  </>
+                                )}
+                              </Button>
                             )}
-                          </Button>
-                          
-                          <Button
-                            onClick={() => setShowAdvanced(!showAdvanced)}
-                            variant="outline"
-                            className="px-6 py-3"
-                            data-testid="advanced-toggle"
-                          >
-                            <Settings className="w-4 h-4 mr-2" />
-                            {showAdvanced ? 'Hide' : 'Show'} Advanced
-                          </Button>
-                          
-                          <label htmlFor="file-upload-replace" className="cursor-pointer">
-                            <span className="inline-flex items-center px-6 py-3 bg-gray-500 hover:bg-gray-600 text-white font-medium rounded-lg transition-colors">
-                              <Upload className="w-4 h-4 mr-2" />
-                              Choose Different
-                            </span>
-                            <input
-                              id="file-upload-replace"
-                              type="file"
-                              className="sr-only"
-                              accept="image/jpeg,image/jpg,image/png"
-                              onChange={handleFileSelect}
-                            />
-                          </label>
+                            
+                            <Button
+                              onClick={() => setShowAdvanced(!showAdvanced)}
+                              variant="outline"
+                              className="px-6 py-3"
+                              data-testid="advanced-toggle"
+                            >
+                              <Settings className="w-4 h-4 mr-2" />
+                              {showAdvanced ? 'Hide' : 'Fine-tune'} Settings
+                            </Button>
+                            
+                            <label htmlFor="file-upload-replace" className="cursor-pointer">
+                              <span className="inline-flex items-center px-6 py-3 bg-gray-500 hover:bg-gray-600 text-white font-medium rounded-lg transition-colors">
+                                <Upload className="w-4 h-4 mr-2" />
+                                Choose Different
+                              </span>
+                              <input
+                                id="file-upload-replace"
+                                type="file"
+                                className="sr-only"
+                                accept="image/jpeg,image/jpg,image/png,image/webp"
+                                onChange={handleFileSelect}
+                              />
+                            </label>
+                          </div>
                         </div>
 
                         {/* Advanced Settings Panel */}
