@@ -91,12 +91,23 @@ export const videoMetadataSchema = z.object({
   videoUrl: z.string().min(1, "Video URL is required").url("Please enter a valid URL"),
 });
 
+export type VideoFormat = {
+  quality: string;
+  format: string;
+  codec: string;
+  bitrate?: string;
+  fps?: number;
+  fileSize?: string;
+  downloadUrl: string;
+};
+
 export type VideoMetadata = {
   title: string;
   duration: string;
   thumbnail: string;
   platform: string;
   videoId: string;
+  availableFormats?: VideoFormat[];
 };
 
 export type InsertThumbnail = z.infer<typeof insertThumbnailSchema>;

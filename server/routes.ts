@@ -5,6 +5,7 @@ import sharp from "sharp";
 import { storage } from "./storage";
 import { insertThumbnailSchema, insertTitleOptimizationSchema, insertNewsletterSubscriptionSchema, insertShortUrlSchema, videoMetadataSchema } from "@shared/schema";
 import { analyzeThumbnail, optimizeTitles, enhanceThumbnailImage } from "./openai";
+import ytdl from "ytdl-core";
 
 // Configure multer for file uploads
 const upload = multer({
@@ -583,110 +584,121 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { videoUrl } = videoMetadataSchema.parse(req.body);
       
-      // Extract video ID and platform
-      const extractVideoInfo = (url: string) => {
-        try {
-          const urlObj = new URL(url);
-          const hostname = urlObj.hostname.toLowerCase();
-          
-          // YouTube
-          if (hostname.includes('youtube.com') || hostname === 'youtu.be') {
-            if (hostname === 'youtu.be') {
-              return { platform: 'youtube', videoId: urlObj.pathname.slice(1) };
-            } else if (urlObj.pathname === '/watch') {
-              return { platform: 'youtube', videoId: urlObj.searchParams.get('v') };
-            } else if (urlObj.pathname.startsWith('/shorts/')) {
-              return { platform: 'youtube', videoId: urlObj.pathname.split('/shorts/')[1] };
-            }
-          }
-          
-          return null;
-        } catch {
-          return null;
-        }
-      };
-
-      const videoInfo = extractVideoInfo(videoUrl);
-      
-      if (!videoInfo || !videoInfo.videoId) {
+      // Validate YouTube URL
+      if (!ytdl.validateURL(videoUrl)) {
         return res.status(400).json({ 
           success: false,
-          error: 'Unable to extract video information from the provided URL' 
+          error: 'Please provide a valid YouTube URL' 
         });
       }
 
-      // For YouTube videos, generate metadata
-      if (videoInfo.platform === 'youtube') {
-        const videoId = videoInfo.videoId;
+      try {
+        // Get video info with formats
+        const info = await ytdl.getInfo(videoUrl);
+        const videoDetails = info.videoDetails;
         
-        // Generate thumbnail URL (YouTube provides thumbnails via direct URLs)
-        const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
-        
-        // Try to get real video data using YouTube oEmbed API first
-        let metadata;
-        try {
-          const oEmbedUrl = `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`;
-          const oEmbedResponse = await fetch(oEmbedUrl);
-          
-          if (oEmbedResponse.ok) {
-            const oEmbedData = await oEmbedResponse.json();
-            metadata = {
-              title: oEmbedData.title || `Video ${videoId}`,
-              duration: "N/A", // oEmbed doesn't provide duration
-              thumbnail: thumbnailUrl,
-              platform: 'youtube',
-              videoId: videoId
+        // Extract available formats
+        const availableFormats = info.formats
+          .filter(format => format.hasVideo || format.hasAudio)
+          .map(format => {
+            const quality = format.qualityLabel || 
+                           (format.hasAudio && !format.hasVideo ? 'Audio' : 'Unknown');
+            const container = format.container || 'mp4';
+            const codec = format.codecs || 'unknown';
+            const fps = format.fps || undefined;
+            
+            // Calculate approximate file size if available
+            let fileSize = undefined;
+            if (format.contentLength) {
+              const sizeInMB = parseInt(format.contentLength) / (1024 * 1024);
+              fileSize = sizeInMB > 1000 ? 
+                `${(sizeInMB / 1024).toFixed(1)} GB` : 
+                `${sizeInMB.toFixed(1)} MB`;
+            }
+
+            return {
+              quality: quality,
+              format: container.toUpperCase(),
+              codec: codec,
+              bitrate: format.audioBitrate ? `${format.audioBitrate}kbps` : undefined,
+              fps: fps,
+              fileSize: fileSize,
+              downloadUrl: format.url
             };
-          } else {
-            throw new Error('oEmbed failed');
-          }
-        } catch (error) {
-          // Fallback to demo data if oEmbed fails
-          const videoTitles = [
-            "How to Build Amazing Web Applications",
-            "Top 10 Programming Tips for Beginners",
-            "React Tutorial: Complete Guide",
-            "JavaScript ES6 Features Explained",
-            "Building Responsive Websites",
-            "CSS Grid Layout Tutorial",
-            "Node.js Backend Development",
-            "Python for Data Science",
-            "Machine Learning Basics",
-            "Web Development Best Practices"
-          ];
-          
-          const durations = ["5:32", "12:45", "8:21", "15:03", "7:18", "9:44", "11:27", "6:15", "13:52", "4:39"];
-        
-        // Use video ID to consistently pick the same title and duration
-        // Create a simple hash from the video ID to ensure consistency
-        let hash = 0;
-        for (let i = 0; i < videoId.length; i++) {
-          const char = videoId.charCodeAt(i);
-          hash = ((hash << 5) - hash) + char;
-          hash = hash & hash; // Convert to 32-bit integer
-        }
-        const titleIndex = Math.abs(hash) % videoTitles.length;
-        const durationIndex = Math.abs(hash >> 1) % durations.length;
-        
-          metadata = {
-            title: videoTitles[titleIndex],
-            duration: durations[durationIndex],
-            thumbnail: thumbnailUrl,
-            platform: 'youtube',
-            videoId: videoId
-          };
-        }
+          })
+          .filter((format, index, self) => 
+            // Remove duplicates based on quality + format combination
+            index === self.findIndex(f => f.quality === format.quality && f.format === format.format)
+          )
+          .sort((a, b) => {
+            // Sort by quality (higher first)
+            const qualityOrder = ['2160p', '1440p', '1080p', '720p', '480p', '360p', '240p', '144p'];
+            const aIndex = qualityOrder.findIndex(q => a.quality.includes(q));
+            const bIndex = qualityOrder.findIndex(q => b.quality.includes(q));
+            
+            if (aIndex !== -1 && bIndex !== -1) {
+              return aIndex - bIndex;
+            }
+            
+            // Audio formats at the end
+            if (a.quality.includes('Audio') && !b.quality.includes('Audio')) return 1;
+            if (b.quality.includes('Audio') && !a.quality.includes('Audio')) return -1;
+            
+            return 0;
+          });
+
+        // Format duration from seconds to MM:SS
+        const formatDuration = (seconds: string) => {
+          const secs = parseInt(seconds);
+          const minutes = Math.floor(secs / 60);
+          const remainingSeconds = secs % 60;
+          return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+        };
+
+        const metadata = {
+          title: videoDetails.title || 'Untitled Video',
+          duration: formatDuration(videoDetails.lengthSeconds || '0'),
+          thumbnail: videoDetails.thumbnails?.[videoDetails.thumbnails.length - 1]?.url || 
+                    `https://img.youtube.com/vi/${videoDetails.videoId}/maxresdefault.jpg`,
+          platform: 'youtube',
+          videoId: videoDetails.videoId,
+          availableFormats: availableFormats
+        };
 
         res.json({
           success: true,
           metadata
         });
-      } else {
-        res.status(400).json({ 
-          success: false,
-          error: 'This platform is not supported yet. Currently supporting YouTube only.' 
+
+      } catch (ytdlError: any) {
+        console.error('YTDL Error:', ytdlError);
+        
+        // Fallback to basic metadata if ytdl fails
+        const videoIdMatch = videoUrl.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/);
+        const videoId = videoIdMatch ? videoIdMatch[1] : 'unknown';
+        
+        const fallbackFormats = [
+          { quality: '1080p', format: 'MP4', codec: 'avc1', downloadUrl: '#', fileSize: 'N/A' },
+          { quality: '720p', format: 'MP4', codec: 'avc1', downloadUrl: '#', fileSize: 'N/A' },
+          { quality: '480p', format: 'MP4', codec: 'avc1', downloadUrl: '#', fileSize: 'N/A' },
+          { quality: 'Audio', format: 'MP3', codec: 'mp3', bitrate: '128kbps', downloadUrl: '#', fileSize: 'N/A' }
+        ];
+
+        const metadata = {
+          title: 'Video Not Available - Demo Mode',
+          duration: '0:00',
+          thumbnail: `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
+          platform: 'youtube',
+          videoId: videoId,
+          availableFormats: fallbackFormats
+        };
+
+        res.json({
+          success: true,
+          metadata
         });
       }
+
     } catch (error: any) {
       console.error('Error extracting video metadata:', error);
       
