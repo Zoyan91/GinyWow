@@ -51,8 +51,8 @@ export default function Header({ currentPage }: HeaderProps) {
           {/* Logo */}
           <div className="flex items-center">
             <Link href="/">
-              <h1 className="text-xl sm:text-2xl font-bold text-gray-900 cursor-pointer hover:opacity-80 transition-opacity" data-testid="logo">
-                <span className="text-gray-900">Giny</span><span className="text-blue-600">Wow</span>
+              <h1 className="text-2xl font-semibold text-gray-900 cursor-pointer hover:text-gray-700 transition-colors" data-testid="logo">
+                tiny<span className="text-blue-600">wow</span>
               </h1>
             </Link>
           </div>
