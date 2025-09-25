@@ -75,14 +75,16 @@ export default function VideoDownloader() {
       formData.append('videoUrl', `https://www.youtube.com/watch?v=${videoData?.videoId}`);
       formData.append('quality', format.quality);
 
-      // Make request to server proxy endpoint
+      // Make request to server proxy endpoint - support all platforms
       const response = await fetch('/api/video-download', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          videoUrl: `https://www.youtube.com/watch?v=${videoData?.videoId}`,
+          videoUrl: videoData?.videoId?.startsWith('http') 
+            ? videoData.videoId 
+            : `https://www.youtube.com/watch?v=${videoData?.videoId}`,
           quality: format.quality
         })
       });
@@ -287,17 +289,29 @@ export default function VideoDownloader() {
               <h1 className="text-xl sm:text-2xl lg:text-4xl font-bold lg:font-normal text-gray-900 mb-4 sm:mb-6 leading-tight">
                 {/* Mobile Version */}
                 <span className="block sm:hidden whitespace-pre-line">
-                  {"Video Downloader\nDownload Videos in HD Quality"}
+                  {"Universal Video Downloader\n1000+ Platforms Supported"}
                 </span>
                 {/* Desktop/Tablet Version */}
                 <span className="hidden sm:block whitespace-pre-line">
-                  {"Video Downloader\nDownload Videos in HD Quality"}
+                  {"Universal Video Downloader\n1000+ Platforms Supported"}
                 </span>
               </h1>
               
               <p className="text-responsive-sm text-gray-600 mb-6 sm:mb-8 leading-relaxed max-w-2xl mx-auto px-4">
-                Download videos from YouTube, Facebook, Instagram, and more platforms. Fast, secure, and completely free.
+                Download videos from YouTube, Instagram, TikTok, Facebook, Vimeo, Twitter and 1000+ platforms in HD quality. Fast, secure, and completely free.
               </p>
+              
+              {/* Platform Support Pills */}
+              <div className="flex flex-wrap justify-center gap-2 mb-6 px-4">
+                <span className="bg-red-100 text-red-800 text-xs px-3 py-1 rounded-full">YouTube</span>
+                <span className="bg-pink-100 text-pink-800 text-xs px-3 py-1 rounded-full">Instagram</span>
+                <span className="bg-gray-900 text-white text-xs px-3 py-1 rounded-full">TikTok</span>
+                <span className="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full">Facebook</span>
+                <span className="bg-cyan-100 text-cyan-800 text-xs px-3 py-1 rounded-full">Vimeo</span>
+                <span className="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full">Twitter</span>
+                <span className="bg-orange-100 text-orange-800 text-xs px-3 py-1 rounded-full">Dailymotion</span>
+                <span className="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">+1000 More</span>
+              </div>
 
               {/* URL Input and Download Button */}
               <div className="max-w-2xl mx-auto mb-8 px-4">

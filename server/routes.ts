@@ -6,6 +6,7 @@ import { storage } from "./storage";
 import { insertThumbnailSchema, insertTitleOptimizationSchema, insertNewsletterSubscriptionSchema, insertShortUrlSchema, videoMetadataSchema } from "@shared/schema";
 import { analyzeThumbnail, optimizeTitles, enhanceThumbnailImage } from "./openai";
 import ytdl from "@distube/ytdl-core";
+import YTDlpWrap from 'yt-dlp-wrap';
 
 // Configure multer for file uploads
 const upload = multer({
@@ -716,7 +717,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Video Download Endpoint - Server Proxy Approach
+  // Universal Video Download Endpoint - All Platforms
   app.post('/api/video-download', async (req, res) => {
     try {
       const { videoUrl, quality } = req.body;
@@ -725,45 +726,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: 'Missing video URL or quality' });
       }
 
-      // Use ytdl-core to get video info and stream
-      const info = await ytdl.getInfo(videoUrl);
+      // Detect platform and use appropriate downloader
+      const isYouTube = videoUrl.includes('youtube.com') || videoUrl.includes('youtu.be');
       
-      // Find matching format intelligently
-      let selectedFormat = null;
-      
-      // First try to find exact match
-      selectedFormat = info.formats.find(f => f.qualityLabel === quality);
-      
-      // If not found, try partial match
-      if (!selectedFormat) {
-        const qualityNumber = quality.match(/\d+/)?.[0];
-        if (qualityNumber) {
-          selectedFormat = info.formats.find(f => 
-            f.qualityLabel && f.qualityLabel.includes(qualityNumber + 'p')
-          );
-        }
-      }
-      
-      // If still not found, try by height
-      if (!selectedFormat) {
-        const qualityNumber = parseInt(quality.match(/\d+/)?.[0] || '0');
-        if (qualityNumber > 0) {
-          selectedFormat = info.formats.find(f => f.height === qualityNumber);
-        }
-      }
-      
-      // If still not found, use highest quality available
-      if (!selectedFormat) {
-        selectedFormat = info.formats
-          .filter(f => f.hasVideo && f.hasAudio)
-          .sort((a, b) => (b.height || 0) - (a.height || 0))[0];
-      }
-      
-      if (!selectedFormat) {
-        return res.status(404).json({ error: 'No suitable format found' });
-      }
-
-      // Sanitize filename
+      // Sanitize filename function
       const sanitizeFilename = (name: string) => {
         return name
           .replace(/[^\w\s-]/g, '')
@@ -771,28 +737,136 @@ export async function registerRoutes(app: Express): Promise<Server> {
           .substring(0, 50);
       };
 
-      const title = sanitizeFilename(info.videoDetails.title);
-      const filename = `${title}-${quality}.${selectedFormat.container || 'mp4'}`;
-
-      // Set proper headers for download
-      res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
-      res.setHeader('Content-Type', selectedFormat.mimeType || 'video/mp4');
-      
-      // Stream directly from ytdl-core to avoid 403 errors
-      const videoStream = ytdl(videoUrl, { format: selectedFormat });
-      
-      videoStream.pipe(res);
-      
-      videoStream.on('error', (error) => {
-        console.error('Video stream error:', error);
-        if (!res.headersSent) {
-          res.status(500).json({ error: 'Download failed' });
+      if (isYouTube) {
+        // Use ytdl-core for YouTube (faster and more reliable)
+        const info = await ytdl.getInfo(videoUrl);
+        
+        // Find matching format intelligently
+        let selectedFormat = null;
+        
+        // First try to find exact match
+        selectedFormat = info.formats.find(f => f.qualityLabel === quality);
+        
+        // If not found, try partial match
+        if (!selectedFormat) {
+          const qualityNumber = quality.match(/\d+/)?.[0];
+          if (qualityNumber) {
+            selectedFormat = info.formats.find(f => 
+              f.qualityLabel && f.qualityLabel.includes(qualityNumber + 'p')
+            );
+          }
         }
-      });
+        
+        // If still not found, try by height
+        if (!selectedFormat) {
+          const qualityNumber = parseInt(quality.match(/\d+/)?.[0] || '0');
+          if (qualityNumber > 0) {
+            selectedFormat = info.formats.find(f => f.height === qualityNumber);
+          }
+        }
+        
+        // If still not found, use highest quality available
+        if (!selectedFormat) {
+          selectedFormat = info.formats
+            .filter(f => f.hasVideo && f.hasAudio)
+            .sort((a, b) => (b.height || 0) - (a.height || 0))[0];
+        }
+        
+        if (!selectedFormat) {
+          return res.status(404).json({ error: 'No suitable format found' });
+        }
+
+        const title = sanitizeFilename(info.videoDetails.title);
+        const filename = `${title}-${quality}.${selectedFormat.container || 'mp4'}`;
+
+        // Set proper headers for download
+        res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+        res.setHeader('Content-Type', selectedFormat.mimeType || 'video/mp4');
+        
+        // Stream directly from ytdl-core
+        const videoStream = ytdl(videoUrl, { format: selectedFormat });
+        videoStream.pipe(res);
+        
+        videoStream.on('error', (error) => {
+          console.error('YouTube video stream error:', error);
+          if (!res.headersSent) {
+            res.status(500).json({ error: 'Download failed' });
+          }
+        });
+
+      } else {
+        // Use yt-dlp-wrap for all other platforms (Instagram, TikTok, Facebook, Vimeo, etc.)
+        try {
+          // Try to download the binary first
+          try {
+            await YTDlpWrap.downloadFromGithub('./yt-dlp');
+          } catch (downloadError) {
+            console.log('yt-dlp binary already exists or download failed, continuing...');
+          }
+          
+          // Initialize with binary path
+          const ytDlpInstance = new YTDlpWrap('./yt-dlp');
+          
+          // Get video info first to extract title
+          const videoInfo = await ytDlpInstance.getVideoInfo(videoUrl);
+          const title = sanitizeFilename(videoInfo.title || 'video');
+          
+          // Determine best format based on quality request
+          let formatSelector = 'best';
+          if (quality.includes('720')) formatSelector = 'best[height<=720]';
+          else if (quality.includes('480')) formatSelector = 'best[height<=480]';
+          else if (quality.includes('1080')) formatSelector = 'best[height<=1080]';
+          else if (quality === 'audio') formatSelector = 'bestaudio';
+          
+          // Set headers for download
+          res.setHeader('Content-Disposition', `attachment; filename="${title}-${quality}.mp4"`);
+          res.setHeader('Content-Type', 'video/mp4');
+          
+          // Execute yt-dlp with streaming to stdout
+          const ytdlpProcess = ytDlpInstance.exec([
+            videoUrl,
+            '-f', formatSelector,
+            '-o', '-',  // Output to stdout for streaming
+            '--no-warnings',
+            '--no-check-certificates'
+          ]);
+          
+          // Handle the streaming properly
+          ytdlpProcess.on('ytDlpEvent', (eventType, eventData) => {
+            if (eventType === 'data') {
+              res.write(eventData);
+            }
+          });
+          
+          ytdlpProcess.on('close', (code) => {
+            if (code === 0) {
+              res.end();
+            } else {
+              console.error(`yt-dlp process exited with code ${code}`);
+              if (!res.headersSent) {
+                res.status(500).json({ error: 'Download failed' });
+              }
+            }
+          });
+          
+          ytdlpProcess.on('error', (error) => {
+            console.error('yt-dlp process error:', error);
+            if (!res.headersSent) {
+              res.status(500).json({ error: 'Download failed from this platform' });
+            }
+          });
+          
+        } catch (ytdlpError) {
+          console.error('yt-dlp setup error:', ytdlpError);
+          res.status(500).json({ 
+            error: 'This platform is not yet supported. We support YouTube fully, with other platforms coming soon.'
+          });
+        }
+      }
 
     } catch (error) {
       console.error('Video download error:', error);
-      res.status(500).json({ error: 'Failed to get download link' });
+      res.status(500).json({ error: 'Failed to download video' });
     }
   });
 
