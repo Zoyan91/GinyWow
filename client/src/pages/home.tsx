@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Copy, Clipboard, CheckCircle } from "lucide-react";
@@ -7,7 +7,9 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { apiRequest } from "@/lib/queryClient";
 import { Link } from "wouter";
 import Header from "@/components/header";
-import Footer from "@/components/footer";
+
+// Lazy load footer for better initial performance
+const Footer = lazy(() => import("@/components/footer"));
 
 export default function Home() {
   const [youtubeUrl, setYoutubeUrl] = useState("");
@@ -677,7 +679,9 @@ export default function Home() {
       {/* Newsletter Section */}
       <NewsletterSection />
 
-      <Footer />
+      <Suspense fallback={<div className="h-16 bg-gray-50 animate-pulse" />}>
+        <Footer />
+      </Suspense>
     </div>
   );
 }
