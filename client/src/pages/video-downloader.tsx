@@ -283,7 +283,7 @@ export default function VideoDownloader() {
                               <Input
                                 type="url"
                                 placeholder="Paste YouTube URL Here"
-                                className="input-mobile text-center focus:ring-2 focus:ring-gray-300 focus:border-gray-300"
+                                className="input-mobile text-center focus:ring-2 focus:ring-gray-300 focus:border-gray-300 video-downloader-input"
                                 data-testid="url-input-mobile"
                                 {...field}
                               />
@@ -326,7 +326,7 @@ export default function VideoDownloader() {
                                 <Input
                                   type="url"
                                   placeholder="Paste YouTube URL Here"
-                                  className="flex-1 border-0 bg-transparent px-6 py-4 text-base focus:ring-2 focus:ring-gray-300 focus:ring-inset placeholder-gray-500"
+                                  className="flex-1 border-0 bg-transparent px-6 py-4 text-base focus:ring-2 focus:ring-gray-300 focus:ring-inset placeholder-gray-500 video-downloader-input"
                                   data-testid="url-input-desktop"
                                   {...field}
                                 />
