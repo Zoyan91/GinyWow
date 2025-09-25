@@ -30,10 +30,10 @@ export default function PDFWatermark() {
       return;
     }
     
-    if (selectedFile.size > 30 * 1024 * 1024) {
+    if (selectedFile.size > 100 * 1024 * 1024) {
       toast({
         title: "File too large",
-        description: "Please select a PDF file smaller than 30MB.",
+        description: "Please select a PDF file smaller than 100MB.",
         variant: "destructive",
       });
       return;

@@ -29,10 +29,10 @@ export default function PDFToImage() {
       return;
     }
     
-    if (selectedFile.size > 20 * 1024 * 1024) {
+    if (selectedFile.size > 100 * 1024 * 1024) {
       toast({
         title: "File too large",
-        description: "Please select a PDF file smaller than 20MB.",
+        description: "Please select a PDF file smaller than 100MB.",
         variant: "destructive",
       });
       return;

@@ -30,10 +30,10 @@ export default function PDFMerge() {
         return false;
       }
       
-      if (file.size > 10 * 1024 * 1024) {
+      if (file.size > 100 * 1024 * 1024) {
         toast({
           title: "File too large",
-          description: `${file.name} is larger than 10MB.`,
+          description: `${file.name} is larger than 100MB.`,
           variant: "destructive",
         });
         return false;
@@ -409,7 +409,7 @@ export default function PDFMerge() {
                     How many PDF files can I merge at once?
                   </h3>
                   <p className="text-gray-600">
-                    You can merge unlimited PDF files, but each file should be under 10MB for optimal performance.
+                    You can merge unlimited PDF files, each up to 100MB in size. Large files may take longer to process.
                   </p>
                 </div>
 

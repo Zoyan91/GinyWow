@@ -31,10 +31,10 @@ export default function PDFToWord() {
       return;
     }
     
-    if (selectedFile.size > 10 * 1024 * 1024) { // 10MB limit
+    if (selectedFile.size > 100 * 1024 * 1024) { // 100MB limit
       toast({
         title: "File too large",
-        description: "Please select a PDF file smaller than 10MB.",
+        description: "Please select a PDF file smaller than 100MB.",
         variant: "destructive",
       });
       return;
@@ -435,7 +435,7 @@ export default function PDFToWord() {
                     What's the maximum file size limit?
                   </h3>
                   <p className="text-gray-600">
-                    You can convert PDF files up to 10MB in size. For larger files, please contact our support team.
+                    You can convert PDF files up to 100MB in size. Large files may take longer to process.
                   </p>
                 </div>
               </div>
