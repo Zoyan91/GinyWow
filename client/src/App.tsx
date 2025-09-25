@@ -22,11 +22,21 @@ const NotFound = lazy(() => import("@/pages/not-found"));
 // Removed aggressive preloading for faster initial load (sub-2-second target)
 // Pages now load on-demand for optimal initial performance
 
-// Minimal loading component to prevent blank flashes
+// Fast skeleton loader for instant visual feedback
 function PageLoader() {
   return (
     <div className="min-h-screen bg-white">
-      {/* Preserves layout without visible loading indicator */}
+      {/* Header skeleton */}
+      <div className="h-16 bg-gray-50 animate-pulse border-b border-gray-200" />
+      
+      {/* Content skeleton */}
+      <div className="max-w-4xl mx-auto px-4 py-8">
+        <div className="text-center mb-8 space-y-4">
+          <div className="h-8 bg-gray-200 rounded-lg animate-pulse mx-auto w-2/3" />
+          <div className="h-4 bg-gray-100 rounded animate-pulse mx-auto w-1/2" />
+        </div>
+        <div className="h-64 bg-gray-50 rounded-lg animate-pulse" />
+      </div>
     </div>
   );
 }
