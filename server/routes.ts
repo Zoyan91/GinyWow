@@ -1,6 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import multer from "multer";
+import sharp from "sharp";
 import { storage } from "./storage";
 import { insertThumbnailSchema, insertTitleOptimizationSchema, insertNewsletterSubscriptionSchema, insertShortUrlSchema } from "@shared/schema";
 import { analyzeThumbnail, optimizeTitles, enhanceThumbnailImage } from "./openai";
@@ -666,6 +667,83 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+
+  // Thumbnail Optimizer API Endpoint
+  app.post('/api/optimize', upload.single('thumbnail'), async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ error: 'No image file provided' });
+      }
+
+      // Validate file size (max 5MB as per requirements)
+      if (req.file.size > 5 * 1024 * 1024) {
+        return res.status(400).json({ error: 'File size exceeds 5MB limit' });
+      }
+
+      // Validate file type (jpg/png only)
+      if (!['image/jpeg', 'image/jpg', 'image/png'].includes(req.file.mimetype)) {
+        return res.status(400).json({ error: 'Only JPG and PNG files are supported' });
+      }
+
+      // Get original image metadata
+      const originalMetadata = await sharp(req.file.buffer).metadata();
+      
+      // Create optimized image with Sharp
+      let optimizedBuffer = await sharp(req.file.buffer)
+        // Auto-center crop if image is too wide or tall (maintain 16:9 ratio for thumbnails)
+        .resize(1280, 720, { 
+          fit: 'cover', 
+          position: 'center'
+        })
+        // Enhance image quality
+        .modulate({
+          brightness: 1.15,     // 15% brighter
+          saturation: 1.25,     // 25% more vibrant colors
+          hue: 0
+        })
+        // Increase sharpness and contrast
+        .sharpen({ sigma: 1.2, flat: 1, jagged: 2 })
+        .linear(1.1, -(128 * 0.1))  // Increase contrast
+        // Output as high-quality JPEG
+        .jpeg({ 
+          quality: 92, 
+          progressive: true,
+          mozjpeg: true 
+        })
+        .toBuffer();
+
+      // Convert original and optimized images to base64
+      const originalBase64 = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
+      const optimizedBase64 = `data:image/jpeg;base64,${optimizedBuffer.toString('base64')}`;
+
+      // Calculate file size information
+      const originalSize = req.file.size;
+      const optimizedSize = optimizedBuffer.length;
+      const sizeReduction = Math.round(((originalSize - optimizedSize) / originalSize) * 100);
+
+      res.json({
+        success: true,
+        originalImage: originalBase64,
+        optimizedImage: optimizedBase64,
+        originalSize: originalSize,
+        optimizedSize: optimizedSize,
+        sizeReduction: sizeReduction > 0 ? sizeReduction : 0,
+        originalDimensions: {
+          width: originalMetadata.width,
+          height: originalMetadata.height
+        },
+        optimizedDimensions: {
+          width: 1280,
+          height: 720
+        },
+        downloadName: `optimized_${req.file.originalname.replace(/\.[^/.]+$/, '.jpg')}`
+      });
+
+    } catch (error) {
+      console.error('Error optimizing thumbnail:', error);
+      res.status(500).json({ error: 'Failed to optimize thumbnail' });
+    }
+  });
 
   // Convert Image Format API Endpoint
   app.post('/api/convert-image', imageUpload.single('image'), async (req, res) => {
