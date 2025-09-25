@@ -55,26 +55,8 @@ export default function Header({ currentPage }: HeaderProps) {
         setLocation('/thumbnail-downloader');
       } else if (searchTerm.includes('format') || searchTerm.includes('convert')) {
         setLocation('/format-converter');
-      } else if (searchTerm.includes('pdf to word') || searchTerm.includes('pdf word')) {
-        setLocation('/pdf-to-word');
-      } else if (searchTerm.includes('pdf to excel') || searchTerm.includes('pdf excel')) {
-        setLocation('/pdf-to-excel');
-      } else if (searchTerm.includes('pdf merge') || searchTerm.includes('merge pdf')) {
-        setLocation('/pdf-merge');
-      } else if (searchTerm.includes('pdf split') || searchTerm.includes('split pdf')) {
-        setLocation('/pdf-split');
-      } else if (searchTerm.includes('pdf compress') || searchTerm.includes('compress pdf')) {
-        setLocation('/pdf-compress');
-      } else if (searchTerm.includes('pdf to image') || searchTerm.includes('pdf image')) {
-        setLocation('/pdf-to-image');
-      } else if (searchTerm.includes('word to pdf') || searchTerm.includes('word pdf')) {
-        setLocation('/word-to-pdf');
-      } else if (searchTerm.includes('pdf editor') || searchTerm.includes('edit pdf')) {
+      } else if (searchTerm.includes('pdf') || searchTerm.includes('editor')) {
         setLocation('/pdf-editor');
-      } else if (searchTerm.includes('pdf unlock') || searchTerm.includes('unlock pdf')) {
-        setLocation('/pdf-unlock');
-      } else if (searchTerm.includes('pdf watermark') || searchTerm.includes('watermark pdf')) {
-        setLocation('/pdf-watermark');
       }
       
       // Clear the input after search
