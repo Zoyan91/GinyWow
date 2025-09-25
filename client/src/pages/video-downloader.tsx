@@ -327,9 +327,6 @@ export default function VideoDownloader() {
               {videoData && (
                 <div className="max-w-4xl mx-auto px-4">
                   <div className="card-mobile p-4 sm:p-6 mb-8">
-                    <h2 className="text-lg sm:text-xl font-semibold text-gray-900 mb-6 text-center" data-testid="downloads-heading">
-                      Available Downloads - {videoData.title}
-                    </h2>
                     
                     {/* Video Info */}
                     <div className="flex flex-col sm:flex-row items-start space-y-4 sm:space-y-0 sm:space-x-6 mb-8 p-4 bg-gray-50 rounded-xl" data-testid="video-info-card">
