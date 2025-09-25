@@ -99,6 +99,11 @@ export type VideoFormat = {
   fps?: number;
   fileSize?: string;
   downloadUrl: string;
+  type?: 'video' | 'audio';
+  height?: number;
+  qualityGroup?: string;
+  hasAudio?: boolean;
+  note?: string;
 };
 
 export type VideoMetadata = {

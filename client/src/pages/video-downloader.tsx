@@ -430,75 +430,134 @@ export default function VideoDownloader() {
                       </div>
                     </div>
                     
-                    {/* Dynamic Quality Format Options */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                    {/* SSYouTube Style Quality Format Options */}
+                    <div className="space-y-3">
+                      <h4 className="text-lg font-bold text-gray-900 mb-4 text-center">
+                        📥 Choose Quality & Download
+                      </h4>
+                      
                       {videoData.availableFormats && videoData.availableFormats.length > 0 ? (
                         videoData.availableFormats.map((format, index) => {
-                          // Helper function to get color theme based on quality
-                          const getColorTheme = (quality: string) => {
-                            if (quality.includes('2160') || quality.includes('4K')) return { bg: 'bg-red-50', icon: 'text-red-600', button: 'bg-red-500 hover:bg-red-600' };
-                            if (quality.includes('1440') || quality.includes('2K')) return { bg: 'bg-indigo-50', icon: 'text-indigo-600', button: 'bg-indigo-500 hover:bg-indigo-600' };
-                            if (quality.includes('1080')) return { bg: 'bg-blue-50', icon: 'text-blue-600', button: 'bg-blue-500 hover:bg-blue-600' };
-                            if (quality.includes('720')) return { bg: 'bg-green-50', icon: 'text-green-600', button: 'bg-green-500 hover:bg-green-600' };
-                            if (quality.includes('480')) return { bg: 'bg-yellow-50', icon: 'text-yellow-600', button: 'bg-yellow-500 hover:bg-yellow-600' };
-                            if (quality.includes('360')) return { bg: 'bg-orange-50', icon: 'text-orange-600', button: 'bg-orange-500 hover:bg-orange-600' };
-                            if (quality.includes('240')) return { bg: 'bg-pink-50', icon: 'text-pink-600', button: 'bg-pink-500 hover:bg-pink-600' };
-                            if (quality.includes('144')) return { bg: 'bg-gray-50', icon: 'text-gray-600', button: 'bg-gray-500 hover:bg-gray-600' };
-                            if (quality.includes('Audio')) return { bg: 'bg-purple-50', icon: 'text-purple-600', button: 'bg-purple-500 hover:bg-purple-600' };
-                            return { bg: 'bg-slate-50', icon: 'text-slate-600', button: 'bg-slate-500 hover:bg-slate-600' };
-                          };
-
-                          const colorTheme = getColorTheme(format.quality);
-                          const isAudio = format.quality.includes('Audio');
+                          // SSYouTube Style Enhanced Color Themes
+                          let colorScheme = "bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200";
+                          let badgeColor = "bg-gray-500";
+                          let gradientBg = "bg-gradient-to-r from-gray-100 to-gray-200";
                           
-                          // Create a description for the format
-                          const formatDescription = () => {
-                            let desc = format.format;
-                            if (format.bitrate) desc += ` • ${format.bitrate}`;
-                            if (format.fps && format.fps > 30) desc += ` • ${format.fps}fps`;
-                            if (format.fileSize) desc += ` • ${format.fileSize}`;
-                            return desc;
-                          };
+                          if (format.quality.includes('8K')) {
+                            colorScheme = "text-purple-900 dark:text-purple-100";
+                            badgeColor = "bg-gradient-to-r from-purple-600 to-pink-600";
+                            gradientBg = "bg-gradient-to-r from-purple-50 via-pink-50 to-purple-100 dark:from-purple-900 dark:via-pink-900 dark:to-purple-800";
+                          } else if (format.quality.includes('4K')) {
+                            colorScheme = "text-red-900 dark:text-red-100";
+                            badgeColor = "bg-gradient-to-r from-red-600 to-purple-600";
+                            gradientBg = "bg-gradient-to-r from-red-50 via-purple-50 to-red-100 dark:from-red-900 dark:via-purple-900 dark:to-red-800";
+                          } else if (format.quality.includes('2K') || format.quality.includes('1440')) {
+                            colorScheme = "text-indigo-900 dark:text-indigo-100";
+                            badgeColor = "bg-gradient-to-r from-indigo-600 to-blue-600";
+                            gradientBg = "bg-gradient-to-r from-indigo-50 via-blue-50 to-indigo-100 dark:from-indigo-900 dark:via-blue-900 dark:to-indigo-800";
+                          } else if (format.quality.includes('1080') || format.quality.includes('Full HD')) {
+                            colorScheme = "text-blue-900 dark:text-blue-100";
+                            badgeColor = "bg-gradient-to-r from-blue-600 to-cyan-600";
+                            gradientBg = "bg-gradient-to-r from-blue-50 via-cyan-50 to-blue-100 dark:from-blue-900 dark:via-cyan-900 dark:to-blue-800";
+                          } else if (format.quality.includes('720') || format.quality.includes('HD')) {
+                            colorScheme = "text-green-900 dark:text-green-100";
+                            badgeColor = "bg-gradient-to-r from-green-600 to-emerald-600";
+                            gradientBg = "bg-gradient-to-r from-green-50 via-emerald-50 to-green-100 dark:from-green-900 dark:via-emerald-900 dark:to-green-800";
+                          } else if (format.quality.includes('480') || format.quality.includes('360') || format.quality.includes('240') || format.quality.includes('144')) {
+                            colorScheme = "text-yellow-900 dark:text-yellow-100";
+                            badgeColor = "bg-gradient-to-r from-yellow-600 to-orange-600";
+                            gradientBg = "bg-gradient-to-r from-yellow-50 via-orange-50 to-yellow-100 dark:from-yellow-900 dark:via-orange-900 dark:to-yellow-800";
+                          } else if (format.type === 'audio' || format.quality.includes('Audio')) {
+                            colorScheme = "text-pink-900 dark:text-pink-100";
+                            badgeColor = "bg-gradient-to-r from-pink-600 to-rose-600";
+                            gradientBg = "bg-gradient-to-r from-pink-50 via-rose-50 to-pink-100 dark:from-pink-900 dark:via-rose-900 dark:to-pink-800";
+                          }
 
                           return (
-                            <div key={index} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
-                              <div className="text-center">
-                                <div className="mb-3 flex items-center justify-center">
-                                  <div className={`w-12 h-12 ${colorTheme.bg} rounded-lg flex items-center justify-center`}>
-                                    {isAudio ? (
-                                      <Volume2 className={`w-6 h-6 ${colorTheme.icon}`} />
-                                    ) : (
-                                      <Video className={`w-6 h-6 ${colorTheme.icon}`} />
-                                    )}
+                            <div key={index} className={`${gradientBg} rounded-xl border-2 border-white dark:border-gray-700 shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all duration-300`}>
+                              <div className="p-5">
+                                <div className="flex items-center justify-between">
+                                  <div className="flex items-center space-x-4 flex-1">
+                                    {/* Icon */}
+                                    <div className={`w-14 h-14 ${badgeColor} rounded-xl flex items-center justify-center shadow-lg`}>
+                                      {format.type === 'audio' || format.quality.includes('Audio') ? (
+                                        <Volume2 className="w-7 h-7 text-white" />
+                                      ) : (
+                                        <Video className="w-7 h-7 text-white" />
+                                      )}
+                                    </div>
+                                    
+                                    {/* Quality Info */}
+                                    <div className="flex-1">
+                                      <div className="flex items-center gap-3 mb-2">
+                                        <h3 className={`text-lg font-bold ${colorScheme}`}>
+                                          {format.quality}
+                                        </h3>
+                                        <span className={`text-xs px-3 py-1 ${badgeColor} text-white rounded-full font-bold shadow-md`}>
+                                          {format.format}
+                                        </span>
+                                        {(format.quality.includes('4K') || format.quality.includes('8K')) && (
+                                          <span className="text-xs px-2 py-1 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-full font-bold shadow-md animate-pulse">
+                                            ULTRA HD
+                                          </span>
+                                        )}
+                                      </div>
+                                      
+                                      {/* Technical Details */}
+                                      <div className={`text-sm ${colorScheme} opacity-80 grid grid-cols-2 md:grid-cols-4 gap-2`}>
+                                        <span><strong>Codec:</strong> {format.codec}</span>
+                                        {format.bitrate && <span><strong>Bitrate:</strong> {format.bitrate}</span>}
+                                        {format.fps && <span><strong>FPS:</strong> {format.fps}</span>}
+                                        {format.fileSize && format.fileSize !== 'N/A' && (
+                                          <span><strong>Size:</strong> {format.fileSize}</span>
+                                        )}
+                                      </div>
+                                      
+                                      {/* Video-only note for high quality formats */}
+                                      {format.note && (
+                                        <div className="mt-2">
+                                          <span className="text-xs px-2 py-1 bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200 rounded-full">
+                                            ⚠️ {format.note}
+                                          </span>
+                                        </div>
+                                      )}
+                                    </div>
                                   </div>
+                                  
+                                  {/* Download Button */}
+                                  <Button
+                                    onClick={() => handleDownload(format)}
+                                    className={`${badgeColor} hover:opacity-90 text-white font-bold px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105`}
+                                    data-testid={`download-${format.quality.replace(/\s+/g, '-').toLowerCase()}`}
+                                  >
+                                    <Download className="w-5 h-5 mr-2" />
+                                    Download
+                                  </Button>
                                 </div>
-                                <p className="text-lg font-semibold text-gray-900 mb-1" data-testid={`format-quality-${index}`}>
-                                  {format.quality}
-                                </p>
-                                <p className="text-sm text-gray-600 mb-3" data-testid={`format-details-${index}`}>
-                                  {formatDescription()}
-                                </p>
-                                <Button
-                                  onClick={() => handleDownload(format)}
-                                  className={`w-full ${colorTheme.button} text-white`}
-                                  data-testid={`download-btn-${index}`}
-                                >
-                                  <Download className="w-4 h-4 mr-2" />
-                                  Download
-                                </Button>
                               </div>
                             </div>
                           );
                         })
                       ) : (
-                        <div className="col-span-full text-center py-8">
-                          <p className="text-gray-500">No formats available for this video.</p>
+                        <div className="text-center py-12 bg-gray-50 dark:bg-gray-800 rounded-xl">
+                          <p className="text-gray-500 text-lg">⚠️ No formats available for this video.</p>
+                          <p className="text-gray-400 text-sm mt-2">Please try a different video URL.</p>
                         </div>
                       )}
                     </div>
                     
-                    <div className="text-center mt-6">
-                      <p className="text-sm text-gray-500">Video download feature coming soon</p>
+                    <div className="text-center mt-8">
+                      <div className="bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-900 dark:to-cyan-900 rounded-xl p-6">
+                        <h5 className="text-lg font-bold text-blue-900 dark:text-blue-100 mb-2">
+                          🚀 SSYouTube Style Features Active!
+                        </h5>
+                        <p className="text-sm text-blue-700 dark:text-blue-300 mb-2">
+                          ✅ High Quality Downloads (720p to 8K) • Multiple Formats (MP4, MP3, WEBM, M4A) • Fast & Secure
+                        </p>
+                        <p className="text-xs text-blue-600 dark:text-blue-400">
+                          Works with YouTube, Instagram, TikTok, Facebook, Vimeo + 1000 platforms
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>

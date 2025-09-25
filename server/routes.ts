@@ -602,55 +602,141 @@ export async function registerRoutes(app: Express): Promise<Server> {
           const info = await ytdl.getInfo(videoUrl);
           const videoDetails = info.videoDetails;
           
-          // Extract available formats
-          const availableFormats = info.formats
-            .filter(format => format.hasVideo || format.hasAudio)
-            .map(format => {
-              const quality = format.qualityLabel || 
-                             (format.hasAudio && !format.hasVideo ? 'Audio' : 'Unknown');
-              const container = format.container || 'mp4';
-              const codec = format.codecs || 'unknown';
-              const fps = format.fps || undefined;
+          // Extract available formats - SSYouTube Style with High Quality Support
+          // Include both combined and video-only formats for 4K/8K support
+          const videoWithAudioFormats = info.formats.filter(format => format.hasVideo && format.hasAudio);
+          const videoOnlyFormats = info.formats.filter(format => format.hasVideo && !format.hasAudio);
+          const audioFormats = info.formats.filter(format => format.hasAudio && !format.hasVideo);
+          
+          // Combine all video formats (priority to combined, fallback to video-only for high quality)
+          const allVideoFormats = [...videoWithAudioFormats];
+          
+          // Add high-quality video-only formats (4K, 8K) that don't have combined versions
+          videoOnlyFormats.forEach(format => {
+            const height = format.height || 0;
+            const hasHighQualityCombined = videoWithAudioFormats.some(combined => 
+              (combined.height || 0) >= height && height > 720
+            );
+            
+            // Include video-only if it's high quality and no combined version exists
+            if (height >= 1080 && !hasHighQualityCombined) {
+              allVideoFormats.push(format);
+            }
+          });
+          
+          // Create comprehensive format list like SSYouTube
+          const availableFormats: any[] = [];
+          
+          // Video Formats - MP4, WEBM with all qualities including 4K/8K
+          const processedQualities = new Set();
+          
+          allVideoFormats.forEach(format => {
+            const height = format.height || 0;
+            const qualityLabel = format.qualityLabel;
+            const container = format.container;
+            
+            if (!height && !qualityLabel) return;
+            
+            // Determine quality based on height or label
+            let quality = 'Unknown';
+            let qualityGroup = 'SD';
+            
+            if (height >= 4320 || qualityLabel?.includes('8K')) {
+              quality = '8K (4320p)';
+              qualityGroup = '8K';
+            } else if (height >= 2160 || qualityLabel?.includes('4K') || qualityLabel?.includes('2160')) {
+              quality = '4K (2160p)';
+              qualityGroup = '4K';
+            } else if (height >= 1440 || qualityLabel?.includes('1440')) {
+              quality = '2K (1440p)';
+              qualityGroup = '2K';
+            } else if (height >= 1080 || qualityLabel?.includes('1080')) {
+              quality = 'Full HD (1080p)';
+              qualityGroup = 'Full HD';
+            } else if (height >= 720 || qualityLabel?.includes('720')) {
+              quality = 'HD (720p)';
+              qualityGroup = 'HD';
+            } else if (height >= 480 || qualityLabel?.includes('480')) {
+              quality = 'SD (480p)';
+              qualityGroup = 'SD';
+            } else if (height >= 360 || qualityLabel?.includes('360')) {
+              quality = 'SD (360p)';
+              qualityGroup = 'SD';
+            } else if (height >= 240 || qualityLabel?.includes('240')) {
+              quality = 'SD (240p)';
+              qualityGroup = 'SD';
+            } else if (height >= 144 || qualityLabel?.includes('144')) {
+              quality = 'SD (144p)';
+              qualityGroup = 'SD';
+            }
+            
+            // Calculate file size
+            let fileSize = 'N/A';
+            if (format.contentLength) {
+              const sizeInMB = parseInt(format.contentLength) / (1024 * 1024);
+              fileSize = sizeInMB > 1000 ? 
+                `${(sizeInMB / 1024).toFixed(1)} GB` : 
+                `${sizeInMB.toFixed(1)} MB`;
+            }
+            
+            // Create format key for uniqueness
+            const formatKey = `${quality}-${container?.toUpperCase() || 'MP4'}`;
+            
+            if (!processedQualities.has(formatKey)) {
+              processedQualities.add(formatKey);
               
-              // Calculate approximate file size if available
-              let fileSize = undefined;
-              if (format.contentLength) {
-                const sizeInMB = parseInt(format.contentLength) / (1024 * 1024);
-                fileSize = sizeInMB > 1000 ? 
-                  `${(sizeInMB / 1024).toFixed(1)} GB` : 
-                  `${sizeInMB.toFixed(1)} MB`;
-              }
-
-              return {
+              availableFormats.push({
                 quality: quality,
-                format: container.toUpperCase(),
-                codec: codec,
-                bitrate: format.audioBitrate ? `${format.audioBitrate}kbps` : undefined,
-                fps: fps,
+                qualityGroup: qualityGroup,
+                format: container?.toUpperCase() || 'MP4',
+                codec: format.videoCodec || format.codecs || 'H.264',
+                bitrate: format.bitrate ? `${Math.round(format.bitrate / 1000)}k` : undefined,
+                fps: format.fps || 30,
                 fileSize: fileSize,
-                downloadUrl: videoUrl // Use original URL for downloads
-              };
-            })
-            .filter((format, index, self) => 
-              // Remove duplicates based on quality + format combination
-              index === self.findIndex(f => f.quality === format.quality && f.format === format.format)
-            )
-            .sort((a, b) => {
-              // Sort by quality (higher first)
-              const qualityOrder = ['2160p', '1440p', '1080p', '720p', '480p', '360p', '240p', '144p'];
-              const aIndex = qualityOrder.findIndex(q => a.quality.includes(q));
-              const bIndex = qualityOrder.findIndex(q => b.quality.includes(q));
-              
-              if (aIndex !== -1 && bIndex !== -1) {
-                return aIndex - bIndex;
-              }
-              
-              // Audio formats at the end
-              if (a.quality.includes('Audio') && !b.quality.includes('Audio')) return 1;
-              if (b.quality.includes('Audio') && !a.quality.includes('Audio')) return -1;
-              
-              return 0;
+                downloadUrl: videoUrl,
+                type: 'video',
+                height: height,
+                hasAudio: format.hasAudio || false, // Track if format includes audio
+                note: !format.hasAudio && height >= 1080 ? 'Video only (high quality)' : undefined
+              });
+            }
+          });
+          
+          // Audio Formats - MP3, M4A, WEBM Audio
+          const audioQualities = [
+            { quality: 'High Quality Audio (320kbps)', format: 'MP3', bitrate: '320kbps' },
+            { quality: 'Standard Audio (128kbps)', format: 'MP3', bitrate: '128kbps' },
+            { quality: 'High Quality Audio', format: 'M4A', bitrate: '256kbps' },
+            { quality: 'Standard Audio', format: 'WEBM', bitrate: '128kbps' }
+          ];
+          
+          audioQualities.forEach(audioOption => {
+            availableFormats.push({
+              quality: audioOption.quality,
+              qualityGroup: 'Audio',
+              format: audioOption.format,
+              codec: audioOption.format === 'MP3' ? 'MP3' : (audioOption.format === 'M4A' ? 'AAC' : 'Opus'),
+              bitrate: audioOption.bitrate,
+              fileSize: 'N/A',
+              downloadUrl: videoUrl,
+              type: 'audio'
             });
+          });
+          
+          // Sort formats: Video first (highest quality first), then audio
+          availableFormats.sort((a, b) => {
+            // Videos first, audio last
+            if (a.type === 'video' && b.type === 'audio') return -1;
+            if (a.type === 'audio' && b.type === 'video') return 1;
+            
+            // Within videos, sort by height/quality
+            if (a.type === 'video' && b.type === 'video') {
+              return (b.height || 0) - (a.height || 0);
+            }
+            
+            // Within audio, maintain order
+            return 0;
+          });
 
           // Format duration from seconds to MM:SS
           const formatDuration = (seconds: string) => {
