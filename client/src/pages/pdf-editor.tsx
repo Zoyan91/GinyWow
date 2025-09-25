@@ -522,6 +522,109 @@ export default function PDFEditor() {
           </div>
         </section>
 
+        {/* PDF Editor Information Section */}
+        <section className="py-12 sm:py-16 lg:py-20 bg-white">
+          <div className="container-mobile max-w-4xl">
+            <div className="prose prose-lg max-w-none">
+              
+              {/* What is GinyWow PDF Editor */}
+              <div className="mb-8 sm:mb-12">
+                <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 sm:mb-6">
+                  What is GinyWow PDF Editor?
+                </h2>
+                <p className="text-gray-600 leading-relaxed mb-4">
+                  GinyWow PDF Editor is a free, online tool that lets you <strong>edit PDF files quickly and easily</strong>. You can modify text, images, and other content in your PDFs without downloading any software. It's designed for students, professionals, and anyone who needs to make changes to PDF documents online.
+                </p>
+              </div>
+
+              {/* Why Use GinyWow PDF Editor */}
+              <div className="mb-8 sm:mb-12">
+                <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 sm:mb-6">
+                  Why Use GinyWow PDF Editor?
+                </h2>
+                <ul className="space-y-3 text-gray-600">
+                  <li className="flex items-start">
+                    <span className="w-2 h-2 bg-blue-500 rounded-full mt-2.5 mr-3 flex-shrink-0"></span>
+                    <span><strong>Free & Online:</strong> Edit PDFs without paying or installing software.</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="w-2 h-2 bg-blue-500 rounded-full mt-2.5 mr-3 flex-shrink-0"></span>
+                    <span><strong>Simple Interface:</strong> Easy to use for beginners and professionals alike.</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="w-2 h-2 bg-blue-500 rounded-full mt-2.5 mr-3 flex-shrink-0"></span>
+                    <span><strong>Edit Content Directly:</strong> Change text, images, or formatting inside your PDF.</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="w-2 h-2 bg-blue-500 rounded-full mt-2.5 mr-3 flex-shrink-0"></span>
+                    <span><strong>Secure:</strong> Your files are processed safely and not stored permanently.</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="w-2 h-2 bg-blue-500 rounded-full mt-2.5 mr-3 flex-shrink-0"></span>
+                    <span><strong>Instant Editing:</strong> Make changes quickly and download your edited PDF immediately.</span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* How to Edit PDFs */}
+              <div className="mb-8 sm:mb-12">
+                <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 sm:mb-6">
+                  How to Edit PDFs with GinyWow
+                </h2>
+                <ol className="space-y-3 text-gray-600">
+                  <li className="flex items-start">
+                    <span className="w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-medium mr-3 mt-0.5 flex-shrink-0">1</span>
+                    <span>Upload your PDF file to GinyWow PDF Editor.</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-medium mr-3 mt-0.5 flex-shrink-0">2</span>
+                    <span>Edit the text, images, or content as needed.</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-medium mr-3 mt-0.5 flex-shrink-0">3</span>
+                    <span>Preview the changes.</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-medium mr-3 mt-0.5 flex-shrink-0">4</span>
+                    <span>Download your edited PDF instantly.</span>
+                  </li>
+                </ol>
+              </div>
+
+              {/* Who Can Benefit */}
+              <div className="mb-8 sm:mb-12">
+                <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 sm:mb-6">
+                  Who Can Benefit from GinyWow PDF Editor?
+                </h2>
+                <ul className="space-y-3 text-gray-600">
+                  <li className="flex items-start">
+                    <span className="w-2 h-2 bg-green-500 rounded-full mt-2.5 mr-3 flex-shrink-0"></span>
+                    <span><strong>Students:</strong> Correct mistakes, update assignments, or modify notes.</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="w-2 h-2 bg-green-500 rounded-full mt-2.5 mr-3 flex-shrink-0"></span>
+                    <span><strong>Professionals:</strong> Edit reports, contracts, or presentations easily.</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="w-2 h-2 bg-green-500 rounded-full mt-2.5 mr-3 flex-shrink-0"></span>
+                    <span><strong>Everyone:</strong> Save time by editing PDF files online anytime, anywhere.</span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Why Choose GinyWow */}
+              <div className="mb-8 sm:mb-12">
+                <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 sm:mb-6">
+                  Why Choose GinyWow PDF Editor?
+                </h2>
+                <p className="text-gray-600 leading-relaxed">
+                  GinyWow PDF Editor makes PDF editing simple, fast, and reliable. No software installation, no complicated processes—just upload your PDF, make changes, and download. Perfect for anyone who wants a hassle-free PDF editing experience.
+                </p>
+              </div>
+
+            </div>
+          </div>
+        </section>
 
         {/* Newsletter Section */}
         <Suspense fallback={<div className="h-48 bg-gray-50"></div>}>
