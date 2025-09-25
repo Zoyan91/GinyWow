@@ -62,21 +62,26 @@ export default function VideoDownloader() {
         description: `${format.quality} ${format.format} download functionality will be available soon.`,
       });
     } else {
-      // Direct download using the browser
-      const link = document.createElement('a');
-      link.href = format.downloadUrl;
-      link.target = '_blank';
-      link.download = `${videoData?.title || 'video'}-${format.quality}.${format.format.toLowerCase()}`;
-      
-      // Add the link to body, click it, then remove it
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      
-      toast({
-        title: "Download initiated", 
-        description: `Opening ${format.quality} ${format.format} download link. If download doesn't start automatically, right-click the link and select "Save as".`,
-        duration: 5000,
+      // Copy download instructions to clipboard
+      const instructions = `To download this video:
+1. Install a YouTube downloader like yt-dlp or 4K Video Downloader
+2. Use this video URL: ${videoData?.videoId ? `https://www.youtube.com/watch?v=${videoData.videoId}` : 'YouTube URL'}
+3. Select ${format.quality} ${format.format} quality`;
+
+      navigator.clipboard.writeText(instructions).then(() => {
+        toast({
+          title: "Download instructions copied!", 
+          description: "Instructions have been copied to your clipboard. Use a YouTube downloader app to download the video.",
+          duration: 6000,
+        });
+      }).catch(() => {
+        // Show instructions in a modal or alert if clipboard fails
+        alert(instructions);
+        toast({
+          title: "Download instructions", 
+          description: "Check the popup for download instructions.",
+          duration: 6000,
+        });
       });
     }
   };
