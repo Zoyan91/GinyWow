@@ -6,6 +6,7 @@ import { storage } from "./storage";
 import { insertThumbnailSchema, insertTitleOptimizationSchema, insertNewsletterSubscriptionSchema, insertShortUrlSchema, videoMetadataSchema, pdfUploadSchema, pdfMergeSchema, pdfSplitSchema, insertPdfFileSchema } from "@shared/schema";
 import { PDFDocument, PDFPage, rgb } from "pdf-lib";
 import { Document, Packer, Paragraph, TextRun } from "docx";
+import pdfParse from "pdf-parse";
 import * as mammoth from "mammoth";
 import { analyzeThumbnail, optimizeTitles, enhanceThumbnailImage } from "./openai";
 import ytdl from "@distube/ytdl-core";
@@ -1342,43 +1343,78 @@ export async function registerRoutes(app: Express): Promise<Server> {
         conversionType: 'pdf-to-word'
       });
 
-      // Simulate PDF to Word conversion (basic implementation)
+      // Extract actual text content from PDF
       try {
-        const pdfDoc = await PDFDocument.load(req.file.buffer);
-        const pageCount = pdfDoc.getPageCount();
+        // Extract text from PDF using pdf-parse
+        const pdfData = await pdfParse(req.file.buffer);
+        const extractedText = pdfData.text.trim();
         
-        // Create a simple Word document with extracted text placeholder
-        const doc = new Document({
-          sections: [{
-            properties: {},
-            children: [
-              new Paragraph({
+        // Create paragraphs from extracted text
+        const paragraphs = [];
+        
+        // Add title
+        paragraphs.push(new Paragraph({
+          children: [
+            new TextRun({
+              text: `Converted from PDF: ${req.file.originalname}`,
+              bold: true,
+              size: 24
+            })
+          ]
+        }));
+        
+        // Add a blank line
+        paragraphs.push(new Paragraph({ children: [new TextRun({ text: "" })] }));
+        
+        if (extractedText && extractedText.length > 0) {
+          // Split text into paragraphs (by double newlines or single newlines if no double found)
+          const textParagraphs = extractedText.split(/\n\s*\n/).filter(p => p.trim().length > 0);
+          
+          if (textParagraphs.length === 0) {
+            // If no double newlines found, split by single newlines
+            const singleLineParagraphs = extractedText.split('\n').filter(p => p.trim().length > 0);
+            singleLineParagraphs.forEach(textPara => {
+              paragraphs.push(new Paragraph({
                 children: [
                   new TextRun({
-                    text: `Converted from PDF: ${req.file.originalname}`,
-                    bold: true,
-                    size: 24
-                  })
-                ]
-              }),
-              new Paragraph({
-                children: [
-                  new TextRun({
-                    text: `This PDF contains ${pageCount} page(s).`,
+                    text: textPara.trim(),
                     size: 20
                   })
                 ]
-              }),
-              new Paragraph({
+              }));
+            });
+          } else {
+            textParagraphs.forEach(textPara => {
+              // Clean up the paragraph text
+              const cleanText = textPara.trim().replace(/\s+/g, ' ');
+              paragraphs.push(new Paragraph({
                 children: [
                   new TextRun({
-                    text: "Note: This is a basic conversion. For advanced text extraction, additional libraries like pdf-parse would be needed.",
-                    size: 16,
-                    italics: true
+                    text: cleanText,
+                    size: 20
                   })
                 ]
+              }));
+            });
+          }
+        } else {
+          paragraphs.push(new Paragraph({
+            children: [
+              new TextRun({
+                text: "No text content could be extracted from this PDF. The PDF may contain only images or be password protected.",
+                size: 18,
+                italics: true,
+                color: "FF0000"
               })
             ]
+          }));
+        }
+        
+        // Create Word document with extracted content
+        const doc = new Document({
+          sections: [{
+            properties: {},
+            children: paragraphs
           }]
         });
 
