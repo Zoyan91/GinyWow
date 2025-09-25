@@ -423,11 +423,11 @@ export default function PDFEditor() {
               <h1 className="text-xl sm:text-2xl lg:text-4xl font-bold lg:font-normal text-gray-900 mb-4 sm:mb-6 leading-tight">
                 {/* Mobile Version */}
                 <span className="block sm:hidden whitespace-pre-line">
-                  {"PDF Editor - Edit PDF Files\nOnline for Free"}
+                  {"Free PDF Editor Online – Edit PDF\nFiles Instantly with GinyWow"}
                 </span>
                 {/* Desktop/Tablet Version */}
                 <span className="hidden sm:block whitespace-pre-line">
-                  {"PDF Editor - Edit PDF Files Online\nfor Free"}
+                  {"Free PDF Editor Online – Edit PDF Files\nInstantly with GinyWow"}
                 </span>
               </h1>
               
