@@ -328,17 +328,21 @@ export default function VideoDownloader() {
                 <div className="max-w-4xl mx-auto px-4">
                   <div className="card-mobile p-4 sm:p-6 mb-8">
                     
-                    {/* Video Info */}
-                    <div className="flex flex-col sm:flex-row items-start space-y-4 sm:space-y-0 sm:space-x-6 mb-8 p-4 bg-gray-50 rounded-xl" data-testid="video-info-card">
-                      <img 
-                        src={videoData.thumbnail} 
-                        alt="Video thumbnail" 
-                        className="w-full sm:w-48 h-32 object-cover rounded-lg"
-                        data-testid="video-thumbnail"
-                      />
-                      <div className="flex-1">
+                    {/* Video Preview */}
+                    <div className="text-center mb-8" data-testid="video-info-card">
+                      <div className="inline-block">
+                        <img 
+                          src={videoData.thumbnail} 
+                          alt="Video thumbnail" 
+                          className="w-full max-w-md h-48 object-cover rounded-lg shadow-lg"
+                          data-testid="video-thumbnail"
+                        />
+                      </div>
+                      
+                      {/* Video Title */}
+                      <div className="mt-4">
                         <h3 className="text-xl font-semibold text-gray-900 mb-2" data-testid="video-title">{videoData.title}</h3>
-                        <div className="flex items-center space-x-4 text-sm text-gray-600">
+                        <div className="flex items-center justify-center space-x-4 text-sm text-gray-600">
                           <span className="flex items-center" data-testid="video-duration">
                             <Play className="w-4 h-4 mr-1" />
                             {videoData.duration}
