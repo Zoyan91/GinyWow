@@ -522,68 +522,6 @@ export default function PDFEditor() {
           </div>
         </section>
 
-        {/* Our More Tools Section - Lightning Fast */}
-        <section className="py-12 sm:py-16 lg:py-20 bg-white border-t-2 border-dashed border-gray-300">
-          <div className="container-mobile max-w-4xl">
-            <div className="text-center mb-8 sm:mb-12">
-              <div className="inline-block bg-orange-500 text-white px-6 py-2 rounded-full text-lg font-medium mb-8 sm:mb-12">
-                Our More Tools : Try It
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-                {/* App Opener Section */}
-                <div
-                  className="group p-6 bg-gradient-to-br from-orange-50 to-red-50 rounded-2xl border border-orange-200 hover:border-orange-300 transition-all duration-300 hover:shadow-lg cursor-pointer animate-fade-in-up"
-                  style={{ animationDelay: '0.1s' }}
-                >
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-xl flex items-center justify-center">
-                      <ArrowRight className="w-6 h-6 text-white" />
-                    </div>
-                    <span className="text-xs bg-orange-100 text-orange-800 px-2 py-1 rounded-full font-medium">
-                      Social Media
-                    </span>
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">
-                    App Opener
-                  </h3>
-                  <p className="text-gray-600 text-sm mb-4 leading-relaxed">
-                    Convert social media links to custom short URLs that open directly in native apps.
-                  </p>
-                  <div className="flex items-center text-orange-600 text-sm font-medium group-hover:text-orange-700 transition-colors">
-                    <span>Try Now</span>
-                    <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </div>
-
-                {/* Format Converter Section */}
-                <div
-                  className="group p-6 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl border border-blue-200 hover:border-blue-300 transition-all duration-300 hover:shadow-lg cursor-pointer animate-fade-in-up"
-                  style={{ animationDelay: '0.2s' }}
-                >
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center">
-                      <ArrowRight className="w-6 h-6 text-white" />
-                    </div>
-                    <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full font-medium">
-                      Image Tools
-                    </span>
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">
-                    Format Converter
-                  </h3>
-                  <p className="text-gray-600 text-sm mb-4 leading-relaxed">
-                    Convert images between 8+ popular formats with quality controls and SEO optimization.
-                  </p>
-                  <div className="flex items-center text-blue-600 text-sm font-medium group-hover:text-blue-700 transition-colors">
-                    <span>Try Now</span>
-                    <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* Newsletter Section */}
         <Suspense fallback={<div className="h-48 bg-gray-50"></div>}>
