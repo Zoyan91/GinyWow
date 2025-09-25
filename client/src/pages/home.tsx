@@ -301,7 +301,56 @@ export default function Home() {
 
       {/* Floating Shapes - TinyWow Style - Extended */}
       <div className="absolute inset-0 z-0 pointer-events-none" style={{ height: '140vh' }}>
-        {/* Hero Section Shapes */}
+        {/* Hero Section Shapes - Starting from very top */}
+          {/* Very Top Front Shapes */}
+          {/* Circle Very Top Right - Blue */}
+          <div 
+            className="absolute top-4 right-20 w-5 h-5 rounded-full animate-float-1"
+            style={{
+              background: '#3b82f6',
+              opacity: 0.3
+            }}
+          ></div>
+
+          {/* Triangle Very Top Left - Green */}
+          <div 
+            className="absolute top-6 left-12 w-6 h-6 animate-float-2"
+            style={{
+              background: '#22c55e',
+              clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
+              opacity: 0.35
+            }}
+          ></div>
+
+          {/* Square Top Center - Orange */}
+          <div 
+            className="absolute top-8 left-1/2 w-4 h-4 animate-float-3"
+            style={{
+              background: '#f97316',
+              transform: 'rotate(45deg)',
+              opacity: 0.3
+            }}
+          ></div>
+
+          {/* Circle Top Left Area - Purple */}
+          <div 
+            className="absolute top-12 left-1/4 w-4 h-4 rounded-full animate-float-4"
+            style={{
+              background: '#9333ea',
+              opacity: 0.4
+            }}
+          ></div>
+
+          {/* Triangle Top Right Area - Cyan */}
+          <div 
+            className="absolute top-14 right-1/3 w-5 h-5 animate-float-1"
+            style={{
+              background: '#06b6d4',
+              clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
+              opacity: 0.3
+            }}
+          ></div>
+
           {/* Triangle Top Left - Pink */}
           <div 
             className="absolute top-20 left-16 w-7 h-7 animate-float-1"
