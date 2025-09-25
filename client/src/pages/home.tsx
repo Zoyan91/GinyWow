@@ -7,7 +7,6 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { apiRequest } from "@/lib/queryClient";
 import { Link } from "wouter";
 import Header from "@/components/header";
-import FloatingShapes from "@/components/FloatingShapes";
 
 // Lazy load footer for better initial performance
 const Footer = lazy(() => import("@/components/footer"));
@@ -152,20 +151,9 @@ export default function Home() {
   };
 
   const handleGenerate = async () => {
-    if (!youtubeUrl.trim()) {
+    if (!youtubeUrl) {
       toast({
-        title: "Error",
-        description: "Please enter a valid URL",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    try {
-      new URL(youtubeUrl);
-    } catch {
-      toast({
-        title: "Invalid URL",
+        title: "URL required",
         description: "Please enter a valid URL",
         variant: "destructive"
       });
@@ -175,22 +163,30 @@ export default function Home() {
     setIsGenerating(true);
     
     try {
-      const response = await apiRequest('POST', '/api/short-url', { url: youtubeUrl });
-      const result = await response.json();
+      const response = await apiRequest({
+        url: '/api/generate-link',
+        method: 'POST',
+        body: { youtubeUrl }
+      });
 
-      if (result.success) {
-        setGeneratedLink(result.shortUrl);
+      if (response && response.success) {
+        setGeneratedLink(response.generatedLink);
         toast({
           title: "Success!",
-          description: `Your ${result.platform || 'app opener'} link has been generated successfully!`,
+          description: "App opener link generated successfully",
         });
       } else {
-        throw new Error(result.error || 'Failed to generate link');
+        toast({
+          title: "Generation failed",
+          description: response?.error || "Failed to generate link. Please try again.",
+          variant: "destructive"
+        });
       }
-    } catch (error: any) {
+    } catch (error) {
+      console.error('Generation error:', error);
       toast({
         title: "Error",
-        description: error.message || "Failed to generate link. Please try again.",
+        description: "An error occurred while generating the link",
         variant: "destructive"
       });
     } finally {
@@ -199,78 +195,48 @@ export default function Home() {
   };
 
   const pasteFromClipboard = async () => {
-    console.log("Paste button clicked!");
     try {
-      // Check if clipboard API is available
-      if (!navigator.clipboard) {
-        console.log("Clipboard API not available");
-        toast({
-          title: "Paste not supported",
-          description: "Clipboard API not available in this browser",
-          variant: "destructive"
-        });
-        return;
-      }
-
-      // Check secure context
-      if (!window.isSecureContext) {
-        console.log("Not in secure context");
-        toast({
-          title: "Paste not supported", 
-          description: "Clipboard access requires HTTPS",
-          variant: "destructive"
-        });
-        return;
-      }
-
-      console.log("Attempting to read clipboard...");
-      const text = await navigator.clipboard.readText();
-      console.log("Clipboard content:", text);
-      
-      if (text && text.trim()) {
-        console.log("Setting URL:", text.trim());
-        setYoutubeUrl(text.trim());
-        toast({
-          title: "Pasted!",
-          description: "Link pasted from clipboard",
-        });
-      } else {
-        console.log("Clipboard empty");
-        toast({
-          title: "Clipboard empty",
-          description: "No content found in clipboard",
-          variant: "destructive"
-        });
+      if (navigator.clipboard && navigator.clipboard.readText) {
+        const text = await navigator.clipboard.readText();
+        if (text) {
+          setYoutubeUrl(text);
+          toast({
+            title: "Pasted!",
+            description: "URL pasted from clipboard",
+          });
+        }
       }
     } catch (error) {
-      console.error("Paste error:", error);
-      const errorMessage = error instanceof Error ? error.message : "Please paste the link manually";
+      // Clipboard API might not be available in some browsers
       toast({
         title: "Paste failed",
-        description: `Error: ${errorMessage}`,
+        description: "Please paste the URL manually",
         variant: "destructive"
       });
     }
   };
 
-  const copyToClipboard = () => {
+  const copyToClipboard = async (text: string) => {
     try {
-      if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(generatedLink);
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(text);
         toast({
           title: "Copied!",
           description: "Link copied to clipboard",
         });
-      } else {
-        // Fallback for non-secure contexts
+        return;
+      }
+      
+      // Fallback for browsers that don't support the Clipboard API
+      if (document.queryCommandSupported && document.queryCommandSupported('copy')) {
         const textArea = document.createElement('textarea');
-        textArea.value = generatedLink;
+        textArea.value = text;
         textArea.style.position = 'fixed';
-        textArea.style.opacity = '0';
+        textArea.style.left = '-999999px';
+        textArea.style.top = '-999999px';
         document.body.appendChild(textArea);
         textArea.focus();
         textArea.select();
-        
         try {
           document.execCommand('copy');
           toast({
@@ -301,11 +267,8 @@ export default function Home() {
       <Header currentPage="home" />
 
       {/* Hero Section - Mobile First */}
-      <section className="relative bg-gradient-to-br from-blue-50 via-white to-purple-50 py-8 sm:py-12 lg:py-20 overflow-hidden">
-        {/* Floating Background Shapes - Only in Hero */}
-        <FloatingShapes count={15} />
-        
-        <div className="relative z-10 container-mobile max-w-4xl">
+      <section className="pt-8 sm:pt-12 lg:pt-20 pb-8 sm:pb-12 lg:pb-16 bg-white">
+        <div className="container-mobile max-w-4xl">
           <div className="text-center animate-fade-in">
             <h1 className="text-xl sm:text-2xl lg:text-4xl font-bold lg:font-normal text-gray-900 mb-4 sm:mb-6 leading-tight">
               {/* Mobile Version */}
@@ -372,53 +335,58 @@ export default function Home() {
                     <button
                       onClick={pasteFromClipboard}
                       disabled={isGenerating}
-                      className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-4 py-4 transition-colors flex items-center justify-center"
-                      data-testid="paste-button"
+                      className="p-3 text-gray-400 hover:text-gray-600 transition-colors"
                       title="Paste from clipboard"
+                      data-testid="paste-button"
                     >
                       <Clipboard className="w-5 h-5" />
                     </button>
-                    <button
+                    <Button
                       onClick={handleGenerate}
                       disabled={isGenerating}
-                      className={`bg-gradient-to-r from-yellow-400 to-orange-400 hover:from-yellow-500 hover:to-orange-500 text-white px-6 py-4 font-semibold transition-colors ${
-                        isGenerating ? 'opacity-70 cursor-not-allowed' : ''
+                      className={`m-1 px-6 bg-gradient-to-r from-red-500 to-orange-400 hover:from-red-600 hover:to-orange-500 text-white ${
+                        isGenerating ? 'opacity-70 cursor-not-allowed' : 'hover:scale-105'
                       }`}
-                      data-testid="generate-text-button"
+                      data-testid="generate-button-desktop"
                     >
                       {isGenerating ? (
                         <div className="flex items-center">
                           <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
-                          <span>Generating...</span>
+                          Generating...
                         </div>
                       ) : (
                         'Generate'
                       )}
-                    </button>
+                    </Button>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Generated Link Result */}
+            {/* Generated Link Display */}
             {generatedLink && (
-              <div className="max-w-2xl mx-auto px-4 animate-mobile-slide-up">
-                <div className="card-mobile p-4 sm:p-6">
-                  <div className="flex flex-col sm:flex-row items-center gap-3">
-                    <Input
-                      value={generatedLink}
-                      readOnly
-                      className="flex-1 bg-gray-50 border-gray-300 text-gray-700 cursor-text text-center sm:text-left"
-                      data-testid="generated-link"
-                    />
-                    <Button
-                      onClick={copyToClipboard}
-                      className="btn-mobile-sm bg-blue-500 hover:bg-blue-600 text-white w-full sm:w-auto"
-                      data-testid="copy-button"
-                    >
-                      <Copy className="w-4 h-4 mr-2" />
-                      Copy
-                    </Button>
+              <div className="max-w-2xl mx-auto px-4 animate-fade-in">
+                <div className="bg-green-50 border border-green-200 rounded-xl p-4 sm:p-6">
+                  <div className="flex items-center mb-3">
+                    <CheckCircle className="w-5 h-5 text-green-600 mr-2" />
+                    <span className="text-green-800 font-medium">Your App Opener Link is Ready!</span>
+                  </div>
+                  <div className="bg-white rounded-lg p-3 sm:p-4 border border-green-200">
+                    <div className="flex items-center justify-between gap-3">
+                      <p className="text-sm sm:text-base text-gray-700 font-mono break-all flex-1">
+                        {generatedLink}
+                      </p>
+                      <Button
+                        onClick={() => copyToClipboard(generatedLink)}
+                        variant="outline"
+                        size="sm"
+                        className="flex-shrink-0 text-green-600 border-green-200 hover:bg-green-50"
+                        data-testid="copy-generated-link"
+                      >
+                        <Copy className="w-4 h-4 mr-1" />
+                        Copy
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -529,24 +497,24 @@ export default function Home() {
                         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                       </svg>
                     </div>
-                    <p className="text-sm sm:text-base text-gray-700">More followers across all platforms</p>
+                    <p className="text-sm sm:text-base text-gray-700">Increased followers and social media growth</p>
                   </div>
                 </div>
               </div>
               
-              <div className="order-first lg:order-last">
-                <div className="bg-gradient-to-br from-blue-50 to-purple-50 p-6 sm:p-8 rounded-2xl">
-                  <div className="text-center space-y-4 sm:space-y-6">
-                    <div className="w-20 h-20 mx-auto bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+              <div className="relative">
+                <div className="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-2xl p-6 sm:p-8">
+                  <div className="text-center">
+                    <div className="w-20 h-20 mx-auto bg-blue-500 rounded-full flex items-center justify-center mb-4">
                       <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
                       </svg>
                     </div>
-                    <h3 className="text-lg sm:text-xl font-bold text-gray-900">
-                      Transform Any Link
+                    <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">
+                      App Opener Magic
                     </h3>
                     <p className="text-sm sm:text-base text-gray-600">
-                      Paste any social media link and instantly generate an app opener version that drives higher engagement.
+                      Transform any social media link into an app-opening powerhouse that drives real engagement and growth.
                     </p>
                   </div>
                 </div>
@@ -556,19 +524,19 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Why Use Section - Mobile Grid */}
+      {/* Why Use Section - Mobile Benefits */}
       <section className="py-12 sm:py-16 lg:py-20 bg-gray-50">
-        <div className="container-mobile max-w-4xl">
+        <div className="container-mobile max-w-6xl">
           <div className="text-center mb-8 sm:mb-12">
             <h2 className="text-responsive-xl font-bold text-gray-900 mb-4 sm:mb-6">
-              Why Use App Opener Links?
+              Why Use GinyWow App Opener?
             </h2>
-            <p className="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto">
-              App opener links provide a superior user experience that leads to better results for content creators and businesses.
+            <p className="text-sm sm:text-base text-gray-600 max-w-2xl mx-auto px-4">
+              Discover the powerful benefits that make app opener links essential for content creators and businesses.
             </p>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {[
               {
                 icon: "📱",
@@ -727,7 +695,8 @@ export default function Home() {
       {/* Newsletter Section */}
       <NewsletterSection />
 
-      <Suspense fallback={<div className="h-16 bg-gray-50 animate-pulse" />}>
+      {/* Footer */}
+      <Suspense fallback={<div className="h-20 bg-gray-100"></div>}>
         <Footer />
       </Suspense>
     </div>
