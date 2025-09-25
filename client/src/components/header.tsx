@@ -52,7 +52,7 @@ export default function Header({ currentPage }: HeaderProps) {
           <div className="flex items-center">
             <Link href="/">
               <h1 className="text-2xl font-semibold text-gray-900 cursor-pointer hover:text-gray-700 transition-colors" data-testid="logo">
-                tiny<span className="text-blue-600">wow</span>
+                giny<span className="text-blue-600">wow</span>
               </h1>
             </Link>
           </div>
