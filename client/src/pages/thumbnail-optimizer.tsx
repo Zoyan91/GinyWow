@@ -138,7 +138,7 @@ export default function ThumbnailOptimizer() {
         <div className="container mx-auto max-w-6xl px-4">
           <div className="text-center mb-8">
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 leading-tight">
-              GinyWow – Thumbnail Optimizer
+              Free YouTube Thumbnail Optimizer – Enhance & Download Thumbnails Online
             </h1>
             
             <p className="text-lg text-gray-600 mb-8 leading-relaxed max-w-2xl mx-auto">
