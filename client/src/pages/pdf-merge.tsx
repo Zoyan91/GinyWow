@@ -66,18 +66,59 @@ export default function PDFMerge() {
     setIsMerging(true);
     
     try {
-      await new Promise(resolve => setTimeout(resolve, 3000));
-      
-      toast({
-        title: "Merge Complete!",
-        description: "Your PDF files have been successfully merged.",
+      // Create FormData for file upload
+      const formData = new FormData();
+      files.forEach((file, index) => {
+        formData.append('pdfs', file);
       });
       
-      setFiles([]);
+      // Make API call to merge PDFs
+      const response = await fetch('/api/pdf/merge', {
+        method: 'POST',
+        body: formData,
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Merge failed');
+      }
+      
+      const result = await response.json();
+      
+      if (result.success) {
+        // Download the merged file
+        const downloadResponse = await fetch(result.downloadUrl);
+        if (downloadResponse.ok) {
+          const blob = await downloadResponse.blob();
+          const downloadUrl = window.URL.createObjectURL(blob);
+          
+          const link = document.createElement('a');
+          link.href = downloadUrl;
+          link.download = result.mergedFileName;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          
+          // Clean up the blob URL
+          window.URL.revokeObjectURL(downloadUrl);
+          
+          toast({
+            title: "Merge Complete!",
+            description: `Successfully merged ${result.originalFileCount} PDF files into ${result.mergedFileName} and downloaded.`,
+          });
+          
+          setFiles([]);
+        } else {
+          throw new Error('Failed to download merged file');
+        }
+      } else {
+        throw new Error(result.message || 'Merge failed');
+      }
     } catch (error) {
+      console.error('PDF merge error:', error);
       toast({
         title: "Merge Failed",
-        description: "Please try again or contact support.",
+        description: error instanceof Error ? error.message : "Please try again or contact support.",
         variant: "destructive",
       });
     } finally {
