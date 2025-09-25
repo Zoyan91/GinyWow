@@ -28,10 +28,10 @@ export default function PDFUnlock() {
       return;
     }
     
-    if (selectedFile.size > 25 * 1024 * 1024) {
+    if (selectedFile.size > 100 * 1024 * 1024) {
       toast({
         title: "File too large",
-        description: "Please select a PDF file smaller than 25MB.",
+        description: "Please select a PDF file smaller than 100MB.",
         variant: "destructive",
       });
       return;
@@ -167,7 +167,7 @@ export default function PDFUnlock() {
                               Select Password-Protected PDF
                             </h3>
                             <p className="text-gray-600 mb-4">
-                              Drop your encrypted PDF file here or click to browse (up to 25MB)
+                              Drop your encrypted PDF file here or click to browse (up to 100MB)
                             </p>
                             <Input
                               type="file"
