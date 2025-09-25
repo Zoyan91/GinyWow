@@ -300,7 +300,7 @@ export default function Home() {
       <Header currentPage="home" />
 
       {/* Floating Shapes - TinyWow Style - Extended */}
-      <div className="fixed inset-0 z-0 pointer-events-none" style={{ height: '200vh' }}>
+      <div className="absolute inset-0 z-0 pointer-events-none" style={{ height: '140vh' }}>
         {/* Hero Section Shapes */}
           {/* Triangle Top Left - Pink */}
           <div 
@@ -425,7 +425,7 @@ export default function Home() {
               background: '#ef4444',
               clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
               opacity: 0.3,
-              top: '32rem'
+              top: '25rem'
             }}
           ></div>
 
@@ -435,7 +435,7 @@ export default function Home() {
             style={{
               background: '#3b82f6',
               opacity: 0.35,
-              top: '35rem'
+              top: '28rem'
             }}
           ></div>
 
@@ -446,7 +446,7 @@ export default function Home() {
               background: '#22c55e',
               transform: 'rotate(45deg)',
               opacity: 0.3,
-              top: '38rem'
+              top: '30rem'
             }}
           ></div>
 
@@ -458,7 +458,7 @@ export default function Home() {
               background: '#f97316',
               clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
               opacity: 0.35,
-              top: '45rem'
+              top: '35rem'
             }}
           ></div>
 
@@ -468,7 +468,7 @@ export default function Home() {
             style={{
               background: '#9333ea',
               opacity: 0.4,
-              top: '48rem'
+              top: '38rem'
             }}
           ></div>
 
@@ -479,7 +479,7 @@ export default function Home() {
               background: '#14b8a6',
               transform: 'rotate(30deg)',
               opacity: 0.35,
-              top: '52rem'
+              top: '42rem'
             }}
           ></div>
 
@@ -489,7 +489,7 @@ export default function Home() {
             style={{
               background: '#ec4899',
               opacity: 0.4,
-              top: '50rem'
+              top: '40rem'
             }}
           ></div>
 
@@ -500,7 +500,7 @@ export default function Home() {
               background: '#06b6d4',
               clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
               opacity: 0.3,
-              top: '55rem'
+              top: '45rem'
             }}
           ></div>
 
@@ -510,16 +510,16 @@ export default function Home() {
             style={{
               background: '#84cc16',
               opacity: 0.35,
-              top: '58rem'
+              top: '48rem'
             }}
           ></div>
 
           {/* Additional scattered dots */}
-          <div className="absolute left-20 w-3 h-3 rounded-full animate-float-2" style={{ background: '#f59e0b', opacity: 0.3, top: '40rem' }}></div>
-          <div className="absolute right-20 w-3 h-3 rounded-full animate-float-3" style={{ background: '#8b5cf6', opacity: 0.35, top: '43rem' }}></div>
-          <div className="absolute left-2/3 w-3 h-3 rounded-full animate-float-4" style={{ background: '#f472b6', opacity: 0.3, top: '47rem' }}></div>
-          <div className="absolute right-1/4 w-3 h-3 rounded-full animate-float-1" style={{ background: '#10b981', opacity: 0.4, top: '53rem' }}></div>
-          <div className="absolute left-1/2 w-3 h-3 rounded-full animate-float-2" style={{ background: '#6366f1', opacity: 0.35, top: '56rem' }}></div>
+          <div className="absolute left-20 w-3 h-3 rounded-full animate-float-2" style={{ background: '#f59e0b', opacity: 0.3, top: '32rem' }}></div>
+          <div className="absolute right-20 w-3 h-3 rounded-full animate-float-3" style={{ background: '#8b5cf6', opacity: 0.35, top: '34rem' }}></div>
+          <div className="absolute left-2/3 w-3 h-3 rounded-full animate-float-4" style={{ background: '#f472b6', opacity: 0.3, top: '37rem' }}></div>
+          <div className="absolute right-1/4 w-3 h-3 rounded-full animate-float-1" style={{ background: '#10b981', opacity: 0.4, top: '43rem' }}></div>
+          <div className="absolute left-1/2 w-3 h-3 rounded-full animate-float-2" style={{ background: '#6366f1', opacity: 0.35, top: '46rem' }}></div>
 
         </div>
 
