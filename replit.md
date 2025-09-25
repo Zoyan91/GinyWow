@@ -2,11 +2,13 @@
 
 ## Overview
 
-GinyWow is a comprehensive tool website with the tagline "Convert Social Media Visitors into Subscribers" that includes two main features:
+GinyWow is a comprehensive tool website with the tagline "Convert Social Media Visitors into Subscribers" that includes three main features:
 
 1. **App Opener (Primary)** - Converts social media links to custom short URLs with intelligent platform-specific redirects, helping content creators convert visitors into subscribers by enabling users to open links directly in native apps instead of in-app browsers.
 
-2. **Format Converter** - Professional image format conversion tool supporting 8+ popular formats (PNG, JPEG, WebP, GIF, BMP, TIFF, AVIF, ICO) with quality controls and comprehensive SEO content.
+2. **Thumbnail Downloader** - Downloads high-quality YouTube thumbnails in multiple resolutions (120x90 to 1280x720) with comprehensive SEO content and mobile-responsive design.
+
+3. **Format Converter** - Professional image format conversion tool supporting 8+ popular formats (PNG, JPEG, WebP, GIF, BMP, TIFF, AVIF, ICO) with quality controls and comprehensive SEO content.
 
 ## Recent Changes
 
@@ -56,17 +58,11 @@ GinyWow is a comprehensive tool website with the tagline "Convert Social Media V
   - Fallback system when ytdl extraction fails with basic format options
   - Users now see exactly what formats are available for their video: "video me jitne bhi quality formats hai wo sabhi"
 
-- **Upgraded to Universal Multi-Platform Video Downloader** per user request
-  - **MAJOR ENHANCEMENT**: Video downloader now supports 1000+ platforms instead of just YouTube
-  - Added Python 3.11 runtime support and yt-dlp-wrap package for universal video downloading
-  - Implemented intelligent platform detection: ytdl-core for YouTube, yt-dlp for all other platforms
-  - **Supported Platforms**: YouTube, Instagram, TikTok, Facebook, Vimeo, Twitter, Dailymotion + 1000 more
-  - Updated frontend title to "Universal Video Downloader" with platform support badges
-  - Added colorful platform pills showing major supported platforms (YouTube, Instagram, TikTok, etc.)
-  - Enhanced error handling with platform-specific fallbacks and user-friendly messages
-  - Maintained optimal performance: YouTube uses fast ytdl-core, others use comprehensive yt-dlp
-  - Fixed 403 download errors through improved server-side proxy streaming
-  - Updated SEO and metadata to reflect multi-platform capabilities
+- **Removed Video Downloader tool** per user request
+  - Tool was experiencing technical issues with YouTube API changes causing 403 errors
+  - Removed from navigation menu and routing system for cleaner user experience  
+  - Focused app architecture on three core working tools: App Opener, Thumbnail Downloader, Format Converter
+  - This simplifies the application and ensures all available tools work reliably
 
 
 ## User Preferences
