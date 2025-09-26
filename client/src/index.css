@@ -118,10 +118,34 @@
     outline-offset: 2px;
   }
 
-  /* Improve image loading */
+  /* Improve image loading with performance hints */
   img {
     height: auto;
     max-width: 100%;
+    loading: lazy;
+    decoding: async;
+  }
+
+  /* Critical CSS for instant rendering */
+  .critical-above-fold {
+    contain: layout style paint;
+  }
+
+  /* Optimize animations for performance */
+  @media (prefers-reduced-motion: no-preference) {
+    * {
+      scroll-behavior: smooth;
+    }
+  }
+
+  /* Performance hint for transforms */
+  .floating-shape-1,
+  .floating-shape-2,
+  .floating-shape-3,
+  .floating-shape-4,
+  .floating-shape-5 {
+    will-change: transform;
+    contain: layout;
   }
 
   /* Better form controls on mobile */

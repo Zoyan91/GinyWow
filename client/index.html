@@ -22,6 +22,23 @@
     <link rel="preload" href="/src/main.tsx" as="script">
     <link rel="preload" href="/src/index.css" as="style">
     
+    <!-- Critical inline CSS for instant rendering -->
+    <style>
+      /* Instant loading skeleton */
+      .loading-skeleton { 
+        background: linear-gradient(90deg, #f0f0f0 25%, transparent 37%, #f0f0f0 63%);
+        background-size: 400% 100%;
+        animation: skeleton 1.4s ease-in-out infinite;
+      }
+      @keyframes skeleton {
+        0% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      /* Critical above-fold styles */
+      .critical-above-fold { contain: layout style paint; }
+      body { font-family: Inter, system-ui, sans-serif; }
+    </style>
+    
     <!-- DNS prefetch for external domains -->
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">

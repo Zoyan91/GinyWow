@@ -319,7 +319,7 @@ export default function Home() {
       <Header currentPage="home" />
 
       {/* Hero Section - Lightning Fast */}
-      <section className="relative bg-blue-50 py-8 sm:py-12 lg:py-20 overflow-hidden">
+      <section className="relative bg-blue-50 py-8 sm:py-12 lg:py-20 overflow-hidden critical-above-fold">
         {/* Floating Gradient Shapes - Hidden on mobile for performance */}
         <div className="absolute inset-0 hidden md:block pointer-events-none">
           {/* Shape 1 - Blue Triangle */}
