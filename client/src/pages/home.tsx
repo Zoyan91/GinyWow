@@ -602,7 +602,7 @@ export default function Home() {
               Our More Tools : Try It
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 lg:gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
               {/* Thumbnail Downloader - Green Theme */}
               <Link href="/thumbnail-downloader">
                 <div
@@ -660,7 +660,7 @@ export default function Home() {
               {/* Image Resizer - Purple Theme */}
               <Link href="/image-resizer">
                 <div
-                  className="group relative bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl cursor-pointer transform hover:-translate-y-2 transition-all duration-300 border border-gray-100 overflow-hidden"
+                  className="group relative bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl cursor-pointer transform hover:-translate-y-2 transition-all duration-300 border border-gray-100 overflow-hidden hidden md:block"
                   data-testid="image-resizer-card"
                 >
                   {/* Background Gradient Overlay */}
@@ -687,7 +687,7 @@ export default function Home() {
               {/* Image Compressor - Pink/Red Theme */}
               <Link href="/image-compressor">
                 <div
-                  className="group relative bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl cursor-pointer transform hover:-translate-y-2 transition-all duration-300 border border-gray-100 overflow-hidden"
+                  className="group relative bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl cursor-pointer transform hover:-translate-y-2 transition-all duration-300 border border-gray-100 overflow-hidden hidden md:block"
                   data-testid="image-compressor-card"
                 >
                   {/* Background Gradient Overlay */}
@@ -711,167 +711,6 @@ export default function Home() {
                 </div>
               </Link>
 
-              {/* Word Counter - Cyan Theme */}
-              <Link href="/word-counter">
-                <div
-                  className="group relative bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl cursor-pointer transform hover:-translate-y-2 transition-all duration-300 border border-gray-100 overflow-hidden"
-                  data-testid="word-counter-card"
-                >
-                  {/* Background Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-cyan-50 to-teal-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  
-                  <div className="relative text-center space-y-5">
-                    <div className="w-20 h-20 mx-auto bg-gradient-to-br from-cyan-500 to-teal-600 rounded-2xl flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                      <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-cyan-700 transition-colors">
-                        Word Counter
-                      </h3>
-                      <p className="text-gray-600 text-sm leading-relaxed">
-                        Count words, characters, and reading time
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-
-              {/* QR Code Generator - Amber Theme */}
-              <Link href="/qr-code-generator">
-                <div
-                  className="group relative bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl cursor-pointer transform hover:-translate-y-2 transition-all duration-300 border border-gray-100 overflow-hidden"
-                  data-testid="qr-code-generator-card"
-                >
-                  {/* Background Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-amber-50 to-yellow-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  
-                  <div className="relative text-center space-y-5">
-                    <div className="w-20 h-20 mx-auto bg-gradient-to-br from-amber-500 to-yellow-600 rounded-2xl flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                      <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-amber-700 transition-colors">
-                        QR Code Generator
-                      </h3>
-                      <p className="text-gray-600 text-sm leading-relaxed">
-                        Create custom QR codes for any content
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-
-              {/* Password Generator - Emerald Theme */}
-              <Link href="/password-generator">
-                <div
-                  className="group relative bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl cursor-pointer transform hover:-translate-y-2 transition-all duration-300 border border-gray-100 overflow-hidden"
-                  data-testid="password-generator-card"
-                >
-                  {/* Background Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 to-green-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  
-                  <div className="relative text-center space-y-5">
-                    <div className="w-20 h-20 mx-auto bg-gradient-to-br from-emerald-500 to-green-600 rounded-2xl flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                      <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-emerald-700 transition-colors">
-                        Password Generator
-                      </h3>
-                      <p className="text-gray-600 text-sm leading-relaxed">
-                        Generate secure, strong passwords
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-
-              {/* Case Converter - Indigo Theme */}
-              <Link href="/case-converter">
-                <div
-                  className="group relative bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl cursor-pointer transform hover:-translate-y-2 transition-all duration-300 border border-gray-100 overflow-hidden"
-                  data-testid="case-converter-card"
-                >
-                  {/* Background Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 to-blue-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  
-                  <div className="relative text-center space-y-5">
-                    <div className="w-20 h-20 mx-auto bg-gradient-to-br from-indigo-500 to-blue-600 rounded-2xl flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                      <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-indigo-700 transition-colors">
-                        Case Converter
-                      </h3>
-                      <p className="text-gray-600 text-sm leading-relaxed">
-                        Transform text to any case format
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-
-              {/* Unit Converter - Orange Theme */}
-              <Link href="/unit-converter">
-                <div
-                  className="group relative bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl cursor-pointer transform hover:-translate-y-2 transition-all duration-300 border border-gray-100 overflow-hidden"
-                  data-testid="unit-converter-card"
-                >
-                  {/* Background Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-orange-50 to-red-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  
-                  <div className="relative text-center space-y-5">
-                    <div className="w-20 h-20 mx-auto bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                      <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-orange-700 transition-colors">
-                        Unit Converter
-                      </h3>
-                      <p className="text-gray-600 text-sm leading-relaxed">
-                        Convert between measurement units
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-
-              {/* Age Calculator - Teal Theme */}
-              <Link href="/age-calculator">
-                <div
-                  className="group relative bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl cursor-pointer transform hover:-translate-y-2 transition-all duration-300 border border-gray-100 overflow-hidden"
-                  data-testid="age-calculator-card"
-                >
-                  {/* Background Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-teal-50 to-cyan-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  
-                  <div className="relative text-center space-y-5">
-                    <div className="w-20 h-20 mx-auto bg-gradient-to-br from-teal-500 to-cyan-600 rounded-2xl flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                      <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-teal-700 transition-colors">
-                        Age Calculator
-                      </h3>
-                      <p className="text-gray-600 text-sm leading-relaxed">
-                        Calculate exact age and milestones
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </Link>
             </div>
           </div>
         </div>
