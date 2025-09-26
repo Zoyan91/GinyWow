@@ -216,55 +216,12 @@
     display: none;
   }
 
-  /* Smooth animations for mobile - lightweight alternatives to framer-motion */
-  .animate-mobile-slide-up {
-    animation: mobile-slide-up 0.3s ease-out;
-  }
-
+  /* Simplified animations for performance */
   .animate-fade-in {
-    animation: fadeIn 0.4s ease-out;
-  }
-
-  .animate-slide-in-left {
-    animation: slideInLeft 0.5s ease-out;
-  }
-
-  .animate-slide-in-right {
-    animation: slideInRight 0.5s ease-out;
-  }
-
-  .animate-scale-in {
-    animation: scaleIn 0.3s ease-out;
-  }
-
-  .animate-stagger-1 {
-    animation-delay: 0.1s;
-  }
-
-  .animate-stagger-2 {
-    animation-delay: 0.2s;
-  }
-
-  .animate-stagger-3 {
-    animation-delay: 0.3s;
-  }
-
-  .animate-stagger-4 {
-    animation-delay: 0.4s;
+    animation: fadeIn 0.3s ease-out;
   }
 
   /* Optimized keyframe animations */
-  @keyframes mobile-slide-up {
-    from {
-      transform: translateY(20px);
-      opacity: 0;
-    }
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-
   @keyframes fadeIn {
     from {
       opacity: 0;
@@ -274,130 +231,7 @@
     }
   }
 
-  @keyframes slideInLeft {
-    from {
-      transform: translateX(-30px);
-      opacity: 0;
-    }
-    to {
-      transform: translateX(0);
-      opacity: 1;
-    }
-  }
-
-  @keyframes slideInRight {
-    from {
-      transform: translateX(30px);
-      opacity: 0;
-    }
-    to {
-      transform: translateX(0);
-      opacity: 1;
-    }
-  }
-
-  @keyframes scaleIn {
-    from {
-      transform: scale(0.9);
-      opacity: 0;
-    }
-    to {
-      transform: scale(1);
-      opacity: 1;
-    }
-  }
-
-  /* Intersection Observer helper classes */
-  .animate-on-scroll {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.6s ease-out;
-  }
-
-  .animate-on-scroll.animate-visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* Floating shape animations - TinyWow style - Slower */
-  .animate-float-1 {
-    animation: float-1 15s ease-in-out infinite;
-  }
-
-  .animate-float-2 {
-    animation: float-2 18s ease-in-out infinite;
-  }
-
-  .animate-float-3 {
-    animation: float-3 20s ease-in-out infinite;
-  }
-
-  .animate-float-4 {
-    animation: float-4 16s ease-in-out infinite;
-  }
-
-  .animate-float-5 {
-    animation: float-5 17s ease-in-out infinite;
-  }
-
-  .animate-float-6 {
-    animation: float-6 19s ease-in-out infinite;
-  }
-
-  /* Floating shape keyframes - TinyWow style - Gentle movement */
-  @keyframes float-1 {
-    0%, 100% {
-      transform: translateY(0px) rotate(0deg);
-    }
-    50% {
-      transform: translateY(-12px) rotate(5deg);
-    }
-  }
-
-  @keyframes float-2 {
-    0%, 100% {
-      transform: translateX(0px) translateY(0px);
-    }
-    50% {
-      transform: translateX(8px) translateY(-8px);
-    }
-  }
-
-  @keyframes float-3 {
-    0%, 100% {
-      transform: translateY(0px) rotate(0deg);
-    }
-    50% {
-      transform: translateY(-10px) rotate(3deg);
-    }
-  }
-
-  @keyframes float-4 {
-    0%, 100% {
-      transform: translateX(0px) scale(1);
-    }
-    50% {
-      transform: translateX(-6px) scale(1.02);
-    }
-  }
-
-  @keyframes float-5 {
-    0%, 100% {
-      transform: translateY(0px) translateX(0px) rotate(0deg);
-    }
-    50% {
-      transform: translateY(-15px) translateX(10px) rotate(-5deg);
-    }
-  }
-
-  @keyframes float-6 {
-    0%, 100% {
-      transform: translateY(0px) scale(1) rotate(0deg);
-    }
-    50% {
-      transform: translateY(-10px) scale(1.05) rotate(8deg);
-    }
-  }
+  /* Removed heavy floating animations for performance */
 }
 
 /* Score badge styling */
