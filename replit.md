@@ -13,6 +13,16 @@ GinyWow is a comprehensive tool website with the tagline "Convert Social Media V
 ## Recent Changes
 
 ### September 26, 2025
+- **Fixed critical Image Resizer and Image Compressor functionality**
+  - **Issue**: Both tools were failing with "Failed to fetch" errors due to missing backend API endpoints
+  - **Solution**: Successfully added `/api/resize-image` and `/api/compress-image` endpoints to server/routes.ts
+  - **Implementation**: Both endpoints use Sharp library for high-quality image processing with proper error handling
+  - **Image Resizer**: Supports width/height resizing with aspect ratio maintenance options, returns detailed size metrics
+  - **Image Compressor**: Offers multiple compression levels (low/medium/high/maximum) with quality controls for different formats
+  - **Result**: Both tools are now 100% functional and ready for end-user testing with complete backend integration
+  - **Architecture**: Added 20MB file upload limits, comprehensive validation, and structured error responses
+  - All three Image tools (Format Converter, Image Resizer, Image Compressor) now have working backend APIs
+
 - **Expanded Image category with dropdown navigation and new tools** per user request
   - Created hierarchical navigation structure with Image dropdown containing 3 sub-tools
   - Added SEO-optimized Image Resizer page with comprehensive meta tags, structured data, and FAQ section
