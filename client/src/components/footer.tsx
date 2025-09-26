@@ -119,13 +119,6 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/case-converter">
-                  <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm">
-                    Case Converter
-                  </span>
-                </Link>
-              </li>
-              <li>
                 <Link href="/unit-converter">
                   <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm">
                     Unit Converter
@@ -297,13 +290,6 @@ export default function Footer() {
                   <Link href="/password-generator">
                     <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm block py-2">
                       Password Generator
-                    </span>
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/case-converter">
-                    <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm block py-2">
-                      Case Converter
                     </span>
                   </Link>
                 </li>

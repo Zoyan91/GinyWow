@@ -18,7 +18,6 @@ const ImageCompressorPage = lazy(() => import("@/pages/image-compressor"));
 const WordCounterPage = lazy(() => import("@/pages/word-counter"));
 const QRCodeGeneratorPage = lazy(() => import("@/pages/qr-code-generator"));
 const PasswordGeneratorPage = lazy(() => import("@/pages/password-generator"));
-const CaseConverterPage = lazy(() => import("@/pages/case-converter"));
 const UnitConverterPage = lazy(() => import("@/pages/unit-converter"));
 const AgeCalculatorPage = lazy(() => import("@/pages/age-calculator"));
 const MortgageCalculatorPage = lazy(() => import("@/pages/mortgage-calculator"));
@@ -85,7 +84,6 @@ function Router() {
           <Route path="/word-counter" component={WordCounterPage} />
           <Route path="/qr-code-generator" component={QRCodeGeneratorPage} />
           <Route path="/password-generator" component={PasswordGeneratorPage} />
-          <Route path="/case-converter" component={CaseConverterPage} />
           <Route path="/unit-converter" component={UnitConverterPage} />
           <Route path="/age-calculator" component={AgeCalculatorPage} />
           <Route path="/mortgage-calculator" component={MortgageCalculatorPage} />
