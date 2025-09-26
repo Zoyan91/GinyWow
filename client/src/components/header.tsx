@@ -37,8 +37,7 @@ export default function Header({ currentPage }: HeaderProps) {
   const navItems = [
     { href: "/", label: "App Opener", testId: "nav-app-opener" },
     { href: "/thumbnail-downloader", label: "Thumbnail Downloader", testId: "nav-thumbnail-downloader" },
-    { href: "/format-converter", label: "Format Converter", testId: "nav-converter" },
-    { href: "/pdf-editor", label: "PDF Editor", testId: "nav-pdf-editor" },
+    { href: "/format-converter", label: "Converter", testId: "nav-converter" },
   ];
 
 
@@ -55,8 +54,6 @@ export default function Header({ currentPage }: HeaderProps) {
         setLocation('/thumbnail-downloader');
       } else if (searchTerm.includes('format') || searchTerm.includes('convert')) {
         setLocation('/format-converter');
-      } else if (searchTerm.includes('pdf') || searchTerm.includes('editor')) {
-        setLocation('/pdf-editor');
       }
       
       // Clear the input after search
