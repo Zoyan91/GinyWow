@@ -407,16 +407,6 @@ export default function MortgageCalculator() {
                       </div>
                     </div>
 
-                    {/* Affordability Tips */}
-                    <div className="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
-                      <h4 className="font-semibold text-blue-800 mb-2">💡 Mortgage Tips:</h4>
-                      <ul className="text-sm text-blue-700 space-y-1">
-                        <li>• Keep EMI below 40% of your monthly income</li>
-                        <li>• Compare rates from multiple lenders</li>
-                        <li>• Consider making prepayments to reduce interest</li>
-                        <li>• Factor in additional costs like insurance and taxes</li>
-                      </ul>
-                    </div>
                   </div>
                 </div>
               </div>
