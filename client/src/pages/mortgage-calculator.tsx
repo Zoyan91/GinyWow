@@ -566,52 +566,6 @@ export default function MortgageCalculator() {
           </div>
         </section>
 
-        {/* Global Markets Section */}
-        <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-blue-50 to-purple-50">
-          <div className="container mx-auto px-4 max-w-5xl">
-            <div className="text-center mb-8 sm:mb-12">
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 sm:mb-8">
-                Works for Home Buyers Worldwide
-              </h2>
-              <p className="text-base sm:text-lg text-gray-600">Trusted by property buyers across the globe</p>
-            </div>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-              {[
-                {
-                  flag: "🇺🇸",
-                  country: "USA",
-                  description: "FHA, VA, conventional loans"
-                },
-                {
-                  flag: "🇬🇧", 
-                  country: "United Kingdom",
-                  description: "Fixed & tracker mortgages"
-                },
-                {
-                  flag: "🇨🇦",
-                  country: "Canada", 
-                  description: "CMHC insured mortgages"
-                },
-                {
-                  flag: "🌍",
-                  country: "Worldwide",
-                  description: "International markets"
-                }
-              ].map((market, index) => (
-                <div
-                  key={index}
-                  className="bg-white rounded-xl p-6 shadow-lg border border-white text-center hover:shadow-xl transition-shadow duration-300"
-                >
-                  <div className="text-3xl mb-3">{market.flag}</div>
-                  <h3 className="font-bold text-gray-900 mb-2">{market.country}</h3>
-                  <p className="text-sm text-gray-600">{market.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* FAQ Section */}
         <section className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
           <div className="bg-gradient-to-r from-gray-800 to-gray-900 p-6">
