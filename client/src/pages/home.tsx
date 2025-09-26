@@ -602,7 +602,7 @@ export default function Home() {
               Our More Tools : Try It
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 lg:gap-8">
               {/* Word Counter - Cyan Theme */}
               <Link href="/word-counter">
                 <div
@@ -705,6 +705,33 @@ export default function Home() {
                       </h3>
                       <p className="text-gray-600 text-sm leading-relaxed">
                         Reduce file size without quality loss
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+
+              {/* Sleep Calculator - Indigo Theme */}
+              <Link href="/sleep-calculator">
+                <div
+                  className="group relative bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl cursor-pointer transform hover:-translate-y-2 transition-all duration-300 border border-gray-100 overflow-hidden"
+                  data-testid="sleep-calculator-card"
+                >
+                  {/* Background Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 to-purple-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  
+                  <div className="relative text-center space-y-5">
+                    <div className="w-20 h-20 mx-auto bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                      <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-indigo-700 transition-colors">
+                        Sleep Calculator
+                      </h3>
+                      <p className="text-gray-600 text-sm leading-relaxed">
+                        Calculate optimal bedtime and wake-up times
                       </p>
                     </div>
                   </div>

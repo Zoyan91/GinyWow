@@ -21,6 +21,7 @@ const PasswordGeneratorPage = lazy(() => import("@/pages/password-generator"));
 const CaseConverterPage = lazy(() => import("@/pages/case-converter"));
 const UnitConverterPage = lazy(() => import("@/pages/unit-converter"));
 const AgeCalculatorPage = lazy(() => import("@/pages/age-calculator"));
+const SleepCalculatorPage = lazy(() => import("@/pages/sleep-calculator"));
 
 
 // Preload secondary pages
@@ -87,6 +88,7 @@ function Router() {
           <Route path="/case-converter" component={CaseConverterPage} />
           <Route path="/unit-converter" component={UnitConverterPage} />
           <Route path="/age-calculator" component={AgeCalculatorPage} />
+          <Route path="/sleep-calculator" component={SleepCalculatorPage} />
           
           <Route component={NotFound} />
         </Switch>
