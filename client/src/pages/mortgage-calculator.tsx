@@ -242,10 +242,9 @@ export default function MortgageCalculator() {
         </div>
       </section>
 
-      <main className="container mx-auto px-4 py-8 max-w-6xl">
-        {/* Main Tool Section */}
-        <div className="grid lg:grid-cols-2 gap-8 mb-12">
-          {/* Input Section */}
+      <main className="container mx-auto px-4 py-8 max-w-4xl">
+        {/* Input Section - Full Width */}
+        <div className="mb-8">
           <div>
             <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
               <div className="bg-gradient-to-r from-green-500 to-blue-600 p-6">
@@ -348,9 +347,11 @@ export default function MortgageCalculator() {
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Results Section - Only show after calculation */}
-          {mortgageResult && (
+        {/* Results Section - Only show after calculation */}
+        {mortgageResult && (
+          <div className="mb-8">
             <div>
               <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
                 <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-6">
@@ -420,12 +421,12 @@ export default function MortgageCalculator() {
                 </div>
               </div>
             </div>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* Year-wise Breakdown */}
         {mortgageResult && (
-          <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden mb-12">
+          <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden mb-8">
             <div className="bg-gradient-to-r from-purple-500 to-pink-600 p-6">
               <h2 className="text-xl font-bold text-white flex items-center gap-3">
                 <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
