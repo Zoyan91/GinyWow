@@ -12,6 +12,18 @@ GinyWow is a comprehensive tool website with the tagline "Convert Social Media V
 
 ## Recent Changes
 
+### September 26, 2025
+- **Expanded Image category with dropdown navigation and new tools** per user request
+  - Created hierarchical navigation structure with Image dropdown containing 3 sub-tools
+  - Added SEO-optimized Image Resizer page with comprehensive meta tags, structured data, and FAQ section
+  - Added SEO-optimized Image Compressor page with full content optimization and breadcrumb navigation
+  - Updated desktop navigation with hover dropdown for Image category showing all 3 tools
+  - Enhanced mobile navigation with collapsible "Image Tools" section for better UX on small screens
+  - Modified home page tool showcase to display all 4 tools (Thumbnail Downloader + 3 Image tools) in responsive grid
+  - Updated footer navigation to include all new tools in both desktop and mobile layouts
+  - Application now includes: App Opener, Thumbnail Downloader, and Image category (Format Converter, Image Resizer, Image Compressor)
+  - All navigation components properly handle the hierarchical structure with consistent styling and data-testid attributes
+
 ### September 24, 2025
 - **Replaced Image Tools with standalone Format Converter** per user request
   - Removed "Image" category and "Remove Background" tool completely
