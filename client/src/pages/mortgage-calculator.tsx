@@ -349,22 +349,22 @@ export default function MortgageCalculator() {
             </div>
           </div>
 
-          {/* Results Section */}
-          <div>
-            <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
-              <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-6">
-                <h2 className="text-xl font-bold text-white flex items-center gap-3">
-                  <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
-                    <DollarSign className="w-5 h-5 text-white" />
-                  </div>
-                  Mortgage Results
-                </h2>
-                <p className="text-blue-100 mt-2">
-                  Your loan calculation summary
-                </p>
-              </div>
-              <div className="p-6">
-                {mortgageResult ? (
+          {/* Results Section - Only show after calculation */}
+          {mortgageResult && (
+            <div>
+              <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+                <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-6">
+                  <h2 className="text-xl font-bold text-white flex items-center gap-3">
+                    <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                      <DollarSign className="w-5 h-5 text-white" />
+                    </div>
+                    Mortgage Results
+                  </h2>
+                  <p className="text-blue-100 mt-2">
+                    Your loan calculation summary
+                  </p>
+                </div>
+                <div className="p-6">
                   <div className="space-y-6">
                     {/* Key Metrics */}
                     <div className="grid grid-cols-2 gap-4">
@@ -417,18 +417,10 @@ export default function MortgageCalculator() {
                       </ul>
                     </div>
                   </div>
-                ) : (
-                  <div className="text-center py-12">
-                    <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Home className="w-10 h-10 text-gray-400" />
-                    </div>
-                    <h3 className="text-lg font-semibold text-gray-700 mb-2">No Calculation Yet</h3>
-                    <p className="text-gray-500 text-sm">Enter your loan details to calculate EMI</p>
-                  </div>
-                )}
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
 
         {/* Year-wise Breakdown */}
