@@ -432,132 +432,182 @@ export default function MortgageCalculator() {
           </div>
         )}
 
-        {/* Comprehensive Information Section */}
-        <section className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden mb-12">
-          <div className="bg-gradient-to-r from-green-600 to-blue-700 p-6">
-            <h2 className="text-xl font-bold text-white">Complete Mortgage Calculator Guide</h2>
-            <p className="text-green-100 mt-2">Everything you need to know about calculating mortgages worldwide</p>
-          </div>
-          <div className="p-6 lg:p-8">
-            <div className="space-y-8">
+        {/* What is Section */}
+        <section className="pt-8 sm:pt-12 lg:pt-16 pb-12 sm:pb-16 lg:pb-20 bg-white">
+          <div className="container mx-auto px-4 max-w-4xl">
+            <div className="text-center mb-8 sm:mb-12">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 sm:mb-6">
+                What is GinyWow Mortgage Calculator?
+              </h2>
+            </div>
+            
+            <div className="prose prose-lg mx-auto text-gray-600">
+              <p className="text-base sm:text-lg leading-relaxed mb-4 sm:mb-6">
+                <strong>GinyWow Mortgage Calculator</strong> is a powerful free tool that helps home buyers, refinancers, and property investors calculate monthly payments, total interest, and loan costs instantly. Perfect for <strong>first-time buyers in the USA</strong>, refinancing in the <strong>UK</strong>, or exploring loans in <strong>Canada and worldwide</strong>.
+              </p>
               
-              {/* What is a Mortgage Calculator */}
-              <div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">What is a Mortgage Calculator?</h3>
-                <p className="text-gray-600 leading-relaxed mb-4">
-                  A <strong>Mortgage Calculator</strong> is a free online tool that helps you calculate your monthly home loan payments, total interest, and overall cost of borrowing. By entering details like loan amount, interest rate, and loan term, you can instantly see how much your mortgage will cost over time.
-                </p>
-                <p className="text-gray-600 leading-relaxed">
-                  Whether you are a <strong>first-time home buyer in the USA</strong>, refinancing in the <strong>UK</strong>, or exploring housing loans in <strong>Canada, Australia, or anywhere worldwide</strong>, this calculator makes it easy to plan your finances.
-                </p>
-              </div>
+              <p className="text-base sm:text-lg leading-relaxed">
+                Simply enter your loan amount, interest rate, and term to get instant results. Whether you're buying your first home or your tenth investment property, our calculator makes mortgage planning <strong>fast, accurate, and easy</strong>.
+              </p>
+            </div>
+          </div>
+        </section>
 
-              {/* Why Use GinyWow Mortgage Calculator */}
-              <div className="bg-gradient-to-r from-blue-50 to-green-50 p-6 rounded-xl border border-blue-200">
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">Why Use GinyWow Mortgage Calculator?</h3>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="flex items-center space-x-3">
-                    <span className="text-green-600 text-lg">✅</span>
-                    <span className="text-gray-700"><strong>Instant Results</strong> – Get monthly payments in seconds.</span>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <span className="text-green-600 text-lg">✅</span>
-                    <span className="text-gray-700"><strong>Worldwide Use</strong> – Works for USA, UK, Canada, Australia, and global users.</span>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <span className="text-green-600 text-lg">✅</span>
-                    <span className="text-gray-700"><strong>Amortization Breakdown</strong> – Understand how much goes toward interest vs. principal.</span>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <span className="text-green-600 text-lg">✅</span>
-                    <span className="text-gray-700"><strong>Better Financial Planning</strong> – Compare different loan terms before making a decision.</span>
+        {/* Why Use Section */}
+        <section className="py-12 sm:py-16 lg:py-20 bg-gray-50">
+          <div className="container mx-auto px-4 max-w-5xl">
+            <div className="text-center mb-8 sm:mb-12">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 sm:mb-8">
+                Why Choose Our Mortgage Calculator?
+              </h2>
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
+              {[
+                {
+                  icon: <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>,
+                  title: "Lightning Fast Results",
+                  description: "Get accurate monthly payments in seconds, not minutes",
+                  color: "blue"
+                },
+                {
+                  icon: <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>,
+                  title: "Worldwide Compatibility",
+                  description: "Works for USA, UK, Canada, Australia and global markets",
+                  color: "green"
+                },
+                {
+                  icon: <svg className="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>,
+                  title: "Detailed Breakdown",
+                  description: "See exactly how much goes to principal vs interest",
+                  color: "purple"
+                },
+                {
+                  icon: <svg className="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" /></svg>,
+                  title: "Smart Financial Planning", 
+                  description: "Compare loan terms to save thousands on interest",
+                  color: "orange"
+                }
+              ].map((benefit, index) => (
+                <div
+                  key={index}
+                  className="bg-white rounded-xl p-4 sm:p-6 shadow-lg border border-gray-100"
+                >
+                  <div className="flex items-start space-x-3 sm:space-x-4">
+                    <div className={`w-10 h-10 bg-${benefit.color}-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1`}>
+                      {benefit.icon}
+                    </div>
+                    <div>
+                      <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-2">
+                        {benefit.title}
+                      </h3>
+                      <p className="text-sm sm:text-base text-gray-600">
+                        {benefit.description}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
-              {/* How to Use */}
-              <div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">How to Use the Mortgage Calculator?</h3>
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-4">
-                    <div className="flex items-start space-x-3">
-                      <div className="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold text-sm">1</div>
-                      <p className="text-gray-600">Enter your <strong>loan amount</strong> (total amount you want to borrow).</p>
+        {/* How It Works Section */}
+        <section className="py-12 sm:py-16 lg:py-20 bg-white">
+          <div className="container mx-auto px-4 max-w-4xl">
+            <div className="text-center mb-8 sm:mb-12">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 sm:mb-8">
+                How to Use Our Mortgage Calculator?
+              </h2>
+              <p className="text-base sm:text-lg text-gray-600">Simple 3-step process to calculate your mortgage:</p>
+            </div>
+            
+            <div className="space-y-6 sm:space-y-8">
+              {[
+                {
+                  number: 1,
+                  title: "Enter Loan Details",
+                  description: "Add your loan amount, interest rate, and loan term (15-30 years)",
+                  bgColor: "bg-blue-600"
+                },
+                {
+                  number: 2,
+                  title: "Get Instant Results",
+                  description: "See monthly payments, total interest, and full cost breakdown immediately",
+                  bgColor: "bg-green-600"
+                },
+                {
+                  number: 3,
+                  title: "Plan & Compare",
+                  description: "Compare different loan terms and make informed decisions for your home purchase",
+                  bgColor: "bg-purple-600"
+                }
+              ].map((step, index) => (
+                <div
+                  key={index}
+                  className="bg-gray-50 rounded-xl p-4 sm:p-6 border border-gray-200"
+                >
+                  <div className="flex items-start space-x-4">
+                    <div className={`w-10 h-10 sm:w-12 sm:h-12 ${step.bgColor} text-white rounded-full flex items-center justify-center text-sm sm:text-base font-bold flex-shrink-0`}>
+                      {step.number}
                     </div>
-                    <div className="flex items-start space-x-3">
-                      <div className="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold text-sm">2</div>
-                      <p className="text-gray-600">Add your <strong>interest rate</strong> (annual percentage rate).</p>
-                    </div>
-                  </div>
-                  <div className="space-y-4">
-                    <div className="flex items-start space-x-3">
-                      <div className="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold text-sm">3</div>
-                      <p className="text-gray-600">Choose your <strong>loan term</strong> (e.g., 15, 20, or 30 years).</p>
-                    </div>
-                    <div className="flex items-start space-x-3">
-                      <div className="w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center font-bold text-sm">4</div>
-                      <p className="text-gray-600">Hit <strong>Calculate</strong> → Instantly see monthly mortgage payments.</p>
+                    <div>
+                      <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-2">
+                        {step.title}
+                      </h3>
+                      <p className="text-sm sm:text-base text-gray-600">
+                        {step.description}
+                      </p>
                     </div>
                   </div>
                 </div>
-              </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
-              {/* Benefits */}
-              <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-6 rounded-xl border border-purple-200">
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">Benefits of a Mortgage Calculator</h3>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="flex items-center space-x-3">
-                    <span className="text-purple-600 text-lg">📊</span>
-                    <span className="text-gray-700">Compare loan options before applying.</span>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <span className="text-purple-600 text-lg">🏡</span>
-                    <span className="text-gray-700">Decide how much home you can afford.</span>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <span className="text-purple-600 text-lg">💰</span>
-                    <span className="text-gray-700">Save money by checking shorter loan terms.</span>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <span className="text-purple-600 text-lg">🔄</span>
-                    <span className="text-gray-700">See the difference between fixed and variable rates.</span>
-                  </div>
+        {/* Global Markets Section */}
+        <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-blue-50 to-purple-50">
+          <div className="container mx-auto px-4 max-w-5xl">
+            <div className="text-center mb-8 sm:mb-12">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-4 sm:mb-8">
+                Works for Home Buyers Worldwide
+              </h2>
+              <p className="text-base sm:text-lg text-gray-600">Trusted by property buyers across the globe</p>
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+              {[
+                {
+                  flag: "🇺🇸",
+                  country: "USA",
+                  description: "FHA, VA, conventional loans"
+                },
+                {
+                  flag: "🇬🇧", 
+                  country: "United Kingdom",
+                  description: "Fixed & tracker mortgages"
+                },
+                {
+                  flag: "🇨🇦",
+                  country: "Canada", 
+                  description: "CMHC insured mortgages"
+                },
+                {
+                  flag: "🌍",
+                  country: "Worldwide",
+                  description: "International markets"
+                }
+              ].map((market, index) => (
+                <div
+                  key={index}
+                  className="bg-white rounded-xl p-6 shadow-lg border border-white text-center hover:shadow-xl transition-shadow duration-300"
+                >
+                  <div className="text-3xl mb-3">{market.flag}</div>
+                  <h3 className="font-bold text-gray-900 mb-2">{market.country}</h3>
+                  <p className="text-sm text-gray-600">{market.description}</p>
                 </div>
-              </div>
-
-              {/* Global Reach */}
-              <div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">Global Reach</h3>
-                <p className="text-gray-600 leading-relaxed mb-4">Our free Mortgage Calculator is designed for everyone:</p>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
-                    <h4 className="font-semibold text-blue-800 mb-2">🇺🇸 USA</h4>
-                    <p className="text-gray-600 text-sm">Calculate FHA, VA, and conventional loans.</p>
-                  </div>
-                  <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
-                    <h4 className="font-semibold text-blue-800 mb-2">🇬🇧 UK</h4>
-                    <p className="text-gray-600 text-sm">Estimate monthly repayments with fixed or tracker rates.</p>
-                  </div>
-                  <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
-                    <h4 className="font-semibold text-blue-800 mb-2">🇨🇦 Canada</h4>
-                    <p className="text-gray-600 text-sm">Calculate CMHC-insured mortgage costs.</p>
-                  </div>
-                  <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
-                    <h4 className="font-semibold text-blue-800 mb-2">🌍 Australia & Worldwide</h4>
-                    <p className="text-gray-600 text-sm">Works with international mortgage rules.</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Final Thoughts */}
-              <div className="bg-gradient-to-r from-gray-800 to-gray-900 p-6 rounded-xl text-white">
-                <h3 className="text-2xl font-bold mb-4">Final Thoughts</h3>
-                <p className="text-gray-200 leading-relaxed mb-4">
-                  A mortgage is one of the biggest financial commitments in life. Using the <strong>GinyWow Mortgage Calculator</strong>, you can plan better, avoid surprises, and make smarter financial decisions before buying your dream home.
-                </p>
-                <p className="text-green-400 font-semibold">👉 Try it now and calculate your mortgage instantly!</p>
-              </div>
-
+              ))}
             </div>
           </div>
         </section>
