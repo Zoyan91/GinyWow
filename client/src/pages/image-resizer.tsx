@@ -9,8 +9,8 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { 
-  Upload, Download, Maximize2, MinusSquare, 
-  CheckCircle, RotateCcw, Image as ImageIcon
+  Upload, Download, Maximize2, CheckCircle, 
+  RotateCcw, Image as ImageIcon
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import Header from "@/components/header";
@@ -124,65 +124,51 @@ export default function ImageResizerPage() {
       setProcessedImage(data.processedImage);
       setResizeResults(data);
       toast({
-        title: "Success!",
+        title: "🎉 Image Resized Successfully!",
         description: `Image resized successfully! ${data.sizeChange}`,
       });
     },
     onError: (error: any) => {
       toast({
-        title: "Error",
+        title: "❌ Resize Failed",
         description: error.message || "Failed to resize image. Please try again.",
         variant: "destructive"
       });
     }
   });
 
+  const onDrop = (acceptedFiles: File[]) => {
+    const file = acceptedFiles[0];
+    if (file) {
+      setFileName(file.name);
+      setOriginalFile(file);
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setOriginalImage(e.target?.result as string);
+        setProcessedImage(null);
+        setResizeResults(null);
+      };
+      reader.readAsDataURL(file);
+
+      // Get original dimensions
+      const img = new Image();
+      img.onload = () => {
+        if (!targetWidth && !targetHeight) {
+          setTargetWidth(img.width.toString());
+          setTargetHeight(img.height.toString());
+        }
+      };
+      img.src = URL.createObjectURL(file);
+    }
+  };
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
     accept: {
       'image/*': ['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.webp', '.tiff', '.ico', '.heic', '.svg']
     },
     multiple: false,
     maxSize: 20 * 1024 * 1024, // 20MB
-    onDrop: (acceptedFiles, rejectedFiles) => {
-      if (rejectedFiles.length > 0) {
-        const error = rejectedFiles[0].errors[0];
-        toast({
-          title: "Upload Error",
-          description: error.code === 'file-too-large' 
-            ? "File is too large. Maximum size is 20MB." 
-            : "Invalid file type. Please upload an image.",
-          variant: "destructive"
-        });
-        return;
-      }
-
-      if (acceptedFiles.length > 0) {
-        const file = acceptedFiles[0];
-        setOriginalFile(file);
-        setFileName(file.name);
-
-        // Create preview
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          setOriginalImage(e.target?.result as string);
-        };
-        reader.readAsDataURL(file);
-
-        // Reset previous results
-        setProcessedImage(null);
-        setResizeResults(null);
-
-        // Get original dimensions
-        const img = new Image();
-        img.onload = () => {
-          if (!targetWidth && !targetHeight) {
-            setTargetWidth(img.width.toString());
-            setTargetHeight(img.height.toString());
-          }
-        };
-        img.src = URL.createObjectURL(file);
-      }
-    }
   });
 
   const handleResize = () => {
@@ -207,7 +193,7 @@ export default function ImageResizerPage() {
     resizeImageMutation.mutate(originalFile);
   };
 
-  const downloadImage = () => {
+  const handleDownload = () => {
     if (!processedImage || !resizeResults) return;
 
     const link = document.createElement('a');
@@ -218,12 +204,12 @@ export default function ImageResizerPage() {
     document.body.removeChild(link);
 
     toast({
-      title: "Downloaded",
-      description: "Your resized image has been downloaded!",
+      title: "📥 Download Started",
+      description: "Your resized image is being downloaded.",
     });
   };
 
-  const resetAll = () => {
+  const handleStartOver = () => {
     setOriginalImage(null);
     setProcessedImage(null);
     setOriginalFile(null);
@@ -235,457 +221,409 @@ export default function ImageResizerPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background relative w-full overflow-x-hidden">
+    <>
+      {/* SEO Head with comprehensive meta tags and structured data */}
       <SEOHead seoData={imageResizerSEO} structuredData={structuredData} />
       
-      <Header currentPage="Image Resizer" />
+      <div className="min-h-screen bg-gray-50">
+        {/* Header */}
+        <Header currentPage="Image Resizer" />
+        
+        {/* Hero Section with Floating Shapes */}
+        <section className="relative bg-gradient-to-br from-blue-50 via-white to-purple-50 py-8 sm:py-12 lg:py-20 overflow-hidden">
+          {/* Floating Shapes - TinyWow Style - Hidden on Mobile */}
+          <div className="absolute inset-0 z-0 pointer-events-none hidden sm:block">
+            {/* Triangle Top Left - Pink */}
+            <div 
+              className="absolute top-16 left-12 w-6 h-6 animate-float-1"
+              style={{
+                background: '#f472b6',
+                clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
+                transform: 'rotate(15deg)',
+                opacity: 0.4
+              }}
+            ></div>
 
-      {/* Hero Section - Mobile First */}
-      <section className="relative bg-gradient-to-br from-blue-50 via-white to-purple-50 py-8 sm:py-12 lg:py-20 overflow-hidden">
-        {/* Floating Shapes - TinyWow Style - Hero Section Only - Hidden on Mobile */}
-        <div className="absolute inset-0 z-0 pointer-events-none hidden sm:block">
-          {/* Triangle Top Left - Pink */}
-          <div 
-            className="absolute top-16 left-12 w-6 h-6 animate-float-1"
-            style={{
-              background: '#f472b6',
-              clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
-              transform: 'rotate(15deg)',
-              opacity: 0.4
-            }}
-          ></div>
+            {/* Circle Top Right - Blue */}
+            <div 
+              className="absolute top-20 right-20 w-5 h-5 rounded-full animate-float-2"
+              style={{
+                background: '#60a5fa',
+                opacity: 0.45
+              }}
+            ></div>
 
-          {/* Circle Top Right - Blue */}
-          <div 
-            className="absolute top-20 right-20 w-5 h-5 rounded-full animate-float-2"
-            style={{
-              background: '#60a5fa',
-              opacity: 0.45
-            }}
-          ></div>
+            {/* Square Top Center - Orange */}
+            <div 
+              className="absolute top-24 left-1/3 w-4 h-4 animate-float-3"
+              style={{
+                background: '#fb923c',
+                transform: 'rotate(45deg)',
+                opacity: 0.4
+              }}
+            ></div>
 
-          {/* Square Top Center - Orange */}
-          <div 
-            className="absolute top-24 left-1/3 w-4 h-4 animate-float-3"
-            style={{
-              background: '#fb923c',
-              transform: 'rotate(45deg)',
-              opacity: 0.4
-            }}
-          ></div>
+            {/* Dot Top Right Corner - Purple */}
+            <div 
+              className="absolute top-8 right-8 w-3 h-3 rounded-full animate-float-4"
+              style={{
+                background: '#c084fc',
+                opacity: 0.5
+              }}
+            ></div>
 
-          {/* Dot Top Right Corner - Purple */}
-          <div 
-            className="absolute top-8 right-8 w-3 h-3 rounded-full animate-float-4"
-            style={{
-              background: '#c084fc',
-              opacity: 0.5
-            }}
-          ></div>
+            {/* Triangle Center Left - Green */}
+            <div 
+              className="absolute top-40 left-8 w-5 h-5 animate-float-5"
+              style={{
+                background: '#34d399',
+                clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
+                transform: 'rotate(-30deg)',
+                opacity: 0.45
+              }}
+            ></div>
 
-          {/* Triangle Center Left - Green */}
-          <div 
-            className="absolute top-40 left-8 w-5 h-5 animate-float-5"
-            style={{
-              background: '#34d399',
-              clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
-              transform: 'rotate(-30deg)',
-              opacity: 0.45
-            }}
-          ></div>
+            {/* Circle Center Right - Yellow */}
+            <div 
+              className="absolute top-36 right-16 w-4 h-4 rounded-full animate-float-6"
+              style={{
+                background: '#fbbf24',
+                opacity: 0.4
+              }}
+            ></div>
 
-          {/* Circle Center Right - Yellow */}
-          <div 
-            className="absolute top-36 right-16 w-4 h-4 rounded-full animate-float-6"
-            style={{
-              background: '#fbbf24',
-              opacity: 0.4
-            }}
-          ></div>
+            {/* Square Center - Cyan */}
+            <div 
+              className="absolute top-48 left-1/2 w-5 h-5 animate-float-1"
+              style={{
+                background: '#22d3ee',
+                transform: 'rotate(30deg)',
+                opacity: 0.45
+              }}
+            ></div>
 
-          {/* Square Center - Cyan */}
-          <div 
-            className="absolute top-48 left-1/2 w-5 h-5 animate-float-1"
-            style={{
-              background: '#22d3ee',
-              transform: 'rotate(30deg)',
-              opacity: 0.45
-            }}
-          ></div>
+            {/* Dot Center Left - Rose */}
+            <div 
+              className="absolute top-52 left-16 w-3 h-3 rounded-full animate-float-2"
+              style={{
+                background: '#fb7185',
+                opacity: 0.5
+              }}
+            ></div>
 
-          {/* Dot Center Left - Rose */}
-          <div 
-            className="absolute top-52 left-16 w-3 h-3 rounded-full animate-float-2"
-            style={{
-              background: '#fb7185',
-              opacity: 0.5
-            }}
-          ></div>
+            {/* Triangle Bottom Left - Indigo */}
+            <div 
+              className="absolute bottom-32 left-10 w-6 h-6 animate-float-3"
+              style={{
+                background: '#818cf8',
+                clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
+                transform: 'rotate(60deg)',
+                opacity: 0.4
+              }}
+            ></div>
 
-          {/* Triangle Bottom Left - Indigo */}
-          <div 
-            className="absolute bottom-32 left-10 w-6 h-6 animate-float-3"
-            style={{
-              background: '#818cf8',
-              clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
-              transform: 'rotate(60deg)',
-              opacity: 0.4
-            }}
-          ></div>
+            {/* Circle Bottom Right - Emerald */}
+            <div 
+              className="absolute bottom-28 right-12 w-4 h-4 rounded-full animate-float-4"
+              style={{
+                background: '#10b981',
+                opacity: 0.45
+              }}
+            ></div>
 
-          {/* Circle Bottom Right - Emerald */}
-          <div 
-            className="absolute bottom-28 right-12 w-4 h-4 rounded-full animate-float-4"
-            style={{
-              background: '#10b981',
-              opacity: 0.45
-            }}
-          ></div>
+            {/* Square Bottom Center - Amber */}
+            <div 
+              className="absolute bottom-24 left-1/3 w-5 h-5 animate-float-5"
+              style={{
+                background: '#f59e0b',
+                transform: 'rotate(15deg)',
+                opacity: 0.4
+              }}
+            ></div>
 
-          {/* Square Bottom Center - Amber */}
-          <div 
-            className="absolute bottom-24 left-1/3 w-5 h-5 animate-float-5"
-            style={{
-              background: '#f59e0b',
-              transform: 'rotate(15deg)',
-              opacity: 0.4
-            }}
-          ></div>
+            {/* Dot Bottom Right - Violet */}
+            <div 
+              className="absolute bottom-20 right-8 w-3 h-3 rounded-full animate-float-6"
+              style={{
+                background: '#8b5cf6',
+                opacity: 0.5
+              }}
+            ></div>
 
-          {/* Dot Bottom Right - Violet */}
-          <div 
-            className="absolute bottom-20 right-8 w-3 h-3 rounded-full animate-float-6"
-            style={{
-              background: '#8b5cf6',
-              opacity: 0.5
-            }}
-          ></div>
-
-          {/* Additional Shapes for More Coverage */}
-          {/* Triangle Mid Left - Teal */}
-          <div 
-            className="absolute top-60 left-6 w-4 h-4 animate-float-1"
-            style={{
-              background: '#14b8a6',
-              clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
-              transform: 'rotate(45deg)',
-              opacity: 0.4
-            }}
-          ></div>
-
-          {/* Circle Mid Right - Lime */}
-          <div 
-            className="absolute top-64 right-6 w-4 h-4 rounded-full animate-float-2"
-            style={{
-              background: '#84cc16',
-              opacity: 0.45
-            }}
-          ></div>
-
-          {/* Dot Top Center - Sky */}
-          <div 
-            className="absolute top-12 left-1/2 w-3 h-3 rounded-full animate-float-3"
-            style={{
-              background: '#0ea5e9',
-              opacity: 0.45
-            }}
-          ></div>
-
-          {/* Square Mid Center - Fuchsia */}
-          <div 
-            className="absolute left-1/2 w-4 h-4 animate-float-4"
-            style={{
-              background: '#d946ef',
-              transform: 'rotate(60deg)',
-              opacity: 0.4,
-              top: '17rem'
-            }}
-          ></div>
-
-          {/* Additional dots scattered */}
-          <div className="absolute top-28 left-20 w-2 h-2 rounded-full animate-float-5" style={{ background: '#f472b6', opacity: 0.45 }}></div>
-          <div className="absolute top-44 right-24 w-2 h-2 rounded-full animate-float-6" style={{ background: '#60a5fa', opacity: 0.4 }}></div>
-          <div className="absolute bottom-40 left-24 w-2 h-2 rounded-full animate-float-1" style={{ background: '#fb923c', opacity: 0.5 }}></div>
-          <div className="absolute bottom-36 right-20 w-2 h-2 rounded-full animate-float-2" style={{ background: '#34d399', opacity: 0.45 }}></div>
-          <div className="absolute top-56 left-1/4 w-2 h-2 rounded-full animate-float-3" style={{ background: '#fbbf24', opacity: 0.4 }}></div>
-          <div className="absolute bottom-44 right-1/4 w-2 h-2 rounded-full animate-float-4" style={{ background: '#c084fc', opacity: 0.45 }}></div>
-
-        </div>
-
-        <div className="relative z-10 container-mobile max-w-4xl">
-          <div className="text-center animate-fade-in">
-            <h1 className="text-xl sm:text-2xl lg:text-4xl font-bold lg:font-normal text-gray-900 mb-4 sm:mb-6 leading-tight">
-              {/* Mobile Version */}
-              <span className="block sm:hidden whitespace-pre-line">
-                {"Free Image Resizer Online\nResize Images Instantly"}
-              </span>
-              {/* Desktop/Tablet Version */}
-              <span className="hidden sm:block whitespace-pre-line">
-                {"Free Image Resizer Online\nResize Images Instantly"}
-              </span>
-            </h1>
+            {/* Additional shapes for more coverage */}
+            <div className="absolute top-60 left-6 w-4 h-4 animate-float-1" style={{ background: '#14b8a6', clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)', transform: 'rotate(45deg)', opacity: 0.4 }}></div>
+            <div className="absolute top-64 right-6 w-4 h-4 rounded-full animate-float-2" style={{ background: '#84cc16', opacity: 0.45 }}></div>
+            <div className="absolute top-12 left-1/2 w-3 h-3 rounded-full animate-float-3" style={{ background: '#0ea5e9', opacity: 0.45 }}></div>
+            <div className="absolute left-1/2 w-4 h-4 animate-float-4" style={{ background: '#d946ef', transform: 'rotate(60deg)', opacity: 0.4, top: '17rem' }}></div>
             
-            <p className="text-responsive-sm text-gray-600 mb-6 sm:mb-8 leading-relaxed max-w-2xl mx-auto px-4">
-              Resize images for any purpose - social media, web, print. Maintain quality while adjusting dimensions. Fast, secure, and completely free.
-            </p>
+            {/* Additional dots scattered */}
+            <div className="absolute top-28 left-20 w-2 h-2 rounded-full animate-float-5" style={{ background: '#f472b6', opacity: 0.45 }}></div>
+            <div className="absolute top-44 right-24 w-2 h-2 rounded-full animate-float-6" style={{ background: '#60a5fa', opacity: 0.4 }}></div>
+            <div className="absolute bottom-40 left-24 w-2 h-2 rounded-full animate-float-1" style={{ background: '#fb923c', opacity: 0.5 }}></div>
+            <div className="absolute bottom-36 right-20 w-2 h-2 rounded-full animate-float-2" style={{ background: '#34d399', opacity: 0.45 }}></div>
+            <div className="absolute top-56 left-1/4 w-2 h-2 rounded-full animate-float-3" style={{ background: '#fbbf24', opacity: 0.4 }}></div>
+            <div className="absolute bottom-44 right-1/4 w-2 h-2 rounded-full animate-float-4" style={{ background: '#c084fc', opacity: 0.45 }}></div>
           </div>
-        </div>
-      </section>
 
-      {/* Main Tool Section */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-white border-t-2 border-dashed border-gray-300">
-        <div className="container-mobile max-w-6xl">
-          <div className="text-center mb-8 sm:mb-12">
-            <div className="inline-block bg-purple-500 text-white px-6 py-2 rounded-full text-lg font-medium mb-8 sm:mb-12">
-              Resize Tool
+          {/* Simple Resizer Section - Moved Up */}
+          <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div className="text-center mb-8">
+              <h1 className="text-xl sm:text-2xl lg:text-4xl font-bold lg:font-normal text-gray-900 mb-4 sm:mb-6 leading-tight" data-testid="page-title">
+                <span className="block sm:inline">Free Online Image Resizer</span> <span className="block sm:inline">– Resize Images for Any Purpose</span>
+              </h1>
+              <p className="text-gray-600 mb-6 text-sm md:text-base" data-testid="hero-description">
+                Resize images for social media, web, print. Maintain quality while adjusting dimensions. Fast, secure, and completely free.
+              </p>
             </div>
-          </div>
-          
-          <div className="grid lg:grid-cols-2 gap-8">
             
-            {/* Upload Section */}
-            <Card className="h-fit">
+            <Card className="shadow-lg">
               <CardHeader>
-                <CardTitle className="flex items-center text-xl">
-                  <Upload className="w-5 h-5 mr-2 text-blue-600" />
-                  Upload Image
+                <CardTitle className="flex items-center gap-3 text-lg sm:text-xl">
+                  <Maximize2 className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600" />
+                  Resize Image
                 </CardTitle>
                 <CardDescription>
-                  Drag and drop your image or click to browse
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div
-                  {...getRootProps()}
-                  className={`border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-colors ${
-                    isDragActive
-                      ? "border-blue-500 bg-blue-50"
-                      : "border-gray-300 hover:border-gray-400 hover:bg-gray-50"
-                  }`}
-                  data-testid="image-upload-dropzone"
-                >
-                  <input {...getInputProps()} />
-                  <ImageIcon className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                  <p className="text-gray-600 mb-2">
-                    {isDragActive
-                      ? "Drop your image here..."
-                      : "Drag & drop an image here, or click to select"}
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    Supports PNG, JPEG, WebP, GIF, BMP (Max: 20MB)
-                  </p>
-                </div>
-
-                {originalImage && (
-                  <div className="mt-6">
-                    <p className="text-sm font-medium text-gray-700 mb-2">
-                      Original Image: {fileName}
-                    </p>
-                    <img
-                      src={originalImage}
-                      alt="Original"
-                      className="max-w-full h-auto rounded-lg border"
-                      style={{ maxHeight: "300px" }}
-                    />
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-
-            {/* Settings and Controls */}
-            <Card className="h-fit">
-              <CardHeader>
-                <CardTitle className="flex items-center text-xl">
-                  <Maximize2 className="w-5 h-5 mr-2 text-purple-600" />
-                  Resize Settings
-                </CardTitle>
-                <CardDescription>
-                  Set your desired image dimensions
+                  Upload your image and resize it to your desired dimensions
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="width">Width (px)</Label>
-                    <Input
-                      id="width"
-                      type="number"
-                      placeholder="Width"
-                      value={targetWidth}
-                      onChange={(e) => setTargetWidth(e.target.value)}
-                      data-testid="width-input"
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="height">Height (px)</Label>
-                    <Input
-                      id="height"
-                      type="number"
-                      placeholder="Height"
-                      value={targetHeight}
-                      onChange={(e) => setTargetHeight(e.target.value)}
-                      data-testid="height-input"
-                    />
-                  </div>
-                </div>
-
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    id="aspect-ratio"
-                    checked={maintainAspectRatio}
-                    onChange={(e) => setMaintainAspectRatio(e.target.checked)}
-                    className="rounded border-gray-300"
-                  />
-                  <Label htmlFor="aspect-ratio" className="text-sm">
-                    Maintain aspect ratio
-                  </Label>
-                </div>
-
-                <div className="flex gap-3">
-                  <Button
-                    onClick={handleResize}
-                    disabled={!originalFile || resizeImageMutation.isPending}
-                    className="flex-1 bg-purple-600 hover:bg-purple-700"
-                    data-testid="resize-button"
+                
+                {/* Upload Area or Preview */}
+                {!originalImage ? (
+                  <div
+                    {...getRootProps()}
+                    className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors ${
+                      isDragActive 
+                        ? 'border-blue-400 bg-blue-50' 
+                        : 'border-gray-300 hover:border-blue-400 hover:bg-gray-50'
+                    }`}
+                    data-testid="upload-area"
                   >
-                    {resizeImageMutation.isPending ? (
-                      <>
-                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
-                        Resizing...
-                      </>
-                    ) : (
-                      <>
-                        <Maximize2 className="w-4 h-4 mr-2" />
-                        Resize Image
-                      </>
+                    <input {...getInputProps()} />
+                    <div className="flex flex-col items-center gap-4">
+                      <div className="p-4 bg-blue-100 rounded-full">
+                        <Upload className="h-8 w-8 text-blue-600" />
+                      </div>
+                      <div>
+                        <p className="text-lg font-medium text-gray-900 mb-2">
+                          {isDragActive ? "Drop your image here" : "Upload Image to Resize"}
+                        </p>
+                        <p className="text-gray-500 text-sm">
+                          Drag & drop your image file or click to browse
+                        </p>
+                        <p className="text-gray-400 text-xs mt-2">
+                          Supports PNG, JPEG, WebP, GIF and more • Max 20MB
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="space-y-6">
+                    {/* Image Preview */}
+                    <div className="grid md:grid-cols-2 gap-6">
+                      <div className="space-y-3">
+                        <h4 className="font-semibold text-gray-900 flex items-center gap-2">
+                          <ImageIcon className="h-5 w-5" />
+                          Original Image
+                        </h4>
+                        <div className="relative bg-gray-50 rounded-lg p-4 border">
+                          <img
+                            src={originalImage}
+                            alt="Original"
+                            className="max-w-full h-auto max-h-64 mx-auto rounded"
+                            data-testid="original-image"
+                          />
+                          <div className="mt-3 text-sm text-gray-600 text-center">
+                            <p className="font-medium">{fileName}</p>
+                            {resizeResults && (
+                              <>
+                                <p>Size: {(resizeResults.originalSize / 1024).toFixed(1)} KB</p>
+                                <p>Dimensions: {resizeResults.originalDimensions.width} × {resizeResults.originalDimensions.height}</p>
+                              </>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {processedImage && (
+                        <div className="space-y-3">
+                          <h4 className="font-semibold text-gray-900 flex items-center gap-2">
+                            <CheckCircle className="h-5 w-5 text-green-600" />
+                            Resized Image
+                          </h4>
+                          <div className="relative bg-gray-50 rounded-lg p-4 border border-green-200">
+                            <img
+                              src={processedImage}
+                              alt="Resized"
+                              className="max-w-full h-auto max-h-64 mx-auto rounded"
+                              data-testid="resized-image"
+                            />
+                            <div className="mt-3 text-sm text-gray-600 text-center">
+                              <p className="font-medium text-green-700">
+                                {resizeResults?.downloadName}
+                              </p>
+                              {resizeResults && (
+                                <>
+                                  <p>Size: {(resizeResults.newSize / 1024).toFixed(1)} KB</p>
+                                  <p>Dimensions: {resizeResults.newDimensions.width} × {resizeResults.newDimensions.height}</p>
+                                </>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                    
+                    {/* Resize Results */}
+                    {resizeResults && (
+                      <Alert className="bg-green-50 border-green-200">
+                        <CheckCircle className="h-5 w-5 text-green-600" />
+                        <AlertDescription className="text-green-800">
+                          <strong>Resize Successful!</strong> {resizeResults.sizeChange} • 
+                          New Dimensions: {resizeResults.newDimensions.width} × {resizeResults.newDimensions.height}
+                        </AlertDescription>
+                      </Alert>
                     )}
-                  </Button>
-                  
-                  <Button
-                    onClick={resetAll}
-                    variant="outline"
-                    className="px-4"
-                    data-testid="reset-button"
-                  >
-                    <RotateCcw className="w-4 h-4" />
-                  </Button>
-                </div>
+                  </div>
+                )}
 
+                {/* Resize Settings */}
+                {originalImage && (
+                  <div className="space-y-6 p-6 bg-gray-50 rounded-lg">
+                    <div className="grid md:grid-cols-2 gap-6">
+                      <div className="space-y-3">
+                        <Label htmlFor="width" className="text-sm font-semibold text-gray-900">Width (px)</Label>
+                        <Input
+                          id="width"
+                          type="number"
+                          placeholder="Width"
+                          value={targetWidth}
+                          onChange={(e) => setTargetWidth(e.target.value)}
+                          data-testid="width-input"
+                          className="bg-white"
+                        />
+                      </div>
+                      <div className="space-y-3">
+                        <Label htmlFor="height" className="text-sm font-semibold text-gray-900">Height (px)</Label>
+                        <Input
+                          id="height"
+                          type="number"
+                          placeholder="Height"
+                          value={targetHeight}
+                          onChange={(e) => setTargetHeight(e.target.value)}
+                          data-testid="height-input"
+                          className="bg-white"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="flex items-center space-x-2">
+                      <input
+                        type="checkbox"
+                        id="aspect-ratio"
+                        checked={maintainAspectRatio}
+                        onChange={(e) => setMaintainAspectRatio(e.target.checked)}
+                        className="rounded border-gray-300"
+                      />
+                      <Label htmlFor="aspect-ratio" className="text-sm">
+                        Maintain aspect ratio
+                      </Label>
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                      {!processedImage ? (
+                        <Button
+                          onClick={handleResize}
+                          disabled={resizeImageMutation.isPending}
+                          size="lg"
+                          className="flex-1 bg-blue-600 hover:bg-blue-700 text-lg py-6"
+                          data-testid="button-resize"
+                        >
+                          {resizeImageMutation.isPending ? (
+                            <>
+                              <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                              Resizing...
+                            </>
+                          ) : (
+                            <>
+                              <Maximize2 className="mr-2 h-5 w-5" />
+                              Resize Image
+                            </>
+                          )}
+                        </Button>
+                      ) : (
+                        <>
+                          <Button
+                            onClick={handleDownload}
+                            size="lg"
+                            className="flex-1 bg-green-600 hover:bg-green-700 text-lg py-6"
+                            data-testid="button-download"
+                          >
+                            <Download className="mr-2 h-5 w-5" />
+                            Download Resized Image
+                          </Button>
+                          <Button
+                            onClick={handleStartOver}
+                            variant="outline"
+                            size="lg"
+                            className="sm:w-auto text-lg py-6"
+                            data-testid="button-start-over"
+                          >
+                            <RotateCcw className="mr-2 h-5 w-5" />
+                            Start Over
+                          </Button>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {/* Processing Indicator */}
                 {resizeImageMutation.isPending && (
-                  <Progress value={75} className="w-full" />
+                  <div className="space-y-4 p-6 bg-blue-50 rounded-lg">
+                    <div className="flex items-center gap-3">
+                      <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
+                      <span className="font-semibold text-blue-900">Resizing your image...</span>
+                    </div>
+                    <Progress value={66} className="h-2" />
+                    <p className="text-sm text-blue-700">
+                      Processing with high-quality algorithms. This usually takes a few seconds.
+                    </p>
+                  </div>
                 )}
               </CardContent>
             </Card>
           </div>
+        </section>
 
-          {/* Results Section */}
-          {processedImage && resizeResults && (
-            <div className="mt-8 grid lg:grid-cols-2 gap-8">
-              {/* Processed Image */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center text-xl">
-                    <CheckCircle className="w-5 h-5 mr-2 text-green-600" />
-                    Resized Image
-                  </CardTitle>
-                  <CardDescription>
-                    Your image has been successfully resized
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <img
-                    src={processedImage}
-                    alt="Resized"
-                    className="max-w-full h-auto rounded-lg border mb-4"
-                    style={{ maxHeight: "300px" }}
-                  />
-                  
-                  <Button
-                    onClick={downloadImage}
-                    className="w-full bg-green-600 hover:bg-green-700"
-                    data-testid="download-button"
-                  >
-                    <Download className="w-4 h-4 mr-2" />
-                    Download Resized Image
-                  </Button>
-                </CardContent>
-              </Card>
+        <Separator className="my-12" />
 
-              {/* Resize Stats */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-xl">Resize Summary</CardTitle>
-                  <CardDescription>
-                    Details about your image resize
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Original Size:</span>
-                    <Badge variant="outline">{(resizeResults.originalSize / 1024).toFixed(1)} KB</Badge>
-                  </div>
-                  
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600">New Size:</span>
-                    <Badge variant="outline">{(resizeResults.newSize / 1024).toFixed(1)} KB</Badge>
-                  </div>
-                  
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Original Dimensions:</span>
-                    <Badge variant="outline">
-                      {resizeResults.originalDimensions.width} × {resizeResults.originalDimensions.height}
-                    </Badge>
-                  </div>
-                  
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600">New Dimensions:</span>
-                    <Badge variant="outline">
-                      {resizeResults.newDimensions.width} × {resizeResults.newDimensions.height}
-                    </Badge>
-                  </div>
-                  
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Size Change:</span>
-                    <Badge variant={resizeResults.sizeChange.includes('reduced') ? 'default' : 'secondary'}>
-                      {resizeResults.sizeChange}
-                    </Badge>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          )}
-        </div>
-      </section>
-
-      <Separator className="my-12" />
-
-      {/* FAQ Section */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-gray-50">
-        <div className="container-mobile max-w-4xl">
-          <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-responsive-xl font-bold text-gray-900 mb-4 sm:mb-8">
+        {/* FAQ Section */}
+        <section className="py-12 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">
               Frequently Asked Questions
             </h2>
+            <div className="grid gap-6">
+              {faqs.map((faq, index) => (
+                <Card key={index}>
+                  <CardContent className="pt-6">
+                    <h3 className="font-semibold text-lg text-gray-900 mb-2">
+                      {faq.question}
+                    </h3>
+                    <p className="text-gray-600 leading-relaxed">
+                      {faq.answer}
+                    </p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
-          <div className="grid gap-6">
-            {faqs.map((faq, index) => (
-              <Card key={index}>
-                <CardContent className="pt-6">
-                  <h3 className="font-semibold text-lg text-gray-900 mb-2">
-                    {faq.question}
-                  </h3>
-                  <p className="text-gray-600 leading-relaxed">
-                    {faq.answer}
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
+        </section>
         
-      <Footer />
-    </div>
+        <Footer />
+      </div>
+    </>
   );
 }
