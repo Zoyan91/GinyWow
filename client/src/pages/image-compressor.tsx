@@ -353,7 +353,7 @@ export default function ImageCompressorPage() {
           <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div className="text-center mb-8">
               <h1 className="text-xl sm:text-2xl lg:text-4xl font-bold lg:font-normal text-gray-900 mb-4 sm:mb-6 leading-tight" data-testid="page-title">
-                <span className="block sm:inline">Free Online Image Compressor</span> <span className="block sm:inline">– Reduce File Size Instantly</span>
+                <span className="block sm:inline">Free Image Compressor Online</span> <span className="block sm:inline">– Reduce Image File Size Instantly with GinyWow</span>
               </h1>
               <p className="text-gray-600 mb-6 text-sm md:text-base" data-testid="hero-description">
                 Compress images online for free. Reduce file size while maintaining quality. Perfect for web optimization, email, storage. Fast, secure, and completely free.
