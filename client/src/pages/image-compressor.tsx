@@ -579,6 +579,50 @@ export default function ImageCompressorPage() {
 
         <Separator className="my-12" />
 
+        {/* GinyWow Image Compressor Information Section */}
+        <section className="py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
+          <div className="max-w-4xl mx-auto">
+            <div className="prose prose-lg max-w-none">
+              <h4 className="text-2xl font-bold text-gray-900 mb-4">What is GinyWow Image Compressor?</h4>
+              <p className="text-gray-600 mb-8 leading-relaxed">
+                GinyWow Image Compressor is a free online tool that helps you <strong>reduce image file size instantly</strong> without losing quality. Whether you want to upload faster, save storage, or optimize your website performance, this tool gives you the best results in seconds.
+              </p>
+
+              <h4 className="text-2xl font-bold text-gray-900 mb-4">Why Use GinyWow Image Compressor?</h4>
+              <ul className="text-gray-600 mb-8 space-y-2 leading-relaxed">
+                <li><strong>Free & Easy-to-Use:</strong> No software installation required.</li>
+                <li><strong>High-Quality Compression:</strong> Reduce file size while keeping images sharp.</li>
+                <li><strong>Supports Multiple Formats:</strong> Works with JPG, PNG, WebP, and more.</li>
+                <li><strong>Faster Websites:</strong> Smaller images load quickly and improve SEO ranking.</li>
+                <li><strong>Secure Processing:</strong> Your files are safe and never stored permanently.</li>
+              </ul>
+
+              <h4 className="text-2xl font-bold text-gray-900 mb-4">How to Compress Images with GinyWow</h4>
+              <ol className="text-gray-600 mb-8 space-y-2 leading-relaxed list-decimal list-inside">
+                <li>Upload your image file to GinyWow Image Compressor.</li>
+                <li>Select your preferred compression level.</li>
+                <li>Preview the optimized image.</li>
+                <li>Download your compressed image instantly.</li>
+              </ol>
+
+              <h4 className="text-2xl font-bold text-gray-900 mb-4">Who Can Benefit from GinyWow Image Compressor?</h4>
+              <ul className="text-gray-600 mb-8 space-y-2 leading-relaxed">
+                <li><strong>Students:</strong> Share lightweight images in projects and assignments.</li>
+                <li><strong>Bloggers & Creators:</strong> Optimize photos for blogs and social media.</li>
+                <li><strong>Businesses:</strong> Save storage and bandwidth when sending or storing images.</li>
+                <li><strong>Web Developers:</strong> Speed up websites with optimized visuals.</li>
+              </ul>
+
+              <h4 className="text-2xl font-bold text-gray-900 mb-4">Why Choose GinyWow Image Compressor?</h4>
+              <p className="text-gray-600 leading-relaxed">
+                With GinyWow Image Compressor, you get <strong>fast, reliable, and free image optimization</strong>. No compromise on quality—just smaller, web-ready images for any use.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <Separator className="my-12" />
+
         {/* FAQ Section */}
         <section className="py-12 px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
