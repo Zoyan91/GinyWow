@@ -321,7 +321,7 @@ export default function FormatConverterPage() {
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center mb-8">
             <h1 className="text-xl sm:text-2xl lg:text-4xl font-bold lg:font-normal text-gray-900 mb-4 sm:mb-6 leading-tight" data-testid="page-title">
-              <span className="block sm:inline">Free Online Image Format Converter</span> <span className="block sm:inline">– JPG, PNG, GIF, WebP & More</span>
+              <span className="block sm:inline">Free Online Image Converter</span> <span className="block sm:inline">– JPG, PNG, GIF, WebP & More</span>
             </h1>
             <p className="text-gray-600 mb-6 text-sm md:text-base" data-testid="hero-description">
               Convert images instantly between 9+ formats including JPG, PNG, GIF, WebP and more. Fast, high-quality, and free online tool with adjustable settings for perfect image conversion.
@@ -561,10 +561,10 @@ export default function FormatConverterPage() {
             {/* What is Section */}
             <div className="text-center mb-16">
               <h2 className="text-3xl font-semibold text-gray-900 mb-8 text-center">
-                What is an Image Format Converter?
+                What is an Image Converter?
               </h2>
               <p className="text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
-                An <strong>Image Format Converter</strong> is a free online tool that allows you to quickly convert images from one format to another, such as <strong>JPG, PNG, WebP, GIF, SVG, HEIC, and PDF</strong>. Whether you're a content creator, student, designer, or business owner, this tool makes it simple to switch between different image file types without losing quality.
+                An <strong>Image Converter</strong> is a free online tool that allows you to quickly convert images from one format to another, such as <strong>JPG, PNG, WebP, GIF, SVG, HEIC, and PDF</strong>. Whether you're a content creator, student, designer, or business owner, this tool makes it simple to switch between different image file types without losing quality.
               </p>
             </div>
 
@@ -573,7 +573,7 @@ export default function FormatConverterPage() {
             {/* Why Use Section */}
             <div className="mb-16">
               <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
-                Why Use GinyWow Image Format Converter?
+                Why Use GinyWow Image Converter?
               </h2>
               <div className="grid md:grid-cols-2 gap-8">
                 <div className="space-y-6">
@@ -657,7 +657,7 @@ export default function FormatConverterPage() {
             {/* Benefits Section */}
             <div className="mb-16">
               <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
-                Benefits of Using Our Image Format Converter
+                Benefits of Using Our Image Converter
               </h2>
               <div className="space-y-4">
                 {[

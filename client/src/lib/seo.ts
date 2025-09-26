@@ -35,26 +35,26 @@ export interface HowToStep {
 // Default SEO configuration
 export const defaultSEO: SEOData = {
   title: "GinyWow - Convert Social Media Visitors into Subscribers",
-  description: "Transform your social media presence with GinyWow's powerful tools: App Opener for smart redirects, Thumbnail Downloader, and Format Converter. Free online tools for content creators.",
-  keywords: "social media tools, app opener, thumbnail downloader, format converter, content creator tools, social media optimization",
+  description: "Transform your social media presence with GinyWow's powerful tools: App Opener for smart redirects, Thumbnail Downloader, and Converter. Free online tools for content creators.",
+  keywords: "social media tools, app opener, thumbnail downloader, converter, content creator tools, social media optimization",
   ogType: "website",
   twitterCard: "summary_large_image",
   robots: "index, follow",
   author: "GinyWow",
 };
 
-// Format Converter specific SEO
+// Converter specific SEO
 export const formatConverterSEO: SEOData = {
-  title: "Free Image Format Converter Online - Convert JPG, PNG, WebP & More | GinyWow",
+  title: "Free Image Converter Online - Convert JPG, PNG, WebP & More | GinyWow",
   description: "Convert images between 12+ formats instantly. Free online tool supporting PNG, JPEG, WebP, GIF, HEIC, PDF conversion with quality controls. Fast, secure, no signup required.",
-  keywords: "image format converter, convert images online, jpg to png, png to webp, heic to jpg, image converter free, online image converter, format conversion tool",
+  keywords: "image converter, convert images online, jpg to png, png to webp, heic to jpg, image converter free, online image converter, format conversion tool",
   canonical: "/format-converter",
-  ogTitle: "Free Image Format Converter - Convert Any Image Format Online",
-  ogDescription: "Professional image format converter supporting 12+ formats. Convert PNG, JPEG, WebP, GIF, HEIC & more. High-quality results, fast conversion, completely free.",
+  ogTitle: "Free Image Converter - Convert Any Image Format Online",
+  ogDescription: "Professional image converter supporting 12+ formats. Convert PNG, JPEG, WebP, GIF, HEIC & more. High-quality results, fast conversion, completely free.",
   ogImage: "/og-format-converter.jpg",
   ogType: "website",
   twitterCard: "summary_large_image",
-  twitterTitle: "Free Image Format Converter - Convert Images Online",
+  twitterTitle: "Free Image Converter - Convert Images Online",
   twitterDescription: "Convert images between 12+ formats instantly. PNG, JPEG, WebP, GIF, HEIC & more. Free tool with quality controls.",
   robots: "index, follow",
   author: "GinyWow",
@@ -64,8 +64,8 @@ export const formatConverterSEO: SEOData = {
 export const generateWebApplicationSchema = (url: string) => ({
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "GinyWow Image Format Converter",
-  "description": "Free online image format converter supporting 12+ popular formats with quality controls",
+  "name": "GinyWow Image Converter",
+  "description": "Free online image converter supporting 12+ popular formats with quality controls",
   "url": url,
   "applicationCategory": "UtilityApplication",
   "operatingSystem": "Web Browser",
@@ -132,17 +132,17 @@ export const generateHowToSchema = (name: string, description: string, steps: Ho
   }))
 });
 
-// Format Converter specific data
+// Converter specific data
 export const formatConverterBreadcrumbs: BreadcrumbItem[] = [
   { name: "Home", url: "/" },
   { name: "Tools", url: "/" },
-  { name: "Format Converter", url: "/format-converter" }
+  { name: "Converter", url: "/format-converter" }
 ];
 
 export const formatConverterFAQs: FAQItem[] = [
   {
-    question: "Is the image format converter completely free to use?",
-    answer: "Yes! Our image format converter is 100% free with no hidden costs, registration requirements, or usage limits. Convert as many images as you need."
+    question: "Is the image converter completely free to use?",
+    answer: "Yes! Our image converter is 100% free with no hidden costs, registration requirements, or usage limits. Convert as many images as you need."
   },
   {
     question: "What image formats are supported for conversion?",
