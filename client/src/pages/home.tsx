@@ -584,7 +584,7 @@ export default function Home() {
               Our More Tools : Try It
             </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 lg:gap-8 max-w-3xl mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-6xl mx-auto">
               {/* Format Converter - Simple Blue */}
               <Link href="/format-converter">
                 <div
@@ -635,6 +635,60 @@ export default function Home() {
                       </h3>
                       <p className="text-gray-600 text-sm leading-relaxed">
                         Calculate home loan EMI and interest payments
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+
+              {/* Age Calculator - Simple Orange (Desktop Only) */}
+              <Link href="/age-calculator">
+                <div
+                  className="hidden lg:block group relative bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl cursor-pointer transform hover:-translate-y-2 transition-all duration-300 border border-gray-100 overflow-hidden"
+                  data-testid="age-calculator-card"
+                >
+                  {/* Background Simple Overlay */}
+                  <div className="absolute inset-0 bg-orange-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  
+                  <div className="relative text-center space-y-5">
+                    <div className="w-20 h-20 mx-auto bg-orange-600 rounded-2xl flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                      <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-orange-700 transition-colors">
+                        Age Calculator
+                      </h3>
+                      <p className="text-gray-600 text-sm leading-relaxed">
+                        Calculate your exact age in years, months, and days
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+
+              {/* Word Counter - Simple Purple (Desktop Only) */}
+              <Link href="/word-counter">
+                <div
+                  className="hidden lg:block group relative bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl cursor-pointer transform hover:-translate-y-2 transition-all duration-300 border border-gray-100 overflow-hidden"
+                  data-testid="word-counter-card"
+                >
+                  {/* Background Simple Overlay */}
+                  <div className="absolute inset-0 bg-purple-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  
+                  <div className="relative text-center space-y-5">
+                    <div className="w-20 h-20 mx-auto bg-purple-600 rounded-2xl flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                      <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-purple-700 transition-colors">
+                        Word Counter
+                      </h3>
+                      <p className="text-gray-600 text-sm leading-relaxed">
+                        Count words, characters, and paragraphs instantly
                       </p>
                     </div>
                   </div>
