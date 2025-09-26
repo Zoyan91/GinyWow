@@ -96,52 +96,6 @@ export type InsertNewsletterSubscription = z.infer<typeof insertNewsletterSubscr
 export type NewsletterSubscription = typeof newsletterSubscriptions.$inferSelect;
 export type InsertShortUrl = z.infer<typeof insertShortUrlSchema>;
 export type ShortUrl = typeof shortUrls.$inferSelect;
-// PDF Processing Tables
-export const pdfFiles = pgTable("pdf_files", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  originalFileName: text("original_file_name").notNull(),
-  fileSize: real("file_size").notNull(),
-  fileData: text("file_data").notNull(), // base64 encoded PDF data
-  conversionType: varchar("conversion_type", { length: 50 }).notNull(), // pdf-to-word, pdf-merge, etc.
-  status: varchar("status", { length: 20 }).default("processing").notNull(), // processing, completed, failed
-  outputData: text("output_data"), // base64 encoded output file
-  outputFileName: text("output_file_name"),
-  createdAt: timestamp("created_at").defaultNow(),
-});
-
-// PDF Processing Schemas
-export const pdfUploadSchema = z.object({
-  conversionType: z.enum(["pdf-to-word", "pdf-to-excel", "pdf-merge", "pdf-split", "pdf-compress", "pdf-to-image", "word-to-pdf", "pdf-editor", "pdf-unlock", "pdf-watermark"]),
-  fileName: z.string().min(1, "File name is required"),
-  fileSize: z.number().positive("File size must be positive"),
-  fileData: z.string().min(1, "File data is required"), // base64 data
-});
-
-export const pdfMergeSchema = z.object({
-  files: z.array(z.object({
-    fileName: z.string(),
-    fileData: z.string(),
-    fileSize: z.number()
-  })).min(2, "At least 2 files required for merging"),
-});
-
-export const pdfSplitSchema = z.object({
-  fileName: z.string().min(1, "File name is required"),
-  fileData: z.string().min(1, "File data is required"),
-  fileSize: z.number().positive("File size must be positive"),
-  pages: z.string().min(1, "Page range is required"), // "1-5" or "1,3,5"
-});
-
-export const insertPdfFileSchema = createInsertSchema(pdfFiles).pick({
-  originalFileName: true,
-  fileSize: true,
-  fileData: true,
-  conversionType: true,
-});
+// Removed PDF processing functionality for performance
 
 export type ThumbnailDownloaderForm = z.infer<typeof thumbnailDownloaderSchema>;
-export type PdfUpload = z.infer<typeof pdfUploadSchema>;
-export type PdfMerge = z.infer<typeof pdfMergeSchema>;
-export type PdfSplit = z.infer<typeof pdfSplitSchema>;
-export type InsertPdfFile = z.infer<typeof insertPdfFileSchema>;
-export type PdfFile = typeof pdfFiles.$inferSelect;

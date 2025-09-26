@@ -1,4 +1,4 @@
-import { type Thumbnail, type InsertThumbnail, type TitleOptimization, type InsertTitleOptimization, type NewsletterSubscription, type InsertNewsletterSubscription, type ShortUrl, type InsertShortUrl, type PdfFile, type InsertPdfFile } from "@shared/schema";
+import { type Thumbnail, type InsertThumbnail, type TitleOptimization, type InsertTitleOptimization, type NewsletterSubscription, type InsertNewsletterSubscription, type ShortUrl, type InsertShortUrl } from "@shared/schema";
 import { randomUUID } from "crypto";
 
 export interface IStorage {
@@ -24,10 +24,7 @@ export interface IStorage {
   getShortUrl(shortCode: string): Promise<ShortUrl | undefined>;
   incrementClickCount(shortCode: string): Promise<void>;
   
-  // PDF operations
-  createPdfFile(pdfFile: InsertPdfFile): Promise<PdfFile>;
-  getPdfFile(id: string): Promise<PdfFile | undefined>;
-  updatePdfFile(id: string, updates: Partial<PdfFile>): Promise<PdfFile | undefined>;
+  // Removed PDF operations for performance
 }
 
 export class MemStorage implements IStorage {
@@ -35,14 +32,12 @@ export class MemStorage implements IStorage {
   private titleOptimizations: Map<string, TitleOptimization>;
   private newsletterSubscriptions: Map<string, NewsletterSubscription>;
   private shortUrls: Map<string, ShortUrl>;
-  private pdfFiles: Map<string, PdfFile>;
 
   constructor() {
     this.thumbnails = new Map();
     this.titleOptimizations = new Map();
     this.newsletterSubscriptions = new Map();
     this.shortUrls = new Map();
-    this.pdfFiles = new Map();
   }
 
   async createThumbnail(insertThumbnail: InsertThumbnail): Promise<Thumbnail> {
@@ -166,33 +161,7 @@ export class MemStorage implements IStorage {
     }
   }
 
-  // PDF file operations
-  async createPdfFile(insertPdfFile: InsertPdfFile): Promise<PdfFile> {
-    const id = randomUUID();
-    const pdfFile: PdfFile = {
-      ...insertPdfFile,
-      id,
-      status: "processing",
-      outputData: null,
-      outputFileName: null,
-      createdAt: new Date(),
-    };
-    this.pdfFiles.set(id, pdfFile);
-    return pdfFile;
-  }
-
-  async getPdfFile(id: string): Promise<PdfFile | undefined> {
-    return this.pdfFiles.get(id);
-  }
-
-  async updatePdfFile(id: string, updates: Partial<PdfFile>): Promise<PdfFile | undefined> {
-    const existing = this.pdfFiles.get(id);
-    if (!existing) return undefined;
-    
-    const updated = { ...existing, ...updates };
-    this.pdfFiles.set(id, updated);
-    return updated;
-  }
+  // Removed PDF operations for performance optimization
 }
 
 export const storage = new MemStorage();
