@@ -587,33 +587,34 @@ export default function MortgageCalculator() {
           </div>
         </section>
 
-        {/* FAQ Section */}
-        <section className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
-          <div className="bg-gradient-to-r from-gray-800 to-gray-900 p-6">
-            <h2 className="text-xl font-bold text-white">Frequently Asked Questions</h2>
-            <p className="text-gray-300 mt-2">Everything you need to know about mortgage calculations</p>
-          </div>
-          <div className="p-6">
-            <div className="space-y-6">
-              <div>
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">What is EMI?</h3>
-                <p className="text-gray-600">EMI (Equated Monthly Installment) is the fixed amount you pay every month towards your home loan, consisting of both principal and interest components.</p>
-              </div>
-              
-              <div>
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">How is EMI calculated?</h3>
-                <p className="text-gray-600">EMI is calculated using the formula: EMI = [P x R x (1+R)^N] / [(1+R)^N-1], where P is principal, R is monthly interest rate, and N is number of months.</p>
-              </div>
-              
-              <div>
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">What factors affect my EMI?</h3>
-                <p className="text-gray-600">Your EMI depends on three main factors: loan amount (principal), interest rate, and loan tenure. Higher loan amount or interest rate increases EMI, while longer tenure reduces it.</p>
-              </div>
-              
-              <div>
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">Should I choose longer or shorter tenure?</h3>
-                <p className="text-gray-600">Shorter tenure means higher EMI but lower total interest. Longer tenure means lower EMI but higher total interest. Choose based on your monthly income and financial goals.</p>
-              </div>
+        {/* FAQ Section - Simple Design */}
+        <section className="bg-gray-50 rounded-lg p-6">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Frequently Asked Questions</h2>
+          
+          <div className="space-y-4 max-w-3xl mx-auto">
+            <div className="bg-white p-4 rounded-lg border border-gray-200">
+              <h3 className="font-semibold text-gray-800 mb-2">How much loan can I afford?</h3>
+              <p className="text-gray-600">As a general rule, your monthly EMI should not exceed 40% of your monthly income. Use our calculator to find the right loan amount for your budget.</p>
+            </div>
+            
+            <div className="bg-white p-4 rounded-lg border border-gray-200">
+              <h3 className="font-semibold text-gray-800 mb-2">What's the difference between interest rates?</h3>
+              <p className="text-gray-600">Fixed rates stay the same throughout your loan term, while variable rates can change. Fixed rates offer predictability, variable rates may start lower but can increase.</p>
+            </div>
+            
+            <div className="bg-white p-4 rounded-lg border border-gray-200">
+              <h3 className="font-semibold text-gray-800 mb-2">Should I make a larger down payment?</h3>
+              <p className="text-gray-600">A larger down payment reduces your loan amount and monthly EMI. It also helps you avoid private mortgage insurance and get better interest rates from lenders.</p>
+            </div>
+            
+            <div className="bg-white p-4 rounded-lg border border-gray-200">
+              <h3 className="font-semibold text-gray-800 mb-2">Can I pay off my loan early?</h3>
+              <p className="text-gray-600">Yes, making extra payments towards the principal can significantly reduce your total interest paid and help you become debt-free sooner. Check for any prepayment penalties.</p>
+            </div>
+            
+            <div className="bg-white p-4 rounded-lg border border-gray-200">
+              <h3 className="font-semibold text-gray-800 mb-2">What other costs should I consider?</h3>
+              <p className="text-gray-600">Besides your EMI, budget for property taxes, home insurance, maintenance costs, and closing fees. These can add 20-30% to your monthly housing expenses.</p>
             </div>
           </div>
         </section>
