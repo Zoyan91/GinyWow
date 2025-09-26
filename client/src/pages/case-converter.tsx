@@ -152,46 +152,90 @@ export default function CaseConverter() {
 
       <Header currentPage="case-converter" />
       
-      <main className="container mx-auto px-4 py-8 max-w-6xl relative">
-        {/* Floating Background Shapes */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none hidden md:block">
-          <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-full opacity-10 animate-float"></div>
-          <div className="absolute top-40 right-20 w-24 h-24 bg-gradient-to-br from-teal-400 to-teal-600 rotate-45 opacity-10 animate-float-2"></div>
-          <div className="absolute bottom-40 left-1/4 w-20 h-20 bg-gradient-to-br from-green-400 to-green-600 rounded-full opacity-15 animate-float-3"></div>
-          <div className="absolute top-60 right-1/3 w-16 h-16 bg-gradient-to-br from-cyan-400 to-cyan-600 transform rotate-12 opacity-10 animate-float-4"></div>
-          <div className="absolute bottom-20 right-16 w-28 h-28 bg-gradient-to-br from-lime-400 to-lime-600 rounded-full opacity-10 animate-float-5"></div>
-          <div className="absolute top-96 left-1/2 w-6 h-6 bg-gradient-to-br from-mint-400 to-mint-600 rounded-full opacity-20 animate-float-6"></div>
+      {/* Hero Section - Mobile First - Matching Home Page */}
+      <section className="relative bg-gradient-to-br from-blue-50 via-white to-purple-50 py-8 sm:py-12 lg:py-20 overflow-hidden">
+        {/* Floating Shapes - Home Page Style - Hidden on Mobile */}
+        <div className="absolute inset-0 z-0 pointer-events-none hidden sm:block">
+          {/* Triangle Top Left - Pink */}
+          <div 
+            className="absolute top-16 left-12 w-6 h-6 animate-float-1"
+            style={{
+              background: '#f472b6',
+              clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
+              transform: 'rotate(15deg)',
+              opacity: 0.4
+            }}
+          ></div>
+
+          {/* Circle Top Right - Blue */}
+          <div 
+            className="absolute top-20 right-20 w-5 h-5 rounded-full animate-float-2"
+            style={{
+              background: '#60a5fa',
+              opacity: 0.45
+            }}
+          ></div>
+
+          {/* Square Top Center - Orange */}
+          <div 
+            className="absolute top-24 left-1/3 w-4 h-4 animate-float-3"
+            style={{
+              background: '#fb923c',
+              transform: 'rotate(45deg)',
+              opacity: 0.4
+            }}
+          ></div>
+
+          {/* Dot Top Right Corner - Purple */}
+          <div 
+            className="absolute top-8 right-8 w-3 h-3 rounded-full animate-float-4"
+            style={{
+              background: '#c084fc',
+              opacity: 0.5
+            }}
+          ></div>
+
+          {/* Triangle Center Left - Green */}
+          <div 
+            className="absolute top-40 left-8 w-5 h-5 animate-float-5"
+            style={{
+              background: '#34d399',
+              clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
+              transform: 'rotate(-30deg)',
+              opacity: 0.45
+            }}
+          ></div>
+
+          {/* Circle Center Right - Yellow */}
+          <div 
+            className="absolute top-36 right-16 w-4 h-4 rounded-full animate-float-6"
+            style={{
+              background: '#fbbf24',
+              opacity: 0.4
+            }}
+          ></div>
+
+          {/* Additional dots scattered */}
+          <div className="absolute top-28 left-20 w-2 h-2 rounded-full animate-float-5" style={{ background: '#f472b6', opacity: 0.45 }}></div>
+          <div className="absolute top-44 right-24 w-2 h-2 rounded-full animate-float-6" style={{ background: '#60a5fa', opacity: 0.4 }}></div>
+          <div className="absolute bottom-40 left-24 w-2 h-2 rounded-full animate-float-1" style={{ background: '#fb923c', opacity: 0.5 }}></div>
+          <div className="absolute bottom-36 right-20 w-2 h-2 rounded-full animate-float-2" style={{ background: '#34d399', opacity: 0.45 }}></div>
         </div>
 
-        {/* Hero Section */}
-        <section className="relative z-10 text-center mb-12">
-          <div className="max-w-4xl mx-auto">
-            <div className="inline-flex items-center gap-3 bg-gradient-to-r from-emerald-100 to-teal-100 px-6 py-3 rounded-full text-emerald-700 text-sm font-medium mb-6">
-              <Type className="w-4 h-4" />
-              Smart Text Converter
-            </div>
-            <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent mb-6 leading-tight">
-              Case Converter
+        <div className="relative z-10 container mx-auto px-4 max-w-4xl">
+          <div className="text-center animate-fade-in">
+            <h1 className="text-xl sm:text-2xl lg:text-4xl font-bold lg:font-normal text-gray-900 mb-4 sm:mb-6 leading-tight">
+              Case Converter Tool
             </h1>
-            <p className="text-xl md:text-2xl text-gray-600 mb-8 leading-relaxed max-w-3xl mx-auto">
+            
+            <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 leading-relaxed max-w-2xl mx-auto px-4">
               Transform your text instantly with 10+ case styles. From camelCase to UPPERCASE, get perfect formatting every time.
             </p>
-            <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-500">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                <span>10+ Case Styles</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-teal-500 rounded-full"></div>
-                <span>Instant Copy</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-cyan-500 rounded-full"></div>
-                <span>100% Free</span>
-              </div>
-            </div>
           </div>
-        </section>
+        </div>
+      </section>
+
+      <main className="container mx-auto px-4 py-8 max-w-6xl">
 
         {/* Main Tool Section */}
         <div className="grid lg:grid-cols-3 gap-6 mb-8">
