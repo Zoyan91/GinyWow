@@ -356,7 +356,7 @@ export default function ImageCompressorPage() {
                 <span className="block sm:inline">Free Image Compressor Online</span> <span className="block sm:inline">– Reduce Image File Size Instantly with GinyWow</span>
               </h1>
               <p className="text-gray-600 mb-6 text-sm md:text-base" data-testid="hero-description">
-                Compress images online for free. Reduce file size while maintaining quality. Perfect for web optimization, email, storage. Fast, secure, and completely free.
+                Compress images online for free with GinyWow Image Compressor. Reduce file size without losing quality. Works with JPG, PNG, WebP, and more.
               </p>
             </div>
             
