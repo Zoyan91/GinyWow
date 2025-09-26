@@ -601,7 +601,7 @@ export default function Home() {
               Our More Tools : Try It
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
               {/* Thumbnail Downloader Section */}
               <Link href="/thumbnail-downloader">
                 <div
@@ -624,7 +624,7 @@ export default function Home() {
                 </div>
               </Link>
 
-              {/* Image Converter Section */}
+              {/* Format Converter Section */}
               <Link href="/format-converter">
                 <div
                   className="card-mobile p-6 sm:p-8 hover:shadow-lg cursor-pointer"
@@ -637,10 +637,54 @@ export default function Home() {
                       </svg>
                     </div>
                     <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
-                      Image
+                      Format Converter
                     </h3>
                     <p className="text-gray-600 text-sm mt-2">
-                      Convert images to any format instantly, free online.
+                      Convert images between 12+ formats instantly
+                    </p>
+                  </div>
+                </div>
+              </Link>
+
+              {/* Image Resizer Section */}
+              <Link href="/image-resizer">
+                <div
+                  className="card-mobile p-6 sm:p-8 hover:shadow-lg cursor-pointer"
+                  data-testid="image-resizer-card"
+                >
+                  <div className="text-center space-y-4">
+                    <div className="w-16 h-16 mx-auto bg-purple-100 rounded-full flex items-center justify-center">
+                      <svg className="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                      </svg>
+                    </div>
+                    <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
+                      Image Resizer
+                    </h3>
+                    <p className="text-gray-600 text-sm mt-2">
+                      Resize images for any purpose with quality control
+                    </p>
+                  </div>
+                </div>
+              </Link>
+
+              {/* Image Compressor Section */}
+              <Link href="/image-compressor">
+                <div
+                  className="card-mobile p-6 sm:p-8 hover:shadow-lg cursor-pointer"
+                  data-testid="image-compressor-card"
+                >
+                  <div className="text-center space-y-4">
+                    <div className="w-16 h-16 mx-auto bg-red-100 rounded-full flex items-center justify-center">
+                      <svg className="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 10h.01M6 14h.01M10 18h.01M10 6h.01M14 6h.01M18 6h.01M18 10h.01M18 14h.01M10 14h.01M14 14h.01M14 18h.01M18 18h.01M10 10h.01M14 10h.01" />
+                      </svg>
+                    </div>
+                    <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
+                      Image Compressor
+                    </h3>
+                    <p className="text-gray-600 text-sm mt-2">
+                      Reduce file size without quality loss
                     </p>
                   </div>
                 </div>

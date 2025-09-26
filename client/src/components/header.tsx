@@ -215,6 +215,28 @@ export default function Header({ currentPage }: HeaderProps) {
                         </button>
                       </Link>
                     ))}
+
+                    {/* Image Tools Collapsible */}
+                    <Collapsible>
+                      <CollapsibleTrigger className="w-full text-left p-4 rounded-lg font-medium text-base transition-colors text-gray-700 hover:bg-gray-50 border border-transparent flex items-center justify-between">
+                        Image Tools
+                        <ChevronDown className="w-4 h-4" />
+                      </CollapsibleTrigger>
+                      <CollapsibleContent className="ml-4 mt-2 space-y-2">
+                        {imageTools.map((tool) => (
+                          <Link href={tool.href} key={tool.href}>
+                            <button 
+                              className="w-full text-left p-3 rounded-lg font-medium text-sm transition-colors text-gray-600 hover:bg-gray-50 border border-transparent"
+                              onClick={() => setIsMobileMenuOpen(false)}
+                              onTouchStart={() => preloadPage(tool.href)}
+                              data-testid={`mobile-${tool.testId}`}
+                            >
+                              {tool.label}
+                            </button>
+                          </Link>
+                        ))}
+                      </CollapsibleContent>
+                    </Collapsible>
                   </nav>
                 </div>
               </SheetContent>
@@ -256,6 +278,28 @@ export default function Header({ currentPage }: HeaderProps) {
                       </button>
                     </Link>
                   ))}
+
+                  {/* Image Tools Collapsible */}
+                  <Collapsible>
+                    <CollapsibleTrigger className="w-full text-left p-3 rounded-lg font-medium transition-colors text-gray-700 hover:bg-gray-50 flex items-center justify-between">
+                      Image Tools
+                      <ChevronDown className="w-4 h-4" />
+                    </CollapsibleTrigger>
+                    <CollapsibleContent className="ml-4 mt-2 space-y-2">
+                      {imageTools.map((tool) => (
+                        <Link href={tool.href} key={tool.href}>
+                          <button 
+                            className="w-full text-left p-2 rounded-lg font-medium text-sm transition-colors text-gray-600 hover:bg-gray-50"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            onTouchStart={() => preloadPage(tool.href)}
+                            data-testid={`tablet-${tool.testId}`}
+                          >
+                            {tool.label}
+                          </button>
+                        </Link>
+                      ))}
+                    </CollapsibleContent>
+                  </Collapsible>
                 </nav>
               </SheetContent>
             </Sheet>

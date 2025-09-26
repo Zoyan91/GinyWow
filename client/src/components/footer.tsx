@@ -71,7 +71,21 @@ export default function Footer() {
               <li>
                 <Link href="/format-converter">
                   <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm">
-                    Image
+                    Format Converter
+                  </span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/image-resizer">
+                  <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm">
+                    Image Resizer
+                  </span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/image-compressor">
+                  <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm">
+                    Image Compressor
                   </span>
                 </Link>
               </li>
@@ -178,7 +192,21 @@ export default function Footer() {
                 <li>
                   <Link href="/format-converter">
                     <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm block py-2">
-                      Image
+                      Format Converter
+                    </span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/image-resizer">
+                    <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm block py-2">
+                      Image Resizer
+                    </span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/image-compressor">
+                    <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm block py-2">
+                      Image Compressor
                     </span>
                   </Link>
                 </li>
