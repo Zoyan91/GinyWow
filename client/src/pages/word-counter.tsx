@@ -128,14 +128,14 @@ Estimated reading time: ${currentStats.readingTime} minute(s)`;
           {/* Text Input Area */}
           <div className="lg:col-span-2">
             <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
-              <div className="bg-gradient-to-r from-cyan-500 to-teal-600 p-6">
+              <div className="bg-blue-600 p-6">
                 <h2 className="text-xl font-bold text-white flex items-center gap-3">
                   <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
                     <FileText className="w-5 h-5 text-white" />
                   </div>
                   Enter Your Text
                 </h2>
-                <p className="text-cyan-100 mt-2">
+                <p className="text-blue-100 mt-2">
                   Type or paste your text below for instant analysis
                 </p>
               </div>
@@ -145,12 +145,12 @@ Estimated reading time: ${currentStats.readingTime} minute(s)`;
                     placeholder="Start typing or paste your text here to see the magic happen..."
                     value={text}
                     onChange={(e) => setText(e.target.value)}
-                    className="min-h-[400px] text-base leading-relaxed border-2 border-gray-200 focus:border-cyan-400 rounded-xl resize-none transition-all duration-300"
+                    className="min-h-[400px] text-base leading-relaxed border-2 border-gray-200 focus:border-blue-400 rounded-xl resize-none transition-all duration-300"
                     data-testid="word-counter-textarea"
                   />
                   {text && (
                     <div className="absolute top-3 right-3">
-                      <Badge className="bg-gradient-to-r from-cyan-500 to-teal-600 text-white">
+                      <Badge className="bg-blue-600 text-white">
                         {currentStats.words} words
                       </Badge>
                     </div>

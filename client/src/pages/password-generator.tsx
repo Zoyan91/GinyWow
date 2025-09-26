@@ -160,7 +160,7 @@ export default function PasswordGenerator() {
           {/* Settings Panel */}
           <div className="lg:col-span-2">
             <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
-              <div className="bg-gradient-to-r from-purple-500 to-indigo-600 p-6">
+              <div className="bg-purple-600 p-6">
                 <h2 className="text-xl font-bold text-white flex items-center gap-3">
                   <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
                     <Shield className="w-5 h-5 text-white" />
@@ -275,14 +275,14 @@ export default function PasswordGenerator() {
           {/* Password Display */}
           <div>
             <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
-              <div className="bg-gradient-to-r from-indigo-500 to-purple-600 p-6">
+              <div className="bg-purple-600 p-6">
                 <h2 className="text-xl font-bold text-white flex items-center gap-3">
                   <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
                     <Eye className="w-5 h-5 text-white" />
                   </div>
                   Generated Password
                 </h2>
-                <p className="text-indigo-100 mt-2">
+                <p className="text-purple-100 mt-2">
                   Your secure password is ready
                 </p>
               </div>

@@ -216,7 +216,7 @@ export default function AgeCalculator() {
           {/* Input Section */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
-              <div className="bg-gradient-to-r from-pink-500 to-rose-600 p-6">
+              <div className="bg-pink-600 p-6">
                 <h2 className="text-xl font-bold text-white flex items-center gap-3">
                   <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
                     <Calendar className="w-5 h-5 text-white" />
@@ -253,7 +253,7 @@ export default function AgeCalculator() {
                 <div className="flex gap-3">
                   <Button
                     onClick={calculateAge}
-                    className="flex-1 h-14 bg-gradient-to-r from-pink-500 to-rose-600 hover:from-pink-600 hover:to-rose-700 text-white text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl"
+                    className="flex-1 h-14 bg-pink-600 hover:bg-pink-700 text-white text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl"
                     data-testid="calculate-age-button"
                   >
                     <Calculator className="w-5 h-5 mr-3" />
@@ -295,7 +295,7 @@ export default function AgeCalculator() {
             {ageResult ? (
               <div className="space-y-4">
                 {/* Main Age Display */}
-                <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
+                <Card className="bg-blue-50 border-blue-200">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2 text-xl">
                       <Gift className="w-6 h-6 text-blue-600" />
@@ -333,7 +333,7 @@ export default function AgeCalculator() {
                 </Card>
 
                 {/* Next Birthday */}
-                <Card className="bg-gradient-to-r from-pink-50 to-rose-50 border-pink-200">
+                <Card className="bg-pink-50 border-pink-200">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                       <Heart className="w-5 h-5 text-pink-600" />

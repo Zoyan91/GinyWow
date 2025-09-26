@@ -183,14 +183,14 @@ export default function QRCodeGenerator() {
           {/* Input Section */}
           <div>
             <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
-              <div className="bg-gradient-to-r from-amber-500 to-orange-600 p-6">
+              <div className="bg-orange-600 p-6">
                 <h2 className="text-xl font-bold text-white flex items-center gap-3">
                   <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
                     <QrCode className="w-5 h-5 text-white" />
                   </div>
                   QR Code Settings
                 </h2>
-                <p className="text-amber-100 mt-2">
+                <p className="text-orange-100 mt-2">
                   Choose type and content for your custom QR code
                 </p>
               </div>
@@ -198,7 +198,7 @@ export default function QRCodeGenerator() {
                 <div>
                   <Label htmlFor="qr-type" className="text-base font-semibold text-gray-700 mb-3 block">QR Code Type</Label>
                   <Select value={qrCodeType} onValueChange={handleTypeChange}>
-                    <SelectTrigger className="h-12 border-2 border-gray-200 focus:border-amber-400 rounded-xl" data-testid="qr-type-select">
+                    <SelectTrigger className="h-12 border-2 border-gray-200 focus:border-orange-400 rounded-xl" data-testid="qr-type-select">
                       <SelectValue placeholder="Select QR code type" />
                     </SelectTrigger>
                     <SelectContent>
@@ -220,7 +220,7 @@ export default function QRCodeGenerator() {
                       placeholder={getPlaceholderText()}
                       value={inputText}
                       onChange={(e) => setInputText(e.target.value)}
-                      className="min-h-[120px] border-2 border-gray-200 focus:border-amber-400 rounded-xl resize-none transition-all duration-300"
+                      className="min-h-[120px] border-2 border-gray-200 focus:border-orange-400 rounded-xl resize-none transition-all duration-300"
                       data-testid="qr-content-textarea"
                     />
                   ) : (
@@ -229,7 +229,7 @@ export default function QRCodeGenerator() {
                       placeholder={getPlaceholderText()}
                       value={inputText}
                       onChange={(e) => setInputText(e.target.value)}
-                      className="h-12 border-2 border-gray-200 focus:border-amber-400 rounded-xl transition-all duration-300"
+                      className="h-12 border-2 border-gray-200 focus:border-orange-400 rounded-xl transition-all duration-300"
                       data-testid="qr-content-input"
                     />
                   )}
@@ -238,7 +238,7 @@ export default function QRCodeGenerator() {
                 <Button
                   onClick={generateQRCode}
                   disabled={isGenerating || !inputText.trim()}
-                  className="w-full h-14 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl"
+                  className="w-full h-14 bg-orange-600 hover:bg-orange-700 text-white text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl"
                   data-testid="generate-qr-button"
                 >
                   {isGenerating ? (
@@ -260,7 +260,7 @@ export default function QRCodeGenerator() {
           {/* Preview Section */}
           <div>
             <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
-              <div className="bg-gradient-to-r from-orange-500 to-amber-600 p-6">
+              <div className="bg-orange-600 p-6">
                 <h2 className="text-xl font-bold text-white flex items-center gap-3">
                   <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
                     <Smartphone className="w-5 h-5 text-white" />
