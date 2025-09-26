@@ -152,101 +152,149 @@ export default function CaseConverter() {
 
       <Header currentPage="case-converter" />
       
-      <main className="container mx-auto px-4 py-8 max-w-6xl">
-        {/* Header Section */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            GinyWow Case Converter Tool
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Transform your text into different cases instantly. Convert to uppercase, lowercase, title case, camelCase, snake_case, kebab-case, and more with one click.
-          </p>
+      <main className="container mx-auto px-4 py-8 max-w-6xl relative">
+        {/* Floating Background Shapes */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none hidden md:block">
+          <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-full opacity-10 animate-float"></div>
+          <div className="absolute top-40 right-20 w-24 h-24 bg-gradient-to-br from-teal-400 to-teal-600 rotate-45 opacity-10 animate-float-2"></div>
+          <div className="absolute bottom-40 left-1/4 w-20 h-20 bg-gradient-to-br from-green-400 to-green-600 rounded-full opacity-15 animate-float-3"></div>
+          <div className="absolute top-60 right-1/3 w-16 h-16 bg-gradient-to-br from-cyan-400 to-cyan-600 transform rotate-12 opacity-10 animate-float-4"></div>
+          <div className="absolute bottom-20 right-16 w-28 h-28 bg-gradient-to-br from-lime-400 to-lime-600 rounded-full opacity-10 animate-float-5"></div>
+          <div className="absolute top-96 left-1/2 w-6 h-6 bg-gradient-to-br from-mint-400 to-mint-600 rounded-full opacity-20 animate-float-6"></div>
         </div>
+
+        {/* Hero Section */}
+        <section className="relative z-10 text-center mb-12">
+          <div className="max-w-4xl mx-auto">
+            <div className="inline-flex items-center gap-3 bg-gradient-to-r from-emerald-100 to-teal-100 px-6 py-3 rounded-full text-emerald-700 text-sm font-medium mb-6">
+              <Type className="w-4 h-4" />
+              Smart Text Converter
+            </div>
+            <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent mb-6 leading-tight">
+              Case Converter
+            </h1>
+            <p className="text-xl md:text-2xl text-gray-600 mb-8 leading-relaxed max-w-3xl mx-auto">
+              Transform your text instantly with 10+ case styles. From camelCase to UPPERCASE, get perfect formatting every time.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-500">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                <span>10+ Case Styles</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-teal-500 rounded-full"></div>
+                <span>Instant Copy</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-cyan-500 rounded-full"></div>
+                <span>100% Free</span>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* Main Tool Section */}
         <div className="grid lg:grid-cols-3 gap-6 mb-8">
           {/* Input Section */}
           <div className="lg:col-span-1">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Type className="w-5 h-5 text-blue-600" />
+            <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+              <div className="bg-gradient-to-r from-emerald-500 to-teal-600 p-6">
+                <h2 className="text-xl font-bold text-white flex items-center gap-3">
+                  <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                    <Type className="w-5 h-5 text-white" />
+                  </div>
                   Input Text
-                </CardTitle>
-                <CardDescription>
-                  Enter the text you want to convert
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
+                </h2>
+                <p className="text-emerald-100 mt-2">
+                  Enter text to convert to different cases
+                </p>
+              </div>
+              <div className="p-6">
                 <Textarea
                   placeholder="Type or paste your text here..."
                   value={inputText}
                   onChange={(e) => setInputText(e.target.value)}
-                  className="min-h-[200px] text-base leading-relaxed"
+                  className="min-h-[250px] text-base leading-relaxed border-2 border-gray-200 focus:border-emerald-400 rounded-xl resize-none transition-all duration-300"
                   data-testid="case-converter-textarea"
                 />
-                <div className="flex gap-2 mt-4">
+                <div className="flex gap-3 mt-6">
                   <Button
                     variant="outline"
                     onClick={clearText}
                     disabled={!inputText}
+                    className="h-12 px-6 border-2 border-gray-200 hover:border-emerald-400 rounded-xl transition-all duration-300"
                     data-testid="clear-text-button"
                   >
                     <RotateCcw className="w-4 h-4 mr-2" />
-                    Clear
+                    Clear Text
                   </Button>
-                  <Badge variant="secondary" className="ml-auto">
-                    {inputText.length} characters
-                  </Badge>
+                  <div className="ml-auto bg-gradient-to-r from-emerald-100 to-teal-100 px-4 py-3 rounded-xl border border-emerald-200">
+                    <span className="text-emerald-700 font-semibold text-sm">
+                      📝 {inputText.length} characters
+                    </span>
+                  </div>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
 
           {/* Conversion Results */}
           <div className="lg:col-span-2">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <ArrowUpDown className="w-5 h-5 text-blue-600" />
+            <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+              <div className="bg-gradient-to-r from-teal-500 to-cyan-600 p-6">
+                <h2 className="text-xl font-bold text-white flex items-center gap-3">
+                  <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                    <ArrowUpDown className="w-5 h-5 text-white" />
+                  </div>
                   Conversion Results
-                </CardTitle>
-                <CardDescription>
-                  Click any result to copy it to clipboard
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
+                </h2>
+                <p className="text-teal-100 mt-2">
+                  Click any result to copy it instantly
+                </p>
+              </div>
+              <div className="p-6">
                 {inputText ? (
-                  <div className="space-y-4">
+                  <div className="space-y-4 max-h-[600px] overflow-y-auto pr-2">
                     {conversions.map((conversion, index) => {
                       const convertedText = conversion.func();
                       return (
                         <div
                           key={index}
-                          className="group border border-gray-200 rounded-lg p-4 hover:border-blue-300 transition-colors cursor-pointer"
+                          className="group bg-gradient-to-br from-gray-50 to-white border-2 border-gray-200 rounded-xl p-5 hover:border-emerald-300 hover:shadow-lg transition-all duration-300 cursor-pointer transform hover:-translate-y-1"
                           onClick={() => copyText(convertedText, conversion.name)}
                           data-testid={`conversion-${conversion.name.toLowerCase().replace(/\s+/g, '-')}`}
                         >
-                          <div className="flex items-center justify-between mb-2">
-                            <h3 className="font-semibold text-gray-900">{conversion.name}</h3>
-                            <Copy className="w-4 h-4 text-gray-400 group-hover:text-blue-600 transition-colors" />
+                          <div className="flex items-center justify-between mb-3">
+                            <h3 className="font-bold text-gray-900 text-lg">{conversion.name}</h3>
+                            <div className="flex items-center gap-2">
+                              <div className="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center group-hover:bg-emerald-200 transition-colors">
+                                <Copy className="w-4 h-4 text-emerald-600 group-hover:text-emerald-700 transition-colors" />
+                              </div>
+                            </div>
                           </div>
-                          <p className="text-xs text-gray-500 mb-2">{conversion.description}</p>
-                          <div className="bg-gray-50 rounded p-3 font-mono text-sm break-all">
-                            {convertedText || <span className="text-gray-400 italic">No output</span>}
+                          <p className="text-sm text-gray-600 mb-4 font-medium">{conversion.description}</p>
+                          <div className="bg-gradient-to-br from-white to-gray-50 border border-gray-200 rounded-lg p-4 font-mono text-sm break-all shadow-inner">
+                            {convertedText ? (
+                              <span className="text-gray-800">{convertedText}</span>
+                            ) : (
+                              <span className="text-gray-400 italic">No output</span>
+                            )}
                           </div>
                         </div>
                       );
                     })}
                   </div>
                 ) : (
-                  <div className="text-center py-16 text-gray-500">
-                    <Type className="w-16 h-16 mx-auto mb-4 opacity-30" />
-                    <p>Enter some text to see conversion results</p>
+                  <div className="text-center py-20 text-gray-500">
+                    <div className="w-20 h-20 bg-gradient-to-br from-emerald-100 to-teal-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                      <Type className="w-10 h-10 text-emerald-500" />
+                    </div>
+                    <h3 className="text-xl font-semibold text-gray-700 mb-2">Ready to Convert</h3>
+                    <p className="text-gray-500">Enter some text in the input field to see conversion results</p>
                   </div>
                 )}
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
         </div>
 
