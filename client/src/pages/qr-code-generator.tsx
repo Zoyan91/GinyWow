@@ -161,7 +161,7 @@ export default function QRCodeGenerator() {
       <Header currentPage="qr-code-generator" />
       
       {/* Hero Section - Mobile First - Matching Home Page */}
-      <section className="relative bg-gradient-to-br from-blue-50 via-white to-purple-50 py-8 sm:py-12 lg:py-20 overflow-hidden">
+      <section className="relative bg-orange-50 py-8 sm:py-12 lg:py-20 overflow-hidden">
 
         <div className="relative z-10 container mx-auto px-4 max-w-4xl">
           <div className="text-center animate-fade-in">
@@ -274,8 +274,8 @@ export default function QRCodeGenerator() {
               <div className="p-6">
                 {generatedQR ? (
                   <div className="text-center space-y-6">
-                    <div className="bg-gradient-to-br from-gray-50 to-white p-8 rounded-2xl border-2 border-dashed border-orange-300 inline-block shadow-inner relative overflow-hidden">
-                      <div className="absolute inset-0 bg-gradient-to-br from-amber-50/50 to-orange-50/50"></div>
+                    <div className="bg-orange-50 p-8 rounded-2xl border-2 border-dashed border-orange-300 inline-block shadow-inner relative overflow-hidden">
+                      <div className="absolute inset-0 bg-orange-50/50"></div>
                       <img
                         src={generatedQR}
                         alt="Generated QR Code"
@@ -283,7 +283,7 @@ export default function QRCodeGenerator() {
                         data-testid="generated-qr-image"
                       />
                     </div>
-                    <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-4 rounded-xl border border-green-200">
+                    <div className="bg-orange-50 p-4 rounded-xl border border-orange-200">
                       <div className="flex items-center justify-center gap-2 text-green-700">
                         <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
                         <span className="font-medium">QR Code Generated Successfully!</span>
@@ -291,7 +291,7 @@ export default function QRCodeGenerator() {
                     </div>
                     <Button
                       onClick={downloadQRCode}
-                      className="w-full h-14 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl"
+                      className="w-full h-14 bg-orange-600 hover:bg-orange-700 text-white text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl"
                       data-testid="download-qr-button"
                     >
                       <Download className="w-4 h-4 mr-2" />

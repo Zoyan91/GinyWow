@@ -194,7 +194,7 @@ export default function AgeCalculator() {
       <Header currentPage="age-calculator" />
       
       {/* Hero Section - Mobile First - Matching Home Page */}
-      <section className="relative bg-gradient-to-br from-blue-50 via-white to-purple-50 py-8 sm:py-12 lg:py-20 overflow-hidden">
+      <section className="relative bg-pink-50 py-8 sm:py-12 lg:py-20 overflow-hidden">
 
         <div className="relative z-10 container mx-auto px-4 max-w-4xl">
           <div className="text-center animate-fade-in">

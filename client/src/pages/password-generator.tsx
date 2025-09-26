@@ -138,7 +138,7 @@ export default function PasswordGenerator() {
       <Header currentPage="password-generator" />
       
       {/* Hero Section - Mobile First - Matching Home Page */}
-      <section className="relative bg-gradient-to-br from-blue-50 via-white to-purple-50 py-8 sm:py-12 lg:py-20 overflow-hidden">
+      <section className="relative bg-purple-50 py-8 sm:py-12 lg:py-20 overflow-hidden">
 
         <div className="relative z-10 container mx-auto px-4 max-w-4xl">
           <div className="text-center animate-fade-in">
@@ -173,7 +173,7 @@ export default function PasswordGenerator() {
               </div>
               <div className="p-6 space-y-6">
                 {/* Password Length */}
-                <div className="bg-gradient-to-br from-gray-50 to-white p-5 rounded-xl border border-gray-200">
+                <div className="bg-purple-50 p-5 rounded-xl border border-purple-200">
                   <Label className="text-base font-semibold text-gray-700 mb-3 block">
                     Password Length: <span className="text-purple-600 font-bold">{length[0]} characters</span>
                   </Label>
@@ -193,7 +193,7 @@ export default function PasswordGenerator() {
                 </div>
 
                 {/* Character Types */}
-                <div className="bg-gradient-to-br from-indigo-50 to-purple-50 p-5 rounded-xl border border-indigo-200">
+                <div className="bg-purple-50 p-5 rounded-xl border border-purple-200">
                   <Label className="text-base font-semibold text-gray-700 mb-4 block">Include Characters</Label>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="flex items-center space-x-3 bg-white p-3 rounded-lg border border-gray-200">
@@ -244,7 +244,7 @@ export default function PasswordGenerator() {
                 </div>
 
                 {/* Advanced Options */}
-                <div className="bg-gradient-to-br from-yellow-50 to-orange-50 p-5 rounded-xl border border-yellow-200">
+                <div className="bg-purple-50 p-5 rounded-xl border border-purple-200">
                   <Label className="text-base font-semibold text-gray-700 mb-3 block">Advanced Options</Label>
                   <div className="flex items-center space-x-3 bg-white p-3 rounded-lg border border-gray-200">
                     <Checkbox
@@ -262,7 +262,7 @@ export default function PasswordGenerator() {
                 {/* Generate Button */}
                 <Button
                   onClick={generatePassword}
-                  className="w-full h-14 bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl"
+                  className="w-full h-14 bg-purple-600 hover:bg-purple-700 text-white text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl"
                   data-testid="generate-password-button"
                 >
                   <RefreshCw className="w-5 h-5 mr-3" />
@@ -293,7 +293,7 @@ export default function PasswordGenerator() {
                     value={password}
                     readOnly
                     placeholder="Click generate to create password"
-                    className="pr-20 font-mono h-14 text-lg border-2 border-gray-200 focus:border-purple-400 rounded-xl bg-gradient-to-r from-gray-50 to-white"
+                    className="pr-20 font-mono h-14 text-lg border-2 border-gray-200 focus:border-purple-400 rounded-xl bg-white"
                     data-testid="generated-password"
                   />
                   <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex gap-2">
@@ -320,7 +320,7 @@ export default function PasswordGenerator() {
                 </div>
 
                 {/* Password Strength */}
-                <div className="bg-gradient-to-br from-gray-50 to-white p-5 rounded-xl border border-gray-200">
+                <div className="bg-purple-50 p-5 rounded-xl border border-purple-200">
                   <div className="flex justify-between items-center mb-3">
                     <span className="text-base font-semibold text-gray-700">Password Strength:</span>
                     <Badge
@@ -337,9 +337,9 @@ export default function PasswordGenerator() {
                   <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
                     <div 
                       className={`h-3 rounded-full transition-all duration-500 ${
-                        strength.color === "green" ? "bg-gradient-to-r from-green-400 to-green-600" : 
-                        strength.color === "yellow" ? "bg-gradient-to-r from-yellow-400 to-yellow-600" : 
-                        "bg-gradient-to-r from-red-400 to-red-600"
+                        strength.color === "green" ? "bg-green-500" : 
+                        strength.color === "yellow" ? "bg-yellow-500" : 
+                        "bg-red-500"
                       }`}
                       style={{ 
                         width: strength.level === "strong" ? "100%" : 
@@ -351,7 +351,7 @@ export default function PasswordGenerator() {
                 </div>
 
                 {/* Security Tip */}
-                <div className="bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200 rounded-xl p-4">
+                <div className="bg-purple-50 border border-purple-200 rounded-xl p-4">
                   <div className="flex items-start gap-3">
                     <div className="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center flex-shrink-0">
                       <AlertTriangle className="w-4 h-4 text-amber-600" />

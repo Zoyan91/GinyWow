@@ -106,7 +106,7 @@ Estimated reading time: ${currentStats.readingTime} minute(s)`;
       <Header currentPage="word-counter" />
       
       {/* Hero Section - Mobile First - Matching Home Page */}
-      <section className="relative bg-gradient-to-br from-blue-50 via-white to-purple-50 py-8 sm:py-12 lg:py-20 overflow-hidden">
+      <section className="relative bg-blue-50 py-8 sm:py-12 lg:py-20 overflow-hidden">
 
         <div className="relative z-10 container mx-auto px-4 max-w-4xl">
           <div className="text-center animate-fade-in">
@@ -170,7 +170,7 @@ Estimated reading time: ${currentStats.readingTime} minute(s)`;
                   <Button
                     onClick={handleCopyStats}
                     disabled={!text}
-                    className="flex-1 bg-gradient-to-r from-cyan-500 to-teal-600 hover:from-cyan-600 hover:to-teal-700 text-white shadow-lg hover:shadow-xl transition-all duration-300"
+                    className="flex-1 bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-xl transition-all duration-300"
                     data-testid="copy-stats-button"
                   >
                     <Copy className="w-4 h-4 mr-2" />
@@ -185,7 +185,7 @@ Estimated reading time: ${currentStats.readingTime} minute(s)`;
           <div className="space-y-6">
             {/* Live Statistics Card */}
             <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
-              <div className="bg-gradient-to-r from-teal-500 to-cyan-600 p-6">
+              <div className="bg-blue-600 p-6">
                 <h2 className="text-xl font-bold text-white flex items-center gap-3">
                   <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
                     <Eye className="w-5 h-5 text-white" />
@@ -196,8 +196,8 @@ Estimated reading time: ${currentStats.readingTime} minute(s)`;
               </div>
               <div className="p-6 space-y-6">
                 {/* Words - Primary Stat */}
-                <div className="text-center p-6 bg-gradient-to-br from-cyan-50 to-teal-50 rounded-xl border border-cyan-200">
-                  <div className="text-4xl font-bold bg-gradient-to-r from-cyan-600 to-teal-600 bg-clip-text text-transparent mb-2" data-testid="word-count">
+                <div className="text-center p-6 bg-blue-50 rounded-xl border border-blue-200">
+                  <div className="text-4xl font-bold text-blue-600 mb-2" data-testid="word-count">
                     {currentStats.words.toLocaleString()}
                   </div>
                   <div className="text-gray-600 font-medium flex items-center justify-center gap-2">
@@ -235,7 +235,7 @@ Estimated reading time: ${currentStats.readingTime} minute(s)`;
                 </div>
                 
                 {/* Reading Time - Special */}
-                <div className="text-center p-6 bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl border border-orange-200">
+                <div className="text-center p-6 bg-blue-50 rounded-xl border border-blue-200">
                   <div className="flex items-center justify-center gap-2 mb-2">
                     <Clock className="w-5 h-5 text-orange-600" />
                     <span className="text-orange-600 font-medium">Reading Time</span>

@@ -92,7 +92,7 @@ export default function Home() {
     };
 
     return (
-      <section className="relative py-8 sm:py-12 lg:py-16 mt-12 bg-gradient-to-br from-blue-50 to-indigo-100 overflow-hidden">
+      <section className="relative py-8 sm:py-12 lg:py-16 mt-12 bg-blue-50 overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-0 right-0 w-32 h-32 sm:w-64 sm:h-64 bg-blue-200 rounded-full opacity-10 blur-2xl sm:blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
           <div className="absolute bottom-0 left-0 w-32 h-32 sm:w-64 sm:h-64 bg-indigo-200 rounded-full opacity-10 blur-2xl sm:blur-3xl transform -translate-x-1/2 translate-y-1/2"></div>
@@ -319,7 +319,7 @@ export default function Home() {
       <Header currentPage="home" />
 
       {/* Hero Section - Lightning Fast */}
-      <section className="relative bg-gradient-to-br from-blue-50 via-white to-purple-50 py-8 sm:py-12 lg:py-20 overflow-hidden">
+      <section className="relative bg-blue-50 py-8 sm:py-12 lg:py-20 overflow-hidden">
         {/* Floating Shapes - TinyWow Style - Hidden on Mobile */}
         <div className="absolute inset-0 z-0 pointer-events-none hidden sm:block">
           {/* Triangle Top Left - Pink */}
@@ -486,7 +486,7 @@ export default function Home() {
                 <Button
                   onClick={handleGenerate}
                   disabled={isGenerating}
-                  className={`btn-mobile w-auto px-8 bg-gradient-to-r from-red-500 to-orange-400 hover:from-red-600 hover:to-orange-500 text-white shadow-lg ${
+                  className={`btn-mobile w-auto px-8 bg-red-600 hover:bg-red-700 text-white shadow-lg ${
                     isGenerating ? 'opacity-70 cursor-not-allowed' : 'hover:scale-105'
                   }`}
                   data-testid="generate-button-mobile"
@@ -521,7 +521,7 @@ export default function Home() {
                     <button
                       onClick={pasteFromClipboard}
                       disabled={isGenerating}
-                      className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-4 py-4 transition-colors flex items-center justify-center"
+                      className="bg-red-600 hover:bg-red-700 text-white px-4 py-4 transition-colors flex items-center justify-center"
                       data-testid="paste-button"
                       title="Paste from clipboard"
                     >
@@ -530,7 +530,7 @@ export default function Home() {
                     <button
                       onClick={handleGenerate}
                       disabled={isGenerating}
-                      className={`bg-gradient-to-r from-yellow-400 to-orange-400 hover:from-yellow-500 hover:to-orange-500 text-white px-6 py-4 font-semibold transition-colors ${
+                      className={`bg-orange-500 hover:bg-orange-600 text-white px-6 py-4 font-semibold transition-colors ${
                         isGenerating ? 'opacity-70 cursor-not-allowed' : ''
                       }`}
                       data-testid="generate-text-button"
@@ -577,10 +577,10 @@ export default function Home() {
       </section>
 
       {/* Our More Tools Section - Modern & Vibrant */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50">
+      <section className="py-12 sm:py-16 lg:py-20 bg-blue-50">
         <div className="container-mobile max-w-6xl">
           <div className="text-center mb-12 sm:mb-16">
-            <div className="inline-flex items-center bg-gradient-to-r from-orange-500 to-red-500 text-white px-8 py-3 rounded-full text-lg font-semibold shadow-lg mb-12 hover:shadow-xl transition-shadow duration-300">
+            <div className="inline-flex items-center bg-red-600 text-white px-8 py-3 rounded-full text-lg font-semibold shadow-lg mb-12 hover:shadow-xl transition-shadow duration-300">
               <span className="mr-2">🚀</span>
               Our More Tools : Try It
             </div>
