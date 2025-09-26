@@ -623,7 +623,7 @@ export default function Home() {
                         Thumbnail Downloader
                       </h3>
                       <p className="text-gray-600 text-sm leading-relaxed">
-                        Extract and download high-quality thumbnails
+                        download high-quality thumbnails
                       </p>
                     </div>
                   </div>
