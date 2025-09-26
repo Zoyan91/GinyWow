@@ -105,114 +105,156 @@ Estimated reading time: ${currentStats.readingTime} minute(s)`;
 
       <Header currentPage="word-counter" />
       
-      <main className="container mx-auto px-4 py-8 max-w-4xl">
-        {/* Header Section */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            GinyWow Word Counter Tool
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Count words, characters, sentences, and paragraphs instantly. Perfect for essays, articles, and content creation with real-time reading time estimation.
-          </p>
-        </div>
+      {/* Floating Background Shapes */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        <div className="absolute top-20 right-10 w-32 h-32 bg-gradient-to-br from-cyan-200 to-blue-300 rounded-full opacity-20 animate-float"></div>
+        <div className="absolute top-40 left-16 w-24 h-24 bg-gradient-to-br from-teal-200 to-cyan-300 rounded-full opacity-25 animate-float-delayed"></div>
+        <div className="absolute bottom-32 right-20 w-40 h-40 bg-gradient-to-br from-blue-200 to-indigo-300 rounded-full opacity-15 animate-float-slow"></div>
+        <div className="absolute bottom-20 left-10 w-28 h-28 bg-gradient-to-br from-cyan-300 to-teal-400 rounded-full opacity-20 animate-float-reverse"></div>
+      </div>
+
+      <main className="relative z-10 container mx-auto px-4 py-8 max-w-6xl">
+        {/* Hero Section */}
+        <section className="relative text-center mb-12 py-16 bg-gradient-to-br from-cyan-50 via-blue-50 to-teal-50 rounded-3xl overflow-hidden shadow-xl">
+          <div className="absolute inset-0 bg-gradient-to-br from-cyan-100/30 to-teal-100/30"></div>
+          <div className="relative z-10 max-w-4xl mx-auto px-6">
+            <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-cyan-500 to-teal-600 text-white rounded-full text-sm font-semibold shadow-lg mb-6">
+              <FileText className="w-4 h-4 mr-2" />
+              Word Counter Tool
+            </div>
+            <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-cyan-600 to-teal-600 bg-clip-text text-transparent mb-6">
+              Count Every Word That Matters
+            </h1>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              Professional text analysis tool for writers, students, and content creators. Get instant word counts, character analysis, and reading time estimates.
+            </p>
+          </div>
+        </section>
 
         {/* Main Tool Section */}
-        <div className="grid lg:grid-cols-3 gap-6 mb-8">
+        <div className="grid lg:grid-cols-3 gap-8 mb-12">
           {/* Text Input Area */}
           <div className="lg:col-span-2">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <FileText className="w-5 h-5 text-blue-600" />
+            <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+              <div className="bg-gradient-to-r from-cyan-500 to-teal-600 p-6">
+                <h2 className="text-xl font-bold text-white flex items-center gap-3">
+                  <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                    <FileText className="w-5 h-5 text-white" />
+                  </div>
                   Enter Your Text
-                </CardTitle>
-                <CardDescription>
-                  Type or paste your text below to get instant word count statistics
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Textarea
-                  placeholder="Start typing or paste your text here..."
-                  value={text}
-                  onChange={(e) => setText(e.target.value)}
-                  className="min-h-[300px] text-base leading-relaxed"
-                  data-testid="word-counter-textarea"
-                />
-                <div className="flex gap-2 mt-4">
+                </h2>
+                <p className="text-cyan-100 mt-2">
+                  Type or paste your text below for instant analysis
+                </p>
+              </div>
+              <div className="p-6">
+                <div className="relative">
+                  <Textarea
+                    placeholder="Start typing or paste your text here to see the magic happen..."
+                    value={text}
+                    onChange={(e) => setText(e.target.value)}
+                    className="min-h-[400px] text-base leading-relaxed border-2 border-gray-200 focus:border-cyan-400 rounded-xl resize-none transition-all duration-300"
+                    data-testid="word-counter-textarea"
+                  />
+                  {text && (
+                    <div className="absolute top-3 right-3">
+                      <Badge className="bg-gradient-to-r from-cyan-500 to-teal-600 text-white">
+                        {currentStats.words} words
+                      </Badge>
+                    </div>
+                  )}
+                </div>
+                <div className="flex gap-3 mt-6">
                   <Button
                     variant="outline"
                     onClick={handleClear}
                     disabled={!text}
+                    className="flex-1 border-2 border-gray-300 hover:border-red-400 hover:text-red-600 transition-all duration-300"
                     data-testid="clear-text-button"
                   >
                     <RotateCcw className="w-4 h-4 mr-2" />
                     Clear Text
                   </Button>
                   <Button
-                    variant="outline"
                     onClick={handleCopyStats}
                     disabled={!text}
+                    className="flex-1 bg-gradient-to-r from-cyan-500 to-teal-600 hover:from-cyan-600 hover:to-teal-700 text-white shadow-lg hover:shadow-xl transition-all duration-300"
                     data-testid="copy-stats-button"
                   >
                     <Copy className="w-4 h-4 mr-2" />
                     Copy Statistics
                   </Button>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
 
           {/* Statistics Panel */}
-          <div>
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Text Statistics</CardTitle>
-                <CardDescription>
-                  Real-time analysis of your text
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex justify-between items-center">
-                  <span className="text-sm font-medium text-gray-600">Words</span>
-                  <Badge variant="secondary" className="text-lg font-bold" data-testid="word-count">
-                    {currentStats.words}
-                  </Badge>
+          <div className="space-y-6">
+            {/* Live Statistics Card */}
+            <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+              <div className="bg-gradient-to-r from-teal-500 to-cyan-600 p-6">
+                <h2 className="text-xl font-bold text-white flex items-center gap-3">
+                  <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                    <Eye className="w-5 h-5 text-white" />
+                  </div>
+                  Live Statistics
+                </h2>
+                <p className="text-teal-100 mt-2">Real-time text analysis</p>
+              </div>
+              <div className="p-6 space-y-6">
+                {/* Words - Primary Stat */}
+                <div className="text-center p-6 bg-gradient-to-br from-cyan-50 to-teal-50 rounded-xl border border-cyan-200">
+                  <div className="text-4xl font-bold bg-gradient-to-r from-cyan-600 to-teal-600 bg-clip-text text-transparent mb-2" data-testid="word-count">
+                    {currentStats.words.toLocaleString()}
+                  </div>
+                  <div className="text-gray-600 font-medium flex items-center justify-center gap-2">
+                    <FileText className="w-4 h-4" />
+                    Words
+                  </div>
                 </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm font-medium text-gray-600">Characters</span>
-                  <Badge variant="outline" data-testid="character-count">
-                    {currentStats.characters}
-                  </Badge>
+                
+                {/* Other Statistics */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="text-center p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-all duration-300">
+                    <div className="text-2xl font-bold text-gray-900 mb-1" data-testid="character-count">
+                      {currentStats.characters.toLocaleString()}
+                    </div>
+                    <div className="text-xs text-gray-600">Characters</div>
+                  </div>
+                  <div className="text-center p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-all duration-300">
+                    <div className="text-2xl font-bold text-gray-900 mb-1" data-testid="character-no-spaces-count">
+                      {currentStats.charactersNoSpaces.toLocaleString()}
+                    </div>
+                    <div className="text-xs text-gray-600">No Spaces</div>
+                  </div>
+                  <div className="text-center p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-all duration-300">
+                    <div className="text-2xl font-bold text-gray-900 mb-1" data-testid="sentence-count">
+                      {currentStats.sentences.toLocaleString()}
+                    </div>
+                    <div className="text-xs text-gray-600">Sentences</div>
+                  </div>
+                  <div className="text-center p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-all duration-300">
+                    <div className="text-2xl font-bold text-gray-900 mb-1" data-testid="paragraph-count">
+                      {currentStats.paragraphs.toLocaleString()}
+                    </div>
+                    <div className="text-xs text-gray-600">Paragraphs</div>
+                  </div>
                 </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm font-medium text-gray-600">Characters (no spaces)</span>
-                  <Badge variant="outline" data-testid="character-no-spaces-count">
-                    {currentStats.charactersNoSpaces}
-                  </Badge>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm font-medium text-gray-600">Sentences</span>
-                  <Badge variant="outline" data-testid="sentence-count">
-                    {currentStats.sentences}
-                  </Badge>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm font-medium text-gray-600">Paragraphs</span>
-                  <Badge variant="outline" data-testid="paragraph-count">
-                    {currentStats.paragraphs}
-                  </Badge>
-                </div>
-                <div className="flex justify-between items-center pt-2 border-t">
-                  <span className="text-sm font-medium text-gray-600 flex items-center gap-1">
-                    <Clock className="w-3 h-3" />
-                    Reading Time
-                  </span>
-                  <Badge variant="default" data-testid="reading-time">
+                
+                {/* Reading Time - Special */}
+                <div className="text-center p-6 bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl border border-orange-200">
+                  <div className="flex items-center justify-center gap-2 mb-2">
+                    <Clock className="w-5 h-5 text-orange-600" />
+                    <span className="text-orange-600 font-medium">Reading Time</span>
+                  </div>
+                  <div className="text-3xl font-bold text-orange-700" data-testid="reading-time">
                     {currentStats.readingTime} min
-                  </Badge>
+                  </div>
+                  <div className="text-xs text-orange-600 mt-1">@ 200 words/min</div>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
         </div>
 

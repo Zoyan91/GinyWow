@@ -131,58 +131,75 @@ export default function QRCodeGenerator() {
 
       <Header currentPage="qr-code-generator" />
       
-      <main className="container mx-auto px-4 py-8 max-w-4xl">
-        {/* Header Section */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            GinyWow QR Code Generator
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Create custom QR codes instantly for URLs, text, email, phone numbers, WiFi passwords, and more. Download high-quality QR codes for free.
-          </p>
-        </div>
+      {/* Floating Background Shapes */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        <div className="absolute top-20 right-10 w-32 h-32 bg-gradient-to-br from-amber-200 to-orange-300 rounded-full opacity-20 animate-float"></div>
+        <div className="absolute top-40 left-16 w-24 h-24 bg-gradient-to-br from-yellow-200 to-amber-300 rounded-full opacity-25 animate-float-delayed"></div>
+        <div className="absolute bottom-32 right-20 w-40 h-40 bg-gradient-to-br from-orange-200 to-red-300 rounded-full opacity-15 animate-float-slow"></div>
+        <div className="absolute bottom-20 left-10 w-28 h-28 bg-gradient-to-br from-amber-300 to-yellow-400 rounded-full opacity-20 animate-float-reverse"></div>
+      </div>
+
+      <main className="relative z-10 container mx-auto px-4 py-8 max-w-6xl">
+        {/* Hero Section */}
+        <section className="relative text-center mb-12 py-16 bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 rounded-3xl overflow-hidden shadow-xl">
+          <div className="absolute inset-0 bg-gradient-to-br from-amber-100/30 to-orange-100/30"></div>
+          <div className="relative z-10 max-w-4xl mx-auto px-6">
+            <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-full text-sm font-semibold shadow-lg mb-6">
+              <QrCode className="w-4 h-4 mr-2" />
+              QR Code Generator
+            </div>
+            <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent mb-6">
+              Create Stunning QR Codes
+            </h1>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              Professional QR code generator for URLs, text, email, WiFi, and more. Create, customize, and download high-quality QR codes instantly.
+            </p>
+          </div>
+        </section>
 
         {/* Main Tool Section */}
-        <div className="grid lg:grid-cols-2 gap-8 mb-8">
+        <div className="grid lg:grid-cols-2 gap-8 mb-12">
           {/* Input Section */}
           <div>
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <QrCode className="w-5 h-5 text-blue-600" />
+            <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+              <div className="bg-gradient-to-r from-amber-500 to-orange-600 p-6">
+                <h2 className="text-xl font-bold text-white flex items-center gap-3">
+                  <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                    <QrCode className="w-5 h-5 text-white" />
+                  </div>
                   QR Code Settings
-                </CardTitle>
-                <CardDescription>
-                  Choose the type and enter your content to generate a QR code
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
+                </h2>
+                <p className="text-amber-100 mt-2">
+                  Choose type and content for your custom QR code
+                </p>
+              </div>
+              <div className="p-6 space-y-6">
                 <div>
-                  <Label htmlFor="qr-type">QR Code Type</Label>
+                  <Label htmlFor="qr-type" className="text-base font-semibold text-gray-700 mb-3 block">QR Code Type</Label>
                   <Select value={qrCodeType} onValueChange={handleTypeChange}>
-                    <SelectTrigger data-testid="qr-type-select">
+                    <SelectTrigger className="h-12 border-2 border-gray-200 focus:border-amber-400 rounded-xl" data-testid="qr-type-select">
                       <SelectValue placeholder="Select QR code type" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="text">Plain Text</SelectItem>
-                      <SelectItem value="url">Website URL</SelectItem>
-                      <SelectItem value="email">Email Address</SelectItem>
-                      <SelectItem value="phone">Phone Number</SelectItem>
-                      <SelectItem value="sms">SMS Message</SelectItem>
-                      <SelectItem value="wifi">WiFi Password</SelectItem>
+                      <SelectItem value="text">📝 Plain Text</SelectItem>
+                      <SelectItem value="url">🌐 Website URL</SelectItem>
+                      <SelectItem value="email">✉️ Email Address</SelectItem>
+                      <SelectItem value="phone">📞 Phone Number</SelectItem>
+                      <SelectItem value="sms">💬 SMS Message</SelectItem>
+                      <SelectItem value="wifi">📶 WiFi Password</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
 
                 <div>
-                  <Label htmlFor="qr-content">Content</Label>
+                  <Label htmlFor="qr-content" className="text-base font-semibold text-gray-700 mb-3 block">Content</Label>
                   {qrCodeType === "sms" || qrCodeType === "wifi" ? (
                     <Textarea
                       id="qr-content"
                       placeholder={getPlaceholderText()}
                       value={inputText}
                       onChange={(e) => setInputText(e.target.value)}
-                      className="min-h-[100px]"
+                      className="min-h-[120px] border-2 border-gray-200 focus:border-amber-400 rounded-xl resize-none transition-all duration-300"
                       data-testid="qr-content-textarea"
                     />
                   ) : (
@@ -191,6 +208,7 @@ export default function QRCodeGenerator() {
                       placeholder={getPlaceholderText()}
                       value={inputText}
                       onChange={(e) => setInputText(e.target.value)}
+                      className="h-12 border-2 border-gray-200 focus:border-amber-400 rounded-xl transition-all duration-300"
                       data-testid="qr-content-input"
                     />
                   )}
@@ -199,48 +217,60 @@ export default function QRCodeGenerator() {
                 <Button
                   onClick={generateQRCode}
                   disabled={isGenerating || !inputText.trim()}
-                  className="w-full"
+                  className="w-full h-14 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl"
                   data-testid="generate-qr-button"
                 >
                   {isGenerating ? (
                     <>
-                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
-                      Generating...
+                      <div className="w-5 h-5 border-3 border-white border-t-transparent rounded-full animate-spin mr-3"></div>
+                      Generating Magic...
                     </>
                   ) : (
                     <>
-                      <QrCode className="w-4 h-4 mr-2" />
-                      Generate QR Code
+                      <QrCode className="w-5 h-5 mr-3" />
+                      Generate QR Code ✨
                     </>
                   )}
                 </Button>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
 
           {/* Preview Section */}
           <div>
-            <Card>
-              <CardHeader>
-                <CardTitle>QR Code Preview</CardTitle>
-                <CardDescription>
-                  Your generated QR code will appear here
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
+            <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+              <div className="bg-gradient-to-r from-orange-500 to-amber-600 p-6">
+                <h2 className="text-xl font-bold text-white flex items-center gap-3">
+                  <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                    <Smartphone className="w-5 h-5 text-white" />
+                  </div>
+                  QR Code Preview
+                </h2>
+                <p className="text-orange-100 mt-2">
+                  Your beautiful QR code will appear here
+                </p>
+              </div>
+              <div className="p-6">
                 {generatedQR ? (
-                  <div className="text-center space-y-4">
-                    <div className="bg-white p-4 rounded-lg border-2 border-gray-200 inline-block">
+                  <div className="text-center space-y-6">
+                    <div className="bg-gradient-to-br from-gray-50 to-white p-8 rounded-2xl border-2 border-dashed border-orange-300 inline-block shadow-inner relative overflow-hidden">
+                      <div className="absolute inset-0 bg-gradient-to-br from-amber-50/50 to-orange-50/50"></div>
                       <img
                         src={generatedQR}
                         alt="Generated QR Code"
-                        className="w-64 h-64 mx-auto"
+                        className="w-64 h-64 mx-auto relative z-10 drop-shadow-lg"
                         data-testid="generated-qr-image"
                       />
                     </div>
+                    <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-4 rounded-xl border border-green-200">
+                      <div className="flex items-center justify-center gap-2 text-green-700">
+                        <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                        <span className="font-medium">QR Code Generated Successfully!</span>
+                      </div>
+                    </div>
                     <Button
                       onClick={downloadQRCode}
-                      className="w-full"
+                      className="w-full h-14 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl"
                       data-testid="download-qr-button"
                     >
                       <Download className="w-4 h-4 mr-2" />
@@ -253,8 +283,8 @@ export default function QRCodeGenerator() {
                     <p>Enter content and click "Generate QR Code" to see your QR code here</p>
                   </div>
                 )}
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
         </div>
 
