@@ -1326,6 +1326,208 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Image Resizer API endpoint
+  app.post('/api/resize-image', imageUpload.single('image'), async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ error: 'No image file provided' });
+      }
+
+      const { width, height, maintainAspectRatio = 'true' } = req.body;
+      
+      if (!width && !height) {
+        return res.status(400).json({ error: 'At least width or height is required' });
+      }
+
+      const targetWidth = width ? parseInt(width) : null;
+      const targetHeight = height ? parseInt(height) : null;
+      const shouldMaintainAspectRatio = maintainAspectRatio === 'true';
+
+      // Get original metadata
+      const originalMetadata = await sharp(req.file.buffer).metadata();
+      const originalSize = req.file.size;
+
+      let resizeOptions: any = {};
+      
+      if (shouldMaintainAspectRatio) {
+        // If maintaining aspect ratio, only set one dimension and let Sharp calculate the other
+        if (targetWidth && targetHeight) {
+          resizeOptions = { width: targetWidth, height: targetHeight, fit: 'inside' };
+        } else if (targetWidth) {
+          resizeOptions = { width: targetWidth };
+        } else if (targetHeight) {
+          resizeOptions = { height: targetHeight };
+        }
+      } else {
+        // Force exact dimensions
+        if (targetWidth && targetHeight) {
+          resizeOptions = { width: targetWidth, height: targetHeight, fit: 'fill' };
+        } else if (targetWidth) {
+          resizeOptions = { width: targetWidth, height: originalMetadata.height };
+        } else if (targetHeight) {
+          resizeOptions = { width: originalMetadata.width, height: targetHeight };
+        }
+      }
+
+      // Resize the image
+      const processedBuffer = await sharp(req.file.buffer)
+        .resize(resizeOptions)
+        .toBuffer();
+
+      // Get new metadata
+      const newMetadata = await sharp(processedBuffer).metadata();
+      const newSize = processedBuffer.length;
+
+      // Calculate size change
+      const sizeDifference = ((newSize - originalSize) / originalSize) * 100;
+      const sizeChange = sizeDifference > 0 
+        ? `Size increased by ${Math.abs(sizeDifference).toFixed(1)}%`
+        : `Size reduced by ${Math.abs(sizeDifference).toFixed(1)}%`;
+
+      // Generate file name
+      const originalName = req.file.originalname;
+      const nameWithoutExt = originalName.substring(0, originalName.lastIndexOf('.'));
+      const extension = originalName.substring(originalName.lastIndexOf('.'));
+      const fileName = `${nameWithoutExt}_resized_${newMetadata.width}x${newMetadata.height}${extension}`;
+
+      // Convert to base64 for frontend
+      const base64Image = `data:${req.file.mimetype};base64,${processedBuffer.toString('base64')}`;
+
+      res.json({
+        success: true,
+        originalDimensions: { 
+          width: originalMetadata.width, 
+          height: originalMetadata.height 
+        },
+        newDimensions: { 
+          width: newMetadata.width, 
+          height: newMetadata.height 
+        },
+        originalSize: originalSize,
+        newSize: newSize,
+        sizeChange: sizeChange,
+        processedImage: base64Image,
+        downloadName: fileName
+      });
+
+    } catch (error) {
+      console.error('Error resizing image:', error);
+      res.status(500).json({ error: 'Failed to resize image' });
+    }
+  });
+
+  // Image Compressor API endpoint
+  app.post('/api/compress-image', imageUpload.single('image'), async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ error: 'No image file provided' });
+      }
+
+      const { compressionLevel = 'medium', quality = '75' } = req.body;
+      const qualityValue = parseInt(quality);
+      const originalSize = req.file.size;
+
+      // Get original metadata
+      const originalMetadata = await sharp(req.file.buffer).metadata();
+      
+      let processedBuffer;
+      let compressionOptions: any = {};
+
+      // Set compression based on level and image format
+      const imageFormat = originalMetadata.format;
+      
+      switch (compressionLevel) {
+        case 'low':
+          if (imageFormat === 'jpeg' || imageFormat === 'jpg') {
+            compressionOptions = { quality: Math.max(qualityValue, 80), progressive: true };
+          } else if (imageFormat === 'png') {
+            compressionOptions = { compressionLevel: 3, progressive: true };
+          } else if (imageFormat === 'webp') {
+            compressionOptions = { quality: Math.max(qualityValue, 80), effort: 4 };
+          }
+          break;
+        case 'medium':
+          if (imageFormat === 'jpeg' || imageFormat === 'jpg') {
+            compressionOptions = { quality: qualityValue, progressive: true };
+          } else if (imageFormat === 'png') {
+            compressionOptions = { compressionLevel: 6, progressive: true };
+          } else if (imageFormat === 'webp') {
+            compressionOptions = { quality: qualityValue, effort: 6 };
+          }
+          break;
+        case 'high':
+          if (imageFormat === 'jpeg' || imageFormat === 'jpg') {
+            compressionOptions = { quality: Math.min(qualityValue, 60), progressive: true };
+          } else if (imageFormat === 'png') {
+            compressionOptions = { compressionLevel: 8, progressive: true };
+          } else if (imageFormat === 'webp') {
+            compressionOptions = { quality: Math.min(qualityValue, 60), effort: 6 };
+          }
+          break;
+        case 'maximum':
+          if (imageFormat === 'jpeg' || imageFormat === 'jpg') {
+            compressionOptions = { quality: Math.min(qualityValue, 40), progressive: true };
+          } else if (imageFormat === 'png') {
+            compressionOptions = { compressionLevel: 9, progressive: true };
+          } else if (imageFormat === 'webp') {
+            compressionOptions = { quality: Math.min(qualityValue, 40), effort: 6 };
+          }
+          break;
+        default:
+          compressionOptions = { quality: qualityValue, progressive: true };
+      }
+
+      // Apply compression based on format
+      if (imageFormat === 'jpeg' || imageFormat === 'jpg') {
+        processedBuffer = await sharp(req.file.buffer)
+          .jpeg(compressionOptions)
+          .toBuffer();
+      } else if (imageFormat === 'png') {
+        processedBuffer = await sharp(req.file.buffer)
+          .png(compressionOptions)
+          .toBuffer();
+      } else if (imageFormat === 'webp') {
+        processedBuffer = await sharp(req.file.buffer)
+          .webp(compressionOptions)
+          .toBuffer();
+      } else {
+        // For other formats, convert to JPEG with compression
+        processedBuffer = await sharp(req.file.buffer)
+          .jpeg({ quality: qualityValue, progressive: true })
+          .toBuffer();
+      }
+
+      const newSize = processedBuffer.length;
+
+      // Calculate compression metrics
+      const compressionRatio = `${((originalSize / newSize)).toFixed(1)}:1`;
+      const sizeReduction = `${(((originalSize - newSize) / originalSize) * 100).toFixed(1)}%`;
+
+      // Generate file name
+      const originalName = req.file.originalname;
+      const nameWithoutExt = originalName.substring(0, originalName.lastIndexOf('.'));
+      const extension = originalName.substring(originalName.lastIndexOf('.'));
+      const fileName = `${nameWithoutExt}_compressed${extension}`;
+
+      // Convert to base64 for frontend
+      const base64Image = `data:${req.file.mimetype};base64,${processedBuffer.toString('base64')}`;
+
+      res.json({
+        success: true,
+        originalSize: originalSize,
+        compressedSize: newSize,
+        compressionRatio: compressionRatio,
+        sizeReduction: sizeReduction,
+        processedImage: base64Image,
+        downloadName: fileName
+      });
+
+    } catch (error) {
+      console.error('Error compressing image:', error);
+      res.status(500).json({ error: 'Failed to compress image' });
+    }
+  });
+
   // PDF to Word Conversion
   app.post('/api/pdf/convert-to-word', pdfUpload.single('pdf'), async (req, res) => {
     try {
