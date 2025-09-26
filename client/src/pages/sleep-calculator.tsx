@@ -39,7 +39,7 @@ export default function SleepCalculator() {
     }
 
     let baseTime: Date;
-    let recommendations: { time: string; cycles: number; quality: string }[] = [];
+    let recommendations: { time: string; cycles: number; quality: string; qualityDescription: string; sleepDuration: string; totalSleepMinutes: number }[] = [];
 
     if (calculationType === "bedtime") {
       // Calculate bedtime based on wake-up time
@@ -66,11 +66,34 @@ export default function SleepCalculator() {
         });
         
         let quality = "Poor";
-        if (cycles >= 4 && cycles <= 6) quality = "Excellent";
-        else if (cycles >= 3) quality = "Good";
-        else if (cycles >= 2) quality = "Fair";
+        let qualityDescription = "";
+        
+        if (cycles >= 4 && cycles <= 6) {
+          quality = "Excellent";
+          qualityDescription = "Ideal sleep duration for optimal rest and recovery";
+        } else if (cycles >= 3) {
+          quality = "Good"; 
+          qualityDescription = "Good amount of sleep for most adults";
+        } else if (cycles >= 2) {
+          quality = "Fair";
+          qualityDescription = "Minimum acceptable sleep for short-term";
+        } else {
+          quality = "Poor";
+          qualityDescription = "Too little sleep - not recommended";
+        }
 
-        recommendations.push({ time: timeStr, cycles, quality });
+        const totalHours = Math.floor((cycles * 1.5 * 60 + 15) / 60);
+        const totalMinutes = Math.round(((cycles * 1.5 * 60 + 15) % 60));
+        const sleepDurationText = `${totalHours}h ${totalMinutes > 0 ? totalMinutes + 'm' : ''}`;
+
+        recommendations.push({ 
+          time: timeStr, 
+          cycles, 
+          quality, 
+          qualityDescription,
+          sleepDuration: sleepDurationText,
+          totalSleepMinutes: cycles * 90 + 15
+        });
       }
     } else {
       // Calculate wake-up time based on bedtime
@@ -93,11 +116,34 @@ export default function SleepCalculator() {
         });
         
         let quality = "Poor";
-        if (cycles >= 4 && cycles <= 6) quality = "Excellent";
-        else if (cycles >= 3) quality = "Good";
-        else if (cycles >= 2) quality = "Fair";
+        let qualityDescription = "";
+        
+        if (cycles >= 4 && cycles <= 6) {
+          quality = "Excellent";
+          qualityDescription = "Ideal sleep duration for optimal rest and recovery";
+        } else if (cycles >= 3) {
+          quality = "Good"; 
+          qualityDescription = "Good amount of sleep for most adults";
+        } else if (cycles >= 2) {
+          quality = "Fair";
+          qualityDescription = "Minimum acceptable sleep for short-term";
+        } else {
+          quality = "Poor";
+          qualityDescription = "Too little sleep - not recommended";
+        }
 
-        recommendations.push({ time: timeStr, cycles, quality });
+        const totalHours = Math.floor((cycles * 1.5 * 60 + 15) / 60);
+        const totalMinutes = Math.round(((cycles * 1.5 * 60 + 15) % 60));
+        const sleepDurationText = `${totalHours}h ${totalMinutes > 0 ? totalMinutes + 'm' : ''}`;
+
+        recommendations.push({ 
+          time: timeStr, 
+          cycles, 
+          quality, 
+          qualityDescription,
+          sleepDuration: sleepDurationText,
+          totalSleepMinutes: cycles * 90 + 15
+        });
       }
     }
 
@@ -368,6 +414,15 @@ export default function SleepCalculator() {
                       <p className="text-sm text-gray-600">
                         Based on 90-minute sleep cycles + 15 minutes to fall asleep
                       </p>
+                      <div className="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                        <h4 className="font-semibold text-blue-800 mb-2">💡 Sleep Tips:</h4>
+                        <ul className="text-sm text-blue-700 space-y-1">
+                          <li>• Aim for 4-6 complete sleep cycles (6-9 hours) for optimal rest</li>
+                          <li>• Keep a consistent sleep schedule every day</li>
+                          <li>• Avoid screens 1 hour before your chosen bedtime</li>
+                          <li>• Create a cool, dark, and quiet sleep environment</li>
+                        </ul>
+                      </div>
                     </div>
                     {results.recommendations.map((rec: any, index: number) => (
                       <div key={index} className="bg-gradient-to-r from-gray-50 to-white p-4 rounded-xl border border-gray-200">
@@ -378,7 +433,8 @@ export default function SleepCalculator() {
                             </div>
                             <div>
                               <div className="text-xl font-bold text-gray-800">{rec.time}</div>
-                              <div className="text-sm text-gray-600">{rec.cycles} sleep cycles ({rec.cycles * 1.5}h sleep)</div>
+                              <div className="text-sm text-gray-600">{rec.cycles} sleep cycles ({rec.sleepDuration} total sleep)</div>
+                              <div className="text-xs text-gray-500 mt-1">{rec.qualityDescription}</div>
                             </div>
                           </div>
                           <Badge className={`${getQualityColor(rec.quality)} text-white`}>
