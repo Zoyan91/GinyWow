@@ -227,7 +227,7 @@ export default function MortgageCalculator() {
       <Header currentPage="Mortgage Calculator" />
       
       {/* Hero Section with exact home page design pattern */}
-      <section className="relative min-h-[40vh] bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center overflow-hidden pt-12 sm:pt-16 lg:pt-20">
+      <section className="relative min-h-[40vh] bg-green-50 flex items-center justify-center overflow-hidden pt-12 sm:pt-16 lg:pt-20">
 
         <div className="relative z-10 container mx-auto px-4 max-w-4xl">
           <div className="text-center animate-fade-in">
@@ -247,7 +247,7 @@ export default function MortgageCalculator() {
         <div className="mb-8">
           <div>
             <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
-              <div className="bg-gradient-to-r from-green-500 to-blue-600 p-6">
+              <div className="bg-green-600 p-6">
                 <h2 className="text-xl font-bold text-white flex items-center gap-3">
                   <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
                     <Home className="w-5 h-5 text-white" />
