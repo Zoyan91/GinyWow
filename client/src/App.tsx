@@ -14,6 +14,14 @@ const FormatConverterPage = lazy(() => import("@/pages/format-converter"));
 const ImageResizerPage = lazy(() => import("@/pages/image-resizer"));
 const ImageCompressorPage = lazy(() => import("@/pages/image-compressor"));
 
+// Utility tools pages
+const WordCounterPage = lazy(() => import("@/pages/word-counter"));
+const QRCodeGeneratorPage = lazy(() => import("@/pages/qr-code-generator"));
+const PasswordGeneratorPage = lazy(() => import("@/pages/password-generator"));
+const CaseConverterPage = lazy(() => import("@/pages/case-converter"));
+const UnitConverterPage = lazy(() => import("@/pages/unit-converter"));
+const AgeCalculatorPage = lazy(() => import("@/pages/age-calculator"));
+
 
 // Preload secondary pages
 const About = lazy(() => import("@/pages/about"));
@@ -71,6 +79,14 @@ function Router() {
           <Route path="/format-converter" component={FormatConverterPage} />
           <Route path="/image-resizer" component={ImageResizerPage} />
           <Route path="/image-compressor" component={ImageCompressorPage} />
+          
+          {/* Utility Tools Routes */}
+          <Route path="/word-counter" component={WordCounterPage} />
+          <Route path="/qr-code-generator" component={QRCodeGeneratorPage} />
+          <Route path="/password-generator" component={PasswordGeneratorPage} />
+          <Route path="/case-converter" component={CaseConverterPage} />
+          <Route path="/unit-converter" component={UnitConverterPage} />
+          <Route path="/age-calculator" component={AgeCalculatorPage} />
           
           <Route component={NotFound} />
         </Switch>
