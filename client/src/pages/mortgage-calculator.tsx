@@ -4,7 +4,8 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Home, Calculator, DollarSign, TrendingUp } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Home, Calculator, DollarSign, TrendingUp, Globe } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
@@ -17,6 +18,45 @@ import {
   mortgageCalculatorBreadcrumbs,
   mortgageCalculatorFAQs
 } from "@/lib/seo";
+
+// Global currency list with major world currencies
+const GLOBAL_CURRENCIES = [
+  { code: 'USD', symbol: '$', name: 'US Dollar', locale: 'en-US' },
+  { code: 'EUR', symbol: '€', name: 'Euro', locale: 'de-DE' },
+  { code: 'GBP', symbol: '£', name: 'British Pound', locale: 'en-GB' },
+  { code: 'JPY', symbol: '¥', name: 'Japanese Yen', locale: 'ja-JP' },
+  { code: 'AUD', symbol: 'A$', name: 'Australian Dollar', locale: 'en-AU' },
+  { code: 'CAD', symbol: 'C$', name: 'Canadian Dollar', locale: 'en-CA' },
+  { code: 'CHF', symbol: 'Fr', name: 'Swiss Franc', locale: 'de-CH' },
+  { code: 'CNY', symbol: '¥', name: 'Chinese Yuan', locale: 'zh-CN' },
+  { code: 'INR', symbol: '₹', name: 'Indian Rupee', locale: 'en-IN' },
+  { code: 'KRW', symbol: '₩', name: 'South Korean Won', locale: 'ko-KR' },
+  { code: 'SGD', symbol: 'S$', name: 'Singapore Dollar', locale: 'en-SG' },
+  { code: 'HKD', symbol: 'HK$', name: 'Hong Kong Dollar', locale: 'en-HK' },
+  { code: 'NOK', symbol: 'kr', name: 'Norwegian Krone', locale: 'nb-NO' },
+  { code: 'SEK', symbol: 'kr', name: 'Swedish Krona', locale: 'sv-SE' },
+  { code: 'DKK', symbol: 'kr', name: 'Danish Krone', locale: 'da-DK' },
+  { code: 'PLN', symbol: 'zł', name: 'Polish Zloty', locale: 'pl-PL' },
+  { code: 'CZK', symbol: 'Kč', name: 'Czech Koruna', locale: 'cs-CZ' },
+  { code: 'HUF', symbol: 'Ft', name: 'Hungarian Forint', locale: 'hu-HU' },
+  { code: 'RUB', symbol: '₽', name: 'Russian Ruble', locale: 'ru-RU' },
+  { code: 'BRL', symbol: 'R$', name: 'Brazilian Real', locale: 'pt-BR' },
+  { code: 'MXN', symbol: '$', name: 'Mexican Peso', locale: 'es-MX' },
+  { code: 'ARS', symbol: '$', name: 'Argentine Peso', locale: 'es-AR' },
+  { code: 'CLP', symbol: '$', name: 'Chilean Peso', locale: 'es-CL' },
+  { code: 'ZAR', symbol: 'R', name: 'South African Rand', locale: 'en-ZA' },
+  { code: 'TRY', symbol: '₺', name: 'Turkish Lira', locale: 'tr-TR' },
+  { code: 'NZD', symbol: 'NZ$', name: 'New Zealand Dollar', locale: 'en-NZ' },
+  { code: 'THB', symbol: '฿', name: 'Thai Baht', locale: 'th-TH' },
+  { code: 'MYR', symbol: 'RM', name: 'Malaysian Ringgit', locale: 'ms-MY' },
+  { code: 'IDR', symbol: 'Rp', name: 'Indonesian Rupiah', locale: 'id-ID' },
+  { code: 'PHP', symbol: '₱', name: 'Philippine Peso', locale: 'en-PH' },
+  { code: 'VND', symbol: '₫', name: 'Vietnamese Dong', locale: 'vi-VN' },
+  { code: 'ILS', symbol: '₪', name: 'Israeli Shekel', locale: 'he-IL' },
+  { code: 'AED', symbol: 'د.إ', name: 'UAE Dirham', locale: 'ar-AE' },
+  { code: 'SAR', symbol: '﷼', name: 'Saudi Riyal', locale: 'ar-SA' },
+  { code: 'EGP', symbol: '£', name: 'Egyptian Pound', locale: 'ar-EG' },
+];
 
 interface MortgageResult {
   monthlyEMI: number;
@@ -35,8 +75,12 @@ export default function MortgageCalculator() {
   const [loanAmount, setLoanAmount] = useState("");
   const [interestRate, setInterestRate] = useState("");
   const [tenure, setTenure] = useState("");
+  const [selectedCurrency, setSelectedCurrency] = useState("USD"); // Default to USD
   const [mortgageResult, setMortgageResult] = useState<MortgageResult | null>(null);
   const { toast } = useToast();
+
+  // Get current currency info
+  const currentCurrency = GLOBAL_CURRENCIES.find(c => c.code === selectedCurrency) || GLOBAL_CURRENCIES[0];
 
   // Generate structured data for SEO (memoized for performance)
   const structuredData = useMemo(() => [
@@ -136,7 +180,7 @@ export default function MortgageCalculator() {
     
     toast({
       title: "Mortgage Calculated",
-      description: `Your monthly EMI is ₹${emi.toLocaleString('en-IN', { maximumFractionDigits: 0 })}`,
+      description: `Your monthly EMI is ${currentCurrency.symbol}${emi.toLocaleString(currentCurrency.locale, { maximumFractionDigits: 0 })}`,
     });
   };
 
@@ -152,7 +196,7 @@ export default function MortgageCalculator() {
   };
 
   const formatCurrency = (amount: number) => {
-    return `₹${amount.toLocaleString('en-IN', { maximumFractionDigits: 0 })}`;
+    return `${currentCurrency.symbol}${amount.toLocaleString(currentCurrency.locale, { maximumFractionDigits: 0 })}`;
   };
 
   const getAffordabilityBadge = (emi: number, income?: number) => {
@@ -205,8 +249,34 @@ export default function MortgageCalculator() {
                 </p>
               </div>
               <div className="p-6 space-y-6">
+                {/* Currency Selection */}
                 <div>
-                  <Label htmlFor="loan-amount" className="text-base font-semibold text-gray-700 mb-3 block">Loan Amount (₹)</Label>
+                  <Label className="text-base font-semibold text-gray-700 mb-3 block flex items-center gap-2">
+                    <Globe className="w-4 h-4" />
+                    Currency
+                  </Label>
+                  <Select value={selectedCurrency} onValueChange={setSelectedCurrency}>
+                    <SelectTrigger className="h-12 border-2 border-gray-200 focus:border-green-400 rounded-xl transition-all duration-300" data-testid="currency-selector">
+                      <SelectValue placeholder="Select Currency" />
+                    </SelectTrigger>
+                    <SelectContent className="max-h-80">
+                      {GLOBAL_CURRENCIES.map((currency) => (
+                        <SelectItem key={currency.code} value={currency.code}>
+                          <div className="flex items-center gap-3">
+                            <span className="text-lg">{currency.symbol}</span>
+                            <div>
+                              <div className="font-medium">{currency.code}</div>
+                              <div className="text-sm text-gray-500">{currency.name}</div>
+                            </div>
+                          </div>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <Label htmlFor="loan-amount" className="text-base font-semibold text-gray-700 mb-3 block">Loan Amount ({currentCurrency.symbol})</Label>
                   <Input
                     id="loan-amount"
                     type="number"
