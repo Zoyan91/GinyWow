@@ -196,7 +196,18 @@ export default function MortgageCalculator() {
   };
 
   const formatCurrency = (amount: number) => {
-    return `${currentCurrency.symbol}${amount.toLocaleString(currentCurrency.locale, { maximumFractionDigits: 0 })}`;
+    // Use Intl.NumberFormat for better currency formatting as suggested by architect
+    try {
+      return new Intl.NumberFormat(currentCurrency.locale, {
+        style: 'currency',
+        currency: currentCurrency.code,
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+      }).format(amount);
+    } catch (error) {
+      // Fallback to symbol + number if currency code not supported
+      return `${currentCurrency.symbol}${amount.toLocaleString(currentCurrency.locale, { maximumFractionDigits: 0 })}`;
+    }
   };
 
   const getAffordabilityBadge = (emi: number, income?: number) => {
@@ -282,10 +293,11 @@ export default function MortgageCalculator() {
                     type="number"
                     value={loanAmount}
                     onChange={(e) => setLoanAmount(e.target.value)}
-                    placeholder="e.g., 5000000"
+                    placeholder={`e.g., ${currentCurrency.code === 'USD' ? '500000' : currentCurrency.code === 'EUR' ? '400000' : currentCurrency.code === 'INR' ? '5000000' : '500000'}`}
                     className="h-12 border-2 border-gray-200 focus:border-green-400 rounded-xl transition-all duration-300"
                     data-testid="loan-amount-input"
                   />
+                  <p className="text-sm text-gray-500 mt-2">Enter amount in {currentCurrency.name} ({currentCurrency.code})</p>
                 </div>
 
                 <div>
