@@ -599,25 +599,44 @@ export default function ImageResizerPage() {
 
         <Separator className="my-12" />
 
-        {/* FAQ Section */}
-        <section className="py-12 px-4 sm:px-6 lg:px-8">
+        {/* GinyWow Image Resizer Information Section */}
+        <section className="py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">
-              Frequently Asked Questions
-            </h2>
-            <div className="grid gap-6">
-              {faqs.map((faq, index) => (
-                <Card key={index}>
-                  <CardContent className="pt-6">
-                    <h3 className="font-semibold text-lg text-gray-900 mb-2">
-                      {faq.question}
-                    </h3>
-                    <p className="text-gray-600 leading-relaxed">
-                      {faq.answer}
-                    </p>
-                  </CardContent>
-                </Card>
-              ))}
+            <div className="prose prose-lg max-w-none">
+              <h4 className="text-2xl font-bold text-gray-900 mb-4">What is GinyWow Image Resizer?</h4>
+              <p className="text-gray-600 mb-8 leading-relaxed">
+                GinyWow Image Resizer is a free online tool that lets you <strong>change the dimensions of images instantly</strong>. Whether you need to make images smaller for websites or resize them for social media platforms, this tool gives you the perfect fit in seconds.
+              </p>
+
+              <h4 className="text-2xl font-bold text-gray-900 mb-4">Why Use GinyWow Image Resizer?</h4>
+              <ul className="text-gray-600 mb-8 space-y-2 leading-relaxed">
+                <li><strong>Free & Online:</strong> No downloads or payments needed.</li>
+                <li><strong>Custom Dimensions:</strong> Enter your desired width and height easily.</li>
+                <li><strong>Multi-Format Support:</strong> Works with JPG, PNG, WebP, and other formats.</li>
+                <li><strong>Social Media Ready:</strong> Get the perfect size for Instagram, Facebook, YouTube, and more.</li>
+                <li><strong>Quality Maintained:</strong> Resize images without blurring or distortion.</li>
+              </ul>
+
+              <h4 className="text-2xl font-bold text-gray-900 mb-4">How to Resize Images with GinyWow</h4>
+              <ol className="text-gray-600 mb-8 space-y-2 leading-relaxed list-decimal list-inside">
+                <li>Upload your image to GinyWow Image Resizer.</li>
+                <li>Enter custom width and height or select a preset ratio.</li>
+                <li>Preview the resized image.</li>
+                <li>Download instantly in your preferred format.</li>
+              </ol>
+
+              <h4 className="text-2xl font-bold text-gray-900 mb-4">Who Can Benefit from GinyWow Image Resizer?</h4>
+              <ul className="text-gray-600 mb-8 space-y-2 leading-relaxed">
+                <li><strong>Students:</strong> Adjust image sizes for projects and presentations.</li>
+                <li><strong>Social Media Creators:</strong> Get perfectly sized images for posts, thumbnails, or covers.</li>
+                <li><strong>Web Designers:</strong> Create responsive visuals for websites.</li>
+                <li><strong>Businesses:</strong> Standardize images for branding and marketing.</li>
+              </ul>
+
+              <h4 className="text-2xl font-bold text-gray-900 mb-4">Why Choose GinyWow Image Resizer?</h4>
+              <p className="text-gray-600 leading-relaxed">
+                With GinyWow Image Resizer, you can resize images quickly, easily, and for free. Perfect dimensions, no hassle—just upload, adjust, and download.
+              </p>
             </div>
           </div>
         </section>
