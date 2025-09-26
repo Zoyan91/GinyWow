@@ -29,8 +29,8 @@ const preloadPage = (path: string) => {
     import("@/pages/unit-converter");
   } else if (path === "/age-calculator") {
     import("@/pages/age-calculator");
-  } else if (path === "/sleep-calculator") {
-    import("@/pages/sleep-calculator");
+  } else if (path === "/mortgage-calculator") {
+    import("@/pages/mortgage-calculator");
   } else if (path === "/about") {
     import("@/pages/about");
   }
@@ -67,7 +67,7 @@ export default function Header({ currentPage }: HeaderProps) {
            location.startsWith("/case-converter") ||
            location.startsWith("/unit-converter") ||
            location.startsWith("/age-calculator") ||
-           location.startsWith("/sleep-calculator");
+           location.startsWith("/mortgage-calculator");
   };
 
   // TinyWow-style navigation items
@@ -91,7 +91,7 @@ export default function Header({ currentPage }: HeaderProps) {
     { href: "/case-converter", label: "Case Converter", testId: "nav-case-converter" },
     { href: "/unit-converter", label: "Unit Converter", testId: "nav-unit-converter" },
     { href: "/age-calculator", label: "Age Calculator", testId: "nav-age-calculator" },
-    { href: "/sleep-calculator", label: "Sleep Calculator", testId: "nav-sleep-calculator" },
+    { href: "/mortgage-calculator", label: "Mortgage Calculator", testId: "nav-mortgage-calculator" },
   ];
 
 
@@ -124,8 +124,8 @@ export default function Header({ currentPage }: HeaderProps) {
         setLocation('/case-converter');
       } else if (searchTerm.includes('unit')) {
         setLocation('/unit-converter');
-      } else if (searchTerm.includes('sleep') || searchTerm.includes('bedtime') || searchTerm.includes('wake')) {
-        setLocation('/sleep-calculator');
+      } else if (searchTerm.includes('mortgage') || searchTerm.includes('loan') || searchTerm.includes('emi')) {
+        setLocation('/mortgage-calculator');
       } else if (searchTerm.includes('age') || searchTerm.includes('calculator')) {
         setLocation('/age-calculator');
       }

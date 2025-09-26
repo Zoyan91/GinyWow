@@ -140,9 +140,9 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/sleep-calculator">
+                <Link href="/mortgage-calculator">
                   <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm">
-                    Sleep Calculator
+                    Mortgage Calculator
                   </span>
                 </Link>
               </li>
@@ -322,9 +322,9 @@ export default function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/sleep-calculator">
+                  <Link href="/mortgage-calculator">
                     <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm block py-2">
-                      Sleep Calculator
+                      Mortgage Calculator
                     </span>
                   </Link>
                 </li>
