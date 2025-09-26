@@ -1,4 +1,4 @@
-import { useState, lazy, Suspense } from "react";
+import { useState, lazy, Suspense, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Copy, Clipboard, CheckCircle } from "lucide-react";
@@ -7,6 +7,16 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { apiRequest } from "@/lib/queryClient";
 import { Link } from "wouter";
 import Header from "@/components/header";
+import { SEOHead } from "@/components/seo-head";
+import { 
+  homeSEO, 
+  generateHomePageSchema,
+  generateOrganizationSchema,
+  generateBreadcrumbSchema,
+  generateFAQSchema,
+  homeBreadcrumbs,
+  homeFAQs
+} from "@/lib/seo";
 
 // Lazy load footer for better initial performance
 const Footer = lazy(() => import("@/components/footer"));
@@ -19,6 +29,14 @@ export default function Home() {
   
   // Enable scroll animations
   useScrollAnimation();
+
+  // Generate structured data for SEO (memoized for performance)
+  const structuredData = useMemo(() => [
+    generateHomePageSchema(),
+    generateOrganizationSchema(),
+    generateBreadcrumbSchema(homeBreadcrumbs),
+    generateFAQSchema(homeFAQs)
+  ], []);
 
   // Newsletter subscription functionality
   const NewsletterSection = () => {
@@ -297,6 +315,9 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background relative w-full overflow-x-hidden">
+      {/* SEO Head with comprehensive optimization */}
+      <SEOHead seoData={homeSEO} structuredData={structuredData} />
+      
       <Header currentPage="home" />
 
       {/* Hero Section - Mobile First */}

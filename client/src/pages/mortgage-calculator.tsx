@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,7 +8,15 @@ import { Home, Calculator, DollarSign, TrendingUp } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import { Helmet } from "react-helmet-async";
+import { SEOHead } from "@/components/seo-head";
+import { 
+  mortgageCalculatorSEO,
+  generateWebApplicationSchema,
+  generateBreadcrumbSchema,
+  generateFAQSchema,
+  mortgageCalculatorBreadcrumbs,
+  mortgageCalculatorFAQs
+} from "@/lib/seo";
 
 interface MortgageResult {
   monthlyEMI: number;
@@ -29,6 +37,13 @@ export default function MortgageCalculator() {
   const [tenure, setTenure] = useState("");
   const [mortgageResult, setMortgageResult] = useState<MortgageResult | null>(null);
   const { toast } = useToast();
+
+  // Generate structured data for SEO (memoized for performance)
+  const structuredData = useMemo(() => [
+    generateWebApplicationSchema("https://ginywow.replit.app/mortgage-calculator"),
+    generateBreadcrumbSchema(mortgageCalculatorBreadcrumbs),
+    generateFAQSchema(mortgageCalculatorFAQs)
+  ], []);
 
   const calculateMortgage = () => {
     if (!loanAmount || !interestRate || !tenure) {
@@ -151,41 +166,8 @@ export default function MortgageCalculator() {
 
   return (
     <>
-      <Helmet>
-        <title>Mortgage Calculator - Calculate Home Loan EMI | GinyWow</title>
-        <meta name="description" content="Calculate your home loan EMI, total interest, and monthly payments with our free mortgage calculator. Plan your home purchase with accurate loan calculations." />
-        <meta name="keywords" content="mortgage calculator, home loan calculator, EMI calculator, loan calculator, interest calculator, mortgage payment" />
-        
-        {/* Open Graph tags */}
-        <meta property="og:title" content="Free Mortgage Calculator - Calculate Home Loan EMI" />
-        <meta property="og:description" content="Calculate your home loan EMI, total interest, and monthly payments with our free mortgage calculator. Plan your home purchase with accurate loan calculations." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://ginywow.com/mortgage-calculator" />
-        
-        {/* Twitter Card tags */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Free Mortgage Calculator - Calculate Home Loan EMI" />
-        <meta name="twitter:description" content="Calculate your home loan EMI, total interest, and monthly payments with our free mortgage calculator." />
-        
-        {/* Structured Data */}
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "WebApplication",
-            "name": "Mortgage Calculator",
-            "description": "Calculate home loan EMI, total interest, and mortgage payments",
-            "url": "https://ginywow.com/mortgage-calculator",
-            "applicationCategory": "FinanceApplication",
-            "operatingSystem": "Any",
-            "permissions": "No permissions required",
-            "isAccessibleForFree": true,
-            "creator": {
-              "@type": "Organization",
-              "name": "GinyWow"
-            }
-          })}
-        </script>
-      </Helmet>
+      {/* SEO Head with comprehensive optimization */}
+      <SEOHead seoData={mortgageCalculatorSEO} structuredData={structuredData} />
 
       <Header currentPage="Mortgage Calculator" />
       
