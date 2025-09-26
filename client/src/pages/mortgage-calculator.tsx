@@ -190,7 +190,7 @@ export default function MortgageCalculator() {
       <Header currentPage="Mortgage Calculator" />
       
       {/* Hero Section with exact home page design pattern */}
-      <section className="relative min-h-[40vh] bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-[40vh] bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center overflow-hidden pt-12 sm:pt-16 lg:pt-20">
         {/* Floating gradient shapes - exact same as home page */}
         <div className="absolute inset-0 hidden md:block">
           {/* Large gradient circles */}
