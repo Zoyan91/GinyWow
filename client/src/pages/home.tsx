@@ -602,7 +602,7 @@ export default function Home() {
               Our More Tools : Try It
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 lg:gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-5xl mx-auto">
               {/* Format Converter - Blue Theme */}
               <Link href="/format-converter">
                 <div
@@ -633,7 +633,7 @@ export default function Home() {
               {/* Image Resizer - Purple Theme */}
               <Link href="/image-resizer">
                 <div
-                  className="group relative bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl cursor-pointer transform hover:-translate-y-2 transition-all duration-300 border border-gray-100 overflow-hidden hidden md:block"
+                  className="group relative bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl cursor-pointer transform hover:-translate-y-2 transition-all duration-300 border border-gray-100 overflow-hidden"
                   data-testid="image-resizer-card"
                 >
                   {/* Background Gradient Overlay */}
@@ -660,7 +660,7 @@ export default function Home() {
               {/* Image Compressor - Pink/Red Theme */}
               <Link href="/image-compressor">
                 <div
-                  className="group relative bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl cursor-pointer transform hover:-translate-y-2 transition-all duration-300 border border-gray-100 overflow-hidden hidden md:block"
+                  className="group relative bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl cursor-pointer transform hover:-translate-y-2 transition-all duration-300 border border-gray-100 overflow-hidden"
                   data-testid="image-compressor-card"
                 >
                   {/* Background Gradient Overlay */}
