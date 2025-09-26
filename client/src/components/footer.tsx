@@ -71,7 +71,7 @@ export default function Footer() {
               <li>
                 <Link href="/format-converter">
                   <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm">
-                    Converter
+                    Image
                   </span>
                 </Link>
               </li>
@@ -178,7 +178,7 @@ export default function Footer() {
                 <li>
                   <Link href="/format-converter">
                     <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm block py-2">
-                      Converter
+                      Image
                     </span>
                   </Link>
                 </li>

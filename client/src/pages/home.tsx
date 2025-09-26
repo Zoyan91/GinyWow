@@ -624,7 +624,7 @@ export default function Home() {
                 </div>
               </Link>
 
-              {/* Format Converter Section */}
+              {/* Image Converter Section */}
               <Link href="/format-converter">
                 <div
                   className="card-mobile p-6 sm:p-8 hover:shadow-lg cursor-pointer"
@@ -637,7 +637,7 @@ export default function Home() {
                       </svg>
                     </div>
                     <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
-                      Converter
+                      Image
                     </h3>
                     <p className="text-gray-600 text-sm mt-2">
                       Convert images to any format instantly, free online.
