@@ -67,9 +67,20 @@ export function SEOHead({ seoData, structuredData = [] }: SEOHeadProps) {
         />
       ))}
       
-      {/* Preconnect to important domains */}
+      {/* Performance Optimizations - Preconnect to important domains */}
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+      <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+      
+      {/* Preload critical CSS and fonts for faster rendering */}
+      <link rel="preload" href="/fonts/inter-var.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+      
+      {/* Resource hints for instant loading */}
+      <link rel="prefetch" href="/api/short-url" />
+      <link rel="prefetch" href="/api/convert-image" />
+      <link rel="prefetch" href="/api/resize-image" />
+      <link rel="prefetch" href="/api/compress-image" />
     </Helmet>
   );
 }

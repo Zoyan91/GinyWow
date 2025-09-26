@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Copy, Clipboard, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { usePerformanceMonitor, useResourcePerformance } from "@/hooks/usePerformanceMonitor";
 import { apiRequest } from "@/lib/queryClient";
 import { Link } from "wouter";
 import Header from "@/components/header";
@@ -29,6 +30,10 @@ export default function Home() {
   
   // Enable scroll animations
   useScrollAnimation();
+
+  // Performance monitoring for Core Web Vitals
+  usePerformanceMonitor();
+  useResourcePerformance();
 
   // Generate structured data for SEO (memoized for performance)
   const structuredData = useMemo(() => [
