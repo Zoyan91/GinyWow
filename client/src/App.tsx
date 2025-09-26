@@ -12,16 +12,6 @@ const Home = lazy(() => import("@/pages/home"));
 const ThumbnailDownloader = lazy(() => import("@/pages/thumbnail-downloader"));
 const FormatConverterPage = lazy(() => import("@/pages/format-converter"));
 
-// PDF Tools Pages
-const PDFToWord = lazy(() => import("@/pages/pdf-to-word"));
-const PDFToExcel = lazy(() => import("@/pages/pdf-to-excel"));
-const PDFMerge = lazy(() => import("@/pages/pdf-merge"));
-const PDFSplit = lazy(() => import("@/pages/pdf-split"));
-const PDFCompress = lazy(() => import("@/pages/pdf-compress"));
-const PDFToImage = lazy(() => import("@/pages/pdf-to-image"));
-const WordToPDF = lazy(() => import("@/pages/word-to-pdf"));
-const PDFUnlock = lazy(() => import("@/pages/pdf-unlock"));
-const PDFWatermark = lazy(() => import("@/pages/pdf-watermark"));
 
 // Preload secondary pages
 const About = lazy(() => import("@/pages/about"));
@@ -77,17 +67,6 @@ function Router() {
           <Route path="/privacy" component={Privacy} />
           <Route path="/thumbnail-downloader" component={ThumbnailDownloader} />
           <Route path="/format-converter" component={FormatConverterPage} />
-          
-          {/* PDF Tools Routes */}
-          <Route path="/pdf-to-word" component={PDFToWord} />
-          <Route path="/pdf-to-excel" component={PDFToExcel} />
-          <Route path="/pdf-merge" component={PDFMerge} />
-          <Route path="/pdf-split" component={PDFSplit} />
-          <Route path="/pdf-compress" component={PDFCompress} />
-          <Route path="/pdf-to-image" component={PDFToImage} />
-          <Route path="/word-to-pdf" component={WordToPDF} />
-          <Route path="/pdf-unlock" component={PDFUnlock} />
-          <Route path="/pdf-watermark" component={PDFWatermark} />
           
           <Route component={NotFound} />
         </Switch>
