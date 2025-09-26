@@ -322,10 +322,6 @@ export default function Home() {
       <section className="bg-white py-8 sm:py-12 lg:py-20">
         <div className="container mx-auto px-4 max-w-4xl">
           <div className="text-center">
-            {/* Debug - Simple test content */}
-            <div className="bg-red-200 p-4 mb-4 rounded">
-              <h2 className="text-2xl font-bold">TEST: Content is Loading</h2>
-            </div>
             <h1 className="text-xl sm:text-2xl lg:text-4xl font-bold lg:font-normal text-gray-900 mb-4 sm:mb-6 leading-tight">
               {/* Mobile Version */}
               <span className="block sm:hidden whitespace-pre-line">
