@@ -53,34 +53,58 @@ export default function MortgageCalculator() {
       return;
     }
 
-    // Calculate EMI using standard formula
-    const emi = (principal * rate * Math.pow(1 + rate, time)) / (Math.pow(1 + rate, time) - 1);
-    const totalAmount = emi * time;
-    const totalInterest = totalAmount - principal;
+    // Calculate EMI using standard formula with zero-interest handling
+    let emi: number;
+    let totalAmount: number;
+    let totalInterest: number;
+    
+    if (rate === 0) {
+      // Handle zero interest rate case
+      emi = principal / time;
+      totalAmount = principal;
+      totalInterest = 0;
+    } else {
+      // Standard EMI formula for positive interest rates
+      emi = (principal * rate * Math.pow(1 + rate, time)) / (Math.pow(1 + rate, time) - 1);
+      totalAmount = emi * time;
+      totalInterest = totalAmount - principal;
+    }
 
     // Generate year-wise breakdown
     const breakdown = [];
     let remainingPrincipal = principal;
     
-    for (let year = 1; year <= parseInt(tenure); year++) {
-      let yearlyInterest = 0;
-      let yearlyPrincipal = 0;
-      
-      for (let month = 1; month <= 12; month++) {
-        const monthlyInterest = remainingPrincipal * rate;
-        const monthlyPrincipal = emi - monthlyInterest;
-        
-        yearlyInterest += monthlyInterest;
-        yearlyPrincipal += monthlyPrincipal;
-        remainingPrincipal -= monthlyPrincipal;
-        
-        if (remainingPrincipal <= 0) break;
+    if (rate === 0) {
+      // For zero interest, distribute principal equally across years
+      const yearlyPrincipal = principal / parseInt(tenure);
+      for (let year = 1; year <= parseInt(tenure); year++) {
+        breakdown.push({
+          principal: yearlyPrincipal,
+          interest: 0
+        });
       }
-      
-      breakdown.push({
-        principal: yearlyPrincipal,
-        interest: yearlyInterest
-      });
+    } else {
+      // Standard amortization calculation for positive interest rates
+      for (let year = 1; year <= parseInt(tenure); year++) {
+        let yearlyInterest = 0;
+        let yearlyPrincipal = 0;
+        
+        for (let month = 1; month <= 12; month++) {
+          const monthlyInterest = remainingPrincipal * rate;
+          const monthlyPrincipal = emi - monthlyInterest;
+          
+          yearlyInterest += monthlyInterest;
+          yearlyPrincipal += monthlyPrincipal;
+          remainingPrincipal -= monthlyPrincipal;
+          
+          if (remainingPrincipal <= 0) break;
+        }
+        
+        breakdown.push({
+          principal: yearlyPrincipal,
+          interest: yearlyInterest
+        });
+      }
     }
 
     const result: MortgageResult = {
