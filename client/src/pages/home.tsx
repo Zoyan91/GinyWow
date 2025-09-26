@@ -320,7 +320,72 @@ export default function Home() {
 
       {/* Hero Section - Lightning Fast */}
       <section className="relative bg-blue-50 py-8 sm:py-12 lg:py-20 overflow-hidden">
-        {/* Removed floating shapes for performance */}
+        {/* Floating Gradient Shapes - Hidden on mobile for performance */}
+        <div className="absolute inset-0 hidden md:block pointer-events-none">
+          {/* Shape 1 - Blue Triangle */}
+          <div 
+            className="absolute w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 opacity-20 floating-shape-1"
+            style={{
+              clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
+              top: '15%',
+              left: '10%',
+              animationDelay: '0s'
+            }}
+          />
+          
+          {/* Shape 2 - Purple Circle */}
+          <div 
+            className="absolute w-20 h-20 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full opacity-25 floating-shape-2"
+            style={{
+              top: '25%',
+              right: '15%',
+              animationDelay: '2s'
+            }}
+          />
+          
+          {/* Shape 3 - Orange Square */}
+          <div 
+            className="absolute w-12 h-12 bg-gradient-to-br from-orange-400 to-orange-600 opacity-30 floating-shape-3"
+            style={{
+              transform: 'rotate(45deg)',
+              top: '60%',
+              left: '8%',
+              animationDelay: '4s'
+            }}
+          />
+          
+          {/* Shape 4 - Green Dot */}
+          <div 
+            className="absolute w-8 h-8 bg-gradient-to-br from-green-400 to-green-600 rounded-full opacity-35 floating-shape-4"
+            style={{
+              top: '70%',
+              right: '20%',
+              animationDelay: '1s'
+            }}
+          />
+          
+          {/* Shape 5 - Pink Hexagon */}
+          <div 
+            className="absolute w-14 h-14 bg-gradient-to-br from-pink-400 to-pink-600 opacity-25 floating-shape-5"
+            style={{
+              clipPath: 'polygon(30% 0%, 70% 0%, 100% 50%, 70% 100%, 30% 100%, 0% 50%)',
+              top: '40%',
+              left: '85%',
+              animationDelay: '3s'
+            }}
+          />
+          
+          {/* Shape 6 - Cyan Triangle */}
+          <div 
+            className="absolute w-10 h-10 bg-gradient-to-br from-cyan-400 to-cyan-600 opacity-30 floating-shape-1"
+            style={{
+              clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)',
+              top: '20%',
+              right: '35%',
+              animationDelay: '5s'
+            }}
+          />
+        </div>
 
         <div className="relative z-10 container mx-auto px-4 max-w-4xl">
           <div className="text-center">

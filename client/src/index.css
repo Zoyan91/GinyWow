@@ -172,6 +172,60 @@
   .space-responsive-sm {
     @apply space-y-4 sm:space-y-6;
   }
+
+  /* Floating gradient shapes animations for home page hero section */
+  @keyframes float-1 {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(30px, -20px) rotate(90deg); }
+    50% { transform: translate(0, -40px) rotate(180deg); }
+    75% { transform: translate(-30px, -20px) rotate(270deg); }
+  }
+
+  @keyframes float-2 {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    33% { transform: translate(-25px, 30px) rotate(120deg); }
+    66% { transform: translate(25px, 15px) rotate(240deg); }
+  }
+
+  @keyframes float-3 {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(20px, 25px) rotate(45deg); }
+    50% { transform: translate(-15px, 10px) rotate(180deg); }
+    75% { transform: translate(35px, -10px) rotate(315deg); }
+  }
+
+  @keyframes float-4 {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(-20px, -30px) rotate(180deg); }
+  }
+
+  @keyframes float-5 {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    20% { transform: translate(15px, -25px) rotate(72deg); }
+    40% { transform: translate(-10px, -15px) rotate(144deg); }
+    60% { transform: translate(-25px, 20px) rotate(216deg); }
+    80% { transform: translate(20px, 30px) rotate(288deg); }
+  }
+
+  .floating-shape-1 {
+    animation: float-1 20s ease-in-out infinite;
+  }
+
+  .floating-shape-2 {
+    animation: float-2 25s ease-in-out infinite;
+  }
+
+  .floating-shape-3 {
+    animation: float-3 18s ease-in-out infinite;
+  }
+
+  .floating-shape-4 {
+    animation: float-4 22s ease-in-out infinite;
+  }
+
+  .floating-shape-5 {
+    animation: float-5 24s ease-in-out infinite;
+  }
   
   .space-responsive-md {
     @apply space-y-6 sm:space-y-8 md:space-y-10;
