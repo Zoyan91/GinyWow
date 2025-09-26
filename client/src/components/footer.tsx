@@ -89,6 +89,48 @@ export default function Footer() {
                   </span>
                 </Link>
               </li>
+              <li>
+                <Link href="/word-counter">
+                  <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm">
+                    Word Counter
+                  </span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/qr-code-generator">
+                  <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm">
+                    QR Code Generator
+                  </span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/password-generator">
+                  <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm">
+                    Password Generator
+                  </span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/case-converter">
+                  <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm">
+                    Case Converter
+                  </span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/unit-converter">
+                  <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm">
+                    Unit Converter
+                  </span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/age-calculator">
+                  <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm">
+                    Age Calculator
+                  </span>
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -207,6 +249,48 @@ export default function Footer() {
                   <Link href="/image-compressor">
                     <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm block py-2">
                       Image Compressor
+                    </span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/word-counter">
+                    <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm block py-2">
+                      Word Counter
+                    </span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/qr-code-generator">
+                    <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm block py-2">
+                      QR Code Generator
+                    </span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/password-generator">
+                    <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm block py-2">
+                      Password Generator
+                    </span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/case-converter">
+                    <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm block py-2">
+                      Case Converter
+                    </span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/unit-converter">
+                    <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm block py-2">
+                      Unit Converter
+                    </span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/age-calculator">
+                    <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm block py-2">
+                      Age Calculator
                     </span>
                   </Link>
                 </li>
