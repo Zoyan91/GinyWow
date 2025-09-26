@@ -13,6 +13,21 @@ GinyWow is a comprehensive tool website with the tagline "Convert Social Media V
 ## Recent Changes
 
 ### September 26, 2025
+- **Successfully expanded Utility tools from 6 to 7 with Sleep Calculator addition**
+  - **Issue**: User requested to add Sleep Calculator to the utility category while maintaining exact design consistency
+  - **Solution**: Created comprehensive Sleep Calculator tool with scientifically accurate 90-minute sleep cycle calculations
+  - **Implementation**: Full sleep schedule optimization with optimal bedtime and wake-up time recommendations
+  - **Features**: 
+    - Calculate bedtime based on desired wake-up time with 1-6 sleep cycle options (6-9 hours sleep)
+    - Calculate wake-up times based on bedtime with sleep cycle recommendations
+    - Sleep quality indicators (Excellent, Good, Fair, Poor) based on sleep duration
+    - 15-minute buffer time included for natural sleep onset
+    - Date handling logic correctly manages past/future wake-up times (e.g., 5 PM now, wake at 6 AM tomorrow)
+  - **Design**: Applied exact home page hero design pattern with blue-purple gradient background and floating shapes
+  - **Integration**: Complete navigation integration including header utility dropdown, search functionality, footer links (desktop & mobile)
+  - **Home Page**: Added Sleep Calculator card with indigo theme to tool showcase with responsive grid layout (xl:grid-cols-5)
+  - **SEO**: Comprehensive meta tags, structured data, and FAQ section for better search visibility
+  - **Result**: All 7 utility tools now share identical hero design foundation ensuring complete visual consistency across platform
 - **Fixed critical Image Resizer and Image Compressor functionality**
   - **Issue**: Both tools were failing with "Failed to fetch" errors due to missing backend API endpoints
   - **Solution**: Successfully added `/api/resize-image` and `/api/compress-image` endpoints to server/routes.ts
