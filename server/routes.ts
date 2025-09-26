@@ -736,7 +736,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           // Audio Formats - Extract real audio formats from ytdl
           const processedAudioFormats = new Set();
           audioFormats.forEach(format => {
-            const abr = format.abr || format.audioBitrate || 128;
+            const abr = (format as any).abr || (format as any).audioBitrate || 128;
             const container = format.container;
             const audioCodec = format.audioCodec || format.codecs;
             
@@ -792,7 +792,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
                 codec: audioOption.codec,
                 bitrate: audioOption.bitrate,
                 fileSize: 'N/A',
-                downloadUrl: format.url || videoUrl,
+                downloadUrl: videoUrl,
                 type: 'audio'
               });
             });
