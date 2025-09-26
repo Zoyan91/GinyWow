@@ -155,10 +155,9 @@ export default function PasswordGenerator() {
 
       <main className="container mx-auto px-4 py-8 max-w-5xl">
 
-        {/* Main Tool Section */}
-        <div className="grid lg:grid-cols-3 gap-6 mb-8">
-          {/* Settings Panel */}
-          <div className="lg:col-span-2">
+        {/* Input Section - Full Width */}
+        <div className="mb-8">
+          <div>
             <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
               <div className="bg-purple-600 p-6">
                 <h2 className="text-xl font-bold text-white flex items-center gap-3">
@@ -271,101 +270,103 @@ export default function PasswordGenerator() {
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Password Display */}
-          <div>
-            <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
-              <div className="bg-purple-600 p-6">
-                <h2 className="text-xl font-bold text-white flex items-center gap-3">
-                  <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
-                    <Eye className="w-5 h-5 text-white" />
-                  </div>
-                  Generated Password
-                </h2>
-                <p className="text-purple-100 mt-2">
-                  Your secure password is ready
-                </p>
-              </div>
-              <div className="p-6 space-y-6">
-                <div className="relative">
-                  <Input
-                    type={showPassword ? "text" : "password"}
-                    value={password}
-                    readOnly
-                    placeholder="Click generate to create password"
-                    className="pr-20 font-mono h-14 text-lg border-2 border-gray-200 focus:border-purple-400 rounded-xl bg-white"
-                    data-testid="generated-password"
-                  />
-                  <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex gap-2">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="h-10 w-10 p-0 bg-white shadow-md hover:shadow-lg rounded-lg border border-gray-200"
-                      data-testid="toggle-password-visibility"
-                    >
-                      {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={copyPassword}
-                      className="h-10 w-10 p-0 bg-white shadow-md hover:shadow-lg rounded-lg border border-gray-200"
-                      disabled={!password}
-                      data-testid="copy-password-button"
-                    >
-                      <Copy className="w-4 h-4" />
-                    </Button>
-                  </div>
-                </div>
-
-                {/* Password Strength */}
-                <div className="bg-purple-50 p-5 rounded-xl border border-purple-200">
-                  <div className="flex justify-between items-center mb-3">
-                    <span className="text-base font-semibold text-gray-700">Password Strength:</span>
-                    <Badge
-                      className={`px-3 py-1 text-sm font-medium ${
-                        strength.color === "green" ? "bg-green-100 text-green-700 border-green-200" : 
-                        strength.color === "yellow" ? "bg-yellow-100 text-yellow-700 border-yellow-200" : 
-                        "bg-red-100 text-red-700 border-red-200"
-                      }`}
-                      data-testid="password-strength"
-                    >
-                      {strength.level === "strong" ? "🛡️ Strong" : strength.level === "medium" ? "⚠️ Medium" : "❌ Weak"}
-                    </Badge>
-                  </div>
-                  <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
-                    <div 
-                      className={`h-3 rounded-full transition-all duration-500 ${
-                        strength.color === "green" ? "bg-green-500" : 
-                        strength.color === "yellow" ? "bg-yellow-500" : 
-                        "bg-red-500"
-                      }`}
-                      style={{ 
-                        width: strength.level === "strong" ? "100%" : 
-                               strength.level === "medium" ? "60%" : 
-                               strength.level === "weak" ? "30%" : "0%" 
-                      }}
-                    ></div>
-                  </div>
-                </div>
-
-                {/* Security Tip */}
-                <div className="bg-purple-50 border border-purple-200 rounded-xl p-4">
-                  <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <AlertTriangle className="w-4 h-4 text-amber-600" />
+        {/* Results Section - Only show after generation */}
+        {password && (
+          <div className="mb-8">
+            <div>
+              <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+                <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-6">
+                  <h2 className="text-xl font-bold text-white flex items-center gap-3">
+                    <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                      <Eye className="w-5 h-5 text-white" />
                     </div>
-                    <div className="text-sm text-amber-700">
-                      <p className="font-semibold mb-1">🔐 Security Tip:</p>
-                      <p>Never share your password and use unique passwords for each account. Store them in a password manager.</p>
+                    Generated Password
+                  </h2>
+                  <p className="text-blue-100 mt-2">
+                    Your secure password is ready to use
+                  </p>
+                </div>
+                <div className="p-6 space-y-6">
+                  <div className="relative">
+                    <Input
+                      type={showPassword ? "text" : "password"}
+                      value={password}
+                      readOnly
+                      className="pr-20 font-mono h-14 text-lg border-2 border-gray-200 focus:border-purple-400 rounded-xl bg-white"
+                      data-testid="generated-password"
+                    />
+                    <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex gap-2">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="h-10 w-10 p-0 bg-white shadow-md hover:shadow-lg rounded-lg border border-gray-200"
+                        data-testid="toggle-password-visibility"
+                      >
+                        {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={copyPassword}
+                        className="h-10 w-10 p-0 bg-white shadow-md hover:shadow-lg rounded-lg border border-gray-200"
+                        data-testid="copy-password-button"
+                      >
+                        <Copy className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  </div>
+
+                  {/* Password Strength */}
+                  <div className="bg-purple-50 p-5 rounded-xl border border-purple-200">
+                    <div className="flex justify-between items-center mb-3">
+                      <span className="text-base font-semibold text-gray-700">Password Strength:</span>
+                      <Badge
+                        className={`px-3 py-1 text-sm font-medium ${
+                          strength.color === "green" ? "bg-green-100 text-green-700 border-green-200" : 
+                          strength.color === "yellow" ? "bg-yellow-100 text-yellow-700 border-yellow-200" : 
+                          "bg-red-100 text-red-700 border-red-200"
+                        }`}
+                        data-testid="password-strength"
+                      >
+                        {strength.level === "strong" ? "🛡️ Strong" : strength.level === "medium" ? "⚠️ Medium" : "❌ Weak"}
+                      </Badge>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+                      <div 
+                        className={`h-3 rounded-full transition-all duration-500 ${
+                          strength.color === "green" ? "bg-green-500" : 
+                          strength.color === "yellow" ? "bg-yellow-500" : 
+                          "bg-red-500"
+                        }`}
+                        style={{ 
+                          width: strength.level === "strong" ? "100%" : 
+                                 strength.level === "medium" ? "60%" : 
+                                 strength.level === "weak" ? "30%" : "0%" 
+                        }}
+                      ></div>
+                    </div>
+                  </div>
+
+                  {/* Security Tip */}
+                  <div className="bg-green-50 border border-green-200 rounded-xl p-4">
+                    <div className="flex items-start gap-3">
+                      <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <AlertTriangle className="w-4 h-4 text-green-600" />
+                      </div>
+                      <div className="text-sm text-green-700">
+                        <p className="font-semibold mb-1">🔐 Security Tip:</p>
+                        <p>Never share your password and use unique passwords for each account. Store them in a password manager.</p>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
 
         {/* Information Sections */}
         <div className="space-y-8">
