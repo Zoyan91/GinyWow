@@ -329,7 +329,7 @@ export default function MortgageCalculator() {
                 <div className="flex gap-3">
                   <Button
                     onClick={calculateMortgage}
-                    className="flex-1 h-14 bg-gradient-to-r from-green-500 to-blue-600 hover:from-green-600 hover:to-blue-700 text-white text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl"
+                    className="flex-1 h-14 bg-green-600 hover:bg-green-700 text-white text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl"
                     data-testid="calculate-mortgage-button"
                   >
                     <Calculator className="w-5 h-5 mr-2" />
