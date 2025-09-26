@@ -96,31 +96,31 @@ export default function Footer() {
           <div>
             <h4 className="font-bold text-gray-900 mb-6 text-lg">Follow Us</h4>
             <div className="flex flex-wrap gap-4">
-              <a href="https://facebook.com/ginywow" target="_blank" rel="noopener noreferrer">
-                <span className="text-gray-400 hover:text-blue-600 transition-colors p-2 rounded-lg hover:bg-blue-50 block" aria-label="Facebook">
+              <Link href="/">
+                <span className="text-gray-400 hover:text-blue-600 transition-colors p-2 rounded-lg hover:bg-blue-50 block cursor-pointer" aria-label="App Opener">
                   <SiFacebook className="w-5 h-5" />
                 </span>
-              </a>
-              <a href="https://x.com/ginywow" target="_blank" rel="noopener noreferrer">
-                <span className="text-gray-400 hover:text-gray-900 transition-colors p-2 rounded-lg hover:bg-gray-50 block" aria-label="X (Twitter)">
+              </Link>
+              <Link href="/thumbnail-downloader">
+                <span className="text-gray-400 hover:text-gray-900 transition-colors p-2 rounded-lg hover:bg-gray-50 block cursor-pointer" aria-label="Thumbnail Downloader">
                   <SiX className="w-5 h-5" />
                 </span>
-              </a>
-              <a href="https://linkedin.com/company/ginywow" target="_blank" rel="noopener noreferrer">
-                <span className="text-gray-400 hover:text-blue-700 transition-colors p-2 rounded-lg hover:bg-blue-50 block" aria-label="LinkedIn">
+              </Link>
+              <Link href="/format-converter">
+                <span className="text-gray-400 hover:text-blue-700 transition-colors p-2 rounded-lg hover:bg-blue-50 block cursor-pointer" aria-label="Format Converter">
                   <SiLinkedin className="w-5 h-5" />
                 </span>
-              </a>
-              <a href="https://youtube.com/@ginywow" target="_blank" rel="noopener noreferrer">
-                <span className="text-gray-400 hover:text-red-600 transition-colors p-2 rounded-lg hover:bg-red-50 block" aria-label="YouTube">
+              </Link>
+              <Link href="/image-resizer">
+                <span className="text-gray-400 hover:text-red-600 transition-colors p-2 rounded-lg hover:bg-red-50 block cursor-pointer" aria-label="Image Resizer">
                   <SiYoutube className="w-5 h-5" />
                 </span>
-              </a>
-              <a href="https://pinterest.com/ginywow" target="_blank" rel="noopener noreferrer">
-                <span className="text-gray-400 hover:text-red-500 transition-colors p-2 rounded-lg hover:bg-red-50 block" aria-label="Pinterest">
+              </Link>
+              <Link href="/image-compressor">
+                <span className="text-gray-400 hover:text-red-500 transition-colors p-2 rounded-lg hover:bg-red-50 block cursor-pointer" aria-label="Image Compressor">
                   <SiPinterest className="w-5 h-5" />
                 </span>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -222,36 +222,36 @@ export default function Footer() {
             </CollapsibleTrigger>
             <CollapsibleContent className="mt-2">
               <div className="flex flex-wrap gap-4 p-4">
-                <a href="https://facebook.com/ginywow" target="_blank" rel="noopener noreferrer">
-                  <span className="text-gray-400 hover:text-blue-600 transition-colors p-3 rounded-lg hover:bg-blue-50 flex items-center space-x-2 cursor-pointer" aria-label="Facebook">
+                <Link href="/">
+                  <span className="text-gray-400 hover:text-blue-600 transition-colors p-3 rounded-lg hover:bg-blue-50 flex items-center space-x-2 cursor-pointer" aria-label="App Opener">
                     <SiFacebook className="w-5 h-5" />
-                    <span className="text-sm">Facebook</span>
+                    <span className="text-sm">App Opener</span>
                   </span>
-                </a>
-                <a href="https://x.com/ginywow" target="_blank" rel="noopener noreferrer">
-                  <span className="text-gray-400 hover:text-gray-900 transition-colors p-3 rounded-lg hover:bg-gray-50 flex items-center space-x-2 cursor-pointer" aria-label="X (Twitter)">
+                </Link>
+                <Link href="/thumbnail-downloader">
+                  <span className="text-gray-400 hover:text-gray-900 transition-colors p-3 rounded-lg hover:bg-gray-50 flex items-center space-x-2 cursor-pointer" aria-label="Thumbnail Downloader">
                     <SiX className="w-5 h-5" />
-                    <span className="text-sm">X</span>
+                    <span className="text-sm">Thumbnail Downloader</span>
                   </span>
-                </a>
-                <a href="https://linkedin.com/company/ginywow" target="_blank" rel="noopener noreferrer">
-                  <span className="text-gray-400 hover:text-blue-700 transition-colors p-3 rounded-lg hover:bg-blue-50 flex items-center space-x-2 cursor-pointer" aria-label="LinkedIn">
+                </Link>
+                <Link href="/format-converter">
+                  <span className="text-gray-400 hover:text-blue-700 transition-colors p-3 rounded-lg hover:bg-blue-50 flex items-center space-x-2 cursor-pointer" aria-label="Format Converter">
                     <SiLinkedin className="w-5 h-5" />
-                    <span className="text-sm">LinkedIn</span>
+                    <span className="text-sm">Format Converter</span>
                   </span>
-                </a>
-                <a href="https://youtube.com/@ginywow" target="_blank" rel="noopener noreferrer">
-                  <span className="text-gray-400 hover:text-red-600 transition-colors p-3 rounded-lg hover:bg-red-50 flex items-center space-x-2 cursor-pointer" aria-label="YouTube">
+                </Link>
+                <Link href="/image-resizer">
+                  <span className="text-gray-400 hover:text-red-600 transition-colors p-3 rounded-lg hover:bg-red-50 flex items-center space-x-2 cursor-pointer" aria-label="Image Resizer">
                     <SiYoutube className="w-5 h-5" />
-                    <span className="text-sm">YouTube</span>
+                    <span className="text-sm">Image Resizer</span>
                   </span>
-                </a>
-                <a href="https://pinterest.com/ginywow" target="_blank" rel="noopener noreferrer">
-                  <span className="text-gray-400 hover:text-red-500 transition-colors p-3 rounded-lg hover:bg-red-50 flex items-center space-x-2 cursor-pointer" aria-label="Pinterest">
+                </Link>
+                <Link href="/image-compressor">
+                  <span className="text-gray-400 hover:text-red-500 transition-colors p-3 rounded-lg hover:bg-red-50 flex items-center space-x-2 cursor-pointer" aria-label="Image Compressor">
                     <SiPinterest className="w-5 h-5" />
-                    <span className="text-sm">Pinterest</span>
+                    <span className="text-sm">Image Compressor</span>
                   </span>
-                </a>
+                </Link>
               </div>
             </CollapsibleContent>
           </Collapsible>
