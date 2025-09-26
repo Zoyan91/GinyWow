@@ -43,18 +43,18 @@ export const defaultSEO: SEOData = {
   author: "GinyWow",
 };
 
-// Converter specific SEO
+// Image tool specific SEO
 export const formatConverterSEO: SEOData = {
-  title: "Free Image Converter Online - Convert JPG, PNG, WebP & More | GinyWow",
+  title: "Free Image Tool Online - Convert JPG, PNG, WebP & More | GinyWow",
   description: "Convert images between 12+ formats instantly. Free online tool supporting PNG, JPEG, WebP, GIF, HEIC, PDF conversion with quality controls. Fast, secure, no signup required.",
   keywords: "image converter, convert images online, jpg to png, png to webp, heic to jpg, image converter free, online image converter, format conversion tool",
   canonical: "/format-converter",
-  ogTitle: "Free Image Converter - Convert Any Image Format Online",
-  ogDescription: "Professional image converter supporting 12+ formats. Convert PNG, JPEG, WebP, GIF, HEIC & more. High-quality results, fast conversion, completely free.",
+  ogTitle: "Free Image Tool - Convert Any Image Format Online",
+  ogDescription: "Professional image tool supporting 12+ formats. Convert PNG, JPEG, WebP, GIF, HEIC & more. High-quality results, fast conversion, completely free.",
   ogImage: "/og-format-converter.jpg",
   ogType: "website",
   twitterCard: "summary_large_image",
-  twitterTitle: "Free Image Converter - Convert Images Online",
+  twitterTitle: "Free Image Tool - Convert Images Online",
   twitterDescription: "Convert images between 12+ formats instantly. PNG, JPEG, WebP, GIF, HEIC & more. Free tool with quality controls.",
   robots: "index, follow",
   author: "GinyWow",
@@ -64,8 +64,8 @@ export const formatConverterSEO: SEOData = {
 export const generateWebApplicationSchema = (url: string) => ({
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "GinyWow Image Converter",
-  "description": "Free online image converter supporting 12+ popular formats with quality controls",
+  "name": "GinyWow Image Tool",
+  "description": "Free online image tool supporting 12+ popular formats with quality controls",
   "url": url,
   "applicationCategory": "UtilityApplication",
   "operatingSystem": "Web Browser",
@@ -141,8 +141,8 @@ export const formatConverterBreadcrumbs: BreadcrumbItem[] = [
 
 export const formatConverterFAQs: FAQItem[] = [
   {
-    question: "Is the image converter completely free to use?",
-    answer: "Yes! Our image converter is 100% free with no hidden costs, registration requirements, or usage limits. Convert as many images as you need."
+    question: "Is the image tool completely free to use?",
+    answer: "Yes! Our image tool is 100% free with no hidden costs, registration requirements, or usage limits. Convert as many images as you need."
   },
   {
     question: "What image formats are supported for conversion?",
@@ -150,7 +150,7 @@ export const formatConverterFAQs: FAQItem[] = [
   },
   {
     question: "Do I need to install any software or create an account?",
-    answer: "No installation or account creation required. Our converter works entirely in your browser - just upload, convert, and download."
+    answer: "No installation or account creation required. Our image tool works entirely in your browser - just upload, convert, and download."
   },
   {
     question: "Is my uploaded image secure and private?",
