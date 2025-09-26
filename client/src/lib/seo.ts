@@ -35,8 +35,8 @@ export interface HowToStep {
 // Default SEO configuration
 export const defaultSEO: SEOData = {
   title: "GinyWow - Convert Social Media Visitors into Subscribers",
-  description: "Transform your social media presence with GinyWow's powerful tools: App Opener for smart redirects, Thumbnail Downloader, and Converter. Free online tools for content creators.",
-  keywords: "social media tools, app opener, thumbnail downloader, converter, content creator tools, social media optimization",
+  description: "Transform your social media presence with GinyWow's powerful tools: App Opener for smart redirects, Thumbnail Downloader, and Image converter. Free online tools for content creators.",
+  keywords: "social media tools, app opener, thumbnail downloader, image converter, content creator tools, social media optimization",
   ogType: "website",
   twitterCard: "summary_large_image",
   robots: "index, follow",
@@ -136,7 +136,7 @@ export const generateHowToSchema = (name: string, description: string, steps: Ho
 export const formatConverterBreadcrumbs: BreadcrumbItem[] = [
   { name: "Home", url: "/" },
   { name: "Tools", url: "/" },
-  { name: "Converter", url: "/format-converter" }
+  { name: "Image", url: "/format-converter" }
 ];
 
 export const formatConverterFAQs: FAQItem[] = [

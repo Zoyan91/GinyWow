@@ -37,7 +37,7 @@ export default function Header({ currentPage }: HeaderProps) {
   const navItems = [
     { href: "/", label: "App Opener", testId: "nav-app-opener" },
     { href: "/thumbnail-downloader", label: "Thumbnail Downloader", testId: "nav-thumbnail-downloader" },
-    { href: "/format-converter", label: "Converter", testId: "nav-converter" },
+    { href: "/format-converter", label: "Image", testId: "nav-image" },
   ];
 
 
@@ -52,7 +52,7 @@ export default function Header({ currentPage }: HeaderProps) {
         setLocation('/');
       } else if (searchTerm.includes('thumbnail')) {
         setLocation('/thumbnail-downloader');
-      } else if (searchTerm.includes('format') || searchTerm.includes('convert')) {
+      } else if (searchTerm.includes('format') || searchTerm.includes('convert') || searchTerm.includes('image')) {
         setLocation('/format-converter');
       }
       
