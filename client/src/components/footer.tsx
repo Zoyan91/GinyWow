@@ -139,6 +139,13 @@ export default function Footer() {
                   </span>
                 </Link>
               </li>
+              <li>
+                <Link href="/sleep-calculator">
+                  <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm">
+                    Sleep Calculator
+                  </span>
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -311,6 +318,13 @@ export default function Footer() {
                   <Link href="/age-calculator">
                     <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm block py-2">
                       Age Calculator
+                    </span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/sleep-calculator">
+                    <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm block py-2">
+                      Sleep Calculator
                     </span>
                   </Link>
                 </li>

@@ -44,19 +44,20 @@ export default function SleepCalculator() {
     if (calculationType === "bedtime") {
       // Calculate bedtime based on wake-up time
       const [hours, minutes] = wakeUpTime.split(':').map(Number);
+      const now = new Date();
       baseTime = new Date();
       baseTime.setHours(hours, minutes, 0, 0);
+
+      // If wake-up time is earlier than current time, it means tomorrow
+      if (baseTime.getTime() <= now.getTime()) {
+        baseTime.setDate(baseTime.getDate() + 1);
+      }
 
       // Generate bedtime recommendations (1-6 sleep cycles, 90 minutes each)
       for (let cycles = 1; cycles <= 6; cycles++) {
         const sleepMinutes = cycles * 90 + 15; // 15 minutes to fall asleep
         const bedtimeMs = baseTime.getTime() - (sleepMinutes * 60 * 1000);
         const bedtimeDate = new Date(bedtimeMs);
-        
-        // Handle previous day
-        if (bedtimeDate.getTime() > baseTime.getTime()) {
-          bedtimeDate.setDate(bedtimeDate.getDate() - 1);
-        }
 
         const timeStr = bedtimeDate.toLocaleTimeString('en-US', { 
           hour: 'numeric', 
@@ -83,10 +84,7 @@ export default function SleepCalculator() {
         const wakeupMs = baseTime.getTime() + (sleepMinutes * 60 * 1000);
         const wakeupDate = new Date(wakeupMs);
         
-        // Handle next day
-        if (wakeupDate.getDate() !== baseTime.getDate()) {
-          wakeupDate.setDate(wakeupDate.getDate());
-        }
+        // Wake-up times are naturally calculated correctly for next day when needed
 
         const timeStr = wakeupDate.toLocaleTimeString('en-US', { 
           hour: 'numeric', 
