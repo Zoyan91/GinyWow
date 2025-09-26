@@ -94,22 +94,6 @@ export const imageResizerSEO: SEOData = {
   author: "GinyWow",
 };
 
-// Image Compressor SEO  
-export const imageCompressorSEO: SEOData = {
-  title: "Free Image Compressor - Reduce File Size Without Quality Loss | GinyWow",
-  description: "Compress images to reduce file size without losing quality. Free online tool supporting JPG, PNG, WebP compression. Perfect for web optimization and faster loading. No signup required.",
-  keywords: "image compressor, compress image online, reduce image size, image optimization, photo compressor, compress photos online, image file size reducer",
-  canonical: "/image-compressor", 
-  ogTitle: "Free Image Compressor - Reduce File Size",
-  ogDescription: "Compress images without quality loss. Free online tool with multiple compression levels. Perfect for web optimization.",
-  ogImage: "/og-image-compressor.jpg",
-  ogType: "website",
-  twitterCard: "summary_large_image",
-  twitterTitle: "Free Image Compressor - Reduce Image Size",
-  twitterDescription: "Compress images to reduce file size without losing quality. Free online tool with instant results.",
-  robots: "index, follow",
-  author: "GinyWow",
-};
 
 // Image tool specific SEO
 export const formatConverterSEO: SEOData = {

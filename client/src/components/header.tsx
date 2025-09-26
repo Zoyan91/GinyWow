@@ -15,8 +15,6 @@ const preloadPage = (path: string) => {
     import("@/pages/format-converter");
   } else if (path === "/image-resizer") {
     import("@/pages/image-resizer");
-  } else if (path === "/image-compressor") {
-    import("@/pages/image-compressor");
   } else if (path === "/word-counter") {
     import("@/pages/word-counter");
   } else if (path === "/qr-code-generator") {
@@ -52,8 +50,7 @@ export default function Header({ currentPage }: HeaderProps) {
 
   const isImageToolActive = () => {
     return location.startsWith("/format-converter") || 
-           location.startsWith("/image-resizer") || 
-           location.startsWith("/image-compressor");
+           location.startsWith("/image-resizer");
   };
 
   const isUtilityToolActive = () => {
@@ -74,7 +71,6 @@ export default function Header({ currentPage }: HeaderProps) {
   const imageTools = [
     { href: "/format-converter", label: "Format Converter", testId: "nav-format-converter" },
     { href: "/image-resizer", label: "Image Resizer", testId: "nav-image-resizer" },
-    { href: "/image-compressor", label: "Image Compressor", testId: "nav-image-compressor" },
   ];
 
   // Utility tools dropdown items
@@ -102,8 +98,6 @@ export default function Header({ currentPage }: HeaderProps) {
         setLocation('/format-converter');
       } else if (searchTerm.includes('resize')) {
         setLocation('/image-resizer');
-      } else if (searchTerm.includes('compress')) {
-        setLocation('/image-compressor');
       } else if (searchTerm.includes('image')) {
         setLocation('/format-converter');
       } else if (searchTerm.includes('word') || searchTerm.includes('count')) {

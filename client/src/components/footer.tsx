@@ -83,13 +83,6 @@ export default function Footer() {
                   </span>
                 </Link>
               </li>
-              <li>
-                <Link href="/image-compressor">
-                  <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm">
-                    Image Compressor
-                  </span>
-                </Link>
-              </li>
             </ul>
           </div>
 
