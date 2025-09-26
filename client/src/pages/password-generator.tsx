@@ -137,178 +137,232 @@ export default function PasswordGenerator() {
 
       <Header currentPage="password-generator" />
       
-      <main className="container mx-auto px-4 py-8 max-w-4xl">
-        {/* Header Section */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            GinyWow Password Generator
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Create strong, secure passwords with customizable options. Generate random passwords with uppercase, lowercase, numbers, and symbols for maximum security.
-          </p>
+      <main className="container mx-auto px-4 py-8 max-w-5xl relative">
+        {/* Floating Background Shapes */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none hidden md:block">
+          <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full opacity-10 animate-float"></div>
+          <div className="absolute top-40 right-20 w-24 h-24 bg-gradient-to-br from-indigo-400 to-indigo-600 rotate-45 opacity-10 animate-float-2"></div>
+          <div className="absolute bottom-40 left-1/4 w-20 h-20 bg-gradient-to-br from-violet-400 to-violet-600 rounded-full opacity-15 animate-float-3"></div>
+          <div className="absolute top-60 right-1/3 w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 transform rotate-12 opacity-10 animate-float-4"></div>
+          <div className="absolute bottom-20 right-16 w-28 h-28 bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-full opacity-10 animate-float-5"></div>
+          <div className="absolute top-96 left-1/2 w-6 h-6 bg-gradient-to-br from-teal-400 to-teal-600 rounded-full opacity-20 animate-float-6"></div>
         </div>
+
+        {/* Hero Section */}
+        <section className="relative z-10 text-center mb-12">
+          <div className="max-w-4xl mx-auto">
+            <div className="inline-flex items-center gap-3 bg-gradient-to-r from-purple-100 to-indigo-100 px-6 py-3 rounded-full text-purple-700 text-sm font-medium mb-6">
+              <Shield className="w-4 h-4" />
+              Ultimate Security Tool
+            </div>
+            <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600 bg-clip-text text-transparent mb-6 leading-tight">
+              Password Generator
+            </h1>
+            <p className="text-xl md:text-2xl text-gray-600 mb-8 leading-relaxed max-w-3xl mx-auto">
+              Create unbreakable passwords in seconds. Customize strength, length, and character types for maximum security.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-500">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                <span>Instant Generation</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                <span>Maximum Security</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                <span>100% Free</span>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* Main Tool Section */}
         <div className="grid lg:grid-cols-3 gap-6 mb-8">
           {/* Settings Panel */}
           <div className="lg:col-span-2">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Shield className="w-5 h-5 text-blue-600" />
+            <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+              <div className="bg-gradient-to-r from-purple-500 to-indigo-600 p-6">
+                <h2 className="text-xl font-bold text-white flex items-center gap-3">
+                  <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                    <Shield className="w-5 h-5 text-white" />
+                  </div>
                   Password Settings
-                </CardTitle>
-                <CardDescription>
-                  Customize your password generation preferences
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
+                </h2>
+                <p className="text-purple-100 mt-2">
+                  Customize strength and character types for your password
+                </p>
+              </div>
+              <div className="p-6 space-y-6">
                 {/* Password Length */}
-                <div>
-                  <Label className="text-base font-medium">Password Length: {length[0]}</Label>
+                <div className="bg-gradient-to-br from-gray-50 to-white p-5 rounded-xl border border-gray-200">
+                  <Label className="text-base font-semibold text-gray-700 mb-3 block">
+                    Password Length: <span className="text-purple-600 font-bold">{length[0]} characters</span>
+                  </Label>
                   <Slider
                     value={length}
                     onValueChange={setLength}
                     max={50}
                     min={4}
                     step={1}
-                    className="mt-2"
+                    className="mt-3"
                     data-testid="password-length-slider"
                   />
-                  <div className="flex justify-between text-xs text-gray-500 mt-1">
-                    <span>4</span>
-                    <span>50</span>
+                  <div className="flex justify-between text-xs text-gray-500 mt-2">
+                    <span className="bg-gray-100 px-2 py-1 rounded">4</span>
+                    <span className="bg-gray-100 px-2 py-1 rounded">50</span>
                   </div>
                 </div>
 
                 {/* Character Types */}
-                <div className="space-y-4">
-                  <Label className="text-base font-medium">Include Characters</Label>
-                  <div className="space-y-3">
-                    <div className="flex items-center space-x-2">
+                <div className="bg-gradient-to-br from-indigo-50 to-purple-50 p-5 rounded-xl border border-indigo-200">
+                  <Label className="text-base font-semibold text-gray-700 mb-4 block">Include Characters</Label>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="flex items-center space-x-3 bg-white p-3 rounded-lg border border-gray-200">
                       <Checkbox
                         id="uppercase"
                         checked={includeUppercase}
                         onCheckedChange={(checked: boolean) => setIncludeUppercase(checked)}
                         data-testid="uppercase-checkbox"
                       />
-                      <Label htmlFor="uppercase" className="text-sm">Uppercase Letters (A-Z)</Label>
+                      <Label htmlFor="uppercase" className="text-sm font-medium text-gray-700">
+                        🔤 Uppercase (A-Z)
+                      </Label>
                     </div>
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center space-x-3 bg-white p-3 rounded-lg border border-gray-200">
                       <Checkbox
                         id="lowercase"
                         checked={includeLowercase}
                         onCheckedChange={(checked: boolean) => setIncludeLowercase(checked)}
                         data-testid="lowercase-checkbox"
                       />
-                      <Label htmlFor="lowercase" className="text-sm">Lowercase Letters (a-z)</Label>
+                      <Label htmlFor="lowercase" className="text-sm font-medium text-gray-700">
+                        🔡 Lowercase (a-z)
+                      </Label>
                     </div>
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center space-x-3 bg-white p-3 rounded-lg border border-gray-200">
                       <Checkbox
                         id="numbers"
                         checked={includeNumbers}
                         onCheckedChange={(checked: boolean) => setIncludeNumbers(checked)}
                         data-testid="numbers-checkbox"
                       />
-                      <Label htmlFor="numbers" className="text-sm">Numbers (0-9)</Label>
+                      <Label htmlFor="numbers" className="text-sm font-medium text-gray-700">
+                        🔢 Numbers (0-9)
+                      </Label>
                     </div>
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center space-x-3 bg-white p-3 rounded-lg border border-gray-200">
                       <Checkbox
                         id="symbols"
                         checked={includeSymbols}
                         onCheckedChange={(checked: boolean) => setIncludeSymbols(checked)}
                         data-testid="symbols-checkbox"
                       />
-                      <Label htmlFor="symbols" className="text-sm">Symbols (!@#$%^&*)</Label>
+                      <Label htmlFor="symbols" className="text-sm font-medium text-gray-700">
+                        🔣 Symbols (!@#$%^&*)
+                      </Label>
                     </div>
                   </div>
                 </div>
 
                 {/* Advanced Options */}
-                <div className="space-y-3 pt-4 border-t">
-                  <Label className="text-base font-medium">Advanced Options</Label>
-                  <div className="flex items-center space-x-2">
+                <div className="bg-gradient-to-br from-yellow-50 to-orange-50 p-5 rounded-xl border border-yellow-200">
+                  <Label className="text-base font-semibold text-gray-700 mb-3 block">Advanced Options</Label>
+                  <div className="flex items-center space-x-3 bg-white p-3 rounded-lg border border-gray-200">
                     <Checkbox
                       id="exclude-similar"
                       checked={excludeSimilar}
                       onCheckedChange={(checked: boolean) => setExcludeSimilar(checked)}
                       data-testid="exclude-similar-checkbox"
                     />
-                    <Label htmlFor="exclude-similar" className="text-sm">Exclude Similar Characters (0, O, 1, l, I)</Label>
+                    <Label htmlFor="exclude-similar" className="text-sm font-medium text-gray-700">
+                      ⚠️ Exclude Similar Characters (0, O, 1, l, I)
+                    </Label>
                   </div>
                 </div>
 
                 {/* Generate Button */}
                 <Button
                   onClick={generatePassword}
-                  className="w-full"
+                  className="w-full h-14 bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl"
                   data-testid="generate-password-button"
                 >
-                  <RefreshCw className="w-4 h-4 mr-2" />
-                  Generate Password
+                  <RefreshCw className="w-5 h-5 mr-3" />
+                  Generate Secure Password ✨
                 </Button>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
 
           {/* Password Display */}
           <div>
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">Generated Password</CardTitle>
-                <CardDescription>
-                  Your secure password
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
+            <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+              <div className="bg-gradient-to-r from-indigo-500 to-purple-600 p-6">
+                <h2 className="text-xl font-bold text-white flex items-center gap-3">
+                  <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                    <Eye className="w-5 h-5 text-white" />
+                  </div>
+                  Generated Password
+                </h2>
+                <p className="text-indigo-100 mt-2">
+                  Your secure password is ready
+                </p>
+              </div>
+              <div className="p-6 space-y-6">
                 <div className="relative">
                   <Input
                     type={showPassword ? "text" : "password"}
                     value={password}
                     readOnly
                     placeholder="Click generate to create password"
-                    className="pr-20 font-mono"
+                    className="pr-20 font-mono h-14 text-lg border-2 border-gray-200 focus:border-purple-400 rounded-xl bg-gradient-to-r from-gray-50 to-white"
                     data-testid="generated-password"
                   />
-                  <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex gap-1">
+                  <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex gap-2">
                     <Button
                       variant="ghost"
                       size="sm"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="h-6 w-6 p-0"
+                      className="h-10 w-10 p-0 bg-white shadow-md hover:shadow-lg rounded-lg border border-gray-200"
                       data-testid="toggle-password-visibility"
                     >
-                      {showPassword ? <EyeOff className="w-3 h-3" /> : <Eye className="w-3 h-3" />}
+                      {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                     </Button>
                     <Button
                       variant="ghost"
                       size="sm"
                       onClick={copyPassword}
-                      className="h-6 w-6 p-0"
+                      className="h-10 w-10 p-0 bg-white shadow-md hover:shadow-lg rounded-lg border border-gray-200"
                       disabled={!password}
                       data-testid="copy-password-button"
                     >
-                      <Copy className="w-3 h-3" />
+                      <Copy className="w-4 h-4" />
                     </Button>
                   </div>
                 </div>
 
                 {/* Password Strength */}
-                <div className="space-y-2">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm font-medium">Strength:</span>
+                <div className="bg-gradient-to-br from-gray-50 to-white p-5 rounded-xl border border-gray-200">
+                  <div className="flex justify-between items-center mb-3">
+                    <span className="text-base font-semibold text-gray-700">Password Strength:</span>
                     <Badge
-                      variant={strength.color === "green" ? "default" : strength.color === "yellow" ? "secondary" : "destructive"}
+                      className={`px-3 py-1 text-sm font-medium ${
+                        strength.color === "green" ? "bg-green-100 text-green-700 border-green-200" : 
+                        strength.color === "yellow" ? "bg-yellow-100 text-yellow-700 border-yellow-200" : 
+                        "bg-red-100 text-red-700 border-red-200"
+                      }`}
                       data-testid="password-strength"
                     >
-                      {strength.text}
+                      {strength.level === "strong" ? "🛡️ Strong" : strength.level === "medium" ? "⚠️ Medium" : "❌ Weak"}
                     </Badge>
                   </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
                     <div 
-                      className={`h-2 rounded-full transition-all ${
-                        strength.color === "green" ? "bg-green-500" : 
-                        strength.color === "yellow" ? "bg-yellow-500" : "bg-red-500"
+                      className={`h-3 rounded-full transition-all duration-500 ${
+                        strength.color === "green" ? "bg-gradient-to-r from-green-400 to-green-600" : 
+                        strength.color === "yellow" ? "bg-gradient-to-r from-yellow-400 to-yellow-600" : 
+                        "bg-gradient-to-r from-red-400 to-red-600"
                       }`}
                       style={{ 
                         width: strength.level === "strong" ? "100%" : 
@@ -320,17 +374,19 @@ export default function PasswordGenerator() {
                 </div>
 
                 {/* Security Tip */}
-                <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
-                  <div className="flex items-start gap-2">
-                    <AlertTriangle className="w-4 h-4 text-amber-600 mt-0.5 flex-shrink-0" />
-                    <div className="text-xs text-amber-700">
-                      <p className="font-medium mb-1">Security Tip:</p>
-                      <p>Never share your password and use unique passwords for each account.</p>
+                <div className="bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200 rounded-xl p-4">
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <AlertTriangle className="w-4 h-4 text-amber-600" />
+                    </div>
+                    <div className="text-sm text-amber-700">
+                      <p className="font-semibold mb-1">🔐 Security Tip:</p>
+                      <p>Never share your password and use unique passwords for each account. Store them in a password manager.</p>
                     </div>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
         </div>
 
