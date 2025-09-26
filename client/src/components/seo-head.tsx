@@ -73,27 +73,8 @@ export function SEOHead({ seoData, structuredData = [] }: SEOHeadProps) {
       <link rel="dns-prefetch" href="//fonts.googleapis.com" />
       <link rel="dns-prefetch" href="//fonts.gstatic.com" />
       
-      {/* Critical performance optimizations for instant loading */}
+      {/* Minimal preloading for instant loading */}
       <link rel="preload" href="/fonts/inter-var.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
-      
-      {/* Preload critical JavaScript modules for faster execution */}
-      <link rel="modulepreload" href="/src/main.tsx" />
-      <link rel="modulepreload" href="/src/pages/home.tsx" />
-      
-      {/* Critical API endpoint prefetch for instant responses */}
-      <link rel="prefetch" href="/api/short-url" />
-      <link rel="prefetch" href="/api/convert-image" />
-      <link rel="prefetch" href="/api/resize-image" />
-      <link rel="prefetch" href="/api/compress-image" />
-      
-      {/* Critical image preloading */}
-      <link rel="preload" href="/hero-bg.jpg" as="image" />
-      <link rel="preload" href="/tool-icons.webp" as="image" />
-      
-      {/* Optimize loading strategies */}
-      <meta name="format-detection" content="telephone=no" />
-      <meta name="mobile-web-app-capable" content="yes" />
-      <meta name="apple-touch-fullscreen" content="yes" />
     </Helmet>
   );
 }

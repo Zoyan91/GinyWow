@@ -1,10 +1,8 @@
-import { useState, lazy, Suspense, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Copy, Clipboard, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { usePerformanceMonitor, useResourcePerformance } from "@/hooks/usePerformanceMonitor";
 import { apiRequest } from "@/lib/queryClient";
 import { Link } from "wouter";
 import Header from "@/components/header";
@@ -19,8 +17,8 @@ import {
   homeFAQs
 } from "@/lib/seo";
 
-// Lazy load footer for better initial performance
-const Footer = lazy(() => import("@/components/footer"));
+// Direct import for faster loading
+import Footer from "@/components/footer";
 
 export default function Home() {
   const [youtubeUrl, setYoutubeUrl] = useState("");
@@ -28,12 +26,7 @@ export default function Home() {
   const [isGenerating, setIsGenerating] = useState(false);
   const { toast } = useToast();
   
-  // Enable scroll animations
-  useScrollAnimation();
-
-  // Performance monitoring for Core Web Vitals
-  usePerformanceMonitor();
-  useResourcePerformance();
+  // Removed performance monitoring for faster loading
 
   // Generate structured data for SEO (memoized for performance)
   const structuredData = useMemo(() => [
@@ -889,9 +882,7 @@ export default function Home() {
       {/* Newsletter Section */}
       <NewsletterSection />
 
-      <Suspense fallback={<div className="h-16 bg-gray-50 animate-pulse" />}>
-        <Footer />
-      </Suspense>
+      <Footer />
     </div>
   );
 }
