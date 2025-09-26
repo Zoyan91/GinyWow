@@ -123,10 +123,9 @@ Estimated reading time: ${currentStats.readingTime} minute(s)`;
 
       <main className="container mx-auto px-4 py-8 max-w-6xl">
 
-        {/* Main Tool Section */}
-        <div className="grid lg:grid-cols-3 gap-8 mb-12">
-          {/* Text Input Area */}
-          <div className="lg:col-span-2">
+        {/* Input Section - Full Width */}
+        <div className="mb-8">
+          <div>
             <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
               <div className="bg-blue-600 p-6">
                 <h2 className="text-xl font-bold text-white flex items-center gap-3">
@@ -180,75 +179,78 @@ Estimated reading time: ${currentStats.readingTime} minute(s)`;
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Statistics Panel */}
-          <div className="space-y-6">
-            {/* Live Statistics Card */}
-            <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
-              <div className="bg-blue-600 p-6">
-                <h2 className="text-xl font-bold text-white flex items-center gap-3">
-                  <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
-                    <Eye className="w-5 h-5 text-white" />
-                  </div>
-                  Live Statistics
-                </h2>
-                <p className="text-teal-100 mt-2">Real-time text analysis</p>
-              </div>
-              <div className="p-6 space-y-6">
-                {/* Words - Primary Stat */}
-                <div className="text-center p-6 bg-blue-50 rounded-xl border border-blue-200">
-                  <div className="text-4xl font-bold text-blue-600 mb-2" data-testid="word-count">
-                    {currentStats.words.toLocaleString()}
-                  </div>
-                  <div className="text-gray-600 font-medium flex items-center justify-center gap-2">
-                    <FileText className="w-4 h-4" />
-                    Words
-                  </div>
+        {/* Results Section - Only show when text exists */}
+        {text.trim() && (
+          <div className="mb-8">
+            <div>
+              <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+                <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-6">
+                  <h2 className="text-xl font-bold text-white flex items-center gap-3">
+                    <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                      <Eye className="w-5 h-5 text-white" />
+                    </div>
+                    Text Analysis Results
+                  </h2>
+                  <p className="text-blue-100 mt-2">Real-time text statistics and analysis</p>
                 </div>
-                
-                {/* Other Statistics */}
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="text-center p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-all duration-300">
-                    <div className="text-2xl font-bold text-gray-900 mb-1" data-testid="character-count">
-                      {currentStats.characters.toLocaleString()}
+                <div className="p-6 space-y-6">
+                  {/* Words - Primary Stat */}
+                  <div className="text-center p-6 bg-blue-50 rounded-xl border border-blue-200">
+                    <div className="text-4xl font-bold text-blue-600 mb-2" data-testid="word-count">
+                      {currentStats.words.toLocaleString()}
                     </div>
-                    <div className="text-xs text-gray-600">Characters</div>
-                  </div>
-                  <div className="text-center p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-all duration-300">
-                    <div className="text-2xl font-bold text-gray-900 mb-1" data-testid="character-no-spaces-count">
-                      {currentStats.charactersNoSpaces.toLocaleString()}
+                    <div className="text-gray-600 font-medium flex items-center justify-center gap-2">
+                      <FileText className="w-4 h-4" />
+                      Words
                     </div>
-                    <div className="text-xs text-gray-600">No Spaces</div>
                   </div>
-                  <div className="text-center p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-all duration-300">
-                    <div className="text-2xl font-bold text-gray-900 mb-1" data-testid="sentence-count">
-                      {currentStats.sentences.toLocaleString()}
+                  
+                  {/* Other Statistics */}
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="text-center p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-all duration-300">
+                      <div className="text-2xl font-bold text-gray-900 mb-1" data-testid="character-count">
+                        {currentStats.characters.toLocaleString()}
+                      </div>
+                      <div className="text-xs text-gray-600">Characters</div>
                     </div>
-                    <div className="text-xs text-gray-600">Sentences</div>
-                  </div>
-                  <div className="text-center p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-all duration-300">
-                    <div className="text-2xl font-bold text-gray-900 mb-1" data-testid="paragraph-count">
-                      {currentStats.paragraphs.toLocaleString()}
+                    <div className="text-center p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-all duration-300">
+                      <div className="text-2xl font-bold text-gray-900 mb-1" data-testid="character-no-spaces-count">
+                        {currentStats.charactersNoSpaces.toLocaleString()}
+                      </div>
+                      <div className="text-xs text-gray-600">No Spaces</div>
                     </div>
-                    <div className="text-xs text-gray-600">Paragraphs</div>
+                    <div className="text-center p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-all duration-300">
+                      <div className="text-2xl font-bold text-gray-900 mb-1" data-testid="sentence-count">
+                        {currentStats.sentences.toLocaleString()}
+                      </div>
+                      <div className="text-xs text-gray-600">Sentences</div>
+                    </div>
+                    <div className="text-center p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-all duration-300">
+                      <div className="text-2xl font-bold text-gray-900 mb-1" data-testid="paragraph-count">
+                        {currentStats.paragraphs.toLocaleString()}
+                      </div>
+                      <div className="text-xs text-gray-600">Paragraphs</div>
+                    </div>
                   </div>
-                </div>
-                
-                {/* Reading Time - Special */}
-                <div className="text-center p-6 bg-blue-50 rounded-xl border border-blue-200">
-                  <div className="flex items-center justify-center gap-2 mb-2">
-                    <Clock className="w-5 h-5 text-orange-600" />
-                    <span className="text-orange-600 font-medium">Reading Time</span>
+                  
+                  {/* Reading Time - Special */}
+                  <div className="text-center p-6 bg-orange-50 rounded-xl border border-orange-200">
+                    <div className="flex items-center justify-center gap-2 mb-2">
+                      <Clock className="w-5 h-5 text-orange-600" />
+                      <span className="text-orange-600 font-medium">Reading Time</span>
+                    </div>
+                    <div className="text-3xl font-bold text-orange-700" data-testid="reading-time">
+                      {currentStats.readingTime} min
+                    </div>
+                    <div className="text-xs text-orange-600 mt-1">@ 200 words/min</div>
                   </div>
-                  <div className="text-3xl font-bold text-orange-700" data-testid="reading-time">
-                    {currentStats.readingTime} min
-                  </div>
-                  <div className="text-xs text-orange-600 mt-1">@ 200 words/min</div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
 
         {/* Information Sections */}
         <div className="space-y-8">

@@ -211,10 +211,9 @@ export default function AgeCalculator() {
 
       <main className="container mx-auto px-4 py-8 max-w-5xl">
 
-        {/* Main Tool Section */}
-        <div className="grid lg:grid-cols-3 gap-6 mb-8">
-          {/* Input Section */}
-          <div className="lg:col-span-1">
+        {/* Input Section - Full Width */}
+        <div className="mb-8">
+          <div>
             <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
               <div className="bg-pink-600 p-6">
                 <h2 className="text-xl font-bold text-white flex items-center gap-3">
@@ -270,99 +269,96 @@ export default function AgeCalculator() {
                 </div>
               </div>
             </div>
-
-            {/* Zodiac Sign */}
-            {zodiacSign && (
-              <Card className="mt-4">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-lg">
-                    <span className="text-2xl">{zodiacSign.emoji}</span>
-                    Zodiac Sign
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-center">
-                    <h3 className="text-xl font-bold text-gray-900 mb-1">{zodiacSign.name}</h3>
-                    <p className="text-sm text-gray-600">{zodiacSign.dates}</p>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
           </div>
+        </div>
 
-          {/* Results Section */}
-          <div className="lg:col-span-2">
-            {ageResult ? (
-              <div className="space-y-4">
-                {/* Main Age Display */}
-                <Card className="bg-blue-50 border-blue-200">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2 text-xl">
-                      <Gift className="w-6 h-6 text-blue-600" />
-                      Your Age
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-center">
-                      <div className="text-4xl font-bold text-blue-900 mb-2">
-                        {ageResult.years} Years
+        {/* Zodiac Sign Section - Only show when birth date is entered */}
+        {zodiacSign && (
+          <div className="mb-8">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-lg">
+                  <span className="text-2xl">{zodiacSign.emoji}</span>
+                  Your Zodiac Sign
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-center">
+                  <h3 className="text-xl font-bold text-gray-900 mb-1">{zodiacSign.name}</h3>
+                  <p className="text-sm text-gray-600">{zodiacSign.dates}</p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
+
+        {/* Results Section - Only show after calculation */}
+        {ageResult && (
+          <div className="mb-8">
+            <div>
+              <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+                <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-6">
+                  <h2 className="text-xl font-bold text-white flex items-center gap-3">
+                    <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                      <Gift className="w-5 h-5 text-white" />
+                    </div>
+                    Age Calculation Results
+                  </h2>
+                  <p className="text-blue-100 mt-2">
+                    Your complete age analysis and breakdown
+                  </p>
+                </div>
+                <div className="p-6 space-y-6">
+                  {/* Main Age Display */}
+                  <div className="text-center p-6 bg-blue-50 rounded-xl border border-blue-200">
+                    <div className="text-4xl font-bold text-blue-900 mb-2">
+                      {ageResult.years} Years
+                    </div>
+                    <div className="text-xl text-blue-700 mb-4">
+                      {ageResult.months} Months, {ageResult.days} Days
+                    </div>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-gray-900">{ageResult.totalDays.toLocaleString()}</div>
+                        <div className="text-sm text-gray-600">Total Days</div>
                       </div>
-                      <div className="text-xl text-blue-700 mb-4">
-                        {ageResult.months} Months, {ageResult.days} Days
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-gray-900">{ageResult.totalHours.toLocaleString()}</div>
+                        <div className="text-sm text-gray-600">Total Hours</div>
                       </div>
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <div className="text-center">
-                          <div className="text-2xl font-bold text-gray-900">{ageResult.totalDays.toLocaleString()}</div>
-                          <div className="text-sm text-gray-600">Total Days</div>
-                        </div>
-                        <div className="text-center">
-                          <div className="text-2xl font-bold text-gray-900">{ageResult.totalHours.toLocaleString()}</div>
-                          <div className="text-sm text-gray-600">Total Hours</div>
-                        </div>
-                        <div className="text-center">
-                          <div className="text-2xl font-bold text-gray-900">{ageResult.totalMinutes.toLocaleString()}</div>
-                          <div className="text-sm text-gray-600">Total Minutes</div>
-                        </div>
-                        <div className="text-center">
-                          <div className="text-2xl font-bold text-gray-900">{ageResult.totalSeconds.toLocaleString()}</div>
-                          <div className="text-sm text-gray-600">Total Seconds</div>
-                        </div>
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-gray-900">{ageResult.totalMinutes.toLocaleString()}</div>
+                        <div className="text-sm text-gray-600">Total Minutes</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-gray-900">{ageResult.totalSeconds.toLocaleString()}</div>
+                        <div className="text-sm text-gray-600">Total Seconds</div>
                       </div>
                     </div>
-                  </CardContent>
-                </Card>
+                  </div>
 
-                {/* Next Birthday */}
-                <Card className="bg-pink-50 border-pink-200">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
+                  {/* Next Birthday */}
+                  <div className="text-center p-6 bg-pink-50 rounded-xl border border-pink-200">
+                    <div className="flex items-center justify-center gap-2 mb-2">
                       <Heart className="w-5 h-5 text-pink-600" />
-                      Next Birthday
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-center">
-                      <div className="text-3xl font-bold text-pink-900 mb-2">
-                        {ageResult.nextBirthday.daysLeft} Days
-                      </div>
-                      <div className="text-pink-700">
-                        Until your birthday on {ageResult.nextBirthday.date}
-                      </div>
-                      {ageResult.nextBirthday.daysLeft === 0 && (
-                        <Badge variant="secondary" className="mt-2 bg-pink-100 text-pink-800">
-                          🎉 Happy Birthday! 🎉
-                        </Badge>
-                      )}
+                      <span className="text-pink-600 font-medium">Next Birthday</span>
                     </div>
-                  </CardContent>
-                </Card>
+                    <div className="text-3xl font-bold text-pink-900 mb-2">
+                      {ageResult.nextBirthday.daysLeft} Days
+                    </div>
+                    <div className="text-pink-700">
+                      Until your birthday on {ageResult.nextBirthday.date}
+                    </div>
+                    {ageResult.nextBirthday.daysLeft === 0 && (
+                      <Badge variant="secondary" className="mt-2 bg-pink-100 text-pink-800">
+                        🎉 Happy Birthday! 🎉
+                      </Badge>
+                    )}
+                  </div>
 
-                {/* Age Breakdown */}
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Detailed Age Breakdown</CardTitle>
-                  </CardHeader>
-                  <CardContent>
+                  {/* Age Breakdown */}
+                  <div className="bg-gray-50 p-6 rounded-xl">
+                    <h3 className="text-lg font-bold text-gray-900 mb-4 text-center">Detailed Age Breakdown</h3>
                     <div className="grid md:grid-cols-2 gap-4">
                       <div className="space-y-2">
                         <div className="flex justify-between">
@@ -393,21 +389,12 @@ export default function AgeCalculator() {
                         </div>
                       </div>
                     </div>
-                  </CardContent>
-                </Card>
-              </div>
-            ) : (
-              <Card className="h-full">
-                <CardContent className="flex items-center justify-center h-full py-16">
-                  <div className="text-center text-gray-500">
-                    <Calendar className="w-16 h-16 mx-auto mb-4 opacity-30" />
-                    <p>Enter your birth date and click "Calculate Age" to see detailed results</p>
                   </div>
-                </CardContent>
-              </Card>
-            )}
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Information Sections */}
         <div className="space-y-8">
