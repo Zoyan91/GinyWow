@@ -51,20 +51,49 @@ export default function QRCodeGenerator() {
     }
   };
 
-  const downloadQRCode = () => {
+  const downloadQRCode = async () => {
     if (!generatedQR) return;
     
-    const link = document.createElement('a');
-    link.href = generatedQR;
-    link.download = 'qr-code.png';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    
-    toast({
-      title: "QR Code Downloaded",
-      description: "QR code has been downloaded successfully.",
-    });
+    try {
+      // Show downloading toast
+      toast({
+        title: "Downloading...",
+        description: "Preparing your QR code for download.",
+      });
+
+      // Fetch the image from external API
+      const response = await fetch(generatedQR);
+      if (!response.ok) {
+        throw new Error('Failed to fetch QR code');
+      }
+      
+      // Convert to blob
+      const blob = await response.blob();
+      
+      // Create blob URL and download
+      const blobUrl = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = blobUrl;
+      link.download = 'qr-code.png';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      // Clean up blob URL
+      URL.revokeObjectURL(blobUrl);
+      
+      toast({
+        title: "QR Code Downloaded",
+        description: "QR code has been downloaded successfully.",
+      });
+    } catch (error) {
+      console.error('Download failed:', error);
+      toast({
+        title: "Download Failed",
+        description: "Failed to download QR code. Please try again.",
+        variant: "destructive"
+      });
+    }
   };
 
   const handleTypeChange = (type: string) => {
