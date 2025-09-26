@@ -7,6 +7,7 @@ import { useState } from "react";
 export default function Footer() {
   const [menusOpen, setMenusOpen] = useState(false);
   const [toolsOpen, setToolsOpen] = useState(false);
+  const [utilityOpen, setUtilityOpen] = useState(false);
   const [socialOpen, setSocialOpen] = useState(false);
 
   return (
@@ -14,7 +15,7 @@ export default function Footer() {
       <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
         
         {/* Desktop Footer */}
-        <div className="hidden md:grid md:grid-cols-3 gap-8 mb-8">
+        <div className="hidden md:grid md:grid-cols-4 gap-8 mb-8">
           {/* Menus */}
           <div>
             <h4 className="font-bold text-gray-900 mb-6 text-lg">Menus</h4>
@@ -89,6 +90,13 @@ export default function Footer() {
                   </span>
                 </Link>
               </li>
+            </ul>
+          </div>
+
+          {/* Utility */}
+          <div>
+            <h4 className="font-bold text-gray-900 mb-6 text-lg">Utility</h4>
+            <ul className="space-y-3">
               <li>
                 <Link href="/word-counter">
                   <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm">
@@ -252,6 +260,18 @@ export default function Footer() {
                     </span>
                   </Link>
                 </li>
+              </ul>
+            </CollapsibleContent>
+          </Collapsible>
+
+          {/* Utility */}
+          <Collapsible open={utilityOpen} onOpenChange={setUtilityOpen}>
+            <CollapsibleTrigger className="flex items-center justify-between w-full p-4 bg-gray-50 rounded-lg">
+              <h4 className="font-bold text-gray-900 text-base">Utility</h4>
+              <ChevronDown className={`h-4 w-4 transition-transform ${utilityOpen ? 'rotate-180' : ''}`} />
+            </CollapsibleTrigger>
+            <CollapsibleContent className="mt-2">
+              <ul className="space-y-3 p-4">
                 <li>
                   <Link href="/word-counter">
                     <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm block py-2">
