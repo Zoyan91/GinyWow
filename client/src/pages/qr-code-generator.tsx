@@ -178,9 +178,8 @@ export default function QRCodeGenerator() {
 
       <main className="container mx-auto px-4 py-8 max-w-6xl">
 
-        {/* Main Tool Section */}
-        <div className="grid lg:grid-cols-2 gap-8 mb-12">
-          {/* Input Section */}
+        {/* Input Section - Full Width */}
+        <div className="mb-8">
           <div>
             <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
               <div className="bg-orange-600 p-6">
@@ -256,23 +255,25 @@ export default function QRCodeGenerator() {
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Preview Section */}
-          <div>
-            <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
-              <div className="bg-orange-600 p-6">
-                <h2 className="text-xl font-bold text-white flex items-center gap-3">
-                  <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
-                    <Smartphone className="w-5 h-5 text-white" />
-                  </div>
-                  QR Code Preview
-                </h2>
-                <p className="text-orange-100 mt-2">
-                  Your beautiful QR code will appear here
-                </p>
-              </div>
-              <div className="p-6">
-                {generatedQR ? (
+        {/* Results Section - Only show after generation */}
+        {generatedQR && (
+          <div className="mb-8">
+            <div>
+              <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+                <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-6">
+                  <h2 className="text-xl font-bold text-white flex items-center gap-3">
+                    <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                      <Smartphone className="w-5 h-5 text-white" />
+                    </div>
+                    Generated QR Code
+                  </h2>
+                  <p className="text-blue-100 mt-2">
+                    Your QR code is ready for download
+                  </p>
+                </div>
+                <div className="p-6">
                   <div className="text-center space-y-6">
                     <div className="bg-orange-50 p-8 rounded-2xl border-2 border-dashed border-orange-300 inline-block shadow-inner relative overflow-hidden">
                       <div className="absolute inset-0 bg-orange-50/50"></div>
@@ -283,7 +284,7 @@ export default function QRCodeGenerator() {
                         data-testid="generated-qr-image"
                       />
                     </div>
-                    <div className="bg-orange-50 p-4 rounded-xl border border-orange-200">
+                    <div className="bg-green-50 p-4 rounded-xl border border-green-200">
                       <div className="flex items-center justify-center gap-2 text-green-700">
                         <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
                         <span className="font-medium">QR Code Generated Successfully!</span>
@@ -291,23 +292,18 @@ export default function QRCodeGenerator() {
                     </div>
                     <Button
                       onClick={downloadQRCode}
-                      className="w-full h-14 bg-orange-600 hover:bg-orange-700 text-white text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl"
+                      className="w-full h-14 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl"
                       data-testid="download-qr-button"
                     >
                       <Download className="w-4 h-4 mr-2" />
                       Download QR Code
                     </Button>
                   </div>
-                ) : (
-                  <div className="text-center py-16 text-gray-500">
-                    <QrCode className="w-16 h-16 mx-auto mb-4 opacity-30" />
-                    <p>Enter content and click "Generate QR Code" to see your QR code here</p>
-                  </div>
-                )}
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
 
         {/* Information Sections */}
         <div className="space-y-8">
