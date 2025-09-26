@@ -579,6 +579,31 @@ export default function ImageCompressorPage() {
 
         <Separator className="my-12" />
 
+        {/* FAQ Section */}
+        <section className="py-12 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">
+              Frequently Asked Questions
+            </h2>
+            <div className="grid gap-6">
+              {faqs.map((faq, index) => (
+                <Card key={index}>
+                  <CardContent className="pt-6">
+                    <h3 className="font-semibold text-lg text-gray-900 mb-2">
+                      {faq.question}
+                    </h3>
+                    <p className="text-gray-600 leading-relaxed">
+                      {faq.answer}
+                    </p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <Separator className="my-12" />
+
         {/* GinyWow Image Compressor Information Section */}
         <section className="py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
           <div className="max-w-4xl mx-auto">
@@ -617,31 +642,6 @@ export default function ImageCompressorPage() {
               <p className="text-gray-600 leading-relaxed">
                 With GinyWow Image Compressor, you get <strong>fast, reliable, and free image optimization</strong>. No compromise on quality—just smaller, web-ready images for any use.
               </p>
-            </div>
-          </div>
-        </section>
-
-        <Separator className="my-12" />
-
-        {/* FAQ Section */}
-        <section className="py-12 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">
-              Frequently Asked Questions
-            </h2>
-            <div className="grid gap-6">
-              {faqs.map((faq, index) => (
-                <Card key={index}>
-                  <CardContent className="pt-6">
-                    <h3 className="font-semibold text-lg text-gray-900 mb-2">
-                      {faq.question}
-                    </h3>
-                    <p className="text-gray-600 leading-relaxed">
-                      {faq.answer}
-                    </p>
-                  </CardContent>
-                </Card>
-              ))}
             </div>
           </div>
         </section>
