@@ -221,7 +221,7 @@ export default function MortgageCalculator() {
         <div className="relative z-10 container mx-auto px-4 max-w-4xl">
           <div className="text-center animate-fade-in">
             <h1 className="text-xl sm:text-2xl lg:text-4xl font-bold lg:font-normal text-gray-900 mb-4 sm:mb-6 leading-tight">
-              Mortgage Calculator Tool
+              Free Mortgage Calculator – Estimate Monthly Payments Instantly
             </h1>
             
             <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 leading-relaxed max-w-2xl mx-auto px-4">
