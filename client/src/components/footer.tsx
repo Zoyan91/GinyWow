@@ -119,13 +119,6 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/unit-converter">
-                  <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm">
-                    Unit Converter
-                  </span>
-                </Link>
-              </li>
-              <li>
                 <Link href="/age-calculator">
                   <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm">
                     Age Calculator
@@ -290,13 +283,6 @@ export default function Footer() {
                   <Link href="/password-generator">
                     <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm block py-2">
                       Password Generator
-                    </span>
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/unit-converter">
-                    <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm block py-2">
-                      Unit Converter
                     </span>
                   </Link>
                 </li>

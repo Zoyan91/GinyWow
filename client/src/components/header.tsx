@@ -23,8 +23,6 @@ const preloadPage = (path: string) => {
     import("@/pages/qr-code-generator");
   } else if (path === "/password-generator") {
     import("@/pages/password-generator");
-  } else if (path === "/unit-converter") {
-    import("@/pages/unit-converter");
   } else if (path === "/age-calculator") {
     import("@/pages/age-calculator");
   } else if (path === "/mortgage-calculator") {
@@ -62,7 +60,6 @@ export default function Header({ currentPage }: HeaderProps) {
     return location.startsWith("/word-counter") || 
            location.startsWith("/qr-code-generator") || 
            location.startsWith("/password-generator") ||
-           location.startsWith("/unit-converter") ||
            location.startsWith("/age-calculator") ||
            location.startsWith("/mortgage-calculator");
   };
@@ -85,7 +82,6 @@ export default function Header({ currentPage }: HeaderProps) {
     { href: "/word-counter", label: "Word Counter", testId: "nav-word-counter" },
     { href: "/qr-code-generator", label: "QR Code Generator", testId: "nav-qr-code-generator" },
     { href: "/password-generator", label: "Password Generator", testId: "nav-password-generator" },
-    { href: "/unit-converter", label: "Unit Converter", testId: "nav-unit-converter" },
     { href: "/age-calculator", label: "Age Calculator", testId: "nav-age-calculator" },
     { href: "/mortgage-calculator", label: "Mortgage Calculator", testId: "nav-mortgage-calculator" },
   ];
@@ -116,8 +112,6 @@ export default function Header({ currentPage }: HeaderProps) {
         setLocation('/qr-code-generator');
       } else if (searchTerm.includes('password') || searchTerm.includes('generator')) {
         setLocation('/password-generator');
-      } else if (searchTerm.includes('unit')) {
-        setLocation('/unit-converter');
       } else if (searchTerm.includes('mortgage') || searchTerm.includes('loan') || searchTerm.includes('emi')) {
         setLocation('/mortgage-calculator');
       } else if (searchTerm.includes('age') || searchTerm.includes('calculator')) {
