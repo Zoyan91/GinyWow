@@ -581,7 +581,6 @@ export default function Home() {
         <div className="container-mobile max-w-6xl">
           <div className="text-center mb-12 sm:mb-16">
             <div className="inline-flex items-center bg-red-600 text-white px-8 py-3 rounded-full text-lg font-semibold shadow-lg mb-12 hover:shadow-xl transition-shadow duration-300">
-              <span className="mr-2">🚀</span>
               Our More Tools : Try It
             </div>
             
