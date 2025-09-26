@@ -68,8 +68,8 @@ Estimated reading time: ${currentStats.readingTime} minute(s)`;
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>Free Word Counter Tool - Count Words, Characters & Reading Time | GinyWow</title>
-        <meta name="description" content="Free online word counter tool by GinyWow. Count words, characters, sentences, paragraphs and estimate reading time instantly. Perfect for writers, students and content creators." />
+        <title>Free Online Word Counter – Count Words, Characters & Sentences Instantly | GinyWow</title>
+        <meta name="description" content="Use our free Word Counter Tool to count words, characters, sentences, and paragraphs online. Perfect for writers, students, bloggers, and SEO professionals. No signup required." />
         <meta name="keywords" content="word counter, character counter, text analyzer, reading time calculator, writing tool, GinyWow" />
         <link rel="canonical" href="https://ginywow.com/word-counter" />
         
@@ -178,11 +178,11 @@ Estimated reading time: ${currentStats.readingTime} minute(s)`;
         <div className="relative z-10 container mx-auto px-4 max-w-4xl">
           <div className="text-center animate-fade-in">
             <h1 className="text-xl sm:text-2xl lg:text-4xl font-bold lg:font-normal text-gray-900 mb-4 sm:mb-6 leading-tight">
-              Word Counter Tool
+              Free Online Word Counter – Count Words, Characters & Sentences Instantly
             </h1>
             
             <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 leading-relaxed max-w-2xl mx-auto px-4">
-              Count words, characters, paragraphs, and reading time instantly. Professional text analysis for writers and content creators.
+              Use our free Word Counter Tool to count words, characters, sentences, and paragraphs online. Perfect for writers, students, bloggers, and SEO professionals.
             </p>
           </div>
         </div>
@@ -319,123 +319,125 @@ Estimated reading time: ${currentStats.readingTime} minute(s)`;
 
         {/* Information Sections */}
         <div className="space-y-8">
-          {/* What is GinyWow Word Counter */}
+          {/* What is a Word Counter Tool */}
           <section className="bg-gray-50 rounded-lg p-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">What is GinyWow Word Counter?</h2>
-            <p className="text-gray-700 leading-relaxed">
-              GinyWow Word Counter is a free, powerful online tool that provides instant text analysis and statistics. 
-              Whether you're a student working on essays, a writer crafting articles, or a professional creating content, 
-              our word counter helps you track your writing progress with real-time word, character, sentence, and paragraph counts.
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">What is a Word Counter Tool?</h2>
+            <p className="text-gray-700 leading-relaxed mb-4">
+              A <strong>Word Counter Tool</strong> is a free online utility that instantly counts the number of words, characters, sentences, and paragraphs in your text. Whether you are a <strong>student writing an essay</strong>, a <strong>blogger creating content</strong>, or a <strong>marketer optimizing SEO</strong>, this tool helps you stay accurate and within limits.
             </p>
           </section>
 
-          {/* Why Use GinyWow Word Counter */}
+          {/* Why Use the GinyWow Word Counter */}
           <section className="bg-white rounded-lg p-6 border border-gray-200">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Why Use GinyWow Word Counter?</h2>
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="space-y-3">
-                <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-blue-600 rounded-full mt-2"></div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900">Real-Time Counting</h3>
-                    <p className="text-gray-600 text-sm">Instant updates as you type or paste text</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-blue-600 rounded-full mt-2"></div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900">Multiple Metrics</h3>
-                    <p className="text-gray-600 text-sm">Words, characters, sentences, paragraphs, and reading time</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-blue-600 rounded-full mt-2"></div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900">Reading Time Estimation</h3>
-                    <p className="text-gray-600 text-sm">Calculate how long it takes to read your content</p>
-                  </div>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">Why Use the GinyWow Word Counter?</h2>
+            <div className="space-y-4">
+              <div className="flex items-start gap-3">
+                <span className="text-green-600 text-lg">✅</span>
+                <div>
+                  <strong className="text-gray-900">Instant Results</strong>
+                  <span className="text-gray-700"> – Paste or type text to see word count immediately.</span>
                 </div>
               </div>
-              <div className="space-y-3">
-                <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-blue-600 rounded-full mt-2"></div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900">Free & No Registration</h3>
-                    <p className="text-gray-600 text-sm">Use without signing up or paying fees</p>
-                  </div>
+              <div className="flex items-start gap-3">
+                <span className="text-green-600 text-lg">✅</span>
+                <div>
+                  <strong className="text-gray-900">Character & Sentence Count</strong>
+                  <span className="text-gray-700"> – Track more than just words.</span>
                 </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-blue-600 rounded-full mt-2"></div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900">Export Statistics</h3>
-                    <p className="text-gray-600 text-sm">Copy detailed statistics to clipboard</p>
-                  </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <span className="text-green-600 text-lg">✅</span>
+                <div>
+                  <strong className="text-gray-900">SEO Friendly</strong>
+                  <span className="text-gray-700"> – Ensure your content meets search engine requirements.</span>
                 </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-blue-600 rounded-full mt-2"></div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900">Privacy Focused</h3>
-                    <p className="text-gray-600 text-sm">Your text is processed locally and never stored</p>
-                  </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <span className="text-green-600 text-lg">✅</span>
+                <div>
+                  <strong className="text-gray-900">Free & Easy</strong>
+                  <span className="text-gray-700"> – 100% free, no login or signup required.</span>
                 </div>
               </div>
             </div>
           </section>
 
-          {/* How to Use */}
+          {/* How to Use the Word Counter */}
           <section className="bg-gray-50 rounded-lg p-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">How to Use GinyWow Word Counter</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">How to Use the Word Counter?</h2>
             <div className="space-y-3">
               <div className="flex items-start gap-3">
                 <Badge variant="outline" className="text-xs">1</Badge>
-                <p className="text-gray-700">Type or paste your text into the text area</p>
+                <p className="text-gray-700">Copy and paste your text into the input box.</p>
               </div>
               <div className="flex items-start gap-3">
                 <Badge variant="outline" className="text-xs">2</Badge>
-                <p className="text-gray-700">Watch real-time statistics update automatically</p>
+                <p className="text-gray-700">Instantly see <strong>word count, character count, sentence count, and paragraph count</strong>.</p>
               </div>
               <div className="flex items-start gap-3">
                 <Badge variant="outline" className="text-xs">3</Badge>
-                <p className="text-gray-700">View detailed metrics including reading time estimation</p>
-              </div>
-              <div className="flex items-start gap-3">
-                <Badge variant="outline" className="text-xs">4</Badge>
-                <p className="text-gray-700">Copy statistics or clear text as needed</p>
+                <p className="text-gray-700">Use results to optimize essays, blog posts, or social media captions.</p>
               </div>
             </div>
           </section>
 
-          {/* Who Can Benefit */}
+          {/* Who Can Use This Tool */}
           <section className="bg-white rounded-lg p-6 border border-gray-200">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Who Can Benefit from GinyWow Word Counter?</h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-              <div className="text-center">
-                <div className="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <FileText className="w-6 h-6 text-blue-600" />
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">Who Can Use This Tool?</h2>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <span className="text-xl">📚</span>
+                  <div>
+                    <strong className="text-gray-900">Students</strong>
+                    <span className="text-gray-700"> – Check essay or assignment length.</span>
+                  </div>
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Students</h3>
-                <p className="text-gray-600 text-sm">Track essay and assignment word requirements</p>
+                <div className="flex items-start gap-3">
+                  <span className="text-xl">✍️</span>
+                  <div>
+                    <strong className="text-gray-900">Writers & Bloggers</strong>
+                    <span className="text-gray-700"> – Track content size for blogs & articles.</span>
+                  </div>
+                </div>
               </div>
-              <div className="text-center">
-                <div className="bg-green-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <Eye className="w-6 h-6 text-green-600" />
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <span className="text-xl">📈</span>
+                  <div>
+                    <strong className="text-gray-900">SEO Professionals</strong>
+                    <span className="text-gray-700"> – Optimize word count for Google ranking.</span>
+                  </div>
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Content Writers</h3>
-                <p className="text-gray-600 text-sm">Meet article length and SEO requirements</p>
+                <div className="flex items-start gap-3">
+                  <span className="text-xl">💬</span>
+                  <div>
+                    <strong className="text-gray-900">Social Media Users</strong>
+                    <span className="text-gray-700"> – Ensure posts fit within Twitter, Instagram, or LinkedIn limits.</span>
+                  </div>
+                </div>
               </div>
-              <div className="text-center">
-                <div className="bg-purple-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <Clock className="w-6 h-6 text-purple-600" />
-                </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Bloggers</h3>
-                <p className="text-gray-600 text-sm">Optimize blog post length and reading time</p>
+            </div>
+          </section>
+
+          {/* Global Use Cases */}
+          <section className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-6">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">Global Use Cases</h2>
+            <p className="text-gray-700 leading-relaxed mb-4">
+              Our <strong>Word Counter Tool</strong> is popular worldwide:
+            </p>
+            <div className="grid md:grid-cols-3 gap-4">
+              <div className="bg-white p-4 rounded-lg border border-gray-200">
+                <h4 className="font-semibold text-blue-800 mb-2">🇺🇸 USA & UK</h4>
+                <p className="text-gray-600 text-sm">Students use it for essays and reports.</p>
               </div>
-              <div className="text-center">
-                <div className="bg-orange-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <Copy className="w-6 h-6 text-orange-600" />
-                </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Professionals</h3>
-                <p className="text-gray-600 text-sm">Create reports and documents within limits</p>
+              <div className="bg-white p-4 rounded-lg border border-gray-200">
+                <h4 className="font-semibold text-blue-800 mb-2">🇮🇳 India & Asia</h4>
+                <p className="text-gray-600 text-sm">Bloggers use it to optimize SEO content.</p>
+              </div>
+              <div className="bg-white p-4 rounded-lg border border-gray-200">
+                <h4 className="font-semibold text-blue-800 mb-2">🌍 Europe & Canada</h4>
+                <p className="text-gray-600 text-sm">Writers and marketers use it for precise word tracking.</p>
               </div>
             </div>
           </section>
