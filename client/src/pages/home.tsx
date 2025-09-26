@@ -711,11 +711,11 @@ export default function Home() {
                 </div>
               </Link>
 
-              {/* Sleep Calculator - Indigo Theme */}
-              <Link href="/sleep-calculator">
+              {/* Mortgage Calculator - Indigo Theme */}
+              <Link href="/mortgage-calculator">
                 <div
                   className="group relative bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl cursor-pointer transform hover:-translate-y-2 transition-all duration-300 border border-gray-100 overflow-hidden"
-                  data-testid="sleep-calculator-card"
+                  data-testid="mortgage-calculator-card"
                 >
                   {/* Background Gradient Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 to-purple-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -723,15 +723,15 @@ export default function Home() {
                   <div className="relative text-center space-y-5">
                     <div className="w-20 h-20 mx-auto bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300 shadow-lg">
                       <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                       </svg>
                     </div>
                     <div>
                       <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-indigo-700 transition-colors">
-                        Sleep Calculator
+                        Mortgage Calculator
                       </h3>
                       <p className="text-gray-600 text-sm leading-relaxed">
-                        Calculate optimal bedtime and wake-up times
+                        Calculate home loan EMI and interest payments
                       </p>
                     </div>
                   </div>
