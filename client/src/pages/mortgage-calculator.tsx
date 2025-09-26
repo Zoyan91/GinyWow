@@ -173,32 +173,6 @@ export default function MortgageCalculator() {
       
       {/* Hero Section with exact home page design pattern */}
       <section className="relative min-h-[40vh] bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center overflow-hidden pt-12 sm:pt-16 lg:pt-20">
-        {/* Floating gradient shapes - exact same as home page */}
-        <div className="absolute inset-0 hidden md:block">
-          {/* Large gradient circles */}
-          <div className="absolute top-10 left-10 w-32 h-32 rounded-full animate-float-1" style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', opacity: 0.1 }}></div>
-          <div className="absolute top-20 right-20 w-40 h-40 rounded-full animate-float-2" style={{ background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)', opacity: 0.08 }}></div>
-          <div className="absolute bottom-20 left-20 w-36 h-36 rounded-full animate-float-3" style={{ background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)', opacity: 0.1 }}></div>
-          <div className="absolute bottom-10 right-10 w-28 h-28 rounded-full animate-float-4" style={{ background: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)', opacity: 0.12 }}></div>
-
-          {/* Medium gradient shapes */}
-          <div className="absolute top-40 left-1/4 w-20 h-20 animate-float-5" style={{ background: 'linear-gradient(45deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%)', opacity: 0.15, clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' }}></div>
-          <div className="absolute top-32 right-1/3 w-24 h-24 rounded-full animate-float-6" style={{ background: 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)', opacity: 0.1 }}></div>
-          <div className="absolute bottom-40 right-1/4 w-18 h-18 animate-float-1" style={{ background: 'linear-gradient(45deg, #a8edea 0%, #fed6e3 100%)', opacity: 0.12, clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)' }}></div>
-          <div className="absolute bottom-32 left-1/3 w-22 h-22 animate-float-2" style={{ background: 'linear-gradient(135deg, #d299c2 0%, #fef9d7 100%)', opacity: 0.1, borderRadius: '0 50% 50% 50%' }}></div>
-
-          {/* Small accent shapes */}
-          <div className="absolute top-16 left-1/2 w-12 h-12 rounded-full animate-float-3" style={{ background: 'linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%)', opacity: 0.2 }}></div>
-          <div className="absolute top-60 right-1/2 w-8 h-8 animate-float-4" style={{ background: 'linear-gradient(45deg, #fdbb2d 0%, #22c1c3 100%)', opacity: 0.25, clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' }}></div>
-          <div className="absolute bottom-60 left-1/2 w-14 h-14 animate-float-5" style={{ background: 'linear-gradient(135deg, #ee9ca7 0%, #ffdde1 100%)', opacity: 0.18, borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%' }}></div>
-          <div className="absolute bottom-48 right-1/2 w-10 h-10 rounded-full animate-float-6" style={{ background: 'linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%)', opacity: 0.2 }}></div>
-
-          {/* Additional dots scattered */}
-          <div className="absolute top-28 left-20 w-2 h-2 rounded-full animate-float-5" style={{ background: '#f472b6', opacity: 0.45 }}></div>
-          <div className="absolute top-44 right-24 w-2 h-2 rounded-full animate-float-6" style={{ background: '#60a5fa', opacity: 0.4 }}></div>
-          <div className="absolute bottom-40 left-24 w-2 h-2 rounded-full animate-float-1" style={{ background: '#fb923c', opacity: 0.5 }}></div>
-          <div className="absolute bottom-36 right-20 w-2 h-2 rounded-full animate-float-2" style={{ background: '#34d399', opacity: 0.45 }}></div>
-        </div>
 
         <div className="relative z-10 container mx-auto px-4 max-w-4xl">
           <div className="text-center animate-fade-in">
