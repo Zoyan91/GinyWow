@@ -637,7 +637,7 @@ export default function Home() {
                       </svg>
                     </div>
                     <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
-                      Format Converter
+                      Converter
                     </h3>
                     <p className="text-gray-600 text-sm mt-2">
                       Convert images to any format instantly, free online.
