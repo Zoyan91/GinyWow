@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { Input } from "@/components/ui/input";
-import { Menu, Search } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Menu, Search, ChevronDown } from "lucide-react";
 import { Link, useLocation } from "wouter";
 
 // Preload pages on hover for instant navigation
@@ -12,6 +13,10 @@ const preloadPage = (path: string) => {
     import("@/pages/thumbnail-downloader");
   } else if (path === "/format-converter") {
     import("@/pages/format-converter");
+  } else if (path === "/image-resizer") {
+    import("@/pages/image-resizer");
+  } else if (path === "/image-compressor") {
+    import("@/pages/image-compressor");
   } else if (path === "/about") {
     import("@/pages/about");
   }
@@ -24,6 +29,7 @@ interface HeaderProps {
 export default function Header({ currentPage }: HeaderProps) {
   const [location] = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isImageDropdownOpen, setIsImageDropdownOpen] = useState(false);
   const [, setLocation] = useLocation();
 
 
@@ -33,11 +39,23 @@ export default function Header({ currentPage }: HeaderProps) {
     return false;
   };
 
+  const isImageToolActive = () => {
+    return location.startsWith("/format-converter") || 
+           location.startsWith("/image-resizer") || 
+           location.startsWith("/image-compressor");
+  };
+
   // TinyWow-style navigation items
   const navItems = [
     { href: "/", label: "App Opener", testId: "nav-app-opener" },
     { href: "/thumbnail-downloader", label: "Thumbnail Downloader", testId: "nav-thumbnail-downloader" },
-    { href: "/format-converter", label: "Image", testId: "nav-image" },
+  ];
+
+  // Image tools dropdown items
+  const imageTools = [
+    { href: "/format-converter", label: "Format Converter", testId: "nav-format-converter" },
+    { href: "/image-resizer", label: "Image Resizer", testId: "nav-image-resizer" },
+    { href: "/image-compressor", label: "Image Compressor", testId: "nav-image-compressor" },
   ];
 
 
@@ -52,7 +70,13 @@ export default function Header({ currentPage }: HeaderProps) {
         setLocation('/');
       } else if (searchTerm.includes('thumbnail')) {
         setLocation('/thumbnail-downloader');
-      } else if (searchTerm.includes('format') || searchTerm.includes('convert') || searchTerm.includes('image')) {
+      } else if (searchTerm.includes('format') || searchTerm.includes('convert')) {
+        setLocation('/format-converter');
+      } else if (searchTerm.includes('resize')) {
+        setLocation('/image-resizer');
+      } else if (searchTerm.includes('compress')) {
+        setLocation('/image-compressor');
+      } else if (searchTerm.includes('image')) {
         setLocation('/format-converter');
       }
       
@@ -97,6 +121,45 @@ export default function Header({ currentPage }: HeaderProps) {
                 </button>
               </Link>
             ))}
+            
+            {/* Image Tools Dropdown */}
+            <div className="relative">
+              <button 
+                className={`px-4 py-2 text-sm font-medium transition-colors rounded-lg flex items-center ${
+                  isImageToolActive()
+                    ? "text-blue-600 bg-blue-50"
+                    : "text-gray-700 hover:text-gray-900 hover:bg-gray-50"
+                }`}
+                data-testid="nav-image-dropdown"
+                onClick={() => setIsImageDropdownOpen(!isImageDropdownOpen)}
+                onBlur={(e) => {
+                  // Close dropdown when clicking outside
+                  if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+                    setTimeout(() => setIsImageDropdownOpen(false), 150);
+                  }
+                }}
+              >
+                Image
+                <ChevronDown className={`w-4 h-4 ml-1 transition-transform ${isImageDropdownOpen ? 'rotate-180' : ''}`} />
+              </button>
+              
+              {isImageDropdownOpen && (
+                <div className="absolute top-full left-0 mt-1 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+                  {imageTools.map((tool) => (
+                    <Link href={tool.href} key={tool.href}>
+                      <div 
+                        className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 first:rounded-t-lg last:rounded-b-lg cursor-pointer"
+                        onMouseEnter={() => preloadPage(tool.href)}
+                        onClick={() => setIsImageDropdownOpen(false)}
+                        data-testid={tool.testId}
+                      >
+                        {tool.label}
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
           </nav>
           
           {/* Right Actions - TinyWow Style */}

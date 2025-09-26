@@ -11,6 +11,8 @@ import { useLocation } from "wouter";
 const Home = lazy(() => import("@/pages/home"));
 const ThumbnailDownloader = lazy(() => import("@/pages/thumbnail-downloader"));
 const FormatConverterPage = lazy(() => import("@/pages/format-converter"));
+const ImageResizerPage = lazy(() => import("@/pages/image-resizer"));
+const ImageCompressorPage = lazy(() => import("@/pages/image-compressor"));
 
 
 // Preload secondary pages
@@ -67,6 +69,8 @@ function Router() {
           <Route path="/privacy" component={Privacy} />
           <Route path="/thumbnail-downloader" component={ThumbnailDownloader} />
           <Route path="/format-converter" component={FormatConverterPage} />
+          <Route path="/image-resizer" component={ImageResizerPage} />
+          <Route path="/image-compressor" component={ImageCompressorPage} />
           
           <Route component={NotFound} />
         </Switch>
