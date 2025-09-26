@@ -14,17 +14,70 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/favicon.png">
     
-    <!-- Critical font preload for instant text rendering -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"></noscript>
-    
-    <!-- Preload critical resources -->
-    <link rel="preload" href="/src/main.tsx" as="script">
-    <link rel="preload" href="/src/index.css" as="style">
+    <!-- System fonts for instant rendering -->
     
     <!-- Critical inline CSS for instant rendering -->
     <style>
-      /* Instant loading skeleton */
+      /* Critical above-the-fold styles for microsecond loading */
+      body { 
+        font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; 
+        margin: 0; 
+        padding: 0;
+        background: #f7faff;
+        color: #171717;
+        line-height: 1.6;
+      }
+      .critical-above-fold { 
+        contain: layout style paint; 
+        will-change: auto;
+      }
+      /* Header critical styles with complete layout */
+      header { 
+        background: white; 
+        border-bottom: 1px solid #e5e7eb;
+        height: 64px;
+        position: relative;
+        z-index: 50;
+      }
+      .header-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      /* Hero section critical styles with full layout */
+      .hero-section {
+        background: #f3f8ff;
+        padding: 3rem 1rem;
+        min-height: 500px;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .hero-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        text-align: center;
+        z-index: 10;
+      }
+      /* Button critical styles */
+      .btn-primary {
+        background: #3b82f6;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem;
+        border: none;
+        font-weight: 600;
+        cursor: pointer;
+        display: inline-block;
+        text-decoration: none;
+      }
+      /* Loading states */
       .loading-skeleton { 
         background: linear-gradient(90deg, #f0f0f0 25%, transparent 37%, #f0f0f0 63%);
         background-size: 400% 100%;
@@ -34,14 +87,7 @@
         0% { background-position: 100% 50%; }
         100% { background-position: 0% 50%; }
       }
-      /* Critical above-fold styles */
-      .critical-above-fold { contain: layout style paint; }
-      body { font-family: Inter, system-ui, sans-serif; }
     </style>
-    
-    <!-- DNS prefetch for external domains -->
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
   </head>
   <body>
     <div id="root"></div>
