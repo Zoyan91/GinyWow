@@ -47,7 +47,7 @@ export const defaultSEO: SEOData = {
 export const homeSEO: SEOData = {
   title: "GinyWow - Convert Social Media Visitors into Subscribers | Free Tools for Content Creators",
   description: "Transform your social media presence with GinyWow's suite of free tools: App Opener for smart redirects, YouTube Thumbnail Downloader, Image Tools (Converter, Resizer, Compressor), and 7+ Utility Tools. Boost engagement and convert visitors into loyal subscribers instantly.",
-  keywords: "social media tools, app opener, link opener, thumbnail downloader, image converter, image resizer, image compressor, utility tools, word counter, qr generator, password generator, case converter, unit converter, age calculator, mortgage calculator, content creator tools, social media optimization, visitor conversion, subscriber growth",
+  keywords: "social media tools, app opener, link opener, thumbnail downloader, image converter, image resizer, image compressor, utility tools, word counter, qr generator, password generator, unit converter, age calculator, mortgage calculator, content creator tools, social media optimization, visitor conversion, subscriber growth",
   canonical: "/",
   ogTitle: "GinyWow - Convert Social Media Visitors into Subscribers",
   ogDescription: "Free suite of powerful tools for content creators: App Opener, Thumbnail Downloader, Image Tools, and 7+ Utilities. Transform visitors into subscribers instantly.",
@@ -269,7 +269,6 @@ export const generateHomePageSchema = () => ({
     "Word Counter - Count words, characters, and reading time",
     "QR Code Generator - Create custom QR codes",
     "Password Generator - Generate secure passwords",
-    "Case Converter - Convert text case formats",
     "Unit Converter - Convert between measurement units",
     "Age Calculator - Calculate age and life statistics",
     "Mortgage Calculator - Calculate home loan EMI and interest"
