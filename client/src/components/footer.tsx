@@ -152,11 +152,6 @@ export default function Footer() {
                   <SiYoutube className="w-5 h-5" />
                 </span>
               </Link>
-              <Link href="/image-compressor">
-                <span className="text-gray-400 hover:text-red-500 transition-colors p-2 rounded-lg hover:bg-red-50 block cursor-pointer" aria-label="Image Compressor">
-                  <SiPinterest className="w-5 h-5" />
-                </span>
-              </Link>
             </div>
           </div>
         </div>
@@ -236,13 +231,6 @@ export default function Footer() {
                   <Link href="/image-resizer">
                     <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm block py-2">
                       Image Resizer
-                    </span>
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/image-compressor">
-                    <span className="text-gray-600 hover:text-blue-600 transition-colors cursor-pointer text-sm block py-2">
-                      Image Compressor
                     </span>
                   </Link>
                 </li>
@@ -327,12 +315,6 @@ export default function Footer() {
                   <span className="text-gray-400 hover:text-red-600 transition-colors p-3 rounded-lg hover:bg-red-50 flex items-center space-x-2 cursor-pointer" aria-label="Image Resizer">
                     <SiYoutube className="w-5 h-5" />
                     <span className="text-sm">Image Resizer</span>
-                  </span>
-                </Link>
-                <Link href="/image-compressor">
-                  <span className="text-gray-400 hover:text-red-500 transition-colors p-3 rounded-lg hover:bg-red-50 flex items-center space-x-2 cursor-pointer" aria-label="Image Compressor">
-                    <SiPinterest className="w-5 h-5" />
-                    <span className="text-sm">Image Compressor</span>
                   </span>
                 </Link>
               </div>
