@@ -320,8 +320,12 @@ export default function Home() {
 
       {/* Hero Section - Lightning Fast */}
       <section className="bg-white py-8 sm:py-12 lg:py-20">
-        <div className="container-mobile max-w-4xl">
-          <div className="text-center animate-fade-in">
+        <div className="container mx-auto px-4 max-w-4xl">
+          <div className="text-center">
+            {/* Debug - Simple test content */}
+            <div className="bg-red-200 p-4 mb-4 rounded">
+              <h2 className="text-2xl font-bold">TEST: Content is Loading</h2>
+            </div>
             <h1 className="text-xl sm:text-2xl lg:text-4xl font-bold lg:font-normal text-gray-900 mb-4 sm:mb-6 leading-tight">
               {/* Mobile Version */}
               <span className="block sm:hidden whitespace-pre-line">
@@ -516,7 +520,7 @@ export default function Home() {
       {/* What is Section - Mobile Optimized */}
       <section className="pt-8 sm:pt-12 lg:pt-16 pb-12 sm:pb-16 lg:pb-20 bg-white">
         <div className="container-mobile max-w-4xl">
-          <div className="animate-on-scroll">
+          <div>
             <div className="text-center mb-8 sm:mb-12">
               <h2 className="text-responsive-xl font-bold text-gray-900 mb-4 sm:mb-6">
                 What is GinyWow App Opener?
@@ -539,7 +543,7 @@ export default function Home() {
       {/* Why Use Section - Mobile Grid */}
       <section className="py-12 sm:py-16 lg:py-20 bg-gray-50">
         <div className="container-mobile max-w-5xl">
-          <div className="animate-on-scroll">
+          <div>
             <div className="text-center mb-8 sm:mb-12">
               <h2 className="text-responsive-xl font-bold text-gray-900 mb-4 sm:mb-8">
                 Why Use GinyWow App Opener?
@@ -575,7 +579,7 @@ export default function Home() {
               ].map((benefit, index) => (
                 <div
                   key={index}
-                  className="card-mobile p-4 sm:p-6 animate-on-scroll"
+                  className="card-mobile p-4 sm:p-6"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
                   <div className="flex items-start space-x-3 sm:space-x-4">
@@ -601,7 +605,7 @@ export default function Home() {
       {/* How It Works Section - Mobile Steps */}
       <section className="py-12 sm:py-16 lg:py-20 bg-white">
         <div className="container-mobile max-w-4xl">
-          <div className="animate-on-scroll">
+          <div>
             <div className="text-center mb-8 sm:mb-12">
               <h2 className="text-responsive-xl font-bold text-gray-900 mb-4 sm:mb-8">
                 How to Use GinyWow App Opener?
@@ -632,7 +636,7 @@ export default function Home() {
               ].map((step, index) => (
                 <div
                   key={index}
-                  className="card-mobile p-4 sm:p-6 animate-on-scroll"
+                  className="card-mobile p-4 sm:p-6"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
                   <div className="flex items-start space-x-4">
@@ -658,7 +662,7 @@ export default function Home() {
       {/* FAQ Section */}
       <section className="py-12 sm:py-16 lg:py-20 bg-gray-50">
         <div className="container-mobile max-w-4xl">
-          <div className="animate-on-scroll">
+          <div>
             <div className="text-center mb-8 sm:mb-12">
               <h2 className="text-responsive-xl font-bold text-gray-900 mb-4 sm:mb-8">
                 Frequently Asked Questions (FAQ)
@@ -690,7 +694,7 @@ export default function Home() {
               ].map((faq, index) => (
                 <div
                   key={index}
-                  className="card-mobile p-4 sm:p-6 animate-on-scroll"
+                  className="card-mobile p-4 sm:p-6"
                   style={{ animationDelay: `${index * 0.1}s` }}
                   data-testid={`faq-item-${index + 1}`}
                 >
