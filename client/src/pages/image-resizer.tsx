@@ -372,7 +372,7 @@ export default function ImageResizerPage() {
                 <span className="block sm:inline">Free Image Resizer Online</span> <span className="block sm:inline">– Resize Images to Any Dimensions with GinyWow</span>
               </h1>
               <p className="text-gray-600 mb-6 text-sm md:text-base" data-testid="hero-description">
-                Resize images for social media, web, print. Maintain quality while adjusting dimensions. Fast, secure, and completely free.
+                Resize images online for free with GinyWow Image Resizer. Adjust width, height, and dimensions instantly for web, social media, or personal use.
               </p>
             </div>
             
