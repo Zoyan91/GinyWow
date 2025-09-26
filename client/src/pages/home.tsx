@@ -619,7 +619,7 @@ export default function Home() {
                       </svg>
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-green-700 transition-colors">
+                      <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-green-700 transition-colors">
                         Thumbnail Downloader
                       </h3>
                       <p className="text-gray-600 text-sm leading-relaxed">
@@ -646,7 +646,7 @@ export default function Home() {
                       </svg>
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-700 transition-colors">
+                      <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-blue-700 transition-colors">
                         Format Converter
                       </h3>
                       <p className="text-gray-600 text-sm leading-relaxed">
@@ -673,7 +673,7 @@ export default function Home() {
                       </svg>
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-purple-700 transition-colors">
+                      <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-purple-700 transition-colors">
                         Image Resizer
                       </h3>
                       <p className="text-gray-600 text-sm leading-relaxed">
@@ -700,7 +700,7 @@ export default function Home() {
                       </svg>
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-pink-700 transition-colors">
+                      <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-pink-700 transition-colors">
                         Image Compressor
                       </h3>
                       <p className="text-gray-600 text-sm leading-relaxed">
