@@ -193,71 +193,106 @@ export default function AgeCalculator() {
 
       <Header currentPage="age-calculator" />
       
-      <main className="container mx-auto px-4 py-8 max-w-4xl">
-        {/* Header Section */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            GinyWow Age Calculator
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Calculate your exact age in years, months, days, hours, minutes, and seconds. Find out your zodiac sign and days until your next birthday.
-          </p>
+      <main className="container mx-auto px-4 py-8 max-w-5xl relative">
+        {/* Floating Background Shapes */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none hidden md:block">
+          <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-pink-400 to-pink-600 rounded-full opacity-10 animate-float"></div>
+          <div className="absolute top-40 right-20 w-24 h-24 bg-gradient-to-br from-rose-400 to-rose-600 rotate-45 opacity-10 animate-float-2"></div>
+          <div className="absolute bottom-40 left-1/4 w-20 h-20 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full opacity-15 animate-float-3"></div>
+          <div className="absolute top-60 right-1/3 w-16 h-16 bg-gradient-to-br from-violet-400 to-violet-600 transform rotate-12 opacity-10 animate-float-4"></div>
+          <div className="absolute bottom-20 right-16 w-28 h-28 bg-gradient-to-br from-fuchsia-400 to-fuchsia-600 rounded-full opacity-10 animate-float-5"></div>
+          <div className="absolute top-96 left-1/2 w-6 h-6 bg-gradient-to-br from-magenta-400 to-magenta-600 rounded-full opacity-20 animate-float-6"></div>
         </div>
+
+        {/* Hero Section */}
+        <section className="relative z-10 text-center mb-12">
+          <div className="max-w-4xl mx-auto">
+            <div className="inline-flex items-center gap-3 bg-gradient-to-r from-pink-100 to-rose-100 px-6 py-3 rounded-full text-pink-700 text-sm font-medium mb-6">
+              <Calendar className="w-4 h-4" />
+              Precise Age Calculator
+            </div>
+            <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-pink-600 via-rose-600 to-purple-600 bg-clip-text text-transparent mb-6 leading-tight">
+              Age Calculator
+            </h1>
+            <p className="text-xl md:text-2xl text-gray-600 mb-8 leading-relaxed max-w-3xl mx-auto">
+              Discover your exact age down to the second. Calculate years, months, days, and find your zodiac sign instantly.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-500">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-pink-500 rounded-full"></div>
+                <span>Precise Calculation</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-rose-500 rounded-full"></div>
+                <span>Zodiac Sign</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                <span>Next Birthday</span>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* Main Tool Section */}
         <div className="grid lg:grid-cols-3 gap-6 mb-8">
           {/* Input Section */}
           <div className="lg:col-span-1">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Calendar className="w-5 h-5 text-blue-600" />
+            <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+              <div className="bg-gradient-to-r from-pink-500 to-rose-600 p-6">
+                <h2 className="text-xl font-bold text-white flex items-center gap-3">
+                  <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                    <Calendar className="w-5 h-5 text-white" />
+                  </div>
                   Enter Dates
-                </CardTitle>
-                <CardDescription>
-                  Enter your birth date and calculation date
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
+                </h2>
+                <p className="text-pink-100 mt-2">
+                  Choose your birth date and calculation date
+                </p>
+              </div>
+              <div className="p-6 space-y-6">
                 <div>
-                  <Label htmlFor="birth-date">Birth Date</Label>
+                  <Label htmlFor="birth-date" className="text-base font-semibold text-gray-700 mb-3 block">Birth Date</Label>
                   <Input
                     id="birth-date"
                     type="date"
                     value={birthDate}
                     onChange={(e) => setBirthDate(e.target.value)}
+                    className="h-14 text-lg border-2 border-gray-200 focus:border-pink-400 rounded-xl transition-all duration-300"
                     data-testid="birth-date-input"
                   />
                 </div>
                 <div>
-                  <Label htmlFor="target-date">Calculate Age On</Label>
+                  <Label htmlFor="target-date" className="text-base font-semibold text-gray-700 mb-3 block">Calculate Age On</Label>
                   <Input
                     id="target-date"
                     type="date"
                     value={targetDate}
                     onChange={(e) => setTargetDate(e.target.value)}
+                    className="h-14 text-lg border-2 border-gray-200 focus:border-pink-400 rounded-xl transition-all duration-300"
                     data-testid="target-date-input"
                   />
                 </div>
-                <div className="flex gap-2">
+                <div className="flex gap-3">
                   <Button
                     onClick={calculateAge}
-                    className="flex-1"
+                    className="flex-1 h-14 bg-gradient-to-r from-pink-500 to-rose-600 hover:from-pink-600 hover:to-rose-700 text-white text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl"
                     data-testid="calculate-age-button"
                   >
-                    <Calculator className="w-4 h-4 mr-2" />
-                    Calculate Age
+                    <Calculator className="w-5 h-5 mr-3" />
+                    Calculate ✨
                   </Button>
                   <Button
                     variant="outline"
                     onClick={clearCalculation}
+                    className="h-14 px-6 border-2 border-gray-200 hover:border-red-400 hover:text-red-600 rounded-xl transition-all duration-300"
                     data-testid="clear-calculation-button"
                   >
                     Clear
                   </Button>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
 
             {/* Zodiac Sign */}
             {zodiacSign && (
