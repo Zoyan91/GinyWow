@@ -225,7 +225,7 @@ export default function MortgageCalculator() {
             </h1>
             
             <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 leading-relaxed max-w-2xl mx-auto px-4">
-              Calculate your home loan EMI, total interest, and monthly payments. Plan your home purchase with accurate mortgage calculations.
+              Use our free online Mortgage Calculator to calculate monthly payments, interest rates, and loan amortization schedules. Perfect for home buyers in the USA, UK, Canada, and worldwide.
             </p>
           </div>
         </div>
