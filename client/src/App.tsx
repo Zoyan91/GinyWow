@@ -12,7 +12,6 @@ const Home = lazy(() => import("@/pages/home"));
 const ThumbnailDownloader = lazy(() => import("@/pages/thumbnail-downloader"));
 const FormatConverterPage = lazy(() => import("@/pages/format-converter"));
 const ImageResizerPage = lazy(() => import("@/pages/image-resizer"));
-const ImageCompressorPage = lazy(() => import("@/pages/image-compressor"));
 
 // Utility tools pages
 const WordCounterPage = lazy(() => import("@/pages/word-counter"));
@@ -77,7 +76,6 @@ function Router() {
           <Route path="/thumbnail-downloader" component={ThumbnailDownloader} />
           <Route path="/format-converter" component={FormatConverterPage} />
           <Route path="/image-resizer" component={ImageResizerPage} />
-          <Route path="/image-compressor" component={ImageCompressorPage} />
           
           {/* Utility Tools Routes */}
           <Route path="/word-counter" component={WordCounterPage} />
