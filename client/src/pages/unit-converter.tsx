@@ -1,4 +1,5 @@
 import { useState } from "react";
+import React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -229,73 +230,115 @@ export default function UnitConverter() {
 
       <Header currentPage="unit-converter" />
       
-      <main className="container mx-auto px-4 py-8 max-w-4xl">
-        {/* Header Section */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            GinyWow Unit Converter Tool
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Convert between different units of measurement instantly. Support for length, weight, temperature, area, and volume with both metric and imperial systems.
-          </p>
+      <main className="container mx-auto px-4 py-8 max-w-5xl relative">
+        {/* Floating Background Shapes */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none hidden md:block">
+          <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full opacity-10 animate-float"></div>
+          <div className="absolute top-40 right-20 w-24 h-24 bg-gradient-to-br from-indigo-400 to-indigo-600 rotate-45 opacity-10 animate-float-2"></div>
+          <div className="absolute bottom-40 left-1/4 w-20 h-20 bg-gradient-to-br from-violet-400 to-violet-600 rounded-full opacity-15 animate-float-3"></div>
+          <div className="absolute top-60 right-1/3 w-16 h-16 bg-gradient-to-br from-cyan-400 to-cyan-600 transform rotate-12 opacity-10 animate-float-4"></div>
+          <div className="absolute bottom-20 right-16 w-28 h-28 bg-gradient-to-br from-sky-400 to-sky-600 rounded-full opacity-10 animate-float-5"></div>
+          <div className="absolute top-96 left-1/2 w-6 h-6 bg-gradient-to-br from-slate-400 to-slate-600 rounded-full opacity-20 animate-float-6"></div>
         </div>
+
+        {/* Hero Section */}
+        <section className="relative z-10 text-center mb-12">
+          <div className="max-w-4xl mx-auto">
+            <div className="inline-flex items-center gap-3 bg-gradient-to-r from-blue-100 to-indigo-100 px-6 py-3 rounded-full text-blue-700 text-sm font-medium mb-6">
+              <Calculator className="w-4 h-4" />
+              Universal Converter
+            </div>
+            <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 bg-clip-text text-transparent mb-6 leading-tight">
+              Unit Converter
+            </h1>
+            <p className="text-xl md:text-2xl text-gray-600 mb-8 leading-relaxed max-w-3xl mx-auto">
+              Convert any measurement instantly. Length, weight, temperature, area, and volume conversions with precision and ease.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-500">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                <span>5+ Categories</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-indigo-500 rounded-full"></div>
+                <span>Metric & Imperial</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-violet-500 rounded-full"></div>
+                <span>Instant Results</span>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* Main Tool Section */}
         <div className="space-y-6 mb-8">
           {/* Category Selection */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Calculator className="w-5 h-5 text-blue-600" />
+          <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+            <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-6">
+              <h2 className="text-xl font-bold text-white flex items-center gap-3">
+                <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
+                  <Calculator className="w-5 h-5 text-white" />
+                </div>
                 Select Category
-              </CardTitle>
-              <CardDescription>
-                Choose the type of units you want to convert
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+              </h2>
+              <p className="text-blue-100 mt-2">
+                Choose the measurement type you want to convert
+              </p>
+            </div>
+            <div className="p-6">
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
                 {Object.entries(conversionCategories).map(([key, cat]) => (
                   <Button
                     key={key}
                     variant={category === key ? "default" : "outline"}
                     onClick={() => handleCategoryChange(key)}
-                    className="flex items-center gap-2 h-auto py-3"
+                    className={`flex flex-col items-center gap-3 h-auto py-4 px-4 rounded-xl transition-all duration-300 ${
+                      category === key 
+                        ? "bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-lg scale-105" 
+                        : "border-2 border-gray-200 hover:border-blue-400 hover:shadow-md"
+                    }`}
                     data-testid={`category-${key}`}
                   >
-                    {cat.icon}
-                    <span className="text-sm">{cat.name}</span>
+                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
+                      category === key ? "bg-white/20" : "bg-blue-100"
+                    }`}>
+                      {React.cloneElement(cat.icon as React.ReactElement, { 
+                        className: `w-4 h-4 ${category === key ? "text-white" : "text-blue-600"}`
+                      })}
+                    </div>
+                    <span className="text-sm font-medium">{cat.name}</span>
                   </Button>
                 ))}
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
 
           {/* Conversion Interface */}
           <div className="grid md:grid-cols-2 gap-6">
             {/* From Section */}
-            <Card>
-              <CardHeader>
-                <CardTitle>From</CardTitle>
-                <CardDescription>Enter value and select unit</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
+            <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+              <div className="bg-gradient-to-r from-indigo-500 to-violet-600 p-6">
+                <h2 className="text-xl font-bold text-white">From</h2>
+                <p className="text-indigo-100 mt-2">Enter value and select unit</p>
+              </div>
+              <div className="p-6 space-y-6">
                 <div>
-                  <Label htmlFor="from-value">Value</Label>
+                  <Label htmlFor="from-value" className="text-base font-semibold text-gray-700 mb-3 block">Value</Label>
                   <Input
                     id="from-value"
                     type="number"
                     placeholder="Enter number"
                     value={fromValue}
                     onChange={(e) => setFromValue(e.target.value)}
-                    className="text-lg"
+                    className="h-14 text-xl border-2 border-gray-200 focus:border-indigo-400 rounded-xl transition-all duration-300"
                     data-testid="from-value-input"
                   />
                 </div>
                 <div>
-                  <Label htmlFor="from-unit">Unit</Label>
+                  <Label htmlFor="from-unit" className="text-base font-semibold text-gray-700 mb-3 block">Unit</Label>
                   <Select value={fromUnit} onValueChange={setFromUnit}>
-                    <SelectTrigger data-testid="from-unit-select">
+                    <SelectTrigger className="h-14 border-2 border-gray-200 focus:border-indigo-400 rounded-xl" data-testid="from-unit-select">
                       <SelectValue placeholder="Select unit" />
                     </SelectTrigger>
                     <SelectContent>
@@ -307,31 +350,31 @@ export default function UnitConverter() {
                     </SelectContent>
                   </Select>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
 
             {/* To Section */}
-            <Card>
-              <CardHeader>
-                <CardTitle>To</CardTitle>
-                <CardDescription>Select target unit and view result</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
+            <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+              <div className="bg-gradient-to-r from-violet-500 to-purple-600 p-6">
+                <h2 className="text-xl font-bold text-white">To</h2>
+                <p className="text-violet-100 mt-2">Select target unit and view result</p>
+              </div>
+              <div className="p-6 space-y-6">
                 <div>
-                  <Label htmlFor="result">Result</Label>
+                  <Label htmlFor="result" className="text-base font-semibold text-gray-700 mb-3 block">Result</Label>
                   <Input
                     id="result"
                     value={result}
                     readOnly
                     placeholder="Result will appear here"
-                    className="text-lg font-bold bg-gray-50"
+                    className="h-14 text-xl font-bold border-2 border-gray-200 rounded-xl bg-gradient-to-r from-gray-50 to-white"
                     data-testid="result-display"
                   />
                 </div>
                 <div>
-                  <Label htmlFor="to-unit">Unit</Label>
+                  <Label htmlFor="to-unit" className="text-base font-semibold text-gray-700 mb-3 block">Unit</Label>
                   <Select value={toUnit} onValueChange={setToUnit}>
-                    <SelectTrigger data-testid="to-unit-select">
+                    <SelectTrigger className="h-14 border-2 border-gray-200 focus:border-violet-400 rounded-xl" data-testid="to-unit-select">
                       <SelectValue placeholder="Select unit" />
                     </SelectTrigger>
                     <SelectContent>
@@ -343,35 +386,34 @@ export default function UnitConverter() {
                     </SelectContent>
                   </Select>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
 
           {/* Action Buttons */}
-          <div className="flex flex-wrap gap-3 justify-center">
+          <div className="flex flex-wrap gap-4 justify-center">
             <Button
               onClick={convertUnits}
-              size="lg"
-              className="min-w-[140px]"
+              className="h-14 px-8 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl min-w-[160px]"
               data-testid="convert-button"
             >
-              <Calculator className="w-4 h-4 mr-2" />
-              Convert
+              <Calculator className="w-5 h-5 mr-3" />
+              Convert ✨
             </Button>
             <Button
               onClick={swapUnits}
               variant="outline"
-              size="lg"
               disabled={!fromUnit || !toUnit}
+              className="h-14 px-8 border-2 border-gray-200 hover:border-indigo-400 rounded-xl transition-all duration-300 min-w-[160px]"
               data-testid="swap-units-button"
             >
-              <ArrowLeftRight className="w-4 h-4 mr-2" />
+              <ArrowLeftRight className="w-5 h-5 mr-3" />
               Swap Units
             </Button>
             <Button
               onClick={clearAll}
               variant="outline"
-              size="lg"
+              className="h-14 px-8 border-2 border-gray-200 hover:border-red-400 hover:text-red-600 rounded-xl transition-all duration-300 min-w-[160px]"
               data-testid="clear-all-button"
             >
               Clear All
