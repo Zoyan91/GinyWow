@@ -593,99 +593,120 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Our More Tools Section - Lightning Fast */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-white border-t-2 border-dashed border-gray-300">
-        <div className="container-mobile max-w-4xl">
-          <div className="text-center mb-8 sm:mb-12">
-            <div className="inline-block bg-orange-500 text-white px-6 py-2 rounded-full text-lg font-medium mb-8 sm:mb-12">
+      {/* Our More Tools Section - Modern & Vibrant */}
+      <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50">
+        <div className="container-mobile max-w-6xl">
+          <div className="text-center mb-12 sm:mb-16">
+            <div className="inline-flex items-center bg-gradient-to-r from-orange-500 to-red-500 text-white px-8 py-3 rounded-full text-lg font-semibold shadow-lg mb-12 hover:shadow-xl transition-shadow duration-300">
+              <span className="mr-2">🚀</span>
               Our More Tools : Try It
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-              {/* Thumbnail Downloader Section */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+              {/* Thumbnail Downloader - Green Theme */}
               <Link href="/thumbnail-downloader">
                 <div
-                  className="card-mobile p-6 sm:p-8 hover:shadow-lg cursor-pointer"
+                  className="group relative bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl cursor-pointer transform hover:-translate-y-2 transition-all duration-300 border border-gray-100 overflow-hidden"
                   data-testid="thumbnail-downloader-card"
                 >
-                  <div className="text-center space-y-4">
-                    <div className="w-16 h-16 mx-auto bg-green-100 rounded-full flex items-center justify-center">
-                      <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  {/* Background Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-green-50 to-emerald-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  
+                  <div className="relative text-center space-y-5">
+                    <div className="w-20 h-20 mx-auto bg-gradient-to-br from-green-400 to-emerald-500 rounded-2xl flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                      <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                       </svg>
                     </div>
-                    <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
-                      Thumbnail Downloader
-                    </h3>
-                    <p className="text-gray-600 text-sm mt-2">
-                      Extract and download high-quality thumbnails
-                    </p>
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-green-700 transition-colors">
+                        Thumbnail Downloader
+                      </h3>
+                      <p className="text-gray-600 text-sm leading-relaxed">
+                        Extract and download high-quality thumbnails
+                      </p>
+                    </div>
                   </div>
                 </div>
               </Link>
 
-              {/* Format Converter Section */}
+              {/* Format Converter - Blue Theme */}
               <Link href="/format-converter">
                 <div
-                  className="card-mobile p-6 sm:p-8 hover:shadow-lg cursor-pointer"
+                  className="group relative bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl cursor-pointer transform hover:-translate-y-2 transition-all duration-300 border border-gray-100 overflow-hidden"
                   data-testid="format-converter-card"
                 >
-                  <div className="text-center space-y-4">
-                    <div className="w-16 h-16 mx-auto bg-blue-100 rounded-full flex items-center justify-center">
-                      <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  {/* Background Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-indigo-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  
+                  <div className="relative text-center space-y-5">
+                    <div className="w-20 h-20 mx-auto bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                      <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                       </svg>
                     </div>
-                    <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
-                      Format Converter
-                    </h3>
-                    <p className="text-gray-600 text-sm mt-2">
-                      Convert images between 12+ formats instantly
-                    </p>
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-700 transition-colors">
+                        Format Converter
+                      </h3>
+                      <p className="text-gray-600 text-sm leading-relaxed">
+                        Convert images between 12+ formats instantly
+                      </p>
+                    </div>
                   </div>
                 </div>
               </Link>
 
-              {/* Image Resizer Section */}
+              {/* Image Resizer - Purple Theme */}
               <Link href="/image-resizer">
                 <div
-                  className="card-mobile p-6 sm:p-8 hover:shadow-lg cursor-pointer"
+                  className="group relative bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl cursor-pointer transform hover:-translate-y-2 transition-all duration-300 border border-gray-100 overflow-hidden"
                   data-testid="image-resizer-card"
                 >
-                  <div className="text-center space-y-4">
-                    <div className="w-16 h-16 mx-auto bg-purple-100 rounded-full flex items-center justify-center">
-                      <svg className="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  {/* Background Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-purple-50 to-violet-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  
+                  <div className="relative text-center space-y-5">
+                    <div className="w-20 h-20 mx-auto bg-gradient-to-br from-purple-500 to-violet-600 rounded-2xl flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                      <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
                       </svg>
                     </div>
-                    <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
-                      Image Resizer
-                    </h3>
-                    <p className="text-gray-600 text-sm mt-2">
-                      Resize images for any purpose with quality control
-                    </p>
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-purple-700 transition-colors">
+                        Image Resizer
+                      </h3>
+                      <p className="text-gray-600 text-sm leading-relaxed">
+                        Resize images for any purpose with quality control
+                      </p>
+                    </div>
                   </div>
                 </div>
               </Link>
 
-              {/* Image Compressor Section */}
+              {/* Image Compressor - Pink/Red Theme */}
               <Link href="/image-compressor">
                 <div
-                  className="card-mobile p-6 sm:p-8 hover:shadow-lg cursor-pointer"
+                  className="group relative bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl cursor-pointer transform hover:-translate-y-2 transition-all duration-300 border border-gray-100 overflow-hidden"
                   data-testid="image-compressor-card"
                 >
-                  <div className="text-center space-y-4">
-                    <div className="w-16 h-16 mx-auto bg-red-100 rounded-full flex items-center justify-center">
-                      <svg className="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  {/* Background Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-pink-50 to-rose-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  
+                  <div className="relative text-center space-y-5">
+                    <div className="w-20 h-20 mx-auto bg-gradient-to-br from-pink-500 to-rose-500 rounded-2xl flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                      <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 10h.01M6 14h.01M10 18h.01M10 6h.01M14 6h.01M18 6h.01M18 10h.01M18 14h.01M10 14h.01M14 14h.01M14 18h.01M18 18h.01M10 10h.01M14 10h.01" />
                       </svg>
                     </div>
-                    <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
-                      Image Compressor
-                    </h3>
-                    <p className="text-gray-600 text-sm mt-2">
-                      Reduce file size without quality loss
-                    </p>
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-pink-700 transition-colors">
+                        Image Compressor
+                      </h3>
+                      <p className="text-gray-600 text-sm leading-relaxed">
+                        Reduce file size without quality loss
+                      </p>
+                    </div>
                   </div>
                 </div>
               </Link>
