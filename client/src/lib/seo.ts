@@ -249,7 +249,6 @@ export const generateHomePageSchema = () => ({
     "YouTube Thumbnail Downloader - Download high-quality thumbnails",
     "Image Converter - Convert between 12+ formats",
     "Image Resizer - Resize photos with quality control",
-    "Image Compressor - Reduce file size without quality loss",
     "Word Counter - Count words, characters, and reading time",
     "QR Code Generator - Create custom QR codes",
     "Password Generator - Generate secure passwords",
