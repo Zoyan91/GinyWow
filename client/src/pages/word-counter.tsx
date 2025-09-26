@@ -420,25 +420,56 @@ Estimated reading time: ${currentStats.readingTime} minute(s)`;
             </div>
           </section>
 
-          {/* Global Use Cases */}
-          <section className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Global Use Cases</h2>
-            <p className="text-gray-700 leading-relaxed mb-4">
-              Our <strong>Word Counter Tool</strong> is popular worldwide:
-            </p>
-            <div className="grid md:grid-cols-3 gap-4">
-              <div className="bg-white p-4 rounded-lg border border-gray-200">
-                <h4 className="font-semibold text-blue-800 mb-2">🇺🇸 USA & UK</h4>
-                <p className="text-gray-600 text-sm">Students use it for essays and reports.</p>
+          {/* FAQ Section */}
+          <section className="bg-white rounded-lg p-6 border border-gray-200">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Frequently Asked Questions</h2>
+            <div className="space-y-6">
+              
+              <div className="border-b border-gray-200 pb-4">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                  Q: Is the Word Counter tool completely free to use?
+                </h3>
+                <p className="text-gray-700">
+                  Yes, our Word Counter tool is 100% free with no hidden charges, registration requirements, or usage limits. You can count words, characters, sentences, and paragraphs as many times as you need.
+                </p>
               </div>
-              <div className="bg-white p-4 rounded-lg border border-gray-200">
-                <h4 className="font-semibold text-blue-800 mb-2">🇮🇳 India & Asia</h4>
-                <p className="text-gray-600 text-sm">Bloggers use it to optimize SEO content.</p>
+
+              <div className="border-b border-gray-200 pb-4">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                  Q: Does the tool store or save my text content?
+                </h3>
+                <p className="text-gray-700">
+                  No, we prioritize your privacy. All text analysis happens locally in your browser, and your content is never stored, saved, or transmitted to our servers. Your text remains completely private.
+                </p>
               </div>
-              <div className="bg-white p-4 rounded-lg border border-gray-200">
-                <h4 className="font-semibold text-blue-800 mb-2">🌍 Europe & Canada</h4>
-                <p className="text-gray-600 text-sm">Writers and marketers use it for precise word tracking.</p>
+
+              <div className="border-b border-gray-200 pb-4">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                  Q: How accurate is the word count compared to Microsoft Word?
+                </h3>
+                <p className="text-gray-700">
+                  Our word counter uses the same counting algorithm as most professional tools. It counts words separated by spaces and treats hyphenated words as single words, providing results consistent with Microsoft Word and Google Docs.
+                </p>
               </div>
+
+              <div className="border-b border-gray-200 pb-4">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                  Q: What's the maximum text length I can analyze?
+                </h3>
+                <p className="text-gray-700">
+                  There's no strict limit on text length. Our tool can handle everything from short social media posts to long academic papers, novels, and research documents efficiently without performance issues.
+                </p>
+              </div>
+
+              <div className="pb-4">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                  Q: How is reading time calculated?
+                </h3>
+                <p className="text-gray-700">
+                  Reading time is calculated based on an average reading speed of 200 words per minute, which is the standard for adult readers. This helps you estimate how long it will take readers to consume your content.
+                </p>
+              </div>
+
             </div>
           </section>
         </div>
