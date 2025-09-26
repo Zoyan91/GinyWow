@@ -8,6 +8,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import { SEOHead } from "@/components/seo-head";
+import { thumbnailDownloaderSEO } from "@/lib/seo";
 import { thumbnailDownloaderSchema, type ThumbnailDownloaderForm } from "@shared/schema";
 
 export default function ThumbnailDownloader() {
@@ -141,6 +143,7 @@ export default function ThumbnailDownloader() {
 
   return (
     <div className="min-h-screen bg-background relative w-full overflow-x-hidden">
+      <SEOHead seoData={thumbnailDownloaderSEO} />
       <Header currentPage="thumbnail-downloader" />
 
       {/* Hero Section */}

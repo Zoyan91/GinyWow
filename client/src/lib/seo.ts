@@ -77,6 +77,23 @@ export const mortgageCalculatorSEO: SEOData = {
   author: "GinyWow",
 };
 
+// Thumbnail Downloader SEO
+export const thumbnailDownloaderSEO: SEOData = {
+  title: "YouTube Thumbnail Downloader - Download HD Thumbnails Instantly | GinyWow",
+  description: "Download high-quality YouTube thumbnails in all resolutions (HD, HQ, Default). Free online tool to extract and save video thumbnails instantly. No signup required.",
+  keywords: "youtube thumbnail downloader, download youtube thumbnails, youtube thumbnail extractor, video thumbnail downloader, youtube image downloader, thumbnail grabber",
+  canonical: "/thumbnail-downloader",
+  ogTitle: "YouTube Thumbnail Downloader - Download HD Thumbnails",
+  ogDescription: "Extract and download high-quality thumbnails from any YouTube video. Get all available sizes from HD to standard quality.",
+  ogImage: "/og-thumbnail-downloader.jpg",
+  ogType: "website",
+  twitterCard: "summary_large_image",
+  twitterTitle: "YouTube Thumbnail Downloader - Free Online Tool",
+  twitterDescription: "Download YouTube thumbnails in HD quality instantly. Free tool with no signup required.",
+  robots: "index, follow",
+  author: "GinyWow",
+};
+
 // Image Resizer SEO
 export const imageResizerSEO: SEOData = {
   title: "Free Image Resizer Online - Resize Photos & Pictures | GinyWow",
