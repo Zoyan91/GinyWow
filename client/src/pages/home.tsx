@@ -628,7 +628,7 @@ export default function Home() {
               Our More Tools : Try It
             </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-5xl mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 lg:gap-8 max-w-3xl mx-auto">
               {/* Format Converter - Blue Theme */}
               <Link href="/format-converter">
                 <div
@@ -656,59 +656,7 @@ export default function Home() {
                 </div>
               </Link>
 
-              {/* Image Resizer - Purple Theme */}
-              <Link href="/image-resizer">
-                <div
-                  className="group relative bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl cursor-pointer transform hover:-translate-y-2 transition-all duration-300 border border-gray-100 overflow-hidden"
-                  data-testid="image-resizer-card"
-                >
-                  {/* Background Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-purple-50 to-violet-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  
-                  <div className="relative text-center space-y-5">
-                    <div className="w-20 h-20 mx-auto bg-gradient-to-br from-purple-500 to-violet-600 rounded-2xl flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                      <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
-                      </svg>
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-purple-700 transition-colors">
-                        Image Resizer
-                      </h3>
-                      <p className="text-gray-600 text-sm leading-relaxed">
-                        Resize images for any purpose with quality control
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </Link>
 
-              {/* Image Compressor - Pink/Red Theme */}
-              <Link href="/image-compressor">
-                <div
-                  className="group relative bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl cursor-pointer transform hover:-translate-y-2 transition-all duration-300 border border-gray-100 overflow-hidden"
-                  data-testid="image-compressor-card"
-                >
-                  {/* Background Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-pink-50 to-rose-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  
-                  <div className="relative text-center space-y-5">
-                    <div className="w-20 h-20 mx-auto bg-gradient-to-br from-pink-500 to-rose-500 rounded-2xl flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                      <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 10h.01M6 14h.01M10 18h.01M10 6h.01M14 6h.01M18 6h.01M18 10h.01M18 14h.01M10 14h.01M14 14h.01M14 18h.01M18 18h.01M10 10h.01M14 10h.01" />
-                      </svg>
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-pink-700 transition-colors">
-                        Image Compressor
-                      </h3>
-                      <p className="text-gray-600 text-sm leading-relaxed">
-                        Reduce file size without quality loss
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </Link>
 
               {/* Mortgage Calculator - Indigo Theme */}
               <Link href="/mortgage-calculator">
